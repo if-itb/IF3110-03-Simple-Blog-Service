@@ -16,7 +16,16 @@ https://www.dropbox.com/sh/ig1hf108ad9fqxi/AAA2PMjPFICSFo3ypdrHl39La?dl=0
 
 ## Deliverable
 
-Masing-masing orang lakukan Fork pada repo ini. Jika sudah selesai tambahkan pull request ke repo ini.
+Tiap-tiap Kelompok Membuat Organizationnya masing-masing, dengan langkah:
+1. Klik tanda Tambah ( + ) disamping username pada Github, Pilih Create New Organization
+2. Buat Organisasi dengan Nama : IF3110-II-(Nomor_Kelompok) . Nomor Kelompok dapat diakses pada:
+
+https://docs.google.com/spreadsheets/d/1Y-FGJ_feIVYNRv-o0ycBXyfAiKMFXKA17cvw3Mhjd1A/edit?usp=sharing
+
+3. Masukkan email address salah satu anggota untuk billing email ( bebas ).
+4. Undang anggota kelompok untuk menjadi anggota Organisasi.
+5. Lakukan Fork Repository ini ke Organisasi yang baru dibentuk
+6. Setelah selesai mengerjakan, lakukan Pull Request.
 
 ## Lisensi
 
