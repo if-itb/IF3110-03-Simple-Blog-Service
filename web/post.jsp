@@ -1,5 +1,5 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="javax.servlet.http.*,javax.servlet.*,myServlet.TimeConverter" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 
@@ -50,6 +50,8 @@
 SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${param.id_post};
 </sql:query> 
 
+<% TimeConverter tc = new TimeConverter(); %>
+
 <nav class="nav">
     <a style="border:none;" id="logo" href="index.jsp"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
@@ -60,9 +62,12 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
 <article class="art simple post">
     
     <c:forEach var="row" items="${result.rows}">
+         <c:set var="myTest" value="${row.date}"/>
+                    <%! String d; %>
+                    <%  d =  pageContext.getAttribute("myTest").toString(); %>
     <header class="art-header">
         <div class="art-header-inner" style="margin-top: 0px; opacity: 1;">
-            <time class="art-time"><c:out value="${row.date}"/></time>
+            <time class="art-time"><%= tc.ConvertDate(d) %></time>
             <h2 class="art-title"><c:out value="${row.title}"/></h2>
             <p class="art-subtitle"></p>
         </div>
@@ -72,8 +77,8 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
         <div class="art-body-inner">
             <hr class="featured-article" />
             <p><c:out value="${row.post}"/></p>
-            <hr />    
-    </c:forEach>>
+            <hr/>    
+    </c:forEach>
     
             
             <h2>Komentar</h2>
@@ -152,16 +157,16 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
       t.src='//www.google-analytics.com/analytics.js';
       z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
       ga('create',ga_ua);ga('send','pageview');
-      
+
 function showKomen(idpost) {
-  var xmlhttp=new XMLHttpRequest();
+  var xmlhttp= new XMLHttpRequest();;
   
   xmlhttp.onreadystatechange=function() {
     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
       document.getElementById("komen").innerHTML=xmlhttp.responseText;
     }
   }
-  xmlhttp.open("GET","GetKomen?id="+idpost);
+  xmlhttp.open("GET","GetKomen.jsp?id="+idpost);
   xmlhttp.send();
 }
 
