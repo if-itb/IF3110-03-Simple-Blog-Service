@@ -4,53 +4,66 @@
     Author     : Asus
 --%>
 
+<%@page import="java.text.ParseException"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*,java.lang.Math "%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 
-<%
-                String id = request.getParameter("id");
-                Statement statement = null;
-                String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-                String DB_URL = "jdbc:mysql://localhost/tucildb_13511097";
-                String USER = "root";
-                String PASS = "";
-                String output = "";
-                Connection conn = null;
-                ResultSet rs;
-                
-                conn = DriverManager.getConnection(DB_URL,USER, PASS);
-                statement = conn.createStatement();
-                
-                try {
-                String sql = "SELECT * FROM `tucildb_13511097`.`post-komen` WHERE `id_post`="+id+" ORDER BY `tanggal` DESC";
-                rs = statement.executeQuery(sql);
-                 
-                    while(rs.next()){
-                        String name = rs.getString("nama");
-                        String tanggal = rs.getString("tanggal");
-                        String isi = rs.getString("isi");
-                        System.out.println("<li class='art-list-item'>");
-                        System.out.println("<div class='art-list-item-title-and-time'>");
-                        System.out.println("<h2 class='art-list-title'><a href='post.php?id="+id+"'>"+name+"</a></h2>");
-                        System.out.println("<div class='art-list-time'>"+tanggal+" </div>");
-                        System.out.println("</div>");
-                        System.out.println("<p>"+isi+"</p>");
-                        System.out.println("</li>");
-                        output += "<li class='art-list-item'>"
-                                + "<div class='art-list-item-title-and-time'>"
-                                + "<h2 class='art-list-title'><a href='post.php?id="+id+"'>"+name+"</a></h2>"
-                                + "<div class='art-list-time'>"+tanggal+" </div>"
-                                + "</div>"
-                                + "<p>"+isi+"</p>"
-                                + "</li>";
-                    }
-		
-		
-                } catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+<%!
+    public String DeltaTimeConvert(String t2){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d1 = new Date();
+        Date d2 = new Date();
+        try{
+            d2 = format.parse(t2);
+        }catch (ParseException e){
+            
+        }
+        
+        
+        long t = d1.getTime() - d2.getTime();
+        
+        if(t<60){
+			return (t+" detik yang lalu");
+		}else if(t<3600){
+			long newt = Math.round(t/60);
+			return  (newt+" menit yang lalu");
+		}else if(t<=86400){
+			long newt = Math.round(t/3600);
+			return (newt+" jam yang lalu");
+		}else{
+			return t2;
 		}
- %>
+    }
+%>
+
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+     url="jdbc:mysql://localhost/tucildb_13511097"
+     user="root"  password=""/>
+
+<sql:query dataSource="${snapshot}" var="result">
+SELECT * FROM `tucildb_13511097`.`post-komen` WHERE `id_post`=<%= request.getParameter("id")%> ORDER BY `tanggal` DESC;
+</sql:query> 
+
+
+<body>
+<ul class="art-list-body">
+<c:forEach var="row" items="${result.rows}">
+    <%! String d; %>
+    <%  d = pageContext.getAttribute("row.tanggal").toString(); %>
+    <%= d %>
+    
+    <li class="art-list-item">
+                    <div class="art-list-item-title-and-time">
+                        <h2 class="art-list-title"><a href="post.jsp"><c:out value='${row.nama}'/></a></h2>
+                        <div class="art-list-time"><c:out value='${row.tanggal}'/></div>
+                    </div>
+                    <p><c:out value='${row.isi}'/></p>
+    </li>
+</c:forEach>
+   
+</body>
+

@@ -72,8 +72,8 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
         <div class="art-body-inner">
             <hr class="featured-article" />
             <p><c:out value="${row.post}"/></p>
-            <hr />    
-    </c:forEach>>
+            <hr/>    
+    </c:forEach>
     
             
             <h2>Komentar</h2>
@@ -152,16 +152,16 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
       t.src='//www.google-analytics.com/analytics.js';
       z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
       ga('create',ga_ua);ga('send','pageview');
-      
+
 function showKomen(idpost) {
-  var xmlhttp=new XMLHttpRequest();
+  var xmlhttp= new XMLHttpRequest();;
   
   xmlhttp.onreadystatechange=function() {
     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
       document.getElementById("komen").innerHTML=xmlhttp.responseText;
     }
   }
-  xmlhttp.open("GET","GetKomen?id="+idpost);
+  xmlhttp.open("GET","GetKomen.jsp?id="+idpost);
   xmlhttp.send();
 }
 
