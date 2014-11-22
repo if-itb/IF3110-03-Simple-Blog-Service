@@ -1,4 +1,5 @@
 
+# NetBeans specific #
 nbproject/private/
 
 build/
@@ -25,8 +26,3 @@ nb-configuration.xml
 *.war
 
 *.ear
-
-
-
-
-

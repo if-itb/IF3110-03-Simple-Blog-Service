@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+
+<%@ page import="javax.servlet.http.*,javax.servlet.*,myServlet.TimeConverter;" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 
@@ -56,16 +58,26 @@
 <sql:query dataSource="${snapshot}" var="result">
 SELECT * FROM `tucilDB_13511097`.`listpost` ORDER BY `date` DESC;
 </sql:query> 
+
+
+<% TimeConverter tc = new TimeConverter(); %>
+
     
 <div id="home">
     <div class="posts">
         <nav class="art-list">
           <ul class="art-list-body">
               <c:forEach var="row" items="${result.rows}">
+
+                  <c:set var="myTest" value="${row.date}"/>
+                    <%! String d; %>
+                    <%  d =  pageContext.getAttribute("myTest").toString(); %>
+                  
                 <li class="art-list-item">
                 <div class="art-list-item-title-and-time">
                     <h2 class="art-list-title"><a href="post.jsp?id_post=<c:out value='${row.id}'/>"><c:out value="${row.title}"/></a></h2>
-                    <div class="art-list-time"><c:out value="${row.date}"/></div>
+                    <div class="art-list-time"><%= tc.ConvertDate(d) %></div>
+
                 </div>
                 <p><c:out value="${row.post}"/></p>
                 <p>
@@ -73,28 +85,8 @@ SELECT * FROM `tucilDB_13511097`.`listpost` ORDER BY `date` DESC;
                 </p>
                 </li>
              </c:forEach>
-            <li class="art-list-item">
-                <div class="art-list-item-title-and-time">
-                    <h2 class="art-list-title"><a href="post.jsp">Apa itu Simple Blog?</a></h2>
-                    <div class="art-list-time">15 Juli 2014</div>
-                    <div class="art-list-time"><span style="color:#F40034;">&#10029;</span> Featured</div>
-                </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis repudiandae quae natus quos alias eos repellendus a obcaecati cupiditate similique quibusdam, atque omnis illum, minus ex dolorem facilis tempora deserunt! &hellip;</p>
-                <p>
-                  <a href="#">Edit</a> | <a href="#">Hapus</a>
-                </p>
-            </li>
 
-            <li class="art-list-item">
-                <div class="art-list-item-title-and-time">
-                    <h2 class="art-list-title"><a href="post.html">Siapa dibalik Simple Blog?</a></h2>
-                    <div class="art-list-time">11 Juli 2014</div>
-                </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis repudiandae quae natus quos alias eos repellendus a obcaecati cupiditate similique quibusdam, atque omnis illum, minus ex dolorem facilis tempora deserunt! &hellip;</p>
-                <p>
-                  <a href="#">Edit</a> | <a href="#">Hapus</a>
-                </p>
-            </li>
+            
           </ul>
         </nav>
     </div>
