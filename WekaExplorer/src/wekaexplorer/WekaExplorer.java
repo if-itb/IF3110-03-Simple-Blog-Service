@@ -156,10 +156,7 @@ public class WekaExplorer {
         wt.setDelimiters(delimiters);
         filter.setTokenizer(wt);
         
-        try{
-            filter.setStopwords(new File("a.txt"));
-        }catch(Exception e){e.printStackTrace();
-        }
+        filter.setStopwords(new File("stopwords.txt"));
         
         System.out.println(filter.getStopwords().toString());
         filter.setWordsToKeep(100000);
