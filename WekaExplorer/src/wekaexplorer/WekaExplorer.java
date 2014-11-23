@@ -155,10 +155,7 @@ public class WekaExplorer {
         String delimiters = " \r\n\t.,;:\"\'()?!-¿¡+*&#$%\\/=<>[]`@~0123456789";
         wt.setDelimiters(delimiters);
         filter.setTokenizer(wt);
-        
         filter.setStopwords(new File("stopwords.txt"));
-        
-        System.out.println(filter.getStopwords().toString());
         filter.setWordsToKeep(100000);
 
         filter.setInputFormat(W.getdata());
