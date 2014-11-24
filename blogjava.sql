@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.1.6
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2014 at 07:29 AM
--- Server version: 5.5.32
--- PHP Version: 5.4.16
+-- Generation Time: Nov 24, 2014 at 07:31 AM
+-- Server version: 5.6.16
+-- PHP Version: 5.5.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `blogjava`
 --
-CREATE DATABASE IF NOT EXISTS `blogjava` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `blogjava`;
 
 -- --------------------------------------------------------
 
@@ -33,6 +31,8 @@ CREATE TABLE IF NOT EXISTS `blogpost` (
   `posttitle` varchar(100) NOT NULL,
   `postcontent` text NOT NULL,
   `postdate` date NOT NULL,
+  `published` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
