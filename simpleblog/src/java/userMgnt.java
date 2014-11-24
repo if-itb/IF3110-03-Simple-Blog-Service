@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.io.IOException;
-import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.facelets.FaceletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  *
@@ -25,35 +27,64 @@ public class userMgnt{
     private String Username;
     private String Password;
     private String Messege;
+    private String Role;
+    private String Email;
+    private Cookie cookie;
     //nanti ditambah-tambah informasi user yang mau ditampilin
     public userMgnt() {
         NameUser="guest";
         Username="guest";
         Password="pass";
         Messege="tidak ada";
+        cookie= new Cookie("Username",null);
+        cookie.setMaxAge(120);
     }
-    public void login() throws IOException{
-        String user="nisa"; //from database
-        String pass="nisadian"; //from database
-        if(Username.equals(user))/*Username ada*/{
-            if(pass.equals(Password))/*Password bener*/{
-                NameUser=Username;//ambil nama dari databse
+    public void login(){
+        String user="nisa";
+        String pass="nisadian";
+        if(user.equals(Username)){
+            if(pass.equals(Password)){
+                NameUser="Nisa";
+                Role="Admin";//dari data base
+                Email="nisa@simple-blog.com";//data base
+                cookie.setValue(Username);
+                FacesContext facesContex = FacesContext.getCurrentInstance();
+                HttpServletResponse response = (HttpServletResponse) facesContex.getExternalContext().getResponse();
+                response.addCookie(cookie);
             }
             else{
-                Messege="Password salah.";
-                NameUser="guest";
-                Username="guest";
-                Password="pass";
+                Messege="Password salah";
             }
-        }else{
-            Messege="Username tidak ditemukan.";
-            NameUser="guest";
-            Username="guest";
-            Password="pass";
+        }
+        else{
+            Messege="Username not found";
         }
     }
-    public String getMessege(){
-        return Messege;
+    public void Logout(){
+        reset();
+        Messege="tidak ada";
+        cookie.setValue(null);
+        cookie.setMaxAge(0);
+        FacesContext facesContex = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) facesContex.getExternalContext().getResponse();
+        response.addCookie(cookie);
+    }
+    public void reset(){
+        NameUser="guest";
+        Username="guest";
+        Password="pass";
+    }
+    
+    //validator
+    public boolean isLogin(){
+        return Username!="guest" && cookie.getValue()!=null;
+    }
+    public boolean activeMessege(){
+        return !Messege.equals("tidak ada") && !isLogin();
+    }
+    //getter
+    public String getName(){
+        return NameUser;
     }
     public String getUsername(){
         return Username;
@@ -61,29 +92,38 @@ public class userMgnt{
     public String getPassword(){
         return Password;
     }
-    public String getName(){
-        return NameUser;
+    public String getMessege(){
+        return Messege;
     }
-    public void setUsername(String s){
-        Username=s;
+    //setter
+    public void setName(String S){
+        NameUser=S;
     }
-    public void setPassword(String s){
-        Password=s;
+    public void setUsername(String S){
+        Username=S;
     }
-    public void setName(String s){
-        NameUser=s;
+    public void setPassword(String S){
+        Password=S;
     }
-    public boolean isLogin(){
-        return !NameUser.equals("guest");
+    public void setMessege(String S){
+        Messege=S;
     }
-    public boolean activeMessege(){
-        return !Messege.equals("tidak ada") && !isLogin();
-    }
-    public void logout(){
-        NameUser="guest";
-        Username="guest";
-        Password="pass";
-        Messege="tidak ada";
+    public Cookie getCookie() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+
+        HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+        Cookie cook = null;
+
+        Cookie[] userCookies = request.getCookies();
+        if (userCookies != null && userCookies.length > 0 ) {
+            for (int i = 0; i < userCookies.length; i++) {
+                if (userCookies[i].getName().equals("Username")) {
+                    cook = userCookies[i];
+                    return cook;
+                }
+            }
+        }
+        return null;
     }
 }
     
