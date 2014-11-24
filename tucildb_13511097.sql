@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2014 at 06:54 PM
+-- Generation Time: Nov 24, 2014 at 04:52 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -79,22 +79,21 @@ INSERT INTO `post-komen` (`myID`, `id_post`, `nama`, `email`, `tanggal`, `isi`) 
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `role` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `role`) VALUES
-(0, 'geraldi', '123', 'owner'),
-(1, 'fawwaz', '123', 'admin'),
-(2, 'Koji', '123', 'Editor');
+(1, 'geraldi', '123', 'owner'),
+(2, 'fawwaz', '123', 'admin'),
+(3, 'koji', '123', 'editor');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
