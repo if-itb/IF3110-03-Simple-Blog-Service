@@ -87,17 +87,17 @@
             <div id="contact-area">
                 <form method="post" action="AddPost.jsp">
                     <label for="Judul">Judul:</label>
-                    <input type="text" name="Judul" id="Judul" value="${judul}">
+                    <input type="text" name="Judul" id="Judul" value="${judul}" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">
 
                     <label for="Tanggal">Tanggal:</label>
-                    <input type="text" name="Tanggal" id="Tanggal" value="${tanggal}"onkeyup ="ValidasiTanggal()" onmousedown ="ValidasiTanggal()">
+                    <input type="text" name="Tanggal" id="Tanggal" value="${tanggal}"onkeyup ="ValidasiTanggal()" onmousedown ="ValidasiTanggal()" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">
                     <div id="err_pass" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">format=yyyy-mm-dd</div><br>
                     
                     <label for="Konten">Konten:</label><br>
-                    <textarea name="Konten" rows="20" cols="20" id="Konten">${post}</textarea>
+                    <textarea name="Konten" rows="20" cols="20" id="Konten" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">${post}</textarea>
                     <input type="hidden" name="mode" value="${param.mode}">
                     <input type="hidden" name="id_post" value="${param.id_post}">
-                    <input type="submit" name="submit" value="Simpan" class="submit-button">
+                    <input type="submit" name="submit" value="Simpan" class="submit-button" >
                 </form>
             </div>
         </div>
@@ -163,8 +163,11 @@ function ValidasiAll(){
 	
 	if (judul!=null && konten!=null && err_pass.innerHTML == "OK"){
 		document.getElementById("submit").disabled = false;
+               
 	}else{
 		document.getElementById("submit").disabled = true;
+                
+                
 	}
     }
     

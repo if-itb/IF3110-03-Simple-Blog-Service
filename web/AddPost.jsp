@@ -13,6 +13,14 @@
 <sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
      url="jdbc:mysql://localhost/tucildb_13511097"
      user="root"  password=""/>
+
+<% 
+   session.setAttribute( "id_user", "1" );
+%>
+
+    <%! String id_user; %>
+    <%  id_user =  session.getAttribute("id_user").toString(); %>
+    
 <c:choose>
        <c:when test="${param.mode=='0'}"> <!--  insert new post-->
             <%! int new_id = 0; 
@@ -49,11 +57,13 @@
             }%>   
           
          <sql:update dataSource="${snapshot}" var="result">
-            INSERT INTO `tucildb_13511097`.`listpost` (`id`,`title`,`date`,`post`) 
+            INSERT INTO `tucildb_13511097`.`listpost` (`id`,`id_user`,`title`,`date`,`post`,`published`) 
 					VALUES ( <%= new_id %>,
+                                                        <%= id_user %>,
 							'<%= request.getParameter("Judul")%>',
 							'<%= request.getParameter("Tanggal")%>',
-							'<%= request.getParameter("Konten")%>');
+							'<%= request.getParameter("Konten")%>',
+                                                        'f');
          </sql:update>
       </c:when>
 

@@ -46,29 +46,51 @@
      url="jdbc:mysql://localhost/tucildb_13511097"
      user="root"  password=""/>
     
+    <%! String role;
+        String id_user;
+    %>
+<% TimeConverter tc = new TimeConverter(); 
 
+   session.setAttribute( "role", "editor" );
+   session.setAttribute( "id_user", "0" );
+   role = session.getAttribute("role").toString();
+    id_user = session.getAttribute("id_user").toString();
+%>
 
 <nav class="nav">
     <a style="border:none;" id="logo" href="index.jsp"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
+        <li>haloooo,  <%= role %></li> <br>
+        <% if (role=="editor" || role=="admin"){%>
+        <li><a href="unpublished.jsp">unpublished post    </a></li>
+        <%} %>
+        <% if (role=="owner" || role=="admin"){%>
         <li><a href="new_post.jsp?mode=0">+ Tambah Post</a></li>
+        <%} %>   
+        <% if (role=="guest"){%>
+        <li><a href="login.jsp">Login</a></li>
+        <%} %> 
     </ul>
 </nav>
 
 <sql:query dataSource="${snapshot}" var="result">
 SELECT * FROM `tucilDB_13511097`.`listpost` ORDER BY `date` DESC;
 </sql:query> 
-
-
-<% TimeConverter tc = new TimeConverter(); %>
-
     
 <div id="home">
     <div class="posts">
         <nav class="art-list">
           <ul class="art-list-body">
               <c:forEach var="row" items="${result.rows}">
+                
+                <c:set var="visible" value="${row.published}"/>
+                  <%! String vi; %>
+                  <%  vi =  pageContext.getAttribute("visible").toString(); %>
 
+                  <%if (vi.equals("t")) {%>
+                   <c:set var="myId" value="${row.id}"/>
+                   <%! String mi; %>
+                    <%  mi =  pageContext.getAttribute("myId").toString(); %>
                   <c:set var="myTest" value="${row.date}"/>
                     <%! String d; %>
                     <%  d =  pageContext.getAttribute("myTest").toString(); %>
@@ -81,11 +103,19 @@ SELECT * FROM `tucilDB_13511097`.`listpost` ORDER BY `date` DESC;
                 </div>
                 <p><c:out value="${row.post}"/></p>
                 <p>
-                  <a href="new_post.jsp?mode=1&id_post=<c:out value='${row.id}'/>">Edit</a> | <a href="javascript:ConfirmDelete(<c:out value='${row.id}'/>)">Hapus</a>
+                    <% if(role== "admin"){%>
+                        <a href="new_post.jsp?mode=1&id_post=<c:out value='${row.id}'/>">Edit</a> | <a href="javascript:ConfirmDelete(<c:out value='${row.id}'/>)">Hapus</a>
+                    <%}else if(role== "owner") {%>
+                         <% if (mi.equals(id_user)) {%>
+                            <a href="new_post.jsp?mode=1&id_post=<c:out value='${row.id}'/>">Edit</a> | <a href="javascript:ConfirmDelete(<c:out value='${row.id}'/>)">Hapus</a>
+                         <%} %>
+                    <%} %>
+                  
                 </p>
                 </li>
+                <% } //end of if vi %>
              </c:forEach>
-
+             
             
           </ul>
         </nav>
