@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.gilang.beans;
 
 import com.gilang.sql.DBAdapter;
 import javax.faces.bean.ManagedBean;
-
-
-
+import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name="hello", eager=true)
+@SessionScoped
 public class HelloWorld {
 	int waw;
 	
@@ -25,5 +18,9 @@ public class HelloWorld {
 	
 	public int getWaw(){
 		return waw;
+	}
+	
+	public void print(){
+		System.out.println("sdsahdsad");
 	}
 }
