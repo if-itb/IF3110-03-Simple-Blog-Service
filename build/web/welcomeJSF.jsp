@@ -16,7 +16,7 @@
             <title>JSP Page</title>
         </head>
         <body>
-            <h1><h:outputText value="JavaServer Faces"/></h1>
+            <h1><h:outputText value="JavaServer Faces#{hello.waw}"/></h1>
         </body>
     </html>
 </f:view>
