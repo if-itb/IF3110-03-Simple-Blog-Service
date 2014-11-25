@@ -51,17 +51,18 @@
 					<h2>Tambah Post</h2>
 
 					<div id="contact-area">
-						<form method="post" action="insert.jsp">
+						<form method="post" name="form1" action="insert.jsp">
 							<label for="Judul">Judul:</label>
 							<input type="text" name="title" id="Judul"/>
-
+                                                        <div id="Tgl">
 							<label for="Tanggal">Tanggal:</label>
-							<input type="text" name="date" id="Tanggal"/>
-
+							<input type="text" name="date" id="Tanggal" onchange="return cektanggal()" placeholder="YYYY-MM-DD" maxlength="10"/>
+                                                        <p id="note">Tanggal Salah!</p>
+                                                        </div>
 							<label for="Konten">Konten:</label><br/>
 							<textarea name="content" rows="20" cols="20" id="Konten"></textarea>
 
-							<input type="submit" name="submit" value="Simpan" class="submit-button"/>
+							<input type="submit" name="submit" value="Simpan" onclick="return cektanggal()" class="submit-button"/>
 						</form>
 					</div>
 				</div>
@@ -89,6 +90,47 @@
 		</footer>
 
 		</div>
+<script type="text/javascript">
+
+function cektanggal()
+{
+	var tanggal = document.forms["form1"]["date"].value;
+	var n = tanggal.search("[0-9]{4}-[0-9]{2}-[0-9]{2}");
+	if (n === 0){
+		var Dat = new Date(tanggal);
+		var Now = new Date();
+		if (Dat>Now){
+			document.getElementById("Tanggal").style.background = "lime";
+            document.getElementById("Tanggal").style.color = "white";
+            document.getElementById("note").style.visibility = "hidden";
+            document.getElementById("note").style.height = 0;
+		}
+		else if((Dat.getDate() === Now.getDate()) && (Dat.getMonth() === Now.getMonth()) && (Dat.getFullYear()==Now.getFullYear())){
+			document.getElementById("Tanggal").style.background = "lime";
+            document.getElementById("Tanggal").style.color = "white";
+            document.getElementById("note").style.visibility = "hidden";
+            document.getElementById("note").style.height = 0;
+		}
+		else{
+			document.getElementById("Tanggal").style.background = "red";
+            document.getElementById("Tanggal").style.color = "white";
+            document.getElementById("Tanggal").focus();
+            document.getElementById("note").style.visibility = "visible";
+            document.getElementById("note").style.height = 31;
+            return false;
+		}
+	}
+	else{
+		document.getElementById("Tanggal").style.background = "red";
+        document.getElementById("Tanggal").style.color = "white";
+		document.getElementById("Tanggal").focus();
+        document.getElementById("note").style.visibility = "visible";
+        document.getElementById("note").style.height = 31;
+        return false;
+        
+	}
+}
+</script>                        
 
 </body>
     </html>
