@@ -59,6 +59,7 @@
 
 							<label for="role">Role:</label>
 							<input type="text" name="role" id="role" value="<%= userData.getRole() %>"/>
+
                                                         
                                                         <label for="role">Email:</label>
 							<input type="text" name="email" id="email" value="<%= userData.getEmail() %>"/>
@@ -95,3 +96,4 @@
 </body>
     </html>
 </f:view>
+

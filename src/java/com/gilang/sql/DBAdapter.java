@@ -257,6 +257,23 @@ public class DBAdapter {
 		}
 	}
 	
+	public void deleteUser(String userID){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			prepStatement = connection.prepareStatement("DELETE FROM user WHERE user_id='" + userID + "'");
+			prepStatement.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				prepStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void publishPost(String postId){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
