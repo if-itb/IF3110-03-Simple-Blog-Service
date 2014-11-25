@@ -80,7 +80,7 @@ public class userMgnt{
     
     //validator
     public boolean isLogin(){
-        return Username!="guest" && cookie.getValue()!=null;
+        return cookie.getValue()!=null;
     }
     public boolean activeMessege(){
         return !Messege.equals("tidak ada") && !isLogin();
