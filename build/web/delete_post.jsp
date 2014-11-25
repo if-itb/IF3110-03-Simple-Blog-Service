@@ -19,7 +19,10 @@
             <title>JSP Page</title>
         </head>
         <body>
-            
+            <%	sql.deletePost(request.getParameter("post_id"));
+				response.setStatus(response.SC_MOVED_TEMPORARILY);
+				response.setHeader("Location", "index.jsp");
+			%>
         </body>
     </html>
 </f:view>

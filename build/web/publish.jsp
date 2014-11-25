@@ -1,11 +1,13 @@
 <%-- 
-    Document   : delete_post
-    Created on : Nov 25, 2014, 1:56:52 PM
+    Document   : publish
+    Created on : Nov 25, 2014, 5:56:29 PM
     Author     : Gilang
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="sql" scope="session" class="com.gilang.sql.DBAdapter" />
+<jsp:useBean id="sql" class="com.gilang.sql.DBAdapter" scope="session"/>
+<jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
+
 <%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
 <%@taglib prefix="h" uri="http://java.sun.com/jsf/html"%>
 
@@ -19,9 +21,9 @@
             <title>JSP Page</title>
         </head>
         <body>
-            <%	sql.deletePost(request.getParameter("post_id"));
+            <%	sql.publishPost(request.getParameter("post_id"));
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "index.jsp");
+				response.setHeader("Location", "unpublished.jsp");
 			%>
         </body>
     </html>

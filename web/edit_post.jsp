@@ -39,7 +39,9 @@
 		<nav class="nav">
 			<a style="border:none;" id="logo" href="home.jsp"><h1>Simple<span>-</span>Blog</h1></a>
 			<ul class="nav-primary">
-				<li><a href="new_post.jsp">+ Tambah Post</a></li>
+				<% if(user.getRole() == 1 || user.getRole() == 3){ %>
+					<li><a href="new_post.jsp">+ Tambah Post</a></li>
+				<% } %>
 				<li><a href="logout.jsp">Logout</a></li>
 			</ul>
 		</nav>

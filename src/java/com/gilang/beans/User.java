@@ -25,23 +25,32 @@ public class User {
 	HttpServletRequest request;
 	HttpServletResponse response;
 	String username;
+	int role;
 	
 	public User(){
 		faces = FacesContext.getCurrentInstance();
 		request = (HttpServletRequest) faces.getExternalContext().getRequest();
 		Cookie[] cookies = request.getCookies();
-		for(Cookie c : cookies){
-			if(c.getName().equals("wbduser"))
-				username = c.getValue();
+		if(cookies != null){
+			for(Cookie c : cookies){
+				if(c.getName().equals("wbduser")){
+					username = c.getValue();
+					DBAdapter sql = new DBAdapter();
+					role = sql.getRole(username);
+				}
+			}
 		}
-		System.out.println("created");
 	}
 	
 	public void login(String username, String password){
 		faces = FacesContext.getCurrentInstance();
 		response = (HttpServletResponse) faces.getExternalContext().getResponse();
 		DBAdapter sql = new DBAdapter();
-		if(sql.checkCredential(username, password)){
+		if(!username.equals("guest"))
+			role = sql.checkCredential(username, password);
+		else
+			role = 4;
+		if(role != -1){
 			Cookie cookie = new Cookie("wbduser", username);
 			cookie.setMaxAge(30*60);
 			response.addCookie(cookie);
@@ -54,16 +63,23 @@ public class User {
 		request = (HttpServletRequest) faces.getExternalContext().getRequest();
 		response = (HttpServletResponse) faces.getExternalContext().getResponse();
 		Cookie[] cookies = request.getCookies();
-		for(Cookie c : cookies){
-			if(c.getName().equals("wbduser")){
-				c.setMaxAge(0);
-				response.addCookie(c);
+		if(cookies != null){
+			for(Cookie c : cookies){
+				if(c.getName().equals("wbduser")){
+					c.setMaxAge(0);
+					response.addCookie(c);
+				}
 			}
 		}
 		username = null;
+		role = -1;
 	}
 	
 	public String getUsername(){
 		return username;
+	}
+	
+	public int getRole(){
+		return role;
 	}
 }

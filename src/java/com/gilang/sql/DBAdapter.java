@@ -74,12 +74,15 @@ public class DBAdapter {
 		return null;
 	}
 	
-	public List<Post> getPosts(){
+	public List<Post> getPosts(boolean unPublished){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
 			List<Post> postList = new ArrayList<>();
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM post");
+			if(unPublished)
+				resultSet = statement.executeQuery("SELECT * FROM post WHERE published=0");
+			else
+				resultSet = statement.executeQuery("SELECT * FROM post WHERE published=1");
 			while(resultSet.next()){
 				int post_id = resultSet.getInt("post_id");
 				String user_id = resultSet.getString("user_id");
@@ -152,7 +155,7 @@ public class DBAdapter {
 	public void deletePost(String postId){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
-			prepStatement = connection.prepareStatement("DELETE post WHERE post_id=" + postId);
+			prepStatement = connection.prepareStatement("DELETE FROM post WHERE post_id=" + postId);
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -166,16 +169,46 @@ public class DBAdapter {
 		}
 	}
 	
-	public boolean checkCredential(String username, String password){
+	public void publishPost(String postId){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			prepStatement = connection.prepareStatement("UPDATE post SET published=1 WHERE post_id=" + postId);
+			prepStatement.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				prepStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public int checkCredential(String username, String password){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * FROM user WHERE user_id='" + username + "' AND password='" + password + "'");
 			if(resultSet.next())
-				return true;
+				return resultSet.getInt("role");
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
-		return false;
+		return -1;
+	}
+	
+	public int getRole(String username){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM user WHERE user_id='" + username + "'");
+			if(resultSet.next())
+				return resultSet.getInt("role");
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return -1;
 	}
 }

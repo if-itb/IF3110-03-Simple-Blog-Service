@@ -26,6 +26,11 @@
 				<input type="password" name="password">
 				<input type="submit">
 			</form>
+			<form action="login.jsp">
+				<input type="hidden" name="user_id" value="guest">
+				<input type="hidden" name="password" value="">
+				<input type="submit" value="login as guest">
+			</form>
 			<%	}
 				else{
 					response.setStatus(response.SC_MOVED_TEMPORARILY);

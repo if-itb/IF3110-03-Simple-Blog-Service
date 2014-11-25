@@ -43,7 +43,9 @@
 	<nav class="nav">
 		<a style="border:none;" id="logo" href="home.jsp"><h1>Simple<span>-</span>Blog</h1></a>
 		<ul class="nav-primary">
-			<li><a href="new_post.jsp">+ Tambah Post</a></li>
+			<% if(user.getRole() == 1 || user.getRole() == 3){ %>
+				<li><a href="new_post.jsp">+ Tambah Post</a></li>
+			<% } %>
 			<li><a href="logout.jsp">Logout</a></li>
 		</ul>
 	</nav>
@@ -51,8 +53,11 @@
 	<div id="home">
 		<div class="posts">
 			<nav class="art-list">
+				<% if(user.getRole() == 2){ %>
+					<a href="unpublished.jsp" style="text-align: right; display: block; width: 100%;" class="art-list-title">See Unpublished</a>
+				<% } %>
 			  <ul class="art-list-body">
-			<%	for(Post p : sql.getPosts()){	  %>
+			<%	for(Post p : sql.getPosts(false)){	  %>
 				<li class="art-list-item">
 					<div class="art-list-item-title-and-time">
 						<h2 class="art-list-title"><a href="post.html"><%= p.getTitle() %></a></h2>
@@ -61,9 +66,12 @@
 					</div>
 					<p><%= p.getContent() %></p>
 					<p>
-					  <a href="edit_post.jsp?post_id=<%= p.getPost_id() %>">Edit</a>
+					
+					<% if(user.getRole() == 1 || user.getRole() == 2 || user.getRole() == 3){ %>
+					<a href="edit_post.jsp?post_id=<%= p.getPost_id() %>">Edit</a>
 					   | 
-					  <a href="delete_post.jsp?post_id<%= p.getPost_id() %>">Hapus</a>
+					<a href="delete_post.jsp?post_id=<%= p.getPost_id() %>">Hapus</a>
+					<% } %>
 					</p>
 				</li>
 			<%	} %>
