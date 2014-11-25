@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2014 at 07:45 AM
+-- Generation Time: Nov 25, 2014 at 03:34 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.9
 
@@ -53,7 +53,16 @@ CREATE TABLE IF NOT EXISTS `post` (
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`post_id`,`user_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `post`
+--
+
+INSERT INTO `post` (`post_id`, `user_id`, `title`, `content`, `date`, `published`, `deleted`) VALUES
+(3, 'gilang', 'wowowowowoowwo', 'lorem ipsum dolor sir amet', '2014-11-11 00:00:00', 1, 0),
+(4, 'gilang', 'new post', 'sadasdsafasfasfsa', '3915-01-12 00:00:00', 1, 0),
+(5, 'owner', 'edit wahahahaha', 'dfdsfsdvsdvfbreg', '5814-12-09 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -69,6 +78,17 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_id`, `password`, `role`) VALUES
+('admin', 'admin', 3),
+('editor', 'editor', 2),
+('gilang', 'wohoho', 1),
+('guest', '', 4),
+('owner', 'owner', 1);
+
+--
 -- Constraints for dumped tables
 --
 
@@ -76,8 +96,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Constraints for table `comment`
 --
 ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `post`
