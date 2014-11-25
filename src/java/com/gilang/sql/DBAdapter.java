@@ -6,6 +6,7 @@
 
 package com.gilang.sql;
 
+import com.gilang.beans.Komentar;
 import com.gilang.beans.Post;
 import com.gilang.beans.UserData;
 import java.sql.Connection;
@@ -72,7 +73,33 @@ public class DBAdapter {
 		}
 		return null;
 	}
-	
+
+        public List<Komentar> getKomentar(int post_id){
+                try{
+			connection = DriverManager.getConnection(url, user, pass);
+			List<Komentar> komentarList = new ArrayList<>();
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM comment WHERE post_id="+post_id);
+			while(resultSet.next()){
+                                int comment_id = Integer.parseInt(resultSet.getString("comment_id"));
+				String user_id = resultSet.getString("user_id");
+				String content = resultSet.getString("content");
+				String date = resultSet.getDate("date").toString();
+				komentarList.add(new Komentar(comment_id, post_id, user_id, content, date));
+			}
+			return komentarList;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return null;
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+        }
+        
 	public List<Post> getPosts(boolean unPublished){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
@@ -104,6 +131,28 @@ public class DBAdapter {
 			}
 		}
 	}
+        
+	public UserData getUser(String userID){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT user_id, role FROM user WHERE user_id='" + userID + "'");
+			if(resultSet.next()){
+				int role = resultSet.getInt("role");
+				UserData user = new UserData(userID, role);
+				return user;
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 	
 	public List<UserData> getUsersData(){
 		try{
@@ -128,7 +177,33 @@ public class DBAdapter {
 			}
 		}
 	}
-	
+
+        	
+        public void addKomentar(int post_id, String user_id, String content,
+					String date){
+                 try{
+			connection = DriverManager.getConnection(url, user, pass);
+			prepStatement = connection.prepareStatement("INSERT INTO comment VALUES (default, ?, ?, ?, ?)");
+			prepStatement.setString(1, user_id);
+			prepStatement.setString(2, String.valueOf(post_id));
+			prepStatement.setString(3, content);
+			prepStatement.setString(4, date);
+			String[] temp = date.split("-");
+			prepStatement.setDate(4, new Date(Integer.valueOf(temp[0]), 
+									Integer.valueOf(temp[1]), Integer.valueOf(temp[2])));
+			prepStatement.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				prepStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}            
+        }
+        
 	public void addPost(String user_id, String title, String date, String content){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);

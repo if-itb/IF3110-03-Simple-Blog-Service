@@ -66,7 +66,7 @@
 			<%	for(Post p : sql.getPosts(false)){	  %>
 				<li class="art-list-item">
 					<div class="art-list-item-title-and-time">
-						<h2 class="art-list-title"><a href="post.html"><%= p.getTitle() %></a></h2>
+						<h2 class="art-list-title"><a href="post.jsp?post_id=<%= p.getPost_id() %>"><%= p.getTitle() %></a></h2>
 						<div class="art-list-time"><%= p.getDate() %></div>
 						<div class="art-list-time"><span style="color:#F40034;">&#10029;</span> Featured</div>
 					</div>
