@@ -52,7 +52,9 @@
 		<div class="posts">
 			<nav class="art-list">
 			  <ul class="art-list-body">
-			<%	for(UserData u : sql.getUsersData()){	  %>
+			<%	for(UserData u : sql.getUsersData()){
+					if(!u.getUser_id().equals("guest")){
+			%>
 				<li class="art-list-item">
 					<div class="art-list-item-title-and-time">
 						<h2 class="art-list-title"><%= u.getUser_id() %></h2>
@@ -73,7 +75,9 @@
 					<a href="delete_user.jsp?user_id=<%= u.getUser_id() %>">Hapus</a>
 					</p>
 				</li>
-			<%	} %>
+			<%		} 
+				}
+			%>
 				  
 			  </ul>
 			</nav>

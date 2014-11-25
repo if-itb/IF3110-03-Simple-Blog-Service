@@ -36,7 +36,7 @@ public class DBAdapter {
 	private String driver = "com.mysql.jdbc.Driver";
 	private String url = "jdbc:mysql://localhost:3306/tubes_wbd";
 	private String user = "root";
-	private String pass = "";
+	private String pass = "Brown3y3$";
 	
 	public DBAdapter(){
 		try{
@@ -154,16 +154,42 @@ public class DBAdapter {
 		return null;
 	}
 	
+        public UserData getUser(String userID){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT user_id, role FROM user WHERE user_id='" + userID + "'");
+			int role;
+                        String emailc;
+                        if(resultSet.next()){
+				role = resultSet.getInt("role");
+                                emailc = resultSet.getString("email");
+				UserData userc = new UserData(userID, role, emailc);
+				return userc;
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+        
 	public List<UserData> getUsersData(){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
 			List<UserData> userList = new ArrayList<>();
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT user_id, role FROM user");
+			resultSet = statement.executeQuery("SELECT user_id, role, email FROM user");
 			while(resultSet.next()){
 				String user_id = resultSet.getString("user_id");
 				int role = resultSet.getInt("role");
-				userList.add(new UserData(user_id, role));
+                                String email = resultSet.getString("email");
+				userList.add(new UserData(user_id, role, email));
 			}
 			return userList;
 		}catch(SQLException e){
@@ -227,6 +253,27 @@ public class DBAdapter {
 		}
 	}
 	
+        public void addUser(String user_id, String password, int role, String email){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			prepStatement = connection.prepareStatement("INSERT INTO user VALUES (?, ?, ?, ?)");
+			prepStatement.setString(1, user_id);
+			prepStatement.setString(2, password);
+			prepStatement.setInt(3, role);
+                        prepStatement.setString(4, email);
+			prepStatement.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				prepStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+        
 	public void updatePost(String post_id, String user_id, String title, String date, String content){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
@@ -235,8 +282,9 @@ public class DBAdapter {
 			prepStatement.setString(2, title);
 			prepStatement.setString(3, content);
 			String[] temp = date.split("-");
-			prepStatement.setDate(4, new Date(Integer.valueOf(temp[0]), 
-									Integer.valueOf(temp[1]), Integer.valueOf(temp[2])));
+                        int year = Integer.valueOf(temp[0]) - 1900;
+                        int month = Integer.valueOf(temp[1]) - 1;
+			prepStatement.setDate(4, new Date(year, month, Integer.valueOf(temp[2])));
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -250,10 +298,45 @@ public class DBAdapter {
 		}
 	}
 	
+        public void updateUser(String userID, int role, String email){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			prepStatement = connection.prepareStatement("UPDATE user SET role=? WHERE user_id='" + userID + "'");
+			prepStatement.setInt(1, role);
+			prepStatement.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				prepStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+        
 	public void deletePost(String postId){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
 			prepStatement = connection.prepareStatement("DELETE FROM post WHERE post_id=" + postId);
+			prepStatement.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				prepStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void deleteUser(String userID){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			prepStatement = connection.prepareStatement("DELETE FROM user WHERE user_id='" + userID + "'");
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
