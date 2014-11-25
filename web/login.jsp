@@ -1,6 +1,7 @@
 <%-- 
     Document   : login
-    Created on : Nov 24, 2014, 12:41:46 AM
+
+    Created on : 21-Nov-2014, 14:21:57
     Author     : Asus
 --%>
 
@@ -8,10 +9,56 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="Deskripsi Blog">
+<meta name="author" content="Judul Blog">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="omfgitsasalmon">
+<meta name="twitter:title" content="Simple Blog">
+<meta name="twitter:description" content="Deskripsi Blog">
+<meta name="twitter:creator" content="Simple Blog">
+<meta name="twitter:image:src" content="{{! TODO: ADD GRAVATAR URL HERE }}">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Simple Blog">
+<meta property="og:description" content="Deskripsi Blog">
+<meta property="og:image" content="{{! TODO: ADD GRAVATAR URL HERE }}">
+<meta property="og:site_name" content="Simple Blog">
+
+<link rel="stylesheet" type="text/css" href="assets/css/screen.css" />
+<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+        <title>Login Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+
+<nav class="nav">
+    <a style="border:none;" id="logo" href="index.jsp"><h1>Simple<span>-</span>Blog</h1></a>
+    <ul class="nav-primary">
+        <li><a href="index.jsp">Home</a></li>
+    </ul>
+</nav>
+        
+<article class="art simple post">
+    
+    
+    <h2 class="art-title" style="margin-bottom:40px">-</h2>
+         <div class="art-body">
+        <div class="art-body-inner">
+      <h2>Login Page!</h2>
+        <form action="process_login.jsp" method="POST">    
+         <div id="contact-area">
+        <p>Username : <input type="text" name="username"> </p>
+        <p>Password : <input type="text" name="password"> </p>
+        <p><input type="submit" value="Login" > </p>
+         </div>
+            
+        </div>
+         </div>
+    
+</article>
     </body>
 </html>

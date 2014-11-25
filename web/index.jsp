@@ -48,19 +48,53 @@
     
     <%! String role;
         String id_user;
+        String username;
     %>
 <% TimeConverter tc = new TimeConverter(); 
+    
+    
+    role = "admin";
+        username = "guest";
+        id_user = "-999";
+        
+   /*Cookie cookie = null;
+    Cookie[] cookies = null;
+    
+    cookies = request.getCookies();
 
-   session.setAttribute( "role", "editor" );
-   session.setAttribute( "id_user", "0" );
-   role = session.getAttribute("role").toString();
-    id_user = session.getAttribute("id_user").toString();
+    if (cookies==null){
+        role = "guest";
+        username = "guest";
+        id_user = "-999";
+    }else{
+        for (int i = 0; i < cookies.length; i++){
+            switch(i) {
+                case 0:{
+                    role = cookies[i].getValue();
+                    break;
+                }
+                case 1:{
+                    username = cookies[i].getValue();
+                    break;
+                }
+                case 2:{
+                    id_user = cookies[i].getValue();
+                    break;
+                }
+            }
+      }
+    }*/
+    
+   /*role = session.getAttribute("role").toString();
+   username = session.getAttribute("username").toString();
+    id_user = session.getAttribute("id_user").toString();*/
 %>
+
 
 <nav class="nav">
     <a style="border:none;" id="logo" href="index.jsp"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
-        <li>haloooo,  <%= role %></li> <br>
+        <li>haloooo,  <%= username %></li> <br>
         <% if (role=="editor" || role=="admin"){%>
         <li><a href="unpublished.jsp">unpublished post    </a></li>
         <%} %>
