@@ -54,7 +54,13 @@
 		<div class="posts">
 			<nav class="art-list">
 				<% if(user.getRole() == 2){ %>
-					<a href="unpublished.jsp" style="text-align: right; display: block; width: 100%;" class="art-list-title">See Unpublished</a>
+					<a href="unpublished.jsp" style="text-align: right; display: block; width: 100%;" class="art-list-title">Publish Posts</a>
+				<% } else if(user.getRole() == 3){ %>
+				<div style="text-align: right; display: block; width: 100%;">
+					<a href="unpublished.jsp" class="art-list-time">Publish Posts</a>
+					|
+					<a href="manage_user.jsp" class="art-list-time">Manage User</a>
+				</div>
 				<% } %>
 			  <ul class="art-list-body">
 			<%	for(Post p : sql.getPosts(false)){	  %>

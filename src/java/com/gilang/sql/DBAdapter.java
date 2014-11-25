@@ -7,6 +7,7 @@
 package com.gilang.sql;
 
 import com.gilang.beans.Post;
+import com.gilang.beans.UserData;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -16,8 +17,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -80,9 +79,9 @@ public class DBAdapter {
 			List<Post> postList = new ArrayList<>();
 			statement = connection.createStatement();
 			if(unPublished)
-				resultSet = statement.executeQuery("SELECT * FROM post WHERE published=0");
+				resultSet = statement.executeQuery("SELECT * FROM post WHERE published=0 and deleted=0");
 			else
-				resultSet = statement.executeQuery("SELECT * FROM post WHERE published=1");
+				resultSet = statement.executeQuery("SELECT * FROM post WHERE published=1 and deleted=0");
 			while(resultSet.next()){
 				int post_id = resultSet.getInt("post_id");
 				String user_id = resultSet.getString("user_id");
@@ -94,6 +93,30 @@ public class DBAdapter {
 				postList.add(new Post(post_id, user_id, title, content, date, published, deleted));
 			}
 			return postList;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return null;
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public List<UserData> getUsersData(){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			List<UserData> userList = new ArrayList<>();
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT user_id, role FROM user");
+			while(resultSet.next()){
+				String user_id = resultSet.getString("user_id");
+				int role = resultSet.getInt("role");
+				userList.add(new UserData(user_id, role));
+			}
+			return userList;
 		}catch(SQLException e){
 			e.printStackTrace();
 			return null;

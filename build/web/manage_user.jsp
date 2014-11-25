@@ -1,10 +1,10 @@
 <%-- 
-    Document   : index
-    Created on : Nov 25, 2014, 6:05:21 AM
+    Document   : manage_user
+    Created on : Nov 25, 2014, 8:47:54 PM
     Author     : Gilang
 --%>
 
-<%@page import="com.gilang.beans.Post"%>
+<%@page import="com.gilang.beans.UserData"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:useBean id="sql" class="com.gilang.sql.DBAdapter" scope="session"/>
@@ -43,9 +43,7 @@
 	<nav class="nav">
 		<a style="border:none;" id="logo" href="home.jsp"><h1>Simple<span>-</span>Blog</h1></a>
 		<ul class="nav-primary">
-			<% if(user.getRole() == 1 || user.getRole() == 3){ %>
-				<li><a href="new_post.jsp">+ Tambah Post</a></li>
-			<% } %>
+			<li><a href="new_user.jsp">+ Tambah User</a></li>
 			<li><a href="logout.jsp">Logout</a></li>
 		</ul>
 	</nav>
@@ -53,31 +51,26 @@
 	<div id="home">
 		<div class="posts">
 			<nav class="art-list">
-				<% if(user.getRole() == 2){ %>
-					<a href="unpublished.jsp" style="text-align: right; display: block; width: 100%;" class="art-list-title">Publish Posts</a>
-				<% } else if(user.getRole() == 3){ %>
-				<div style="text-align: right; display: block; width: 100%;">
-					<a href="unpublished.jsp" class="art-list-time">Publish Posts</a>
-					|
-					<a href="manage_user.jsp" class="art-list-time">Manage User</a>
-				</div>
-				<% } %>
 			  <ul class="art-list-body">
-			<%	for(Post p : sql.getPosts(false)){	  %>
+			<%	for(UserData u : sql.getUsersData()){	  %>
 				<li class="art-list-item">
 					<div class="art-list-item-title-and-time">
-						<h2 class="art-list-title"><a href="post.html"><%= p.getTitle() %></a></h2>
-						<div class="art-list-time"><%= p.getDate() %></div>
-						<div class="art-list-time"><span style="color:#F40034;">&#10029;</span> Featured</div>
+						<h2 class="art-list-title"><%= u.getUser_id() %></h2>
 					</div>
-					<p><%= p.getContent() %></p>
+					<p><%	switch(u.getRole()){
+							case 1: out.print("Owner");
+									break;
+							case 2: out.print("Editor");
+									break;
+							case 3: out.print("Admin");
+									break;
+							}
+					%></p>
 					<p>
 					
-					<% if(user.getRole() == 1 || user.getRole() == 2 || user.getRole() == 3){ %>
-					<a href="edit_post.jsp?post_id=<%= p.getPost_id() %>">Edit</a>
+					<a href="edit_user.jsp?user_id=<%= u.getUser_id() %>">Edit</a>
 					   | 
-					<a href="delete_post.jsp?post_id=<%= p.getPost_id() %>">Hapus</a>
-					<% } %>
+					<a href="delete_user.jsp?user_id=<%= u.getUser_id() %>">Hapus</a>
 					</p>
 				</li>
 			<%	} %>
