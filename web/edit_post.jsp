@@ -56,18 +56,18 @@
 					<h2>Tambah Post</h2>
 
 					<div id="contact-area">
-						<form method="post" action="update.jsp">
+						<form method="post" name="form1" action="update.jsp">
 							<input type="hidden" name="post_id" value="<%= post.getPost_id() %>"/>
 							<label for="Judul">Judul:</label>
 							<input type="text" name="title" id="Judul" value="<%= post.getTitle() %>"/>
-
+                                                        <div id="Tgl">
 							<label for="Tanggal">Tanggal:</label>
-							<input type="text" name="date" id="Tanggal" value="<%= post.getDate() %>"/>
-
+							<input type="text" name="date" id="Tanggal" value="<%= post.getDate() %>" onchange="return cektanggal()" placeholder="YYYY-MM-DD" maxlength="10"/>
+                                                        </div>
 							<label for="Konten">Konten:</label><br/>
 							<textarea name="content" rows="20" cols="20" id="Konten"><%= post.getContent() %></textarea>
 
-							<input type="submit" name="submit" value="Simpan" class="submit-button"/>
+							<input type="submit" name="submit" value="Simpan" onclick="return cektanggal()" class="submit-button"/>
 						</form>
 					</div>
 				</div>
@@ -95,7 +95,39 @@
 		</footer>
 
 		</div>
+<script type="text/javascript">
 
+function cektanggal()
+{
+	var tanggal = document.forms["form1"]["date"].value;
+	var n = tanggal.search("[0-9]{4}-[0-9]{2}-[0-9]{2}");
+	if (n === 0){
+		var Dat = new Date(tanggal);
+		var Now = new Date();
+		if (Dat>Now){
+			document.getElementById("Tanggal").style.background = "lime";
+                        document.getElementById("Tanggal").style.color = "white";
+		}
+		else if((Dat.getDate() === Now.getDate()) && (Dat.getMonth() === Now.getMonth()) && (Dat.getFullYear()==Now.getFullYear())){
+			document.getElementById("Tanggal").style.background = "lime";
+                        document.getElementById("Tanggal").style.color = "white";
+		}
+		else{
+			document.getElementById("Tanggal").style.background = "red";
+                        document.getElementById("Tanggal").style.color = "white";
+                        document.getElementById("Tanggal").focus();
+                        return false;
+		}
+	}
+	else{
+            document.getElementById("Tanggal").style.background = "red";
+            document.getElementById("Tanggal").style.color = "white";
+            document.getElementById("Tanggal").focus();
+        return false;
+        
+	}
+}
+</script> 
 </body>
     </html>
 </f:view>

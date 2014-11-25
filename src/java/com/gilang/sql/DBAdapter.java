@@ -207,8 +207,9 @@ public class DBAdapter {
 			prepStatement.setString(2, title);
 			prepStatement.setString(3, content);
 			String[] temp = date.split("-");
-			prepStatement.setDate(4, new Date(Integer.valueOf(temp[0]), 
-									Integer.valueOf(temp[1]), Integer.valueOf(temp[2])));
+                        int year = Integer.valueOf(temp[0]) - 1900;
+                        int month = Integer.valueOf(temp[1]) - 1;
+			prepStatement.setDate(4, new Date(year, month, Integer.valueOf(temp[2])));
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -278,23 +279,6 @@ public class DBAdapter {
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
 			prepStatement = connection.prepareStatement("UPDATE post SET published=1 WHERE post_id=" + postId);
-			prepStatement.executeUpdate();
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			try {
-				prepStatement.close();
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-        
-        public void deleteUser(String userID){
-		try{
-			connection = DriverManager.getConnection(url, user, pass);
-			prepStatement = connection.prepareStatement("DELETE FROM user WHERE user_id='" + userID + "'");
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
