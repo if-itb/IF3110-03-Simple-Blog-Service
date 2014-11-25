@@ -36,6 +36,8 @@ public class userMgnt{
         Username="guest";
         Password="pass";
         Messege="tidak ada";
+        Role="geust";
+        Email="geust@simple-blog.com";
         cookie= new Cookie("Username",null);
         cookie.setMaxAge(120);
     }
@@ -94,6 +96,12 @@ public class userMgnt{
     }
     public String getMessege(){
         return Messege;
+    }
+    public String getRole(){
+        return Role;
+    }
+    public String getEmail(){
+        return Email;
     }
     //setter
     public void setName(String S){

@@ -1,9 +1,14 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>Home - Simple blog</title>
+        <title>New Post- Simple blog</title>
         <link rel="stylesheet" type="text/css" href="assets/style.css" />
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
     </h:head>
@@ -36,27 +41,26 @@
                 </li>
             </ul>
         </nav>
-            <div id="home">
-                <div class="posts">
-                    <nav class="art-list">
-                      <ul class="art-list-body">
-                        <li class="art-list-item">
-                            <div class="art-list-item-title-and-time">
-                                <h2 class="art-list-title"><a href="post.html">Judul</a></h2>
-                                <div class="art-list-time">25 November 2014</div>
-                                <div class="art-list-time"><span style="color:#F40034;">&#10029;</span> Featured</div>
-                            </div>
-                            <p>
-                                Halo ini isi artikel. Hanya mencoba-coba supaya bisa dilihat :3
-                            </p>
-                            <p>
-                              <a href="#">Edit</a> | <a href="#">Hapus</a>
-                            </p>
-                        </li>
-                      </ul>
-                    </nav>
+            <article class="art simple post">
+
+
+            <h2 class="art-title" style="margin-bottom:40px">-</h2>
+
+            <div class="art-body">
+                <div class="art-body-inner">
+                    <h2>Tambah Post</h2>
+
+                    <div id="contact-area">
+                        <h:form>
+                            <h:outputText value="Judul: "/>
+                            <h:outputText value="Tanggal: "/>
+                            <h:outputText value="Konten: " />
+                        </h:form>
+                    </div>
                 </div>
             </div>
+
+        </article>
             
     </div>
     </body>
@@ -72,4 +76,3 @@
     </aside>
 </footer>
 </html>
-
