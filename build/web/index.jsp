@@ -1,9 +1,24 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <head>
+<%-- 
+    Document   : index
+    Created on : Nov 25, 2014, 6:05:21 AM
+    Author     : Gilang
+--%>
+
+<%@page import="com.gilang.beans.Post"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<jsp:useBean id="sql" class="com.gilang.sql.DBAdapter" scope="session"/>
+<jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
+
+<%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
+<%@taglib prefix="h" uri="http://java.sun.com/jsf/html"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+
+<f:view>
+    <html>
+       <head>
 
 	<link rel="stylesheet" type="text/css" href="resources/screen.css" />
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico"/>
@@ -14,16 +29,22 @@
 
 	<title>Simple Blog</title>
 
-
 	</head>
-
+	<%	if(user.getUsername() == null){
+			response.setStatus(response.SC_MOVED_TEMPORARILY);
+			response.setHeader("Location", "home.jsp");
+		}
+	%>
+	Hello <%= user.getUsername() %>
 	<body class="default">
+		
 	<div class="wrapper">
 
 	<nav class="nav">
-		<a style="border:none;" id="logo" href="index.html"><h1>Simple<span>-</span>Blog</h1></a>
+		<a style="border:none;" id="logo" href="home.jsp"><h1>Simple<span>-</span>Blog</h1></a>
 		<ul class="nav-primary">
-			<li><a href="new_post.html">+ Tambah Post</a></li>
+			<li><a href="new_post.jsp">+ Tambah Post</a></li>
+			<li><a href="logout.jsp">Logout</a></li>
 		</ul>
 	</nav>
 
@@ -31,19 +52,22 @@
 		<div class="posts">
 			<nav class="art-list">
 			  <ul class="art-list-body">
-				<ui:repeat value="#{sql.posts}" var="post">
+			<%	for(Post p : sql.getPosts()){	  %>
 				<li class="art-list-item">
 					<div class="art-list-item-title-and-time">
-						<h2 class="art-list-title"><a href="post.html">#{post.title}</a></h2>
-						<div class="art-list-time">#{post.date}</div>
+						<h2 class="art-list-title"><a href="post.html"><%= p.getTitle() %></a></h2>
+						<div class="art-list-time"><%= p.getDate() %></div>
 						<div class="art-list-time"><span style="color:#F40034;">&#10029;</span> Featured</div>
 					</div>
-					<p>#{post.content}</p>
+					<p><%= p.getContent() %></p>
 					<p>
-					  <a href="#">Edit</a> | <a href="#">Hapus</a>
+					  <a href="edit_post.jsp?post_id=<%= p.getPost_id() %>">Edit</a>
+					   | 
+					  <a href="delete_post.jsp?post_id<%= p.getPost_id() %>">Hapus</a>
 					</p>
 				</li>
-				</ui:repeat>
+			<%	} %>
+				  
 			  </ul>
 			</nav>
 		</div>
@@ -71,6 +95,5 @@
 	</div>
 
 	</body>
-
-</html>
-
+    </html>
+</f:view>
