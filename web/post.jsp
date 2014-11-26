@@ -73,7 +73,7 @@
                         <h2>Komentar</h2>
 
                         <div id="contact-area">
-                            <form method="post" action="add_comment.jsp">
+                            <form method="post" action="add_comment.jsp" name="commentForm">
 								<input type="hidden" name="post_id" value="<%= post.getPost_id() %>"/>
 								<% if(!user.getUsername().equals("guest")){ %>
 									<input type="hidden" name="user_id" id="Nama" value="<%=  userData.getUser_id() %>"/>
@@ -86,22 +86,15 @@
 								<% } %>
                                 <label for="Komentar">Komentar:</label>
                                 <textarea name="content" rows="20" cols="20" id="Komentar"></textarea><br/>
-                                <input type="submit" name="submit" value="Kirim" class="submit-button">
+                                <input type="button" name="submit" value="Kirim" class="submit-button" onclick="addComment()">
                             </form>
                         </div>
 
-                        <ul class="art-list-body">
-                        <%	for(Komentar k : sql.getComments(post.getPost_id())){	  %>
-                            <li class="art-list-item">
-                                <div class="art-list-item-title-and-time">
-                                    <h2 class="art-list-title"><a href="post.html"><%= k.getUser_id() %></a></h2>
-									<%= k.getEmail() %>
-                                    <div class="art-list-time"><%= k.getDate()%></div>
-                                </div>
-                                <p> <%= k.getContent()%></p>
-                            </li>
-                        <%	} %>
-                        </ul>
+						<div id="comment">
+						
+						</div>
+								
+                        
                     </div>
                 </div>
 
@@ -127,6 +120,9 @@
             </footer>
 
             </div>
+								
+			<script type="text/javascript" src="resources/comment.js"></script>
+			<script type="text/javascript">loadComment()</script>
 
         </body>
     </html>
