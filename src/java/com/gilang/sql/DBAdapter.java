@@ -16,7 +16,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -74,7 +76,7 @@ public class DBAdapter {
 		return null;
 	}
 
-	public List<Komentar> getKomentar(int post_id){
+	public List<Komentar> getComments(int post_id){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
 			List<Komentar> komentarList = new ArrayList<>();
@@ -82,10 +84,11 @@ public class DBAdapter {
 			resultSet = statement.executeQuery("SELECT * FROM comment WHERE post_id="+post_id);
 			while(resultSet.next()){
 				int comment_id = Integer.parseInt(resultSet.getString("comment_id"));
-				String user_id = resultSet.getString("user_id");
+				String name = resultSet.getString("name");
+				String email = resultSet.getString("email");
 				String content = resultSet.getString("content");
 				String date = resultSet.getDate("date").toString();
-				komentarList.add(new Komentar(comment_id, post_id, user_id, content, date));
+				komentarList.add(new Komentar(comment_id, post_id, name, email, content, date));
 			}
 			return komentarList;
 		}catch(SQLException e){
@@ -98,6 +101,32 @@ public class DBAdapter {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public Komentar getComment(int postID, int commentID){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT comment_id, name, email, content, date FROM comment WHERE post_id="
+												+ postID + " and comment_id=" + commentID);
+			if(resultSet.next()){
+				String name = resultSet.getString("name");
+				String email = resultSet.getString("email");
+				String content = resultSet.getString("content");
+				String date = resultSet.getString("date");
+				Komentar comment = new Komentar(commentID, postID, name, email, content, date);
+				return comment;
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
         
 	public List<Post> getPosts(boolean unPublished){
@@ -183,18 +212,16 @@ public class DBAdapter {
 	}
 
         	
-	public void addKomentar(int post_id, String user_id, String content,
-		String date){
+	public void addComment(int post_id, String name, String content, String email){
 			try{
 			connection = DriverManager.getConnection(url, user, pass);
-			prepStatement = connection.prepareStatement("INSERT INTO comment VALUES (default, ?, ?, ?, ?)");
-			prepStatement.setString(1, user_id);
-			prepStatement.setString(2, String.valueOf(post_id));
-			prepStatement.setString(3, content);
-			prepStatement.setString(4, date);
-			String[] temp = date.split("-");
-			prepStatement.setDate(4, new Date(Integer.valueOf(temp[0]), 
-							Integer.valueOf(temp[1]), Integer.valueOf(temp[2])));
+			String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+			prepStatement = connection.prepareStatement("INSERT INTO comment ( post_id, name, email, content, date) VALUES (?, ?, ?, ?, ?)");
+			prepStatement.setInt(1, post_id);
+			prepStatement.setString(2, name);
+			prepStatement.setString(3, email);
+			prepStatement.setString(4, content);
+			prepStatement.setString(5, timeStamp);
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
