@@ -32,12 +32,18 @@
 		</head>
 
 		<body class="default">
-			
+		
 		<% Post post = sql.getPost(Integer.valueOf(request.getParameter("post_id"))); %>
+		
+		<img src="resources/img/bg.png" class="background">
+		<img src="resources/img/navbackground.png" class="navbackground">
 		<div class="wrapper">
 
 		<nav class="nav">
-			<a style="border:none;" id="logo" href="home.jsp"><h1>Simple<span>-</span>Blog</h1></a>
+			<div class="logologo">
+				<img src="resources/img/navicon.png" class="navicon">
+				<a id="logo" href="home.jsp"><img src="resources/img/icontext.png" class="icontext"></a>
+			</div>
 			<ul class="nav-primary">
 				<% if(user.getRole() == 1 || user.getRole() == 3){ %>
 					<li><a href="new_post.jsp">+ Tambah Post</a></li>
@@ -57,13 +63,15 @@
 
 					<div id="contact-area">
 						<form method="post" name="form1" action="update.jsp">
+							<label for="note"></label>
+							<p id="note" style="visibility: hidden">Tanggal Salah!</p>
 							<input type="hidden" name="post_id" value="<%= post.getPost_id() %>"/>
 							<label for="Judul">Judul:</label>
 							<input type="text" name="title" id="Judul" value="<%= post.getTitle() %>"/>
-                                                        <div id="Tgl">
-							<label for="Tanggal">Tanggal:</label>
-							<input type="text" name="date" id="Tanggal" value="<%= post.getDate() %>" onchange="return cektanggal()" placeholder="YYYY-MM-DD" maxlength="10"/>
-                                                        </div>
+							<div id="Tgl" style="display: inline-block; width: 100%">
+								<label for="Tanggal">Tanggal:</label>
+								<input type="text" name="date" id="Tanggal" value="<%= post.getDate() %>" onchange="return cektanggal()" placeholder="YYYY-MM-DD" maxlength="10"/>
+							</div>
 							<label for="Konten">Konten:</label><br/>
 							<textarea name="content" rows="20" cols="20" id="Konten"><%= post.getContent() %></textarea>
 
@@ -106,23 +114,25 @@ function cektanggal()
 		var Now = new Date();
 		if (Dat>Now){
 			document.getElementById("Tanggal").style.background = "lime";
-                        document.getElementById("Tanggal").style.color = "white";
+			document.getElementById("Tanggal").style.color = "white";
 		}
 		else if((Dat.getDate() === Now.getDate()) && (Dat.getMonth() === Now.getMonth()) && (Dat.getFullYear()==Now.getFullYear())){
 			document.getElementById("Tanggal").style.background = "lime";
-                        document.getElementById("Tanggal").style.color = "white";
+			document.getElementById("Tanggal").style.color = "white";
 		}
 		else{
 			document.getElementById("Tanggal").style.background = "red";
-                        document.getElementById("Tanggal").style.color = "white";
-                        document.getElementById("Tanggal").focus();
-                        return false;
+			document.getElementById("Tanggal").style.color = "white";
+			document.getElementById("Tanggal").focus();
+			return false;
 		}
 	}
 	else{
-            document.getElementById("Tanggal").style.background = "red";
-            document.getElementById("Tanggal").style.color = "white";
-            document.getElementById("Tanggal").focus();
+		document.getElementById("Tanggal").style.background = "red";
+		document.getElementById("Tanggal").style.color = "white";
+		document.getElementById("Tanggal").focus();
+        document.getElementById("note").style.visibility = "visible";
+        document.getElementById("note").style.height = 31;
         return false;
         
 	}

@@ -14,12 +14,12 @@ public class UserData {
 	
 	private String user_id;
 	private int role;
-        private String email;
+	private String email;
 	
 	public UserData(String user_id, int role, String email){
 		this.user_id = user_id;
 		this.role = role;
-                this.email = email;
+		this.email = email;
 	}
 
 	public String getUser_id() {
@@ -30,7 +30,7 @@ public class UserData {
 		return role;
 	}
         
-        public String getEmail() {
-                return email;
-        }
+	public String getEmail() {
+		return email;
+	}
 }

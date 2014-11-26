@@ -38,10 +38,16 @@
 	Hello <%= user.getUsername() %>
 	<body class="default">
 		
+	<img src="resources/img/bg.png" class="background">
+	<img src="resources/img/navbackground.png" class="navbackground">
+	
 	<div class="wrapper">
 
 	<nav class="nav">
-		<a style="border:none;" id="logo" href="home.jsp"><h1>Simple<span>-</span>Blog</h1></a>
+		<div class="logologo">
+				<img src="resources/img/navicon.png" class="navicon">
+				<a id="logo" href="home.jsp"><img src="resources/img/icontext.png" class="icontext"></a>
+		</div>
 		<ul class="nav-primary">
 			<li><a href="new_user.jsp">+ Tambah User</a></li>
 			<li><a href="logout.jsp">Logout</a></li>
@@ -67,7 +73,8 @@
 							case 3: out.print("Admin");
 									break;
 							}
-					%></p>
+					%><br/>
+					<%= u.getEmail() %></p>
 					<p>
 					
 					<a href="edit_user.jsp?user_id=<%= u.getUser_id() %>">Edit</a>

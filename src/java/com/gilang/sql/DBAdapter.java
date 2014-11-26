@@ -36,7 +36,7 @@ public class DBAdapter {
 	private String driver = "com.mysql.jdbc.Driver";
 	private String url = "jdbc:mysql://localhost:3306/tubes_wbd";
 	private String user = "root";
-	private String pass = "Brown3y3$";
+	private String pass = "";
 	
 	public DBAdapter(){
 		try{
@@ -74,14 +74,14 @@ public class DBAdapter {
 		return null;
 	}
 
-        public List<Komentar> getKomentar(int post_id){
-                try{
+	public List<Komentar> getKomentar(int post_id){
+		try{
 			connection = DriverManager.getConnection(url, user, pass);
 			List<Komentar> komentarList = new ArrayList<>();
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * FROM comment WHERE post_id="+post_id);
 			while(resultSet.next()){
-                                int comment_id = Integer.parseInt(resultSet.getString("comment_id"));
+				int comment_id = Integer.parseInt(resultSet.getString("comment_id"));
 				String user_id = resultSet.getString("user_id");
 				String content = resultSet.getString("content");
 				String date = resultSet.getDate("date").toString();
@@ -98,7 +98,7 @@ public class DBAdapter {
 				e.printStackTrace();
 			}
 		}
-        }
+	}
         
 	public List<Post> getPosts(boolean unPublished){
 		try{
@@ -131,39 +131,17 @@ public class DBAdapter {
 			}
 		}
 	}
-        
+	
 	public UserData getUser(String userID){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT user_id, role FROM user WHERE user_id='" + userID + "'");
-			if(resultSet.next()){
-				int role = resultSet.getInt("role");
-				UserData user = new UserData(userID, role);
-				return user;
-			}
-		}catch(SQLException e){
-			e.printStackTrace();
-		}finally{
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
-	
-        public UserData getUser(String userID){
-		try{
-			connection = DriverManager.getConnection(url, user, pass);
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT user_id, role FROM user WHERE user_id='" + userID + "'");
+			resultSet = statement.executeQuery("SELECT user_id, role, email FROM user WHERE user_id='" + userID + "'");
 			int role;
-                        String emailc;
-                        if(resultSet.next()){
+			String emailc;
+			if(resultSet.next()){
 				role = resultSet.getInt("role");
-                                emailc = resultSet.getString("email");
+				emailc = resultSet.getString("email");
 				UserData userc = new UserData(userID, role, emailc);
 				return userc;
 			}
@@ -188,7 +166,7 @@ public class DBAdapter {
 			while(resultSet.next()){
 				String user_id = resultSet.getString("user_id");
 				int role = resultSet.getInt("role");
-                                String email = resultSet.getString("email");
+				String email = resultSet.getString("email");
 				userList.add(new UserData(user_id, role, email));
 			}
 			return userList;
@@ -205,9 +183,9 @@ public class DBAdapter {
 	}
 
         	
-        public void addKomentar(int post_id, String user_id, String content,
-					String date){
-                 try{
+	public void addKomentar(int post_id, String user_id, String content,
+		String date){
+			try{
 			connection = DriverManager.getConnection(url, user, pass);
 			prepStatement = connection.prepareStatement("INSERT INTO comment VALUES (default, ?, ?, ?, ?)");
 			prepStatement.setString(1, user_id);
@@ -216,7 +194,7 @@ public class DBAdapter {
 			prepStatement.setString(4, date);
 			String[] temp = date.split("-");
 			prepStatement.setDate(4, new Date(Integer.valueOf(temp[0]), 
-									Integer.valueOf(temp[1]), Integer.valueOf(temp[2])));
+							Integer.valueOf(temp[1]), Integer.valueOf(temp[2])));
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -228,7 +206,7 @@ public class DBAdapter {
 				e.printStackTrace();
 			}
 		}            
-        }
+	}
         
 	public void addPost(String user_id, String title, String date, String content){
 		try{
@@ -238,8 +216,8 @@ public class DBAdapter {
 			prepStatement.setString(2, title);
 			prepStatement.setString(3, content);
 			String[] temp = date.split("-");
-			prepStatement.setDate(4, new Date(Integer.valueOf(temp[0]), 
-									Integer.valueOf(temp[1]), Integer.valueOf(temp[2])));
+			prepStatement.setDate(4, new Date(Integer.valueOf(temp[0]) - 1900, 
+									Integer.valueOf(temp[1]) - 1, Integer.valueOf(temp[2])));
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -253,14 +231,14 @@ public class DBAdapter {
 		}
 	}
 	
-        public void addUser(String user_id, String password, int role, String email){
+	public void addUser(String user_id, String password, int role, String email){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
 			prepStatement = connection.prepareStatement("INSERT INTO user VALUES (?, ?, ?, ?)");
 			prepStatement.setString(1, user_id);
 			prepStatement.setString(2, password);
 			prepStatement.setInt(3, role);
-                        prepStatement.setString(4, email);
+			prepStatement.setString(4, email);
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -282,8 +260,8 @@ public class DBAdapter {
 			prepStatement.setString(2, title);
 			prepStatement.setString(3, content);
 			String[] temp = date.split("-");
-                        int year = Integer.valueOf(temp[0]) - 1900;
-                        int month = Integer.valueOf(temp[1]) - 1;
+			int year = Integer.valueOf(temp[0]) - 1900;
+			int month = Integer.valueOf(temp[1]) - 1;
 			prepStatement.setDate(4, new Date(year, month, Integer.valueOf(temp[2])));
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
@@ -298,11 +276,12 @@ public class DBAdapter {
 		}
 	}
 	
-        public void updateUser(String userID, int role, String email){
+	public void updateUser(String userID, int role, String email){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
-			prepStatement = connection.prepareStatement("UPDATE user SET role=? WHERE user_id='" + userID + "'");
+			prepStatement = connection.prepareStatement("UPDATE user SET role=?, email=? WHERE user_id='" + userID + "'");
 			prepStatement.setInt(1, role);
+			prepStatement.setString(2, email);
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();

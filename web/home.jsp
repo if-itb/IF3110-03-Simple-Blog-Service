@@ -17,26 +17,43 @@
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+			<link rel="stylesheet" type="text/css" href="resources/screen.css" />
+			<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico"/>
             <title>JSP Page</title>
         </head>
-        <body>
-			<%	if(user.getUsername() == null){ %>
-            <form action="login.jsp">
-				<input type="text" name="user_id">
-				<input type="password" name="password">
-				<input type="submit">
-			</form>
-			<form action="login.jsp">
-				<input type="hidden" name="user_id" value="guest">
-				<input type="hidden" name="password" value="">
-				<input type="submit" value="login as guest">
-			</form>
-			<%	}
-				else{
-					response.setStatus(response.SC_MOVED_TEMPORARILY);
-					response.setHeader("Location", "index.jsp");
-				}
-			%>
+        <body class="default">
+			<img src="resources/img/bg.png" class="background">
+			<img src="resources/img/navbackground.png" class="navbackground">
+			<div class="wrapper">
+			
+				<nav class="nav">
+					<div class="logologo">
+						<img src="resources/img/navicon.png" class="navicon">
+						<a id="logo" href="home.jsp"><img src="resources/img/icontext.png" class="icontext"></a>
+					</div>
+				</nav>
+				<div id="home" class="posts">
+					<nav class="art-list">
+					<%	if(user.getUsername() == null){ %>
+					<form action="login.jsp">
+						<input type="text" name="user_id">
+						<input type="password" name="password">
+						<input type="submit">
+					</form>
+					<form action="login.jsp">
+						<input type="hidden" name="user_id" value="guest">
+						<input type="hidden" name="password" value="">
+						<input type="submit" value="login as guest">
+					</form>
+					<%	}
+						else{
+							response.setStatus(response.SC_MOVED_TEMPORARILY);
+							response.setHeader("Location", "index.jsp");
+						}
+					%>
+					</nav>
+				</div>
+			</div>
         </body>
     </html>
 </f:view>

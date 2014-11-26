@@ -21,7 +21,10 @@
             <title>JSP Page</title>
         </head>
         <body>
-            <%	
+            <%	sql.updateUser(request.getParameter("user_id"), Integer.valueOf(request.getParameter("role")),
+								request.getParameter("email"));
+				response.setStatus(response.SC_MOVED_TEMPORARILY);
+				response.setHeader("Location", "manage_user.jsp");
 			%>
         </body>
     </html>

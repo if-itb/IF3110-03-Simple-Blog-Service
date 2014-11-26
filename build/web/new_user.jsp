@@ -30,10 +30,17 @@
 		</head>
 
 		<body class="default">
+			
+		<img src="resources/img/bg.png" class="background">
+		<img src="resources/img/navbackground.png" class="navbackground">
+		
 		<div class="wrapper">
 
 		<nav class="nav">
-			<a style="border:none;" id="logo" href="index.html"><h1>Simple<span>-</span>Blog</h1></a>
+			<div class="logologo">
+				<img src="resources/img/navicon.png" class="navicon">
+				<a id="logo" href="home.jsp"><img src="resources/img/icontext.png" class="icontext"></a>
+			</div>
 		</nav>
 
 		<article class="art simple post">

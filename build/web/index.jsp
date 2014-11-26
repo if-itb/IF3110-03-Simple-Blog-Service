@@ -38,10 +38,16 @@
 	Hello <%= user.getUsername() %>
 	<body class="default">
 		
+	<img src="resources/img/bg.png" class="background">
+	<img src="resources/img/navbackground.png" class="navbackground">
+	
 	<div class="wrapper">
 
 	<nav class="nav">
-		<a style="border:none;" id="logo" href="home.jsp"><h1>Simple<span>-</span>Blog</h1></a>
+		<div class="logologo">
+				<img src="resources/img/navicon.png" class="navicon">
+				<a id="logo" href="home.jsp"><img src="resources/img/icontext.png" class="icontext"></a>
+		</div>
 		<ul class="nav-primary">
 			<% if(user.getRole() == 1 || user.getRole() == 3){ %>
 				<li><a href="new_post.jsp">+ Tambah Post</a></li>
@@ -66,7 +72,7 @@
 			<%	for(Post p : sql.getPosts(false)){	  %>
 				<li class="art-list-item">
 					<div class="art-list-item-title-and-time">
-						<h2 class="art-list-title"><a href="post.html"><%= p.getTitle() %></a></h2>
+						<h2 class="art-list-title"><a href="post.jsp?post_id=<%= p.getPost_id() %>"><%= p.getTitle() %></a></h2>
 						<div class="art-list-time"><%= p.getDate() %></div>
 						<div class="art-list-time"><span style="color:#F40034;">&#10029;</span> Featured</div>
 					</div>
