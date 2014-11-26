@@ -8,7 +8,6 @@ package UserBeans;
 import java.util.Date;
 
 
-
 /**
  *
  * @author Yusuf
@@ -20,7 +19,7 @@ public class BlogPost {
     private String username;
     private String posttitle;
     private String postcontent;
-    private Date postdate;
+    private String postdate;
     private boolean ispublished;
     private boolean isdeleted;
 
@@ -29,9 +28,10 @@ public class BlogPost {
         posttitle = "";
         postcontent = "";
         username = "";
-        postdate = null;
         ispublished = false;
         isdeleted = false;
+        Date date = new Date();
+        postdate = String.valueOf(date.getMonth()+1)+"/"+String.valueOf(date.getDate())+"/"+String.valueOf(date.getYear()+1900);
     }
 
     public int getPid() {
@@ -62,7 +62,7 @@ public class BlogPost {
         return content;
     }
 
-    public Date getPostdate() {
+    public String getPostdate() {
         return postdate;
     }
 
@@ -108,7 +108,11 @@ public class BlogPost {
         postcontent = PostContent;
     }
 
-    public void setPostdate(Date PostDate) {
+    /**
+     * 
+     * @param PostDate date format : mm/dd/yyyy
+     */
+    public void setPostdate(String PostDate) {
         postdate = PostDate;
     }
 

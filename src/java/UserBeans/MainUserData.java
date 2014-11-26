@@ -7,7 +7,6 @@ package UserBeans;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -25,9 +24,9 @@ public class MainUserData {
        
         userMgnt um = new userMgnt();
         BlogPost post = new BlogPost();
-        post.setPostcontent("lalala");
-        post.setPosttitle("dadada");
-        post.setPostdate(new Date());
+        post.setPostcontent("lalala2");
+        post.setPosttitle("dadada2");
+        post.setPostdate("12/01/2014");
         post.setUid(2);
         um.setPost(post);
         um.submitPost();

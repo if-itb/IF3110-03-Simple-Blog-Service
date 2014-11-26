@@ -56,20 +56,24 @@ and open the template in the editor.
                     <div class="art-body">
                         <div class="art-body-inner">
                             <h2>Tambah Post</h2>
-
                             <div id="contact-area">
-                                <h:form rendered="#{beans.isLogin()}">
-                                    <h:outputLabel>Judul:</h:outputLabel>
-                                    <h:inputText value="#{beans.post.posttitle}"/>
-                                    <h:outputLabel>Tanggal:</h:outputLabel>
-                                    <input type="date" jsf:value="#{beans.post.postdate}" />
-                                    <h:outputLabel>Konten:</h:outputLabel>
-                                    <h:inputTextarea value="#{beans.post.postcontent}" />
-                                    <input type="checkbox" jsf:value="#{beans.post.published}" style="margin-left:10px;width:20px" />
-                                    <h:outputLabel>Publish</h:outputLabel>
-                                    <h:commandButton action="#{beans.submitPost()}" value="Submit" style="width:150px;float:right;"/>
-                                </h:form>
+                            <f:subview id="new_post_form" rendered="#{beans.isLogin()}">
+                                <form name="formPost" id="formPost" method="post" action="#{beans.submitPost()}" onsubmit="return validate();">
+                                    <label for="Judul">Judul:</label>
+                                    <input type="text" name="Judul" id="Judul" value="#{beans.post.posttitle}"/>
+
+                                    <label for="Tanggal">Tanggal:</label>
+                                    <input type="date" name="Tanggal" id="Tanggal" value="#{beans.post.postdate}" placeholder="MM/DD/YYYY"/>
+
+                                    <label for="Konten">Konten:</label><br />
+                                    <textarea name="Konten" rows="20" cols="20" id="Konten" value="#{beans.post.postcontent}"></textarea>
+
+                                    <input type="submit" name="submit" id="submit" value="Simpan" class="submit-button"  />
+                                </form>
+                            </f:subview>
                             </div>
+
+                            
                         </div>
                     </div>
 
@@ -88,4 +92,33 @@ and open the template in the editor.
             </footer>
         </h:body>
     </f:view>
+    <script type="text/javascript">
+                function validate(){
+                var title = getElementById('Judul').value;
+                        var date = getElementById('Tanggal').value;
+                        var content = getElementById('Konten').value;
+                        if (title = "" || date = "" || content = ""){
+                return false;
+                } else{
+                var dStream = date.split("/");
+                        var t = new Date();
+                        var dd = t.getDate();
+                        var mm = t.getMonth() + 1;
+                        var yy = t.getFullYear();
+                        if (yy > dStream[0]){
+                return false;
+                } else{
+                if (mm > dStream[1]){
+                return false;
+                } else{
+                if (dd > dStream[0]){
+                return false;
+                } else{
+                return true;
+                }
+                }
+                }
+                }
+                }
+    </script>
 </html>
