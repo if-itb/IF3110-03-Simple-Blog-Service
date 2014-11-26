@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <f:view>
+        <h:head>
+            <title>New Post- Simple blog</title>
+            <link rel="stylesheet" type="text/css" href="assets/style.css" />
+            <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+        </h:head>
+
+        <h:body class="default">
+            <div class="wrapper">
+
+                <nav class="nav">
+                    <a style="margin: 0px;border:none;float:left" id="logo" href="faces/index.xhtml"><h1>Simple<span>-</span>Blog    |   </h1></a>
+                    <h1 style="font-size: 20px;float: left;color: dodgerblue"><h:outputText value="Hello #{beans.user.fullname} " style="float:left "/></h1>
+                    <ul class="nav-primary">
+                        <li>
+                            <h:form>
+                                <ul>
+                                    <li style="padding: 5px">
+                                        <f:subview rendered="#{beans.isLogin()}" id="test">
+                                            <a href="faces/add_post.xhtml" style="color: #F40034;z-index:100;">+ Tambah Post </a>
+                                        </f:subview>
+                                    </li>
+                                    <li>
+                                        <h:outputText value="#{beans.message}" style="color:red" rendered="#{beans.activeMessage()}"/><br></br>
+                                        <h:commandLink action="#{beans.Logout()}" style="color:#F40034;z-index:100;" value="Logout" rendered="#{beans.isLogin()}"/>
+                                        <h:form rendered="#{!beans.isLogin()}">
+                                            <h:outputText value="username: "/>
+                                            <h:inputText value="#{beans.user.username}"/>
+                                            <h:outputText value="password: "/>
+                                            <h:inputSecret value="#{beans.user.password}"/>
+                                            <h:outputText value="   "/>
+                                            <h:commandButton action="#{beans.login()}" style="background-color: papayawhip;color: darkblue" value="Login" />
+                                        </h:form>
+                                    </li>
+                                </ul>
+                            </h:form>
+                        </li>
+                    </ul>
+                </nav>
+                <article class="art simple post">
+
+
+                    <h2 class="art-title" style="margin-bottom:40px">-</h2>
+
+                    <div class="art-body">
+                        <div class="art-body-inner">
+                            <h2>Tambah Post</h2>
+
+                            <div id="contact-area">
+                                <h:form rendered="#{beans.isLogin()}">
+                                    <h:outputLabel>Judul:</h:outputLabel>
+                                    <h:inputText value="#{beans.post.posttitle}"/>
+                                    <h:outputLabel>Tanggal:</h:outputLabel>
+                                    <input type="date" jsf:value="#{beans.post.postdate}" />
+                                    <h:outputLabel>Konten:</h:outputLabel>
+                                    <h:inputTextarea value="#{beans.post.postcontent}" />
+                                    <input type="checkbox" jsf:value="#{beans.post.published}" style="margin-left:10px;width:20px" />
+                                    <h:outputLabel>Publish</h:outputLabel>
+                                    <h:commandButton action="#{beans.submitPost()}" value="Submit" style="width:150px;float:right;"/>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+            </div>
+            <footer class="footer">
+                <div class="back-to-top"><a href="#">Back to top</a></div>
+                <!-- <div class="footer-nav"><p></p></div> -->
+                <aside class="offsite-links">
+                    IF3110 Tubes II Kelompok 6
+                    <br></br>Yusuf Rahmatullah
+                    <br></br>Hayyu Lutfi Hanifah
+                    <br></br>Nisa Dian Rachmadi    
+                </aside>
+            </footer>
+        </h:body>
+    </f:view>
+</html>
