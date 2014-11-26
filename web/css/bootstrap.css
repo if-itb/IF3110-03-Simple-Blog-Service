@@ -3,18 +3,18 @@
   background-color: #fff;
   color: #d9230f;
 }
+
 .btn {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .btn-default,
 .btn-default:hover {
-  background-image: -webkit-linear-gradient(#4f5151, #474949 6%, #3f4141);
-  background-image: -o-linear-gradient(#4f5151, #474949 6%, #3f4141);
-  background-image: linear-gradient(#4f5151, #474949 6%, #3f4141);
+  background-image: -webkit-linear-gradient(#4FE710, #68AE46 6%, #75BA36);
+  background-image: -o-linear-gradient(#e72510, #d9230f 6%, #cb210e);
+  background-image: linear-gradient(#2F9828, #1CD90F 6%, #0ECB1F);
   background-repeat: no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4f5151', endColorstr='#ff3f4141', GradientType=0);
   filter: none;
-  border: 1px solid #2e2f2f;
 }
 .btn-primary,
 .btn-primary:hover {
@@ -2477,14 +2477,14 @@ output {
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 .form-control::-moz-placeholder {
-  color: #dddddd;
+  color: #B5ACAC;
   opacity: 1;
 }
 .form-control:-ms-input-placeholder {
-  color: #dddddd;
+  color: #B5ACAC
 }
 .form-control::-webkit-input-placeholder {
-  color: #dddddd;
+  color: #B5ACAC
 }
 .form-control[disabled],
 .form-control[readonly],
@@ -2978,8 +2978,8 @@ fieldset[disabled] .btn-default.active {
 }
 .btn-primary {
   color: #ffffff;
-  background-color: #d9230f;
-  border-color: #d9230f;
+  background-color: #24AD26;
+  border-color: rgba(271, 35, 15, 0);
 }
 .btn-primary:hover,
 .btn-primary:focus,

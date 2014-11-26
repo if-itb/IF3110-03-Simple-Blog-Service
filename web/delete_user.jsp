@@ -21,9 +21,15 @@
             <title>JSP Page</title>
         </head>
         <body>
+			<%	if(user.getUsername() == null){
+			response.setStatus(response.SC_MOVED_TEMPORARILY);
+			response.setHeader("Location", "home.jsp");
+				}else{
+			%>
             <%	sql.deleteUser(request.getParameter("user_id"));
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "manage_user.jsp");
+				}
 			%>
         </body>
     </html>

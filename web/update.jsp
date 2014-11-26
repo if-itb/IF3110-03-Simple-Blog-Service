@@ -22,10 +22,15 @@
             <title>JSP Page</title>
         </head>
         <body>
+			<%	if(user.getUsername() == null){
+			response.setStatus(response.SC_MOVED_TEMPORARILY);
+			response.setHeader("Location", "home.jsp");
+				}else{
+			%>
             <%	sql.updatePost(request.getParameter("post_id"), user.getUsername(),
 					request.getParameter("title"), request.getParameter("date"), request.getParameter("content")) ;
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "index.jsp");
+				response.setHeader("Location", "index.jsp");}
 			%>
         </body>
     </html>

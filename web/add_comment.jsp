@@ -19,6 +19,11 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         </head>
         <body>
+			<%	if(user.getUsername() == null){
+			response.setStatus(response.SC_MOVED_TEMPORARILY);
+			response.setHeader("Location", "home.jsp");
+				}else{
+			%>
             <%	if(user.getUsername().equals("guest"))
 					sql.addComment(Integer.valueOf(request.getParameter("post_id")), request.getParameter("user_id"),
 								request.getParameter("content"), request.getParameter("email"));
@@ -27,6 +32,7 @@
 								request.getParameter("content"), sql.getUser(user.getUsername()).getEmail());
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "post.jsp?post_id="+request.getParameter("post_id"));
+				}
 			%>
                         
                        

@@ -25,7 +25,11 @@
 		<![endif]-->
 
 		<title>Simple Blog | Tambah User</title>
-
+<%	if(user.getUsername() == null){
+			response.setStatus(response.SC_MOVED_TEMPORARILY);
+			response.setHeader("Location", "home.jsp");
+				}
+			%>
 
 		</head>
 

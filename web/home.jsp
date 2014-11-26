@@ -19,7 +19,10 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 			<link rel="stylesheet" type="text/css" href="resources/screen.css" />
 			<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico"/>
-            <title>JSP Page</title>
+            <title>Welcome to Our Blog</title>
+			    <link href="css/bootstrap.css" rel="stylesheet">
+				<link href="css/style.css" rel="stylesheet">
+				<link href="css/profil.css" rel="stylesheet">
         </head>
         <body class="default">
 			<img src="resources/img/bg.png" class="background">
@@ -36,14 +39,48 @@
 					<nav class="art-list">
 					<%	if(user.getUsername() == null){ %>
 					<form action="login.jsp">
-						<input type="text" name="user_id">
-						<input type="password" name="password">
-						<input type="submit">
+						<div class="input-group-lg">
+						<input type="text" name="user_id" class="form-control" style="
+									width: 30%;
+									margin-left: 35%;
+									border: 0px;
+									margin-bottom: 20px;
+									margin-top: 20px;
+									text-align: center;
+								" placeholder="Username kamu ;D">
+						<input type="password" name="password" class="form-control" style="
+									width: 30%;
+									margin-left: 35%;
+									border: 0px;
+									margin-bottom: 20px;
+									margin-top: 20px;
+									text-align: center;
+								" placeholder="Password kamu ;D">
+						<input type="submit" class="btn btn-primary btn-lg btn-block" 
+								style="
+									width: 20%;
+									margin-left: 40%;
+									background-color: green;
+									border: 0px;
+									margin-bottom: 20px;
+									margin-top: 20px;
+								" 
+								>
+						</div>
 					</form>
 					<form action="login.jsp">
 						<input type="hidden" name="user_id" value="guest">
 						<input type="hidden" name="password" value="">
-						<input type="submit" value="login as guest">
+						<input type="submit" class="btn btn-primary btn-lg btn-block" 
+								style="
+									width: 20%;
+									margin-left: 40%;
+									background-color: green;
+									border: 0px;
+									margin-bottom: 20px;
+									margin-top: 20px;
+									" value="Login as Guest"
+								>
 					</form>
 					<%	}
 						else{

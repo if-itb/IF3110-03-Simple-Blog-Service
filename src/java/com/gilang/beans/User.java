@@ -51,10 +51,18 @@ public class User {
 		else
 			role = 4;
 		if(role != -1){
-			Cookie cookie = new Cookie("wbduser", username);
-			cookie.setMaxAge(30*60);
-			response.addCookie(cookie);
-			this.username = username;
+			if(role == 4){
+				Cookie cookie = new Cookie("wbduser", username);
+				cookie.setMaxAge(30*60);
+				response.addCookie(cookie);
+				this.username = username;
+			}
+			else{
+				Cookie cookie = new Cookie("wbduser", username);
+				cookie.setMaxAge(-1);
+				response.addCookie(cookie);
+				this.username = username;
+			}
 		}
 	}
 	

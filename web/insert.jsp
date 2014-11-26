@@ -21,9 +21,14 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         </head>
         <body>
+			<%	if(user.getUsername() == null){
+			response.setStatus(response.SC_MOVED_TEMPORARILY);
+			response.setHeader("Location", "home.jsp");
+				}else{
+			%>
             <%	sql.addPost(user.getUsername(), request.getParameter("title"), request.getParameter("date"), request.getParameter("content"));
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "index.jsp");
+				response.setHeader("Location", "index.jsp");}
 			%>
                         
         </body>

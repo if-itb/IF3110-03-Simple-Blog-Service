@@ -21,6 +21,11 @@
 <f:view>
     <html>
         <head>
+			<%	if(user.getUsername() == null){
+			response.setStatus(response.SC_MOVED_TEMPORARILY);
+			response.setHeader("Location", "home.jsp");
+				}
+			%>
             <%	Post post = sql.getPost(Integer.valueOf(request.getParameter("post_id"))); 
 				UserData userData = sql.getUser(user.getUsername());
 				System.out.println(user.getUsername());
@@ -48,9 +53,9 @@
 				</div>
                 <ul class="nav-primary">
 					<% if(user.getRole() == 1 || user.getRole() == 3){ %>
-						<li><a href="new_post.jsp">+ Tambah Post</a></li>
+						<li><a href="new_post.jsp"><img src="resources/img/add.png" style="width: auto; height: 80px; size: auto;"> </a></li>
 					<% } %>
-					<li><a href="logout.jsp">Logout</a></li>
+					<li><a href="logout.jsp"><img src="resources/img/logout.png" style="width: auto; height: 80px; size: auto;"> </a></li>
 				</ul>
             </nav>
 

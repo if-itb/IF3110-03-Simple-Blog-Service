@@ -21,9 +21,14 @@
             <title>JSP Page</title>
         </head>
         <body>
+			<%	if(user.getUsername() == null){
+			response.setStatus(response.SC_MOVED_TEMPORARILY);
+			response.setHeader("Location", "home.jsp");
+				}else{
+			%>
             <%	sql.publishPost(request.getParameter("post_id"));
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "unpublished.jsp");
+				response.setHeader("Location", "unpublished.jsp");}
 			%>
         </body>
     </html>
