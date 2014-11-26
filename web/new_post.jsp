@@ -49,9 +49,20 @@
 <div class="wrapper">
 
 <nav class="nav">
-    <a style="border:none;" id="logo" href="index.jsp"><h1>Simple<span>-</span>Blog</h1></a>
+    <a style="border:none;" id="logo" href="mainpage.jsp"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
+         <% if (session.getAttribute("role").toString().equals("editor") || session.getAttribute("role").toString().equals("admin")){%>
+        <li><a href="unpublished.jsp">unpublished post    </a></li>
+        <%} %>
+        <% if (session.getAttribute("role").toString().equals("owner") || session.getAttribute("role").toString().equals("admin")){%>
         <li><a href="new_post.jsp?mode=0">+ Tambah Post</a></li>
+        <%} %>   
+        <% if (session.getAttribute("role").toString().equals("admin")){%>
+        <li><a href="manage_user.jsp">manage user</a></li>
+        <%} %> 
+        <% if (session.getAttribute("role").toString().equals("guest")){%>
+        <li><a href="login.jsp">Login</a></li>
+        <%} %> 
     </ul>
 </nav>
 
@@ -97,7 +108,7 @@
                     <textarea name="Konten" rows="20" cols="20" id="Konten" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">${post}</textarea>
                     <input type="hidden" name="mode" value="${param.mode}">
                     <input type="hidden" name="id_post" value="${param.id_post}">
-                    <input type="submit" name="submit" value="Simpan" class="submit-button" >
+                    <input type="submit" id="submit" value="Simpan" class="submit-button" >
                 </form>
             </div>
         </div>

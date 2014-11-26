@@ -23,9 +23,20 @@
 <%
     Statement statement = null;
                 int new_id =0;
+                String role;
+                String id;
+                if (session.getAttribute("firsttimer").toString().equals("yes")){
+                    role = "guest";
+                    id = "-999";
+                    
+                }else{
+                    role = session.getAttribute("role").toString();
+                    id = session.getAttribute("id_user").toString();
+                    
+                }
                 String id_post = request.getParameter("id_post");
-                String nama = request.getParameter("Nama");
-                String email = request.getParameter("Email");
+                String nama = "";
+                String email = "";
                 String komentar = request.getParameter("Komentar");
                 
                 String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -38,6 +49,24 @@
                 
                  conn = DriverManager.getConnection(DB_URL,USER, PASS);
                 statement = conn.createStatement();
+                
+                if (role.equals("guest")){
+                     nama = request.getParameter("Nama");
+                     email = request.getParameter("Email");
+                }else{//ambil dulu nilai nama dan email dari db
+                    try {
+                String sql = "SELECT `username`,`email` FROM `tucildb_13511097`.`user` WHERE `id`="+id;
+                rs = statement.executeQuery(sql);
+                
+                while(rs.next()){
+                    nama = rs.getString("username");
+                    email = rs.getString("email");
+                }
+                } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+                }
                 
                 while ( true){   
                 try {
