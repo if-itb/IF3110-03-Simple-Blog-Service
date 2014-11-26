@@ -73,7 +73,7 @@
                         <h2>Komentar</h2>
 
                         <div id="contact-area">
-                            <form method="post" action="add_comment.jsp" name="commentForm">
+                            <form method="post" onsubmit=" addComment()" name="commentForm">
 								<input type="hidden" name="post_id" value="<%= post.getPost_id() %>"/>
 								<% if(!user.getUsername().equals("guest")){ %>
 									<input type="hidden" name="user_id" id="Nama" value="<%=  userData.getUser_id() %>"/>
@@ -82,7 +82,7 @@
 									<label for="Nama">Nama:</label>
 									<input type="text" name="user_id" id="Nama" value="anonymous"/>
 									<label for="Email">Email:</label>
-									<input type="text" name="email" id="Email"/>
+									<input type="text" name="email" id="Email" onchange="return validateEmail()"/>
 								<% } %>
                                 <label for="Komentar">Komentar:</label>
                                 <textarea name="content" rows="20" cols="20" id="Komentar"></textarea><br/>
@@ -120,7 +120,19 @@
             </footer>
 
             </div>
-								
+            <script type="text/javascript" src="assets/js/fittext.js"></script>
+            <script type="text/javascript" src="assets/js/app.js"></script>
+            <script type="text/javascript" src="assets/js/respond.min.js"></script>
+            <script type="text/javascript">
+              var ga_ua = '{{! TODO: ADD GOOGLE ANALYTICS UA HERE }}';
+
+              (function(g,h,o,s,t,z){g.GoogleAnalyticsObject=s;g[s]||(g[s]=
+                  function(){(g[s].q=g[s].q||[]).push(arguments)});g[s].s=+new Date;
+                  t=h.createElement(o);z=h.getElementsByTagName(o)[0];
+                  t.src='//www.google-analytics.com/analytics.js';
+                  z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
+                  ga('create',ga_ua);ga('send','pageview');
+            </script>								
 			<script type="text/javascript" src="resources/comment.js"></script>
 			<script type="text/javascript">loadComment()</script>
 

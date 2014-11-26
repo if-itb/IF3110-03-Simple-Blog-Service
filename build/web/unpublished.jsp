@@ -67,7 +67,7 @@
 					
 					<a href="edit_post.jsp?post_id=<%= p.getPost_id() %>">Edit</a>
 						| 
-					<a href="delete_post.jsp?post_id=<%= p.getPost_id() %>">Hapus</a>
+						<a onclick="Konfirmasi(<%= p.getPost_id() %>)" href="#">Hapus</a>
 						|
 					<a href="publish.jsp?post_id=<%= p.getPost_id() %>">Publish</a>
 					</p>
@@ -99,7 +99,15 @@
 	</footer>
 
 	</div>
+<script>
+function Konfirmasi(x) {
+    if (confirm("Yakin mau delete") == true) {
+		window.location="delete_post.jsp?post_id="+x;
+    } else {
 
+    }
+}
+</script>
 	</body>
     </html>
 </f:view>
