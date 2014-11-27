@@ -57,23 +57,18 @@ and open the template in the editor.
                         <div class="art-body-inner">
                             <h2>Tambah Post</h2>
                             <div id="contact-area">
-                            <f:subview id="new_post_form" rendered="#{beans.isLogin()}">
-                                <form name="formPost" id="formPost" method="post" action="#{beans.submitPost()}" onsubmit="return validate();">
-                                    <label for="Judul">Judul:</label>
-                                    <input type="text" name="Judul" id="Judul" value="#{beans.post.posttitle}"/>
-
-                                    <label for="Tanggal">Tanggal:</label>
-                                    <input type="date" name="Tanggal" id="Tanggal" value="#{beans.post.postdate}" placeholder="MM/DD/YYYY"/>
-
-                                    <label for="Konten">Konten:</label><br />
-                                    <textarea name="Konten" rows="20" cols="20" id="Konten" value="#{beans.post.postcontent}"></textarea>
-
-                                    <input type="submit" name="submit" id="submit" value="Simpan" class="submit-button"  />
-                                </form>
-                            </f:subview>
+                                <h:form rendered="#{beans.isLogin()}" >
+                                    <h:outputLabel>Judul:</h:outputLabel>
+                                    <h:inputText id="title" value="#{beans.post.posttitle}"/>
+                                    <h:outputLabel>Tanggal:</h:outputLabel>
+                                    <input id="date" type="date" jsf:value="#{beans.post.postdate}" />
+                                    <h:outputLabel>Konten:</h:outputLabel>
+                                    <h:inputTextarea id="content" value="#{beans.post.postcontent}" />
+                                    <h:commandButton value="Submit" style="width:150px;float:right;" action="#{beans.submitPost}" onclick="return validate();" />
+                                </h:form>
                             </div>
 
-                            
+
                         </div>
                     </div>
 
@@ -92,12 +87,12 @@ and open the template in the editor.
             </footer>
         </h:body>
     </f:view>
-    <script type="text/javascript">
+    <script type="text/javascript">        
                 function validate(){
                 var title = getElementById('Judul').value;
                         var date = getElementById('Tanggal').value;
                         var content = getElementById('Konten').value;
-                        if (title = "" || date = "" || content = ""){
+                        if (title === "" || date === "" || content === ""){
                 return false;
                 } else{
                 var dStream = date.split("/");
@@ -114,6 +109,9 @@ and open the template in the editor.
                 if (dd > dStream[0]){
                 return false;
                 } else{
+                    title = "";
+                    date = "mm/dd/yyyy";
+                    content = "";
                 return true;
                 }
                 }

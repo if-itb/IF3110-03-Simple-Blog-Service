@@ -25,6 +25,7 @@ public class BlogPost {
 
     public BlogPost() {
         pid = 0;
+        uid = 0;
         posttitle = "";
         postcontent = "";
         username = "";

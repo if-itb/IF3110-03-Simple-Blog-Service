@@ -167,16 +167,10 @@ public class UserData {
         
         PreparedStatement pst = null;
         Connection con = getConnection();
-              
-        //mengubah format date dari mm/dd/yyyy menjadi yyyy-mm-dd
-        String[] dateStream = blogPost.getPostdate().split("/");
-        String m = (Integer.parseInt(dateStream[0]))+"-";
-        String date = dateStream[2]+"-"+m+dateStream[1];
-        
         String sql = "INSERT INTO blogpost VALUES (NULL, '"+ blogPost.getUid()
                 + "', '" + blogPost.getPosttitle()
                 + "', '" + blogPost.getPostcontent() + "', '"
-                + date + "', '"
+                + blogPost.getPostdate() + "', '"
                 + blogPost.publishedToInt() + "', '"
                 + blogPost.deletedToInt() + "')";
         
