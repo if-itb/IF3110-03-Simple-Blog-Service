@@ -45,6 +45,7 @@ public class userMgnt implements Serializable {
         User userValidator = ud.getUser(user.getUsername());
         if (userValidator != null) {
             if (user.getPassword().compareTo(userValidator.getPassword()) == 0) {
+                user.setUid(userValidator.getUid());
                 user.setFullname(userValidator.getFullname());
                 user.setRole(userValidator.getRole());
                 user.setEmail(userValidator.getEmail());
@@ -86,6 +87,8 @@ public class userMgnt implements Serializable {
     
     public void submitPost(){
         UserData ud = new UserData();
+        post.setUid(user.getUid());
+        post.setUsername(user.getFullname());
         ud.writeBlogPost(post);
     }
     
