@@ -27,7 +27,7 @@ and open the template in the editor.
                             <h:form>
                                 <ul>
                                     <li style="padding: 5px">
-                                        <f:subview rendered="#{beans.isLogin()}" id="test">
+                                        <f:subview rendered="#{beans.isLogin() and !beans.editor}" id="test">
                                             <a href="faces/add_post.xhtml" style="color: #F40034;z-index:100;">+ Tambah Post </a>
                                         </f:subview>
                                     </li>
@@ -57,13 +57,13 @@ and open the template in the editor.
                         <div class="art-body-inner">
                             <h2>Tambah Post</h2>
                             <div id="contact-area">
-                                <h:form rendered="#{beans.isLogin()}" >
+                                <h:form rendered="#{beans.isLogin() and !beans.editor}" >
                                     <h:outputLabel>Judul:</h:outputLabel>
-                                    <h:inputText id="title" value="#{beans.post.posttitle}"/>
+                                    <input id="Judul" type="text" jsf:value="#{beans.post.posttitle}" />
                                     <h:outputLabel>Tanggal:</h:outputLabel>
-                                    <input id="date" type="date" jsf:value="#{beans.post.postdate}" />
-                                    <h:outputLabel>Konten:</h:outputLabel>
-                                    <h:inputTextarea id="content" value="#{beans.post.postcontent}" />
+                                    <input id="Tanggal" type="date" jsf:value="#{beans.post.postdate}" />
+                                    <h:outputLabel>Konten:</h:outputLabel>                                    
+                                    <textarea id="Konten" jsf:value="#{beans.post.postcontent}" />
                                     <h:commandButton value="Submit" style="width:150px;float:right;" action="#{beans.submitPost}" onclick="return validate();" />
                                 </h:form>
                             </div>
@@ -87,36 +87,23 @@ and open the template in the editor.
             </footer>
         </h:body>
     </f:view>
-    <script type="text/javascript">        
-                function validate(){
-                var title = getElementById('Judul').value;
-                        var date = getElementById('Tanggal').value;
-                        var content = getElementById('Konten').value;
-                        if (title === "" || date === "" || content === ""){
+    <script type="text/javascript">
+        function validate(){
+        var title = document.getElementById('Judul').value;
+        var date = document.getElementById('Tanggal').value;
+        var content = document.getElementById('Konten').value;
+        if (title === "" || date === "" || content === ""){
+            alert("Isikan semua field!");
+            return false;
+        } else{
+            var t = new Date();
+            if(Date.parse(t) > Date.parse(date)){
+                alert("Tanggal yang Anda masukkan salah");
                 return false;
-                } else{
-                var dStream = date.split("/");
-                        var t = new Date();
-                        var dd = t.getDate();
-                        var mm = t.getMonth() + 1;
-                        var yy = t.getFullYear();
-                        if (yy > dStream[0]){
-                return false;
-                } else{
-                if (mm > dStream[1]){
-                return false;
-                } else{
-                if (dd > dStream[0]){
-                return false;
-                } else{
-                    title = "";
-                    date = "mm/dd/yyyy";
-                    content = "";
+            }else{
                 return true;
-                }
-                }
-                }
-                }
-                }
+            }
+        }
+    }
     </script>
 </html>

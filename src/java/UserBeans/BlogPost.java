@@ -34,6 +34,18 @@ public class BlogPost {
         Date date = new Date();
         postdate = String.valueOf(date.getMonth()+1)+"/"+String.valueOf(date.getDate())+"/"+String.valueOf(date.getYear()+1900);
     }
+    
+    public void reset(){
+        pid = 0;
+        uid = 0;
+        posttitle = "";
+        postcontent = "";
+        username = "";
+        ispublished = false;
+        isdeleted = false;
+        Date date = new Date();
+        postdate = String.valueOf(date.getMonth()+1)+"/"+String.valueOf(date.getDate())+"/"+String.valueOf(date.getYear()+1900);
+    }
 
     public int getPid() {
         return pid;

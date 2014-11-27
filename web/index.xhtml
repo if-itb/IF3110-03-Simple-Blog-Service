@@ -20,7 +20,7 @@
                         <h:form>
                             <ul>
                                 <li style="padding: 5px">
-                                    <f:subview rendered="#{beans.isLogin()}" id="test">
+                                    <f:subview rendered="#{beans.isLogin() and !beans.editor}" id="test">
                                         <a href="faces/add_post.xhtml" style="color: #F40034">+ Tambah Post </a>
                                     </f:subview>
                                 </li>

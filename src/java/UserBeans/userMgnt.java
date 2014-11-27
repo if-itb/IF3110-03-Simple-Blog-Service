@@ -81,6 +81,18 @@ public class userMgnt implements Serializable {
         return user.getUsername().compareTo("guest") != 0 && cookie.getValue() != null;
     }
 
+    public boolean isAdmin(){
+        return user.getRole().compareTo("admin")==0;
+    }
+    
+    public boolean isOwner(){
+        return user.getRole().compareTo("owner")==0;
+    }
+    
+    public boolean isEditor(){
+        return user.getRole().compareTo("editor")==0;
+    }
+    
     public boolean activeMessage() {
         return !Message.equals("tidak ada") && !isLogin();
     }
@@ -90,6 +102,7 @@ public class userMgnt implements Serializable {
         post.setUid(user.getUid());
         post.setUsername(user.getFullname());
         ud.writeBlogPost(post);
+        post.reset();
     }
     
     
