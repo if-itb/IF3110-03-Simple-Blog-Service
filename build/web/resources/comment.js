@@ -1,21 +1,19 @@
 function addComment(){
-	if (validateEmail()){
-    var xmlhttp = getXMLHTTPObject();
-    var post_id = document.forms['commentForm']['post_id'].value;
-    var name = document.forms['commentForm']['user_id'].value;
-    var email = document.forms['commentForm']['email'].value;
-    var content = document.forms['commentForm']['content'].value;
-    var param = "post_id="+post_id+"&user_id="+name+"&email="+email+"&content="+content;
-    xmlhttp.onreadystatechange=function(){
-        if(xmlhttp.readyState == 4){
-            loadComment();
-            resetForm();
-        }
-    }
-    xmlhttp.open("POST", "add_comment.jsp", true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send(param);
+	var xmlhttp = getXMLHTTPObject();
+	var post_id = document.forms['commentForm']['post_id'].value;
+	var name = document.forms['commentForm']['user_id'].value;
+	var email = document.forms['commentForm']['email'].value;
+	var content = document.forms['commentForm']['content'].value;
+	var param = "post_id="+post_id+"&user_id="+name+"&email="+email+"&content="+content;
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			loadComment();
+			resetForm();
+		}
 	}
+	xmlhttp.open("POST", "add_comment.jsp", true);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(param);
 }
 
 function getXMLHTTPObject(){
@@ -44,14 +42,15 @@ function loadComment(){
 }
 
 function validateEmail() {
-	var email = document.forms["commentForm"]["Email"].value;
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    var result = email.match(re);
-	if (result !== null){document.getElementById("Email").style.background = "lime";
-            document.getElementById("Email").style.color = "white"; return true;}
-	else
-	{document.getElementById("Email").style.background = "red";
-            document.getElementById("Email").style.color = "white"; return false;}
+	var email = document.forms["commentForm"]["email"].value;
+    var re = /[\w\d\._-]+@[\w\d]+\.\w+/;
+	if (re.test(email)){
+		document.getElementById("Email").style.background = "lime";
+        document.getElementById("Email").style.color = "white"; return true;
+	}
+	else{
+		document.getElementById("Email").style.background = "red";
+		document.getElementById("Email").style.color = "white"; return false;}
 }
 
 function resetForm(){

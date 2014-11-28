@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.1.6
 -- http://www.phpmyadmin.net
 --
--- Inang: 127.0.0.1
--- Waktu pembuatan: 25 Nov 2014 pada 20.44
--- Versi Server: 5.5.32
--- Versi PHP: 5.4.19
+-- Host: 127.0.0.1
+-- Generation Time: Nov 28, 2014 at 02:14 PM
+-- Server version: 5.6.16
+-- PHP Version: 5.5.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,44 +17,55 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Basis data: `tubes_wbd`
+-- Database: `tubes_wbd`
 --
-CREATE DATABASE IF NOT EXISTS `tubes_wbd` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `tubes_wbd`;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `comment`
+-- Table structure for table `comment`
 --
 
 CREATE TABLE IF NOT EXISTS `comment` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
   `post_id` int(11) NOT NULL,
   `content` text NOT NULL,
   `date` datetime NOT NULL,
-  PRIMARY KEY (`comment_id`,`user_id`,`post_id`),
-  KEY `user_id` (`user_id`),
+  `email` varchar(100) NOT NULL,
+  PRIMARY KEY (`comment_id`,`post_id`),
+  KEY `user_id` (`name`),
   KEY `post_id` (`post_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
--- Dumping data untuk tabel `comment`
+-- Dumping data for table `comment`
 --
 
-INSERT INTO `comment` (`comment_id`, `user_id`, `post_id`, `content`, `date`) VALUES
-(7, 'guest', 3, 'dascaca', '2014-11-26 01:28:00'),
-(8, 'Daniar', 3, 'dascaca', '2014-11-26 01:33:24'),
-(9, 'Daniar Heri', 3, 'cdslcnlsdcnlsdncs', '2014-11-26 01:34:31'),
-(10, 'Husein', 3, 'ncsdlcnsdlcnlsdcm', '2014-11-26 01:39:05'),
-(11, 'Danodws', 4, 'mlcnmlsdknls', '2014-11-26 01:39:34'),
-(12, 'ewdawf', 3, 'fewaf', '2014-11-26 02:08:55');
+INSERT INTO `comment` (`comment_id`, `name`, `post_id`, `content`, `date`, `email`) VALUES
+(2, 'admin', 3, 'test', '2014-11-26 00:00:00', 'admin@admin.com'),
+(3, 'admin', 3, 'test2', '2014-11-26 00:00:00', 'admin@admin.com'),
+(4, 'admin', 3, 'cxcxzvcdsvfdsvfd', '2014-11-26 12:55:12', 'admin@admin.com'),
+(5, 'gilang', 3, 'comment lagi nih', '2014-11-26 12:58:48', 'gilang.9h@edited.com'),
+(6, 'dummy user', 3, 'dsfkjkjgbwkjebgj', '2014-11-26 13:01:03', 'gdsbgjvsb@fsdkjbk.com'),
+(7, 'anonymous', 3, 'dfdssdf', '2014-11-26 13:24:15', 'anonymous@anonym.com'),
+(10, 'anonymous', 3, 'refdsnfjksdnkjsdnf', '2014-11-26 14:49:13', 'editor@editor.com'),
+(12, 'anonymous', 3, 'hihihi', '2014-11-26 14:55:09', 'editor@editor.com'),
+(13, 'anonym', 3, 'yah gitulah', '2014-11-26 14:55:40', 'editor@lalala.com'),
+(14, 'anonymous', 3, 'fdsffdgdfgfgfddffdfsd', '2014-11-26 14:58:22', 'editor@editor.com'),
+(17, 'admin', 5, 'admin here', '2014-11-28 16:49:31', 'admin@admin.com'),
+(18, 'anonymous', 3, 'fdsfsd', '2014-11-28 17:38:25', 'dsfsdfds'),
+(19, 'anonymous', 3, '', '2014-11-28 17:38:26', 'dsfsdfds'),
+(20, 'anonymous', 3, '', '2014-11-28 17:38:26', 'dsfsdfds'),
+(21, 'anonymous', 3, '', '2014-11-28 17:38:26', 'dsfsdfds'),
+(22, 'anonymous', 3, '', '2014-11-28 17:38:27', 'dsfsdfds'),
+(23, 'anonymous', 3, 'sadfdafdsf', '2014-11-28 17:38:33', 'anonim@an.com'),
+(24, 'admin', 5, 'new coommemfdbvhjsfbvkj', '2014-11-28 17:44:17', 'admin@admin.com');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `post`
+-- Table structure for table `post`
 --
 
 CREATE TABLE IF NOT EXISTS `post` (
@@ -67,54 +78,55 @@ CREATE TABLE IF NOT EXISTS `post` (
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`post_id`,`user_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
--- Dumping data untuk tabel `post`
+-- Dumping data for table `post`
 --
 
 INSERT INTO `post` (`post_id`, `user_id`, `title`, `content`, `date`, `published`, `deleted`) VALUES
-(3, 'admin', 'wowowowowoowwo', 'lorem ipsum dvdvfvdvdvdffvvdfvolor sir amet cdscsdcsdc dscscsdc', '7715-02-11 00:00:00', 1, 0),
-(4, 'admin', 'new post', 'sadasdsafasfasfsa cdscs', '5815-02-12 00:00:00', 1, 0),
-(5, 'owner', 'edit wahahahaha', 'dfdsfsdvsdvfbreg', '5814-12-09 00:00:00', 0, 0),
-(6, 'guest', 'dcscsca', 'csvsvdsv', '3914-12-11 00:00:00', 0, 0);
+(3, 'gilang', 'wowowowowoowwo', 'lorem ipsum dolor sir amet', '2014-11-11 00:00:00', 1, 0),
+(5, 'admin', 'blahblahblah', 'edited content by admin', '2014-11-28 00:00:00', 1, 0),
+(6, 'owner', 'New Second Post', 'svnrekgeubgs jhg ersjhg erhjg jrsg jrgjhergjes', '2014-11-29 00:00:00', 0, 0),
+(8, 'admin', 'blahblahblah', 'blahblahblah', '2014-12-12 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` varchar(20) NOT NULL,
   `password` varchar(20) NOT NULL,
   `role` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `password`, `role`) VALUES
-('admin', 'admin', 3),
-('editor', 'editor', 2),
-('gilang', 'wohoho', 1),
-('guest', '', 4),
-('owner', 'owner', 1);
+INSERT INTO `user` (`user_id`, `password`, `role`, `email`) VALUES
+('admin', 'admin', 3, 'admin@admin.com'),
+('editor', 'editor', 2, 'editor@editor.com'),
+('gilang', 'wohoho', 1, 'gilang.9h@edited.com'),
+('guest', '', 4, ''),
+('owner', 'owner', 1, 'owner@owner.com');
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `comment`
+-- Constraints for table `comment`
 --
 ALTER TABLE `comment`
   ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `post`
+-- Constraints for table `post`
 --
 ALTER TABLE `post`
   ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;

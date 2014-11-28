@@ -54,6 +54,7 @@
 	<div id="home">
 		<div class="posts">
 			<nav class="art-list">
+				<h5>Unpublished Post</h5><br/>
 			  <ul class="art-list-body">
 			<%	for(Post p : sql.getPosts(true)){	  %>
 				<li class="art-list-item">
@@ -84,17 +85,11 @@
 		<!-- <div class="footer-nav"><p></p></div> -->
 		<div class="psi">&Psi;</div>
 		<aside class="offsite-links">
-			Asisten IF3110 /
-			<a class="rss-link" href="#rss">RSS</a> /
+			Gilang Julian Suherik | 13512045
 			<br/>
-			<a class="twitter-link" href="http://twitter.com/YoGiiSinaga">Yogi</a> /
-			<a class="twitter-link" href="http://twitter.com/sonnylazuardi">Sonny</a> /
-			<a class="twitter-link" href="http://twitter.com/fathanpranaya">Fathan</a> /
+			Daniar Heri Kurniawan | 13512064
 			<br/>
-			<a class="twitter-link" href="#">Renusa</a> /
-			<a class="twitter-link" href="#">Kelvin</a> /
-			<a class="twitter-link" href="#">Yanuar</a> /
-
+			Muhammad Husain Jakfari | 13512067
 		</aside>
 	</footer>
 

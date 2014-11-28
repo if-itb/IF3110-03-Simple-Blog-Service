@@ -1,6 +1,6 @@
 <%-- 
-    Document   : unpublished
-    Created on : Nov 25, 2014, 5:54:34 PM
+    Document   : deleted
+    Created on : Nov 28, 2014, 5:45:01 PM
     Author     : Gilang
 --%>
 
@@ -54,9 +54,9 @@
 	<div id="home">
 		<div class="posts">
 			<nav class="art-list">
-				<h5>Unpublished Post</h5><br/>
+				<h5>Deleted Post</h5><br/>
 			  <ul class="art-list-body">
-			<%	for(Post p : sql.getPosts(true)){	  %>
+			<%	for(Post p : sql.getDeletedPosts()){	  %>
 				<li class="art-list-item">
 					<div class="art-list-item-title-and-time">
 						<h2 class="art-list-title"><a href="post.html"><%= p.getTitle() %></a></h2>
@@ -65,12 +65,7 @@
 					</div>
 					<p><%= p.getContent() %></p>
 					<p>
-					
-					<a href="edit_post.jsp?post_id=<%= p.getPost_id() %>">Edit</a>
-						| 
-						<a onclick="Konfirmasi(<%= p.getPost_id() %>)" href="#">Hapus</a>
-						|
-					<a href="publish.jsp?post_id=<%= p.getPost_id() %>">Publish</a>
+					<a href="restore.jsp?post_id=<%= p.getPost_id() %>">Restore</a>
 					</p>
 				</li>
 			<%	} %>
@@ -94,15 +89,6 @@
 	</footer>
 
 	</div>
-<script>
-function Konfirmasi(x) {
-    if (confirm("Yakin mau delete") == true) {
-		window.location="delete_post.jsp?post_id="+x;
-    } else {
-
-    }
-}
-</script>
 	</body>
     </html>
 </f:view>

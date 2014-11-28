@@ -79,7 +79,7 @@
 					
 					<a href="edit_user.jsp?user_id=<%= u.getUser_id() %>">Edit</a>
 					   | 
-					<a href="delete_user.jsp?user_id=<%= u.getUser_id() %>">Hapus</a>
+					<a onclick="return Konfirmasi()" href="delete_user.jsp?user_id=<%= u.getUser_id() %>">Hapus</a>
 					</p>
 				</li>
 			<%		} 
@@ -96,22 +96,22 @@
 		<!-- <div class="footer-nav"><p></p></div> -->
 		<div class="psi">&Psi;</div>
 		<aside class="offsite-links">
-			Asisten IF3110 /
-			<a class="rss-link" href="#rss">RSS</a> /
+			Gilang Julian Suherik | 13512045
 			<br/>
-			<a class="twitter-link" href="http://twitter.com/YoGiiSinaga">Yogi</a> /
-			<a class="twitter-link" href="http://twitter.com/sonnylazuardi">Sonny</a> /
-			<a class="twitter-link" href="http://twitter.com/fathanpranaya">Fathan</a> /
+			Daniar Heri Kurniawan | 13512064
 			<br/>
-			<a class="twitter-link" href="#">Renusa</a> /
-			<a class="twitter-link" href="#">Kelvin</a> /
-			<a class="twitter-link" href="#">Yanuar</a> /
-
+			Muhammad Husain Jakfari | 13512067
 		</aside>
 	</footer>
 
 	</div>
-
+<script>
+function Konfirmasi() {
+    if (confirm("Yakin mau delete?") == true) 
+		return true;
+	return false;
+}
+</script>
 	</body>
     </html>
 </f:view>

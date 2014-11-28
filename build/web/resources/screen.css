@@ -764,10 +764,11 @@ padding: 0;
   color: #000;
 }
 
-input::selection{
+textarea::selection,input::selection{
   background: #000;
   color: #FFF;
 }
+
 
 ::-moz-selection {
   background: #FFF;

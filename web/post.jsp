@@ -74,27 +74,29 @@
                         <hr class="featured-article" />
                         <%= post.getContent() %>
                         <hr />
-
-                        <h2>Komentar</h2>
-
-                        <div id="contact-area">
-                            <form method="post" onsubmit=" addComment()" name="commentForm">
-								<input type="hidden" name="post_id" value="<%= post.getPost_id() %>"/>
-								<% if(!user.getUsername().equals("guest")){ %>
-									<input type="hidden" name="user_id" id="Nama" value="<%=  userData.getUser_id() %>"/>
-									<input type="hidden" name="email" value="<%=  userData.getEmail() %>"/>
-								<% } else {%>
-									<label for="Nama">Nama:</label>
-									<input type="text" name="user_id" id="Nama" value="anonymous"/>
-									<label for="Email">Email:</label>
-									<input type="text" name="email" id="Email" onchange="return validateEmail()"/>
-								<% } %>
-                                <label for="Komentar">Komentar:</label>
-                                <textarea name="content" rows="20" cols="20" id="Komentar"></textarea><br/>
-                                <input type="button" name="submit" value="Kirim" class="submit-button" onclick="addComment()">
-                            </form>
-                        </div>
-
+						
+						<h2>Komentar</h2>
+						
+							<div id="contact-area">
+								<form method="post" onsubmit=" addComment()" name="commentForm">
+									<input type="hidden" name="post_id" value="<%= post.getPost_id() %>"/>
+									<% if(!user.getUsername().equals("guest")){ %>
+										<input type="hidden" name="user_id" id="Nama" value="<%=  userData.getUser_id() %>"/>
+										<input type="hidden" name="email" value="<%=  userData.getEmail() %>"/>
+									<% } else if(user.getRole() != 2){%>
+										<label for="Nama">Nama:</label>
+										<input type="text" name="user_id" id="Nama" value="anonymous"/>
+										<label for="Email">Email:</label>
+										<input type="text" name="email" id="Email" onchange="return validateEmail()"/>
+									<% } 
+										if(user.getRole() != 2){
+									%>
+									<label for="Komentar">Komentar:</label>
+									<textarea name="content" rows="20" cols="20" id="Komentar"></textarea><br/>
+									<input type="button" name="submit" value="Kirim" class="submit-button" onclick="addComment()">
+									<% } %>
+								</form>
+							</div>
 						<div id="comment">
 						
 						</div>
@@ -110,34 +112,15 @@
                 <!-- <div class="footer-nav"><p></p></div> -->
                 <div class="psi">&Psi;</div>
                 <aside class="offsite-links">
-                    Asisten IF3110 /
-                    <a class="rss-link" href="#rss">RSS</a> /
-                    <br>
-                    <a class="twitter-link" href="http://twitter.com/YoGiiSinaga">Yogi</a> /
-                    <a class="twitter-link" href="http://twitter.com/sonnylazuardi">Sonny</a> /
-                    <a class="twitter-link" href="http://twitter.com/fathanpranaya">Fathan</a> /
-                    <br>
-                    <a class="twitter-link" href="#">Renusa</a> /
-                    <a class="twitter-link" href="#">Kelvin</a> /
-                    <a class="twitter-link" href="#">Yanuar</a> /
-
-                </aside>
+					Gilang Julian Suherik | 13512045
+					<br/>
+					Daniar Heri Kurniawan | 13512064
+					<br/>
+					Muhammad Husain Jakfari | 13512067
+				</aside>
             </footer>
 
-            </div>
-            <script type="text/javascript" src="assets/js/fittext.js"></script>
-            <script type="text/javascript" src="assets/js/app.js"></script>
-            <script type="text/javascript" src="assets/js/respond.min.js"></script>
-            <script type="text/javascript">
-              var ga_ua = '{{! TODO: ADD GOOGLE ANALYTICS UA HERE }}';
-
-              (function(g,h,o,s,t,z){g.GoogleAnalyticsObject=s;g[s]||(g[s]=
-                  function(){(g[s].q=g[s].q||[]).push(arguments)});g[s].s=+new Date;
-                  t=h.createElement(o);z=h.getElementsByTagName(o)[0];
-                  t.src='//www.google-analytics.com/analytics.js';
-                  z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
-                  ga('create',ga_ua);ga('send','pageview');
-            </script>								
+            </div>	
 			<script type="text/javascript" src="resources/comment.js"></script>
 			<script type="text/javascript">loadComment()</script>
 

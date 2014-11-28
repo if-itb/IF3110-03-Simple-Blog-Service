@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="sql" scope="session" class="com.gilang.sql.DBAdapter" />
+<jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
+
 <%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
 <%@taglib prefix="h" uri="http://java.sun.com/jsf/html"%>
 
@@ -20,13 +22,13 @@
         </head>
         <body>
 			<%	if(user.getUsername() == null){
-			response.setStatus(response.SC_MOVED_TEMPORARILY);
-			response.setHeader("Location", "home.jsp");
+					response.setStatus(response.SC_MOVED_TEMPORARILY);
+					response.setHeader("Location", "home.jsp");
 				}else{
-			%>
-            <%	sql.deletePost(request.getParameter("post_id"));
-				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "index.jsp");}
+					sql.deletePost(request.getParameter("post_id"));
+					response.setStatus(response.SC_MOVED_TEMPORARILY);
+					response.setHeader("Location", "index.jsp");
+				}
 			%>
         </body>
     </html>

@@ -1,11 +1,11 @@
 <%-- 
-    Document   : delete_post
-    Created on : Nov 25, 2014, 1:56:52 PM
+    Document   : restore
+    Created on : Nov 28, 2014, 5:48:39 PM
     Author     : Gilang
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="sql" scope="session" class="com.gilang.sql.DBAdapter" />
+<jsp:useBean id="sql" class="com.gilang.sql.DBAdapter" scope="session"/>
 <jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
 
 <%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
@@ -22,13 +22,13 @@
         </head>
         <body>
 			<%	if(user.getUsername() == null){
-					response.setStatus(response.SC_MOVED_TEMPORARILY);
-					response.setHeader("Location", "home.jsp");
+			response.setStatus(response.SC_MOVED_TEMPORARILY);
+			response.setHeader("Location", "home.jsp");
 				}else{
-					sql.deletePost(request.getParameter("post_id"));
-					response.setStatus(response.SC_MOVED_TEMPORARILY);
-					response.setHeader("Location", "index.jsp");
-				}
+			%>
+            <%	sql.restorePost(request.getParameter("post_id"));
+				response.setStatus(response.SC_MOVED_TEMPORARILY);
+				response.setHeader("Location", "deleted.jsp");}
 			%>
         </body>
     </html>

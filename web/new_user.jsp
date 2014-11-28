@@ -19,7 +19,7 @@
 
 		<link rel="stylesheet" type="text/css" href="resources/screen.css" />
 		<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico"/>
-
+		<script type="text/javascript" src="resources/comment.js"></script>
 		<!--[if lt IE 9]>
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -57,7 +57,7 @@
 					<h2>Tambah User</h2>
 
 					<div id="contact-area">
-						<form method="post" action="insert_user.jsp">
+						<form method="post" action="insert_user.jsp" name="commentForm" onsubmit="return validateEmail()">
 							<label for="user">User ID:</label>
 							<input type="text" name="user_id" id="user"/>
 							
@@ -67,8 +67,8 @@
 							<label for="role">Role:</label>
 							<input type="text" name="role" id="role"/>
                                                         
-                                                        <label for="role">Email:</label>
-							<input type="text" name="email" id="email"/>
+							<label for="Email">Email:</label>
+							<input type="text" name="email" id="Email" onchange="validateEmail()"/>
 							
 							<input type="submit" name="submit" value="Simpan" class="submit-button"/>
 						</form>
@@ -83,22 +83,16 @@
 			<!-- <div class="footer-nav"><p></p></div> -->
 			<div class="psi">&Psi;</div>
 			<aside class="offsite-links">
-				Asisten IF3110 /
-				<a class="rss-link" href="#rss">RSS</a> /
+				Gilang Julian Suherik | 13512045
 				<br/>
-				<a class="twitter-link" href="http://twitter.com/YoGiiSinaga">Yogi</a> /
-				<a class="twitter-link" href="http://twitter.com/sonnylazuardi">Sonny</a> /
-				<a class="twitter-link" href="http://twitter.com/fathanpranaya">Fathan</a> /
+				Daniar Heri Kurniawan | 13512064
 				<br/>
-				<a class="twitter-link" href="#">Renusa</a> /
-				<a class="twitter-link" href="#">Kelvin</a> /
-				<a class="twitter-link" href="#">Yanuar</a> /
-
+				Muhammad Husain Jakfari | 13512067
 			</aside>
 		</footer>
 
 		</div>
-
+		
 </body>
     </html>
 </f:view>

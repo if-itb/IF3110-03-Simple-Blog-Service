@@ -63,7 +63,9 @@
 					<a href="unpublished.jsp" style="text-align: right; display: block; width: 100%;" class="art-list-title">Publish Posts</a>
 				<% } else if(user.getRole() == 3){ %>
 				<div style="text-align: right; display: block; width: 100%;">
-					<a href="unpublished.jsp" class="art-list-time">Publish Posts</a>
+					<a href="deleted.jsp" class="art-list-time">Restore Post</a>
+					|
+					<a href="unpublished.jsp" class="art-list-time">Publish Post</a>
 					|
 					<a href="manage_user.jsp" class="art-list-time">Manage User</a>
 				</div>
@@ -82,7 +84,7 @@
 					<% if(user.getRole() == 1 || user.getRole() == 2 || user.getRole() == 3){ %>
 					<a href="edit_post.jsp?post_id=<%= p.getPost_id() %>">Edit</a>
 					   | 
-					   <a onclick="Konfirmasi(<%= p.getPost_id() %>)" href="#">Hapus</a>
+					   <a onclick="return Konfirmasi()" href="delete_post.jsp?post_id=<%= p.getPost_id() %>">Hapus</a>
 					<% } %>
 					</p>
 				</li>
@@ -98,28 +100,20 @@
 		<!-- <div class="footer-nav"><p></p></div> -->
 		<div class="psi">&Psi;</div>
 		<aside class="offsite-links">
-			Asisten IF3110 /
-			<a class="rss-link" href="#rss">RSS</a> /
+			Gilang Julian Suherik | 13512045
 			<br/>
-			<a class="twitter-link" href="http://twitter.com/YoGiiSinaga">Yogi</a> /
-			<a class="twitter-link" href="http://twitter.com/sonnylazuardi">Sonny</a> /
-			<a class="twitter-link" href="http://twitter.com/fathanpranaya">Fathan</a> /
+			Daniar Heri Kurniawan | 13512064
 			<br/>
-			<a class="twitter-link" href="#">Renusa</a> /
-			<a class="twitter-link" href="#">Kelvin</a> /
-			<a class="twitter-link" href="#">Yanuar</a> /
-
+			Muhammad Husain Jakfari | 13512067
 		</aside>
 	</footer>
 
 	</div>
 <script>
 function Konfirmasi(x) {
-    if (confirm("Yakin mau delete") == true) {
-		window.location="delete_post.jsp?post_id="+x;
-    } else {
-
-    }
+    if (confirm("Yakin mau delete?") == true) 
+		return true;
+    return false;
 }
 </script>
 	</body>

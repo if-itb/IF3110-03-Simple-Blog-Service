@@ -161,6 +161,35 @@ public class DBAdapter {
 		}
 	}
 	
+	public List<Post> getDeletedPosts(){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			List<Post> postList = new ArrayList<>();
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM post WHERE deleted=1");
+			while(resultSet.next()){
+				int post_id = resultSet.getInt("post_id");
+				String user_id = resultSet.getString("user_id");
+				String title = resultSet.getString("title");
+				String content = resultSet.getString("content");
+				String date = resultSet.getDate("date").toString();
+				boolean published = resultSet.getBoolean("published");
+				boolean deleted = resultSet.getBoolean("deleted");
+				postList.add(new Post(post_id, user_id, title, content, date, published, deleted));
+			}
+			return postList;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return null;
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public UserData getUser(String userID){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
@@ -325,7 +354,7 @@ public class DBAdapter {
 	public void deletePost(String postId){
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
-			prepStatement = connection.prepareStatement("DELETE FROM post WHERE post_id=" + postId);
+			prepStatement = connection.prepareStatement("UPDATE post SET deleted=1 WHERE post_id=" + postId);
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -360,6 +389,23 @@ public class DBAdapter {
 		try{
 			connection = DriverManager.getConnection(url, user, pass);
 			prepStatement = connection.prepareStatement("UPDATE post SET published=1 WHERE post_id=" + postId);
+			prepStatement.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				prepStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void restorePost(String postId){
+		try{
+			connection = DriverManager.getConnection(url, user, pass);
+			prepStatement = connection.prepareStatement("UPDATE post SET deleted=0 WHERE post_id=" + postId);
 			prepStatement.executeUpdate();
 		}catch(SQLException e){
 			e.printStackTrace();
