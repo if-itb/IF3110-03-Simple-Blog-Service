@@ -22,6 +22,7 @@ public class MainUserData {
         System.out.println("password : "+user.getPassword());
         */
        
+        /*
         userMgnt um = new userMgnt();
         BlogPost post = new BlogPost();
         post.setPostcontent("lalala2");
@@ -30,5 +31,9 @@ public class MainUserData {
         post.setUid(2);
         um.setPost(post);
         um.submitPost();
+                */
+        
+        userMgnt um = new userMgnt();
+        um.publishPost(9);
     }
 }

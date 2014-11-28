@@ -27,10 +27,13 @@ public class userMgnt implements Serializable {
      */
     private String Message;
     private Cookie cookie;
-    private String passedParam;
     private User user;
     private BlogPost post;
     private ArrayList<BlogPost> allPosts;
+    private ArrayList<BlogPost> unpublishedPosts;
+    private ArrayList<Komentar> comments;
+    private Komentar komen;
+    private int pid;
 
     public userMgnt() {
         user = new User();
@@ -38,6 +41,10 @@ public class userMgnt implements Serializable {
         Message = "tidak ada";
         cookie = new Cookie("Username", null);
         cookie.setMaxAge(120);
+        post = new BlogPost();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String passedParam = (String) facesContext.getExternalContext().getRequestParameterMap().get("pid");
+        pid = Integer.parseInt(passedParam);
     }
     
     public void login() {
@@ -61,7 +68,7 @@ public class userMgnt implements Serializable {
         }
     }
 
-    public void Logout() {
+    public String Logout() {
         reset();
         Message = "tidak ada";
         cookie.setValue(null);
@@ -69,6 +76,7 @@ public class userMgnt implements Serializable {
         FacesContext facesContex = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) facesContex.getExternalContext().getResponse();
         response.addCookie(cookie);
+        return "faces/index.xhtml";
     }
 
     public void reset() {
@@ -105,6 +113,51 @@ public class userMgnt implements Serializable {
         post.reset();
     }
     
+    public void publishPost(int pid){
+        UserData ud = new UserData();
+        ud.publishPost(pid);
+    }
+    
+    public void deletePost(int pid){
+        UserData ud = new UserData();
+        ud.deletePost(pid);
+    }
+    
+    public void writeComment(){
+        UserData ud = new UserData();
+        komen.setPid(pid);
+        ud.writeKomentar(komen);
+    }
+        
+    public ArrayList<Komentar> getComments(){
+        UserData ud = new UserData();
+        return ud.getListKomentar(pid);
+    }
+    
+    public Komentar getKomen(){
+        return komen;
+    }
+    
+    public void setKomen(Komentar komen){
+        this.komen.setCid(komen.getCid());
+        this.komen.setCommentDate(komen.getCommentDate());
+        this.komen.setEmail(komen.getEmail());
+        this.komen.setKomen(komen.getKomen());
+        this.komen.setKomentator(komen.getKomentator());
+        this.komen.setPid(komen.getPid());
+    }
+    
+    public ArrayList<BlogPost> getUnpublishedPosts(){
+        UserData ud = new UserData();
+        return ud.getAllUnpublishedBlogPost();
+    }
+    
+    public void setUnpublishedPosts(ArrayList<BlogPost> unpublishedPostSet){
+        unpublishedPosts.clear();
+        for (BlogPost unpublishedPostSet1 : unpublishedPostSet) {
+            unpublishedPosts.add(unpublishedPostSet1);
+        }
+    }
     
     public User getUser() {
         return this.user;
@@ -126,19 +179,9 @@ public class userMgnt implements Serializable {
 
     public void setAllPosts(ArrayList<BlogPost> postSet) {
         allPosts.clear();
-        for (int i = 0; i < postSet.size(); i++) {
-            allPosts.add(postSet.get(i));
+        for (BlogPost postSet1 : postSet) {
+            allPosts.add(postSet1);
         }
-    }
-
-    public String getPassedParam() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        this.passedParam = (String) facesContext.getExternalContext().getRequestParameterMap().get("pid");
-        return passedParam;
-    }
-
-    public void setPassedParam(String newPassedParam) {
-        passedParam = newPassedParam;
     }
 
     public BlogPost getPost(){

@@ -128,7 +128,7 @@ public class UserData {
                 komentar.setKomentator(rs.getString("komentator"));
                 komentar.setKomen(rs.getString("komen"));
                 komentar.setEmail(rs.getString("email"));
-                komentar.setCommentDate(rs.getDate("commentdate"));
+                komentar.setCommentDate(rs.getString("commentdate"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,7 +141,7 @@ public class UserData {
         ResultSet rs = null;
         Statement pst = null;
         Connection con = getConnection();
-        String sql = "SELECT * FROM komentar WHERE pid=" + pid;
+        String sql = "SELECT * FROM komentar WHERE pid=" + pid+" ORDER BY cid DESC";
         try {
             pst = con.createStatement();
             rs = pst.executeQuery(sql);
@@ -154,7 +154,7 @@ public class UserData {
                 komentar.setKomentator(rs.getString("komentator"));
                 komentar.setKomen(rs.getString("komen"));
                 komentar.setEmail(rs.getString("email"));
-                komentar.setCommentDate(rs.getDate("commentdate"));
+                komentar.setCommentDate(rs.getString("commentdate"));
                 records.add(komentar);
             }
         } catch (SQLException ex) {
@@ -266,6 +266,35 @@ public class UserData {
         }
         return records;
     }
+    
+    public ArrayList<BlogPost> getAllUnpublishedBlogPost(){
+        ArrayList<BlogPost> records = new ArrayList<BlogPost>();
+        ResultSet rs = null;
+        Statement pst = null;
+        Connection con = getConnection();
+        String sql = "SELECT blogpost.*, user.fullname FROM blogpost NATURAL JOIN user WHERE blogpost.uid = user.uid AND published=0 ORDER BY blogpost.postdate DESC";
+        try {
+            pst = con.createStatement();
+            rs = pst.executeQuery(sql);
+            
+            while (rs.next()) {
+                BlogPost blogPost = new BlogPost();
+                blogPost.setPid(rs.getInt("pid"));
+                blogPost.setUid(rs.getInt("uid"));
+                blogPost.setUsername(rs.getString("fullname"));
+                blogPost.setPosttitle(rs.getString("posttitle"));
+                blogPost.setPostcontent(rs.getString("postcontent"));
+                blogPost.setPostdate(rs.getDate("postdate").toString());
+                blogPost.setPublished(rs.getBoolean("published"));
+                blogPost.setDeleted(rs.getBoolean("deleted"));
+                records.add(blogPost);
+            }
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return records;
+    }
 
     public Connection getConnection() {
         Connection con = null;
@@ -281,6 +310,32 @@ public class UserData {
         }
 
         return con;
+    }
+    
+    public void publishPost(int pid){
+        PreparedStatement pst = null;
+        Connection con = getConnection();
+        String sql = "UPDATE blogpost SET published = 1 WHERE pid=" + pid;
+        try {
+            pst = con.prepareStatement(sql);
+            pst.execute();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void deletePost(int pid){
+        PreparedStatement pst = null;
+        Connection con = getConnection();
+        String sql = "DELETE FROM blogpost WHERE pid=" + pid;
+        try {
+            pst = con.prepareStatement(sql);
+            pst.execute();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
