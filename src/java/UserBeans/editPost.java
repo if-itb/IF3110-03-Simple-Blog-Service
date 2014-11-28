@@ -6,17 +6,17 @@
 package UserBeans;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author Yusuf
  */
-@ManagedBean(name = "editPost")
-@RequestScoped
+@ManagedBean(name = "edit", eager = true)
+@SessionScoped
 public class editPost {
 
+    
     private int pid;
     private BlogPost post;
     
@@ -25,12 +25,15 @@ public class editPost {
      */
     public editPost() {
         post = new BlogPost();
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        String passedParam = (String) facesContext.getExternalContext().getRequestParameterMap().get("pid");
+        pid = 0;
+    }
+    
+    public String initiate(int ppid){
         UserData ud = new UserData();
-        
-        pid = Integer.parseInt(passedParam);
-        post = ud.getBlogPost(pid);
+        pid = ppid;
+        post = ud.getBlogPost(ppid);
+        BlogPost dummy = ud.getBlogPost(ppid);
+        return "faces/edit_post.xhtml";
     }
     
     public BlogPost getPost(){

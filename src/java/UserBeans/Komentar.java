@@ -23,11 +23,11 @@ public class Komentar {
     public Komentar() {
         cid=0;
         pid=0;
-        komentator="";
+        komentator="guest";
         komen="";
         email="";
         java.util.Date date = new java.util.Date();
-        commentDate = String.valueOf(date.getMonth()+1)+"/"+String.valueOf(date.getDate())+"/"+String.valueOf(date.getYear()+1900);
+        commentDate = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
     }
 
     public int getCid() {

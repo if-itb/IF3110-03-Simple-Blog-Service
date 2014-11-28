@@ -1,4 +1,6 @@
-/*
+/*;;
+
+
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -82,7 +84,6 @@ public class UserData {
         try {
             pst = con.createStatement();
             rs = pst.executeQuery(sql);
-            con.close();
 
             while (rs.next()) {
                 User user = new User();
@@ -94,7 +95,9 @@ public class UserData {
                 user.setUsername(rs.getString("username"));
                 records.add(user);
             }
+            con.close();
         } catch (SQLException ex) {
+            String exex = ex.getMessage();
             Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
         }
         return records;
@@ -104,7 +107,7 @@ public class UserData {
         ResultSet rs = null;
         PreparedStatement pst = null;
         Connection con = getConnection();
-        String sql = "INSERT INTO komentar VALUES (NULL, " + "'" + komentar.getPid()
+        String sql = "INSERT INTO `blogjava`.`komentar` (`cid`, `pid`, `komentator`, `komen`, `email`, `commentdate`) VALUES (NULL, " + "'" + komentar.getPid()
                 + "', '" + komentar.getKomentator() + "', '"
                 + komentar.getKomen() + "', '"
                 + komentar.getEmail() + "', '"
@@ -114,6 +117,7 @@ public class UserData {
             pst.execute();
             con.close();
         } catch (SQLException ex) {
+            String exex = ex.getMessage();
             Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -133,6 +137,7 @@ public class UserData {
             pst.execute();
             con.close();
         } catch (SQLException ex) {
+            String exe = ex.getMessage();
             Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -172,7 +177,6 @@ public class UserData {
         try {
             pst = con.createStatement();
             rs = pst.executeQuery(sql);
-            con.close();
 
             while (rs.next()) {
                 Komentar komentar = new Komentar();
@@ -184,7 +188,9 @@ public class UserData {
                 komentar.setCommentDate(rs.getString("commentdate"));
                 records.add(komentar);
             }
+            con.close();
         } catch (SQLException ex) {
+            String exex = ex.getMessage();
             Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
         }
         return records;
@@ -215,54 +221,28 @@ public class UserData {
         ResultSet rs = null;
         Statement pst = null;
         Connection con = getConnection();
-        String sql = "SELECT * FROM blogpost WHERE pid=" + pid;
+        //String sql = "select * from blogpost where pid=1";
+        String sql = "SELECT blogpost.*, user.fullname FROM blogpost NATURAL JOIN user WHERE blogpost.uid = user.uid AND blogpost.pid=" + pid;
         try {
             pst = con.createStatement();
             rs = pst.executeQuery(sql);
-            con.close();
 
             blogPost = new BlogPost();
-            while (rs.next()) {
+            rs.first();
+                blogPost.setUsername(rs.getString("fullname"));
                 blogPost.setPid(rs.getInt("pid"));
                 blogPost.setUid(rs.getInt("uid"));
                 blogPost.setPosttitle(rs.getString("posttitle"));
                 blogPost.setPostcontent(rs.getString("postcontent"));
-                blogPost.setPostdate(rs.getDate("postdate").toString());
+                blogPost.setPostdate(rs.getString("postdate"));
                 blogPost.setPublished(rs.getBoolean("published"));
                 blogPost.setDeleted(rs.getBoolean("deleted"));
-            }
+                con.close();
         } catch (SQLException ex) {
+            String logg = ex.getMessage();
             Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
         }
         return blogPost;
-    }
-
-    public ArrayList<BlogPost> getListBlogPost(int uid) {
-        ArrayList<BlogPost> records = new ArrayList<BlogPost>();
-        ResultSet rs = null;
-        Statement pst = null;
-        Connection con = getConnection();
-        String sql = "SELECT * FROM blogpost WHERE uid=" + uid;
-        try {
-            pst = con.createStatement();
-            rs = pst.executeQuery(sql);
-            con.close();
-
-            while (rs.next()) {
-                BlogPost blogPost = new BlogPost();
-                blogPost.setPid(rs.getInt("pid"));
-                blogPost.setUid(rs.getInt("uid"));
-                blogPost.setPosttitle(rs.getString("posttitle"));
-                blogPost.setPostcontent(rs.getString("postcontent"));
-                blogPost.setPostdate(rs.getDate("postdate").toString());
-                blogPost.setPublished(rs.getBoolean("published"));
-                blogPost.setDeleted(rs.getBoolean("deleted"));
-                records.add(blogPost);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return records;
     }
 
     public ArrayList<BlogPost> getAllBlogPost() {
@@ -300,6 +280,35 @@ public class UserData {
         Statement pst = null;
         Connection con = getConnection();
         String sql = "SELECT blogpost.*, user.fullname FROM blogpost NATURAL JOIN user WHERE blogpost.uid = user.uid AND published=0 ORDER BY blogpost.postdate DESC";
+        try {
+            pst = con.createStatement();
+            rs = pst.executeQuery(sql);
+            
+            while (rs.next()) {
+                BlogPost blogPost = new BlogPost();
+                blogPost.setPid(rs.getInt("pid"));
+                blogPost.setUid(rs.getInt("uid"));
+                blogPost.setUsername(rs.getString("fullname"));
+                blogPost.setPosttitle(rs.getString("posttitle"));
+                blogPost.setPostcontent(rs.getString("postcontent"));
+                blogPost.setPostdate(rs.getDate("postdate").toString());
+                blogPost.setPublished(rs.getBoolean("published"));
+                blogPost.setDeleted(rs.getBoolean("deleted"));
+                records.add(blogPost);
+            }
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return records;
+    }
+    
+    public ArrayList<BlogPost> getDeletedPosts(){
+        ArrayList<BlogPost> records = new ArrayList<BlogPost>();
+        ResultSet rs = null;
+        Statement pst = null;
+        Connection con = getConnection();
+        String sql = "SELECT blogpost.*, user.fullname FROM blogpost NATURAL JOIN user WHERE blogpost.uid = user.uid AND deleted=1 ORDER BY blogpost.postdate DESC";
         try {
             pst = con.createStatement();
             rs = pst.executeQuery(sql);
@@ -387,6 +396,25 @@ public class UserData {
                 +"', role='"+updUser.getRole()
                 +"', email='"+updUser.getEmail()
                 +"' WHERE uid="+updUser.getUid();
+        try {
+            pst = con.prepareStatement(sql);
+            pst.execute();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void createUserDB(User newUser){
+        PreparedStatement pst = null;
+        Connection con = getConnection();
+        String sql = "INSERT INTO user VALUES (NULL, '" 
+                +newUser.getFullname()
+                +"', '"+newUser.getUsername()
+                +"', '"+newUser.getPassword()
+                +"', '"+newUser.getRole()
+                +"', '"+newUser.getEmail()
+                +"')"; 
         try {
             pst = con.prepareStatement(sql);
             pst.execute();

@@ -19,11 +19,27 @@
                     <li>
                         <h:form>
                             <ul>
-                                <li style="padding: 5px">
-                                    <f:subview rendered="#{beans.isLogin()}" id="test">
-                                        <a href="faces/add_post.xhtml" style="color: #F40034">+ Tambah Post </a>
-                                    </f:subview>
-                                </li>
+
+                                <f:subview id="justAdmin" rendered="#{beans.admin}">
+                                    <li style="padding: 5px">
+                                        <a href="faces/admin_page.xhtml" style="color: #F40034;z-index:100;">Halaman Admin </a>
+                                    </li>
+                                </f:subview>
+
+
+                                <f:subview rendered="#{beans.isLogin() and !beans.owner}" id="publish-post">
+                                    <li style="padding: 5px">
+                                        <a href="faces/publish_post.xhtml" style="color: #F40034;">Publish Post</a>
+                                    </li>
+                                </f:subview>
+
+
+                                <f:subview rendered="#{beans.isLogin() and !beans.editor}" id="test">
+                                    <li style="padding: 5px">
+                                        <a href="#{beans.genAddPostLink()}" style="color: #F40034">+ Tambah Post </a>
+                                    </li>
+                                </f:subview>
+
                                 <li>
                                     <h:outputText value="#{beans.message}" style="color:red" rendered="#{beans.activeMessage()}"/><br></br>
                                     <h:commandLink action="#{beans.Logout()}" style="color:#F40034;  " value="Logout" rendered="#{beans.isLogin()}"/>
@@ -45,24 +61,32 @@
                 <div class="posts">
                     <nav class="art-list">
                         <ul class="art-list-body">
-                            <ui:repeat value="#{beans.allPosts}" var="value">
-                                <li class="art-list-item">
-                                    <div class="art-list-item-title-and-time">
-                                        <h2 class="art-list-title"><a href="faces/post.xhtml?pid=#{value.pid}">#{value.posttitle}</a></h2>
-                                        <div class="art-list-time">#{value.postdate.toString()}</div>
-                                        <div class="art-list-time">By #{value.username}</div>
-                                    </div>
-                                    <p>
-                                        #{value.getPostContentWithLimit(300)}
-                                        <br />
-                                        <f:subview rendered="#{beans.isLogin()}" id="edit-hapus">
-                                            <a href="faces/edit_post.xhtml?pid=#{value.pid}" >Edit </a>
-                                            |
-                                            <a href="faces/delete_post.xhtml?pid=#{value.pid}" > Hapus</a>
-                                        </f:subview>
-                                    </p>
-                                </li>
-                            </ui:repeat>
+                            <h:form>
+                                <ui:repeat value="#{beans.allPosts}" var="value">
+                                    <li class="art-list-item">
+                                        <div class="art-list-item-title-and-time">
+                                            <h2 class="art-list-title">
+                                                <h:commandLink action="#{beans.genPostLink(value.pid)}">
+                                                    #{value.posttitle}
+                                                </h:commandLink>
+                                            </h2>
+                                            <div class="art-list-time">#{value.postdate.toString()}</div>
+                                            <div class="art-list-time">By #{value.username}</div>
+                                        </div>
+                                        <p>
+                                            #{value.getPostContentWithLimit(300)}
+                                            <br />
+                                            <f:subview rendered="#{beans.isLogin() and !beans.editor}" id="edit-hapus">
+                                                <h:form>
+                                                    <h:commandButton action="#{edit.initiate(value.pid)}" style="color:rgb(244,0,52);background-color:rgba(0,0,0,0);border: 0px;" value="Edit" />
+                                                    |
+                                                    <h:commandButton action="#{beans.softDeletePost(value.pid)}" onclick="return confirm('Apakah Anda yakin menghapus post ini?');" style="color:rgb(244,0,52);background-color:rgba(0,0,0,0);border: 0px;" value="Hapus" />
+                                                </h:form>
+                                            </f:subview>
+                                        </p>
+                                    </li>
+                                </ui:repeat>
+                            </h:form>
                         </ul>
                     </nav>
                 </div>

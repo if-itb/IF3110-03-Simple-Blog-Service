@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: 26 Nov 2014 pada 13.20
+-- Generation Time: 28 Nov 2014 pada 18.29
 -- Versi Server: 5.6.16
 -- PHP Version: 5.5.9
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `blogpost` (
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`pid`),
   KEY `uid` (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=53 ;
 
 --
 -- Dumping data untuk tabel `blogpost`
@@ -47,12 +47,14 @@ INSERT INTO `blogpost` (`pid`, `uid`, `posttitle`, `postcontent`, `postdate`, `p
 (8, 1, 'Post Keduaku', 'ieu post Kedua kuring', '2014-11-25', 1, 0),
 (9, 1, 'Post ketigaku', 'isi Post ketiga', '2014-11-25', 0, 0),
 (10, 2, 'post pertama nisa', 'nisa dian lalala', '2014-11-26', 1, 0),
-(11, 2, 'dadada', 'lalala', '2014-11-29', 0, 0),
-(12, 2, 'dadada', 'lalala', '2014-12-29', 0, 0),
-(13, 2, 'dadada2', 'lalala2', '2014-10-26', 0, 0),
-(14, 2, 'dadada2', 'lalala2', '2014-11-01', 0, 0),
-(15, 3, 'lala hayyu', 'hayuuu hayyu', '2014-11-26', 0, 0),
-(16, 2, 'dadada2', 'lalala2', '2014-12-01', 0, 0);
+(45, 1, 'Post ketigaku - Copy', 'isi Post ketiga', '2014-11-25', 0, 0),
+(46, 1, 'ini post buat di hapus', 'sesuai judul', '2014-11-28', 1, 0),
+(47, 3, 'ini postnya hayyu', 'tanggalnya sudah benar', '2014-11-29', 1, 0),
+(48, 2, 'post pertama nisa - edited', 'nisa dian lilili', '2014-11-29', 1, 0),
+(49, 3, 'hayyu luthfi', 'di hati yang ter dalam', '2014-11-29', 1, 0),
+(50, 3, 'Post Keduaku', 'ieu post Kedua kuring', '2014-11-25', 1, 0),
+(51, 3, 'Post Keduaku', 'ieu post Kedua kuring', '2014-11-25', 1, 0),
+(52, 3, 'laksjlkajd', ';lkasja/dskjalkdj', '2014-11-28', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -63,13 +65,34 @@ INSERT INTO `blogpost` (`pid`, `uid`, `posttitle`, `postcontent`, `postdate`, `p
 CREATE TABLE IF NOT EXISTS `komentar` (
   `cid` int(3) NOT NULL AUTO_INCREMENT,
   `pid` int(3) NOT NULL,
-  `komentator` varchar(20) NOT NULL,
+  `komentator` varchar(32) NOT NULL,
   `komen` text NOT NULL,
   `email` varchar(30) NOT NULL,
   `commentdate` date NOT NULL,
   PRIMARY KEY (`cid`),
   KEY `fk.pid` (`pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+
+--
+-- Dumping data untuk tabel `komentar`
+--
+
+INSERT INTO `komentar` (`cid`, `pid`, `komentator`, `komen`, `email`, `commentdate`) VALUES
+(3, 10, 'guest', 'nisa jelek', 'guest@guest.com', '2014-11-28'),
+(10, 10, 'ucuplain', 'ucup ganteng loh', 'ucup@gmail.com', '2014-11-28'),
+(11, 10, 'ucup-lain', 'ucup ganteng loh broo', 'ucup@gmail.com', '2014-11-28'),
+(16, 10, 'lala', 'lilili', 'lali@lali.com', '2014-11-28'),
+(17, 10, 'lala', 'lilili', 'lali@lali.com', '2014-11-28'),
+(23, 10, 'lala', '', 'lala@lala.lala', '2014-11-28'),
+(27, 10, 'guest', 'lalalalala', 'lala.asda', '2014-11-28'),
+(28, 51, 'guest', 'llida.adasd', 'lala.aswd', '2014-11-28'),
+(29, 10, 'bukan guest', 'harusnya saklah', 'bukan@guest.com', '2014-11-28'),
+(30, 10, 'bukan guest', 'harusnya saklah', 'bukan@guest.com', '2014-11-28'),
+(31, 10, 'guest syalala bum bunmb ubmbm', 'isinya panjang amat mas', 'panjang@email.com', '2014-11-29'),
+(32, 10, 'guest syalala bum bunmb ubmbm', 'isinya panjang amat mas', 'panjang@email.com', '2014-11-29'),
+(33, 10, 'guest syalala ', 'isinya panjang amat mas', 'panjang@email.com', '2014-11-29'),
+(34, 10, 'guest syalala bum bumnmb', 'isinya panjang amat mas', 'panjang@email.com', '2014-11-29'),
+(35, 10, 'guest syalala bum bumnmb', 'isinya panjang amat mas', 'panjang@email.com', '2014-11-29');
 
 -- --------------------------------------------------------
 
@@ -85,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `role` varchar(10) NOT NULL,
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data untuk tabel `user`
@@ -94,7 +117,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`uid`, `fullname`, `username`, `password`, `role`, `email`) VALUES
 (1, 'Yusuf Rahmatullah', 'ucup', 'ucup', 'owner', 'ucup@gmail.com'),
 (2, 'Nisa Dian Rachmadi', 'nisa', 'nisa', 'editor', 'nisa@gmail.com'),
-(3, 'Hayyu Luthfi Hanifah', 'hayyu', 'hayyu', 'admin', 'hayyu@gmail.com');
+(3, 'Hayyu Luthfi Hanifah', 'hayyu', 'hayyu', 'admin', 'hayyu@gmail.com'),
+(4, 'dummy man', 'dummyman', 'dummywoman', 'owner', 'dummyman@simpleblog.com'),
+(5, 'semarak cinta ', 'semarakcinta', 'cinta', 'editor', 'semarak@cinta.com');
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

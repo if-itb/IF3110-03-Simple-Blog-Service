@@ -28,6 +28,7 @@ public class userMgnt implements Serializable {
     private String Message;
     private Cookie cookie;
     private User user;
+    private User newUser;
     private BlogPost post;
     private ArrayList<BlogPost> allPosts;
     private ArrayList<BlogPost> unpublishedPosts;
@@ -48,6 +49,9 @@ public class userMgnt implements Serializable {
         String passedParam = (String) facesContext.getExternalContext().getRequestParameterMap().get("pid");
         if(passedParam != null)
             pid = Integer.parseInt(passedParam);
+        
+        komen = new Komentar();
+        newUser = new User();
     }
     
     public void login() {
@@ -63,6 +67,9 @@ public class userMgnt implements Serializable {
                 FacesContext facesContex = FacesContext.getCurrentInstance();
                 HttpServletResponse response = (HttpServletResponse) facesContex.getExternalContext().getResponse();
                 response.addCookie(cookie);
+                
+                komen.setEmail(userValidator.getEmail());
+                komen.setKomentator(userValidator.getFullname());
             } else {
                 Message = "Password is wrong";
             }
@@ -86,6 +93,9 @@ public class userMgnt implements Serializable {
         user.setFullname("guest");
         user.setUsername("guest");
         user.setPassword("pass");
+        user.setEmail("");
+        user.setRole("guest");
+        user.setUid(0);
     }
 
     public boolean isLogin() {
@@ -121,20 +131,26 @@ public class userMgnt implements Serializable {
         ud.publishPost(pid);
     }
     
-    public void deletePost(int pid){
+    public void softDeletePost(int ppid){
         UserData ud = new UserData();
-        ud.softDeletePost(pid);
+        ud.softDeletePost(ppid);
+    }
+    
+    public void deletedPost(int ppid){
+        UserData ud = new UserData();
+        ud.deletePost(ppid);
     }
     
     public void writeComment(){
         UserData ud = new UserData();
-        komen.setPid(pid);
+        komen.setPid(post.getPid());
         ud.writeKomentar(komen);
     }
         
     public ArrayList<Komentar> getComments(){
         UserData ud = new UserData();
-        return ud.getListKomentar(pid);
+        comments = ud.getListKomentar(post.getPid());
+        return comments;
     }
     
     public Komentar getKomen(){
@@ -208,7 +224,8 @@ public class userMgnt implements Serializable {
     
     public ArrayList<User> getUsers(){
         UserData ud = new UserData();
-        return ud.getListUser();
+        users =  ud.getListUser();
+        return users;
     }
     
     public void setMessage(String S) {
@@ -237,19 +254,42 @@ public class userMgnt implements Serializable {
         return "faces/edit_post.xhtml?pid="+editPid;
     }
     
-    public void updateUserOption(int usersIndex){
-        if(!users.isEmpty() && users.size() >= usersIndex){
+    public String genPostLink(int ppid){
+        UserData ud = new UserData();
+        post = ud.getBlogPost(ppid);
+        return "faces/post.xhtml";
+    }
+            
+    public String updateUserOption(int usersIndex){
+        if(users.size() >= usersIndex){
             UserData ud = new UserData();
             ud.updateUserDB(users.get(usersIndex));
+            return "alert('update berhasil');";
         }
+        return "alert('update gagal');";
     }
     
     public ArrayList<BlogPost> getDeletedPosts(){
-        return deletedPosts;
+        UserData ud = new UserData();
+        return ud.getDeletedPosts();
     }
     
     public void restoreDeletedPost(int delPid){
         UserData ud = new UserData();
         ud.restorePost(delPid);
+    }
+    
+    public String genAddPostLink(){
+        post.reset();
+        return "faces/add_post.xhtml";
+    }
+    
+    public User getNewUser(){
+        return newUser;
+    }
+    
+    public void createNewUser(){
+        UserData ud = new UserData();
+        ud.createUserDB(newUser);
     }
 }
