@@ -27,6 +27,11 @@ and open the template in the editor.
                             <h:form>
                                 <ul>
                                     <li style="padding: 5px">
+                                        <f:subview id="justAdmin" rendered="#{beans.admin}">
+                                            <a href="faces/admin_page.xhtml" style="color: #F40034;z-index:100;">Halaman Admin </a>
+                                        </f:subview>
+                                    </li>
+                                    <li style="padding: 5px">
                                         <f:subview rendered="#{beans.isLogin() and !beans.editor}" id="test">
                                             <a href="faces/add_post.xhtml" style="color: #F40034;z-index:100;">+ Tambah Post </a>
                                         </f:subview>

@@ -18,9 +18,16 @@ public class Komentar {
     private String komentator;
     private String komen;
     private String email;
-    private Date commentDate;
+    private String commentDate;
 
     public Komentar() {
+        cid=0;
+        pid=0;
+        komentator="";
+        komen="";
+        email="";
+        java.util.Date date = new java.util.Date();
+        commentDate = String.valueOf(date.getMonth()+1)+"/"+String.valueOf(date.getDate())+"/"+String.valueOf(date.getYear()+1900);
     }
 
     public int getCid() {
@@ -63,11 +70,11 @@ public class Komentar {
         email = Email;
     }
 
-    public Date getCommentDate() {
+    public String getCommentDate() {
         return commentDate;
     }
 
-    public void setCommentDate(Date CommentDate) {
+    public void setCommentDate(String CommentDate) {
         commentDate = CommentDate;
     }
 }

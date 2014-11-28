@@ -67,9 +67,9 @@
                                         <br />
                                         <f:subview rendered="#{beans.isLogin() and !beans.editor}" id="edit-hapus">
                                             <h:form>
-                                            <h:commandButton action="faces/edit_post.xhtml?pid=#{value.pid}" style="color:rgb(244,0,52);background-color:rgba(0,0,0,0);border: 0px;" value="Edit" />
+                                            <h:commandButton action="#{beans.genEditLink(value.pid)}" style="color:rgb(244,0,52);background-color:rgba(0,0,0,0);border: 0px;" value="Edit" />
                                             |
-                                            <h:commandButton action="#{beans.deletePost(value.pid)}" onclick="confirm('Apakah Anda yakin menghapus post ini?')" style="color:rgb(244,0,52);background-color:rgba(0,0,0,0);border: 0px;" value="Hapus" />
+                                            <h:commandButton action="#{beans.softDeletePost(value.pid)}" onclick="return confirm('Apakah Anda yakin menghapus post ini?');" style="color:rgb(244,0,52);background-color:rgba(0,0,0,0);border: 0px;" value="Hapus" />
                                             </h:form>
                                         </f:subview>
                                     </p>

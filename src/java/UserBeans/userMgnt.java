@@ -34,6 +34,8 @@ public class userMgnt implements Serializable {
     private ArrayList<Komentar> comments;
     private Komentar komen;
     private int pid;
+    private ArrayList<User> users;
+    private ArrayList<BlogPost> deletedPosts;
 
     public userMgnt() {
         user = new User();
@@ -44,7 +46,8 @@ public class userMgnt implements Serializable {
         post = new BlogPost();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String passedParam = (String) facesContext.getExternalContext().getRequestParameterMap().get("pid");
-        pid = Integer.parseInt(passedParam);
+        if(passedParam != null)
+            pid = Integer.parseInt(passedParam);
     }
     
     public void login() {
@@ -120,7 +123,7 @@ public class userMgnt implements Serializable {
     
     public void deletePost(int pid){
         UserData ud = new UserData();
-        ud.deletePost(pid);
+        ud.softDeletePost(pid);
     }
     
     public void writeComment(){
@@ -202,8 +205,12 @@ public class userMgnt implements Serializable {
     public String getMessage() {
         return Message;
     }
-
-    //setter
+    
+    public ArrayList<User> getUsers(){
+        UserData ud = new UserData();
+        return ud.getListUser();
+    }
+    
     public void setMessage(String S) {
         Message = S;
     }
@@ -224,5 +231,25 @@ public class userMgnt implements Serializable {
             }
         }
         return null;
+    }
+    
+    public String genEditLink(int editPid){
+        return "faces/edit_post.xhtml?pid="+editPid;
+    }
+    
+    public void updateUserOption(int usersIndex){
+        if(!users.isEmpty() && users.size() >= usersIndex){
+            UserData ud = new UserData();
+            ud.updateUserDB(users.get(usersIndex));
+        }
+    }
+    
+    public ArrayList<BlogPost> getDeletedPosts(){
+        return deletedPosts;
+    }
+    
+    public void restoreDeletedPost(int delPid){
+        UserData ud = new UserData();
+        ud.restorePost(delPid);
     }
 }

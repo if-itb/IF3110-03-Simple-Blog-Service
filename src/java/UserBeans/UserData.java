@@ -72,6 +72,33 @@ public class UserData {
         }
         return user;
     }
+    
+    public ArrayList<User> getListUser(){
+        ArrayList<User> records = new ArrayList<User>();
+        ResultSet rs = null;
+        Statement pst = null;
+        Connection con = getConnection();
+        String sql = "SELECT * FROM user";
+        try {
+            pst = con.createStatement();
+            rs = pst.executeQuery(sql);
+            con.close();
+
+            while (rs.next()) {
+                User user = new User();
+                user.setEmail(rs.getString("email"));
+                user.setFullname(rs.getString("fullname"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+                user.setUid(rs.getInt("uid"));
+                user.setUsername(rs.getString("username"));
+                records.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return records;
+    }
 
     public void writeKomentar(Komentar komentar) {
         ResultSet rs = null;
@@ -329,6 +356,50 @@ public class UserData {
         PreparedStatement pst = null;
         Connection con = getConnection();
         String sql = "DELETE FROM blogpost WHERE pid=" + pid;
+        try {
+            pst = con.prepareStatement(sql);
+            pst.execute();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void softDeletePost(int pid){
+        PreparedStatement pst = null;
+        Connection con = getConnection();
+        String sql = "UPDATE blogpost SET deleted = 1, published = 0 WHERE pid=" + pid;
+        try {
+            pst = con.prepareStatement(sql);
+            pst.execute();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updateUserDB(User updUser){
+        PreparedStatement pst = null;
+        Connection con = getConnection();
+        String sql = "UPDATE user SET fullname='"+updUser.getFullname()
+                +"', username='"+updUser.getUsername()
+                +"', password='"+updUser.getPassword()
+                +"', role='"+updUser.getRole()
+                +"', email='"+updUser.getEmail()
+                +"' WHERE uid="+updUser.getUid();
+        try {
+            pst = con.prepareStatement(sql);
+            pst.execute();
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void restorePost(int pid){
+        PreparedStatement pst = null;
+        Connection con = getConnection();
+        String sql = "UPDATE blogpost SET deleted = 0, published = 1 WHERE pid=" + pid;
         try {
             pst = con.prepareStatement(sql);
             pst.execute();

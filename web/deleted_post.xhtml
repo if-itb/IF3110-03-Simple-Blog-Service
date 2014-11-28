@@ -25,6 +25,11 @@
                                         </f:subview>
                                     </li>
                                 <li style="padding: 5px">
+                                    <f:subview rendered="#{beans.isLogin() and !beans.owner}" id="publish-post">
+                                        <a href="faces/publish_post.xhtml" style="color: #F40034;">Publish Post</a>
+                                    </f:subview>
+                                </li>
+                                <li style="padding: 5px">
                                     <f:subview rendered="#{beans.isLogin() and !beans.editor}" id="test">
                                         <a href="faces/add_post.xhtml" style="color: #F40034">+ Tambah Post </a>
                                     </f:subview>
@@ -50,7 +55,7 @@
                 <div class="posts">
                     <nav class="art-list">
                         <ul class="art-list-body">
-                            <ui:repeat value="#{beans.unpublishedPosts}" var="value">
+                            <ui:repeat value="#{beans.deletedPosts}" var="value">
                                 <li class="art-list-item">
                                     <div class="art-list-item-title-and-time">
                                         <h2 class="art-list-title"><a href="faces/post.xhtml?pid=#{value.pid}">#{value.posttitle}</a></h2>
@@ -62,11 +67,9 @@
                                         <br />
                                         <f:subview rendered="#{beans.isLogin()}" id="edit-hapus">
                                             <h:form>
-                                                <h:commandButton action="faces/edit_post.xhtml?pid=#{value.pid}" style="color:rgb(244,0,52);background-color:rgba(0,0,0,0);border: 0px;" value="Edit" />
+                                                <h:commandButton action="#{beans.deletePost(value.pid)}" onclick="return confirm('Apakah Anda yakin menghapus post ini secara permanen?');" style="color:rgb(244,0,52);background-color:rgba(0,0,0,0);border: 0px;" value="Hapus" />
                                                 |
-                                                <h:commandButton action="#{beans.softDeletePost(value.pid)}" onclick="return confirm('Apakah Anda yakin menghapus post ini?');" style="color:rgb(244,0,52);background-color:rgba(0,0,0,0);border: 0px;" value="Hapus" />
-                                                |
-                                                <h:commandButton action="#{beans.publishPost(value.pid)}"  style="color:rgb(244,0,52);background-color:rgba(0,0,0,0);border: 0px;" value="Publish" />
+                                                <h:commandButton action="#{beans.restoreDeletedPost(value.pid)}"  style="color:rgb(244,0,52);background-color:rgba(0,0,0,0);border: 0px;" value="Restore" />
                                             </h:form>
                                         </f:subview>
                                     </p>
