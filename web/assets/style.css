@@ -388,7 +388,6 @@ article{
   padding: 120px 0 0;
 }
 .art-list-body {
-    width:640px;
   position: relative;
   overflow: hidden;
 }
@@ -406,9 +405,9 @@ article{
   line-height: 26px;
   font-weight: 700;
 }
-.art-list-item-title-and-time {    
-    display:inline-block;
+.art-list-item-title-and-time {       
   float: left;
+  width:30%;
   margin-bottom: 10px;
 }
 .art-list-time {
@@ -425,7 +424,6 @@ article{
   color: #F40034;
 }
 .art-list-item p {
-    display:inline-block;
   width: 65%;
   float: left;
   margin-left: 5%;

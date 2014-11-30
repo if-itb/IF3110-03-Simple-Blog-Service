@@ -36,7 +36,7 @@ and open the template in the editor.
                                 
                                     <f:subview rendered="#{beans.isLogin()}" id="test">
                                         <li style="padding: 5px">
-                                        <a href="#{beans.genAddPostLink()}" style="color: #F40034">+ Tambah Post </a>
+                                        <a href="add_post.xhtml" onclick="#{beans.genAddPostLink()}" style="color: #F40034">+ Tambah Post </a>
                                         </li>
                                     </f:subview>
                                 
@@ -61,15 +61,15 @@ and open the template in the editor.
 
                 <header class="art-header">
                     <div class="art-header-inner" style="margin-top: 0px; opacity: 1;">
-                        <time class="art-time">#{beans.post.postdate}</time>
-                        <h2 class="art-title">#{beans.post.posttitle}</h2>
+                        <time class="art-time">#{beans.lihatpost.postdate}</time>
+                        <h2 class="art-title">#{beans.lihatpost.posttitle}</h2>
                         <p class="art-subtitle"></p>
                     </div>
                 </header>
                 <div class="art-body">
                     <div class="art-body-inner">
                         <hr class="featured-article" />
-                        #{beans.post.postcontent}
+                        #{beans.lihatpost.postcontent}
 
                         <hr />
 

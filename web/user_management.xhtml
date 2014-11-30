@@ -30,7 +30,7 @@
 
                                 <f:subview rendered="#{beans.isLogin() and !beans.owner}" id="publish-post">
                                     <li style="padding: 5px">
-                                        <a href="#{beans.genAddPostLink()}" style="color: #F40034;">Publish Post</a>
+                                        <a href="add_post.xhtml" onclick="#{beans.genAddPostLink()}" style="color: #F40034">+ Tambah Post </a>
                                     </li>
                                 </f:subview>
 
@@ -100,6 +100,11 @@
                     </ui:repeat>
                     <h:form>
                         <tr>
+                            <td colspan="5">
+                                Tambah User baru : 
+                            </td>
+                        </tr>
+                        <tr>                            
                                 <td class="username">
                                     <input type="text" jsf:value="#{beans.newUser.username}" />
                                 </td>
@@ -112,8 +117,8 @@
                                 <td class="role">
                                     <input type="text" jsf:value="#{beans.newUser.role}" />
                                 </td>
-                                <td class="update">
-                                    <h:commandButton action="#{beans.createNewUser()}" style="background-color: papayawhip;color: darkblue" value="update" />
+                                <td class="create">
+                                    <h:commandButton action="#{beans.createNewUser()}" style="background-color: papayawhip;color: darkblue" value="create" />
                                 </td>
                             </tr>
                     </h:form>

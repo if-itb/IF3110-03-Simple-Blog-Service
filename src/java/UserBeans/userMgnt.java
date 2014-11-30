@@ -30,6 +30,7 @@ public class userMgnt implements Serializable {
     private User user;
     private User newUser;
     private BlogPost post;
+    private BlogPost lihatpost;
     private ArrayList<BlogPost> allPosts;
     private ArrayList<BlogPost> unpublishedPosts;
     private ArrayList<Komentar> comments;
@@ -256,7 +257,7 @@ public class userMgnt implements Serializable {
     
     public String genPostLink(int ppid){
         UserData ud = new UserData();
-        post = ud.getBlogPost(ppid);
+        lihatpost = ud.getBlogPost(ppid);
         return "faces/post.xhtml";
     }
             
@@ -291,5 +292,9 @@ public class userMgnt implements Serializable {
     public void createNewUser(){
         UserData ud = new UserData();
         ud.createUserDB(newUser);
+    }
+    
+    public BlogPost getLihatpost(){
+        return lihatpost;
     }
 }
