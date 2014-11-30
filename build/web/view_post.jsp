@@ -34,59 +34,63 @@
                     <li><a href="index.jsp">Home</a></li>
                     <%
                         CookieController CC = new CookieController();
-                        Cookie[] cookies = request.getCookies();
-
-                        if(cookies!=null)
+                Cookie[] cookies = request.getCookies();
+                MySQLAccess sql = new MySQLAccess();
+                
+                if(cookies!=null)
+                {
+                    int idx = CC.FindUserCookie(cookies);
+                    if(idx<cookies.length)
+                    {
+                        if(!cookies[idx].getValue().equalsIgnoreCase("guest"))
                         {
-                            int idx = CC.FindUserCookie(cookies);
-                            if(idx<cookies.length)
-                            {
-                                if(!cookies[idx].getValue().equalsIgnoreCase("guest"))
+                            out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
+                        }
+                        if(sql.getRolebyUsername(
+                            cookies[CC.FindUserCookie(cookies)].getValue()).equalsIgnoreCase("admin"))
+                        {
+                            out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
+                        }
+                    }
+                    else
+                    {
+                        // Menciptakan cookies untuk guest      
+                        Cookie guest = new Cookie("user","guest"); 
+                        // Meng - set agar cookie hilang setelah 24 jam
+                        guest.setMaxAge(60*60*2); 
+                        // Menambahkan cookie ke header response
+                        response.addCookie(guest);
+                    }
+                }
+                else
                                 {
-                                    out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
-                                }
-                                if(cookies[CC.FindUserCookie(cookies)].getValue().equalsIgnoreCase("admin"))
-                                {
-                                    out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
-                                }
-                            }
-                            else
-                            {
-                                // Menciptakan cookies untuk guest      
-                                Cookie guest = new Cookie("user","guest"); 
-                                // Meng - set agar cookie hilang setelah 24 jam
-                                guest.setMaxAge(60*60*2); 
-                                // Menambahkan cookie ke header response
-                                response.addCookie(guest);
-                            }
-                        }
-                        else
-                                        {
-                            // Menciptakan cookies untuk guest      
-                            Cookie guest = new Cookie("user","guest"); 
-                            // Meng - set agar cookie hilang setelah 24 jam
-                            guest.setMaxAge(60*60*2); 
-                            // Menambahkan cookie ke header response
-                            response.addCookie(guest);
-                        }
-                        int idx = CC.FindUserCookie(cookies);
-                        User user = null;
-                        if(idx<cookies.length)
-                        {
-                            user=new User(cookies[CC.FindUserCookie(cookies)].getValue(), " ", " ", cookies[CC.FindUserCookie(cookies)].getValue());
-                        }
-                        else
-                        {
-                            user = new User("guest"," "," ","guest");
-                        }
-                        if(user.role.equalsIgnoreCase("guest"))
-                        {
-                            out.println(CC.LoginForm());
-                        }
-                        else
-                        {
-                            out.println(CC.Welcome(user.username));
-                        }    
+                    // Menciptakan cookies untuk guest      
+                    Cookie guest = new Cookie("user","guest"); 
+                    // Meng - set agar cookie hilang setelah 24 jam
+                    guest.setMaxAge(60*60*2); 
+                    // Menambahkan cookie ke header response
+                    response.addCookie(guest);
+                }
+                int idx = CC.FindUserCookie(cookies);
+                String username = cookies[idx].getValue();
+                
+                User user = null;
+                if(idx<cookies.length)
+                {
+                    user=new User(username, " ", " ", sql.getRolebyUsername(username));
+                }
+                else
+                {
+                    user = new User("guest"," "," ","guest");
+                }
+                if(user.role.equalsIgnoreCase("guest"))
+                {
+                    out.println(CC.LoginForm());
+                }
+                else
+                {
+                    out.println(CC.Welcome(user.username));
+                }    
                     %>
                 </ul>
             </div><!--close menubar-->	
@@ -94,7 +98,6 @@
     </header>
     <div id="site_content">
         <%
-            MySQLAccess sql=new MySQLAccess();
             int idPost= Integer.parseInt(request.getParameter("idPost"));
             Post postId=new Post();
             postId=sql.getPostId(idPost);

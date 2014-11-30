@@ -31,7 +31,8 @@
             <%
                 CookieController CC = new CookieController();
                 Cookie[] cookies = request.getCookies();
-
+                MySQLAccess sql = new MySQLAccess();
+                
                 if(cookies!=null)
                 {
                     int idx = CC.FindUserCookie(cookies);
@@ -39,9 +40,10 @@
                     {
                         if(!cookies[idx].getValue().equalsIgnoreCase("guest"))
                         {
-                            out.println("<li class=\"current\"><a href=\"add_post.jsp\">Add Post</a></li>");
+                            out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
                         }
-                        if(cookies[CC.FindUserCookie(cookies)].getValue().equalsIgnoreCase("admin"))
+                        if(sql.getRolebyUsername(
+                            cookies[CC.FindUserCookie(cookies)].getValue()).equalsIgnoreCase("admin"))
                         {
                             out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
                         }
@@ -66,10 +68,12 @@
                     response.addCookie(guest);
                 }
                 int idx = CC.FindUserCookie(cookies);
+                String username1 = cookies[idx].getValue();
+                
                 User user = null;
                 if(idx<cookies.length)
                 {
-                    user=new User(cookies[CC.FindUserCookie(cookies)].getValue(), " ", " ", cookies[CC.FindUserCookie(cookies)].getValue());
+                    user=new User(username1, " ", " ", sql.getRolebyUsername(username1));
                 }
                 else
                 {
@@ -94,7 +98,6 @@
             <h2 class="art-title" style="margin-bottom:40px">-</h2>
 
             <%
-            MySQLAccess sql=new MySQLAccess();
             String username = request.getParameter("username");
             User user1 = sql.getSpesificUser(username);
             int ID = sql.getUserID(username);

@@ -384,5 +384,24 @@ public class MySQLAccess {
         }
     }
     
+    public String getRolebyUsername(String username) {
+        open();
+        String role = "";
+        try{
+            preparedStatement = connect.prepareStatement("SELECT `role` FROM `simpleblog`.`user` WHERE username=\""+username+"\";");
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next())
+            {
+                role = resultSet.getString("role");
+            }
+            close();
+        } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+        }
+        return role;
+        
+    }
     
 }

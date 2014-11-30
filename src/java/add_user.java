@@ -19,7 +19,7 @@ public class add_user extends HttpServlet {
             MySQLAccess SQL = new MySQLAccess();
             String username = request.getParameter("username");
             String password = request.getParameter("pass");
-            String email = request.getParameter("email");
+            String email = request.getParameter("Email");
             String role = request.getParameter("role");
             
             SQL.addUser( username, password, email, role);
