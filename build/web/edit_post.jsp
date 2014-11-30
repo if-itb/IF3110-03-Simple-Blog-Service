@@ -84,7 +84,7 @@
                 {
                     user = new User("guest"," "," ","guest");
                 }
-                if(user.role.equalsIgnoreCase("guest"))
+                if(user.username.equalsIgnoreCase("guest"))
                 {
                     out.println(CC.LoginForm());
                 }

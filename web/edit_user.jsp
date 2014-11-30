@@ -73,13 +73,13 @@
                 User user = null;
                 if(idx<cookies.length)
                 {
-                    user=new User(username1, " ", " ", sql.getRolebyUsername(username1));
+                    user=new User(username, " ", " ", sql.getRolebyUsername(username));
                 }
                 else
                 {
                     user = new User("guest"," "," ","guest");
                 }
-                if(user.role.equalsIgnoreCase("guest"))
+                if(user.username.equalsIgnoreCase("guest"))
                 {
                     out.println(CC.LoginForm());
                 }

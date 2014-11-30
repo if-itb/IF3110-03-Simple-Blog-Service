@@ -81,7 +81,7 @@
                 {
                     user = new User("guest"," "," ","guest");
                 }
-                if(user.role.equalsIgnoreCase("guest"))
+                if(user.username.equalsIgnoreCase("guest"))
                 {
                     out.println(CC.LoginForm());
                 }
@@ -104,7 +104,7 @@
             for (Post p:listpost)
             {
                   
-                if(user.role.compareTo("guest")==0)
+                if(user.username.compareTo("guest")==0)
                 {
                     if(p.publish==1)
                     {
