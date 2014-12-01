@@ -36,11 +36,11 @@ body {
 /* Typography
 ================================================== */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "proxima-nova", "helvetica neue", "helvetica", sans-serif;
+  font-family: "Arial Black", "helvetica", sans-serif;
   font-weight: normal;
   text-transform: uppercase;
   font-weight: 700;
-  color: #000;
+  color: #551F00;
   text-rendering: optimizeLegibility;
 }
 
@@ -97,7 +97,7 @@ cite {
 
 header#teaser h1 {
   text-transform: none !important;
-  color: #333;
+  color: #803C15;
   font-size: 28px !important;
   font-weight: 300 !important;
 }
@@ -106,7 +106,7 @@ header#teaser h1 {
 /* Links
 ================================================== */
 a {
-  color: #F40034;
+  color: #AA6239;
   text-decoration: none;
   -webkit-transition: color .2s ease-in-out;
      -moz-transition: color .2s ease-in-out;
@@ -173,11 +173,11 @@ a:hover {
 #logo h1,
 .nav-primary li,
 .nav-primary li a {
-  font-family: "proxima-nova", "helvetica neue", "helvetica", sans-serif;
+  font-family: "Arial","helvetica", sans-serif;
   font-weight: 700;
   font-size: 13px;
   line-height: 30px;
-  color: #000;
+  color: #551F00;
   text-transform: uppercase;
 }
 
@@ -185,12 +185,12 @@ a:hover {
   height: 30px;
   margin-left: 0px;
   letter-spacing: 1px;
-  font-family: 'Questrial', sans-serif;
+  font-family: 'Arial', sans-serif;
   font-size: 30px;
 }
 
 #logo h1 span{
-  color: #F40034 !important;
+  color: #551F00 !important;
 }
 
 .nav li:first-child {
@@ -279,14 +279,14 @@ article{
 .art-body {
   position: relative;
   width: 100%;
-  background: #fff;
+  background: #D4AB6A;
   z-index: 1;
   -webkit-box-shadow: 0 -3px 3px rgba(0,0,0,.2);
      -moz-box-shadow: 0 -3px 3px rgba(0,0,0,.2);
           box-shadow: 0 -3px 3px rgba(0,0,0,.2);
 }
 .art-body-inner {
-  font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+  font-family: Arial Black,Cambria,"Arial",serif;
   max-width: 640px;
   padding: 80px 0 50px;
   letter-spacing: 0.01rem;
@@ -296,7 +296,7 @@ article{
   line-height: 1.5;
 }
 .art-body-inner a:hover {
-  border-bottom: 1px solid #F40034;
+  border-bottom: 1px solid #551F00;
   padding-bottom:2px;
 }
 .art-body-inner ul,
@@ -369,7 +369,7 @@ article{
 }
 .art-body-inner .art-reference {
   font-size: 80%;
-  color: #999;
+  color: #aa6239;
   margin-top: 50px;
 }
 
@@ -395,7 +395,7 @@ article{
   padding: 40px 0;
   list-style: none;
   overflow: hidden;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #551F00;
 }
 .art-list-item:last-child {
   border-bottom: none;
@@ -418,7 +418,7 @@ article{
   color: #999;
 }
 .art-list-title a {
-  color: #000;
+  color: #551F00;
 }
 .art-list-title a:hover {
   color: #F40034;
@@ -442,13 +442,13 @@ article{
 }
 .footer,
 .footer a {
-  font-family: "proxima-nova", "helvetica neue", "helvetica", sans-serif;
+  font-family: "Arial","helvetica", sans-serif;
   font-size: 13px;
   text-transform: uppercase;
-  color: #777;
+  color: #803C15;
 }
 .footer a:hover {
-  color: #000;
+  color: #F40034;
 }
 .back-to-top,
 .footer-nav,

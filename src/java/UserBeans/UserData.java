@@ -173,7 +173,7 @@ public class UserData {
         ResultSet rs = null;
         Statement pst = null;
         Connection con = getConnection();
-        String sql = "SELECT * FROM komentar WHERE pid=" + pid+" ORDER BY cid DESC";
+        String sql = "SELECT * FROM komentar WHERE pid=" + pid+" ORDER BY cid ASC";
         try {
             pst = con.createStatement();
             rs = pst.executeQuery(sql);
@@ -338,6 +338,13 @@ public class UserData {
         String user = "root";
         String password = "";
 
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
         try {
             con = DriverManager.getConnection(url, user, password);
         } catch (SQLException ex) {
