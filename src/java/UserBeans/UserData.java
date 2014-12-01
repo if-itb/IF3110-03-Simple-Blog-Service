@@ -334,7 +334,7 @@ public class UserData {
 
     public Connection getConnection() {
         Connection con = null;
-        String url = "jdbc:mysql://localhost:3307/blogjava";
+        String url = "jdbc:mysql://localhost:3306/blogjava";
         String user = "root";
         String password = "";
 
