@@ -103,6 +103,7 @@
         </sql:query>
             
         <h1>Manage User Pages!</h1>
+        <% out.print(StringUtils.isEmptyOrWhitespaceOnly(request.getParameter("message")) ? "<h4>"+request.getParameter("message")+"</h4>" : "" ); %>
         <h4><a href="manage_user.jsp?action=create">Create New User</a></h4>
         <table border="1px">
             <tr>
