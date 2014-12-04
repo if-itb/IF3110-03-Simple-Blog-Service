@@ -53,12 +53,33 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
 </sql:query> 
 
 
-<% TimeConverter tc = new TimeConverter(); %>
+<%! TimeConverter tc = new TimeConverter();
+    String role;%>
+    <% 
+        if (session.getAttribute("firsttimer").toString().equals("yes")){
+            role = "guest";
+        }else{
+            role = session.getAttribute("role").toString();
+        }
+            
+        %>
+        
 
 <nav class="nav">
-    <a style="border:none;" id="logo" href="index.jsp"><h1>Simple<span>-</span>Blog</h1></a>
+    <a style="border:none;" id="logo" href="mainpage.jsp"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
+         <% if (role.equals("editor") || role.equals("admin")){%>
+        <li><a href="unpublished.jsp">unpublished post    </a></li>
+        <%} %>
+        <% if (role.equals("owner") || role.equals("admin")){%>
         <li><a href="new_post.jsp?mode=0">+ Tambah Post</a></li>
+        <%} %>   
+        <% if (role.equals("admin")){%>
+        <li><a href="manage_user.jsp">manage user</a></li>
+        <%} %> 
+        <% if (role.equals("guest")){%>
+        <li><a href="login.jsp">Login</a></li>
+        <%} %> 
     </ul>
 </nav>
 
@@ -89,12 +110,13 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
 
             <div id="contact-area">
                 <form method="post" action="#">
+                    <% if (role.equals("guest")) {%>
                     <label for="Nama">Nama:</label>
                     <input type="text" name="Nama" id="Nama" value="">
-        
-                    <label for="Email">Email:</label>
-                    <input type="text" name="Email" id="Email" value="" onkeyup="checkEmail(this)"><div id="err_email"></div><br>
                     
+                    <label for="Email">Email:</label>
+                    <input type="text" name="Email" id="Email" value="" onkeyup="checkEmail(this)">
+                    <% }%><div id="err_email"></div><br>
                     <label for="Komentar">Komentar:</label><br>
                     <textarea name="Komentar" rows="20" cols="20" id="Komentar"></textarea>
 					<input type="hidden" name="id_post" value="<?php echo $id; ?>">
@@ -106,23 +128,7 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
         <!--memunculkan komen-komen yang sudah ada-->
 			</div>
 
-            <ul class="art-list-body">
-                <li class="art-list-item">
-                    <div class="art-list-item-title-and-time">
-                        <h2 class="art-list-title"><a href="post.jsp">Jems</a></h2>
-                        <div class="art-list-time">2 menit lalu</div>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis repudiandae quae natus quos alias eos repellendus a obcaecati cupiditate similique quibusdam, atque omnis illum, minus ex dolorem facilis tempora deserunt! &hellip;</p>
-                </li>
-
-                <li class="art-list-item">
-                    <div class="art-list-item-title-and-time">
-                        <h2 class="art-list-title"><a href="post.jsp">Kave</a></h2>
-                        <div class="art-list-time">1 jam lalu</div>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis repudiandae quae natus quos alias eos repellendus a obcaecati cupiditate similique quibusdam, atque omnis illum, minus ex dolorem facilis tempora deserunt! &hellip;</p>
-                </li>
-            </ul>
+            
         </div>
     </div>
 
@@ -161,32 +167,47 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
       t.src='//www.google-analytics.com/analytics.js';
       z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
       ga('create',ga_ua);ga('send','pageview');
-
+//---------------------------------/
 function showKomen(idpost) {
   var xmlhttp= new XMLHttpRequest();;
+  var role = "<%= role %>";
   
   xmlhttp.onreadystatechange=function() {
     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
       document.getElementById("komen").innerHTML=xmlhttp.responseText;
     }
   }
-  xmlhttp.open("GET","GetKomen.jsp?id="+idpost);
+  xmlhttp.open("GET","GetKomen.jsp?id="+idpost+"&role="+role);
   xmlhttp.send();
 }
 
+// -----------------------------------/
 function AddKomen(idpost){
 	 var xmlhttp=new XMLHttpRequest();
-	 var nama =  document.getElementById("Nama").value;
-	 var email =  document.getElementById("Email").value;
+         var role = "<%= role %>";
+                 
+         if(role=="guest"){
+              var nama =  document.getElementById("Nama").value;
+              var email =  document.getElementById("Email").value;
+              
+    }else{
+         var nama =  "<%= session.getAttribute("username")%>";
+	 var email =   "<%= session.getAttribute("email")%>";
+       //  document.getElementById("err_mes").innerHTML= email;
+    }
+	
 	 var komentar = document.getElementById("Komentar").value;
-	 var veremail = checkEmail();
+	 var veremail = checkEmail(email);
      
   if(nama!=""&&email!=""&&komen!=""&& veremail==true){
 	xmlhttp.onreadystatechange=function() {
     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 	  document.getElementById("err_mes").innerHTML= "";
-      document.getElementById("Nama").value=xmlhttp.responseText;
-	  document.getElementById("Email").value=xmlhttp.responseText;
+          if(role=="guest"){
+              document.getElementById("Nama").value=xmlhttp.responseText;
+              document.getElementById("Email").value=xmlhttp.responseText;
+          }
+      
 	  document.getElementById("Komentar").value=xmlhttp.responseText;
 	  showKomen(idpost);
 	 }
@@ -197,9 +218,11 @@ function AddKomen(idpost){
 	 document.getElementById("err_mes").innerHTML= "masukkan belum tepat/lengkap";
   }
 }
-function checkEmail(){
+
+//---------------------------------/
+function checkEmail(email){
 				var err_email = document.getElementById("err_email");
-				var emailStr = document.getElementById("Email").value;
+				var emailStr = email;
 				var emailRegexStr = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 				var isValid = emailRegexStr.test(emailStr);
 				if(!isValid){
@@ -210,6 +233,22 @@ function checkEmail(){
 					err_email.innerHTML = "";
 					return true;
 				}
+}
+
+function ConfirmDelete(id){
+	var conf = confirm("Apakah Anda yakin menghapus komen ini?");
+	
+	if(conf==true){
+             var xmlhttp=new XMLHttpRequest();
+             xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	  
+	 }
+	}
+              xmlhttp.open("GET","editKomen?id="+id, true);
+              xmlhttp.send();
+                
+	}
 }
 </script>
 

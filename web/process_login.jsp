@@ -7,7 +7,7 @@
 <%@page import="java.sql.*" %>
 
 <%! Cookie c1,c2,c3;
-    String role, id;
+    String role, id,email;
 %>
 
 <%
@@ -24,9 +24,12 @@
     if (rs.next()) {
         role = rs.getString("role");
         id = rs.getString("id");
+        email = rs.getString("email");
         session.setAttribute("username", userid);
         session.setAttribute( "role", role );
         session.setAttribute( "id_user", id );
+        session.setAttribute( "email", email );
+        session.setAttribute("firsttimer", "no");
         //out.println("welcome " + userid);
         //out.println("<a href='logout.jsp'>Log out</a>");
         c2 = new Cookie("username",userid);
@@ -42,7 +45,7 @@
         response.addCookie(c1);
         response.addCookie(c2);
         response.addCookie(c3);
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("mainpage.jsp");
     } else {
         response.sendRedirect("login.jsp");
     }
@@ -54,6 +57,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%= session.getAttribute("role") %>
         <h1>Logged in!</h1>
         
     </body>

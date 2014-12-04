@@ -28,7 +28,8 @@
         long t = d1.getTime() - d2.getTime();
         
         if(t<60000){
-			return (t+" detik yang lalu");
+                        long newt = Math.round(t/1000);
+			return (newt+" detik yang lalu");
 		}else if(t<3600000){
 			long newt = Math.round(t/60000);
 			return  (newt+" menit yang lalu");
@@ -64,8 +65,12 @@ SELECT * FROM `tucildb_13511097`.`post-komen` WHERE `id_post`=<%= request.getPar
                         <div class="art-list-time"><%= DeltaTimeConvert(d)%></div>
                     </div>
                     <p><c:out value='${row.isi}'/></p>
+                    <%if (request.getParameter("role").toString().equals("admin")) { %>
+                    <p> <a href="editKomen.jsp?id= <c:out value='${row.myID}'/>">Edit Komen</a> | <a href="javascript:ConfirmDelete(<c:out value='${row.myID}'/>)">Hapus</a> </p>
+                    <%}%>
     </li>
 </c:forEach>
    
 </body>
+
 

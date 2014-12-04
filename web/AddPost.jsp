@@ -14,9 +14,7 @@
      url="jdbc:mysql://localhost/tucildb_13511097"
      user="root"  password=""/>
 
-<% 
-   session.setAttribute( "id_user", "1" );
-%>
+
 
     <%! String id_user; %>
     <%  id_user =  session.getAttribute("id_user").toString(); %>
@@ -89,4 +87,4 @@
 </c:choose>
      
           
-          <% response.sendRedirect("index.jsp"); %>
+          <% response.sendRedirect("mainpage.jsp"); %>
