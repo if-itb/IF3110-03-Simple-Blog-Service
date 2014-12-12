@@ -30,6 +30,7 @@ public class PenguasaDuniaService {
     public Vector<DataSnapshot> Users = new Vector<DataSnapshot>();
     public Vector<DataSnapshot> Comments = new Vector<DataSnapshot>();
     public int count;
+    public boolean wait = true;
     
     /**
      * This is a sample web service operation
@@ -54,6 +55,7 @@ public class PenguasaDuniaService {
     
     @WebMethod(operationName = "listPost")
     public Vector<DataSnapshot> listPost() { //outputnya arrayPost
+        wait = true;
         postsRef.addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot ds) {
@@ -62,6 +64,7 @@ public class PenguasaDuniaService {
                     Posts.add(element);
                     System.out.println(element.getValue());
                 }
+                wait = false;
             }
 
             @Override
@@ -70,6 +73,7 @@ public class PenguasaDuniaService {
             }
         
         });
+        while (wait);
         return Posts;
     }
     
@@ -107,6 +111,7 @@ public class PenguasaDuniaService {
     
     @WebMethod(operationName = "listUser")
     public Vector<DataSnapshot> listUser() { //output adalah listUserResponse2
+        wait = false;
         usersRef.addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot ds) {
@@ -115,6 +120,7 @@ public class PenguasaDuniaService {
                     Users.add(element);
                     System.out.println(element.getValue());
                 }
+                wait = false;
             }
 
             @Override
@@ -123,6 +129,7 @@ public class PenguasaDuniaService {
             }
         
         });
+        while (wait); //tunggu sampe ada event
         return Users;
     }
     
@@ -157,6 +164,7 @@ public class PenguasaDuniaService {
     
     @WebMethod(operationName = "listComment")
     public Vector<DataSnapshot> listComment() { //output listCommentResponse2
+        wait = true;
         commentsRef.addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot ds) {
@@ -165,6 +173,7 @@ public class PenguasaDuniaService {
                     Comments.add(element);
                     System.out.println(element.getValue());
                 }
+                wait = false;
             }
 
             @Override
@@ -173,6 +182,7 @@ public class PenguasaDuniaService {
             }
         
         });
+        while (wait); //tunggu sampe ada event
         return Comments;
     }
     
@@ -183,20 +193,28 @@ public class PenguasaDuniaService {
     }
     
     @WebMethod(operationName = "search")
-    public boolean search(@WebParam(name="query") String query) { //result arrayPost
-        Firebase myRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/posts/");
-        myRef.addListenerForSingleValueEvent(new ValueEventListener(){
+    public Vector<DataSnapshot> search(@WebParam(name="query") final String query) { //result arrayPost
+        wait = true;
+        postsRef.addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot ds) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                Posts.removeAll(Posts);
+                for (DataSnapshot element : ds.getChildren()) {
+                    if (element.child("judul").toString().contains(query) || element.child("konten").toString().contains(query)) {
+                        Posts.add(element);
+                        System.out.println(element.getValue());
+                    }
+                }
+                wait = false;
             }
 
             @Override
             public void onCancelled(FirebaseError fe) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         
         });
-        return true;
+        while (wait);
+        return Posts;
     }
 }
