@@ -13,7 +13,7 @@ import org.wbd.heroku.helper.User;
 public interface FirebaseService {
 
 	boolean addPost(String judul, String konten, String tanggal, String idAuthor);
-	List<Post> listPost();
+	List<Post> listPost(int code);
 	boolean editPost(String id, String judul, String konten, String tanggal);
 	boolean deletePost(String id);
 	boolean pulverizePost(String id);

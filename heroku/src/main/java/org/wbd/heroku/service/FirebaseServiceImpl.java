@@ -46,7 +46,23 @@ public class FirebaseServiceImpl implements FirebaseService {
 	}
 
 	@Override
-	public List<Post> listPost() {
+	/**
+	 * Code adalah suatu cara untuk menyaring post apa saja yang diinginkan
+	 * code adalah sebuah int yang berukuran 4 bit, dengan struktur
+	 * 3210
+	 * abcd
+	 * a - mengambil post yang deleted 
+	 * b - mengambil post yang not deleted
+	 * c - mengambil post yang published
+	 * d - mengambil post yang not published
+	 * code terdiri dari beberapa kemungkinan yaitu, 
+	 * 1111 (15) - seluruh post yang ada
+	 * 1011 (11) - post yang deleted
+	 * 0111 (7)  - post yang belum dihapus, 
+	 * 1110 (14) - post yang sudah di publish, etc.
+	 * @param code
+	 */
+	public List<Post> listPost(int code) {
 		try {
 			URL inferno = new URL(FIREBASE_URL + POST_PATH + ".json");
 			URLConnection fire = inferno.openConnection();
@@ -61,7 +77,11 @@ public class FirebaseServiceImpl implements FirebaseService {
 				Post the_post = new Post(post.getString("judul"),
 						post.getString("tanggal"), post.getString("konten"),
 						post.getString("id_author"));
-				result.add(the_post);
+				the_post.setId(post.getString("id"));
+				the_post.setDeleted(post.getBoolean("deleted"));
+				the_post.setPublished(post.getBoolean("published"));
+				if ((the_post.getMask() & code) > 0)
+					result.add(the_post);
 			}
 
 			return result;
@@ -77,13 +97,6 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 	@Override
 	public boolean editPost(String id, String judul, String konten, String tanggal) {
-		Post newPost = new Post();
-		newPost.setJudul(judul);
-		newPost.setKonten(konten);
-		newPost.setTanggal(tanggal);
-		newPost.setDeleted(false);
-		newPost.setPublished(false);
-
 		Firebase fire = myFirebase.child(POST_PATH).child(id);
 		fire.child("judul").setValue(judul);
 		fire.child("konten").setValue(konten);
