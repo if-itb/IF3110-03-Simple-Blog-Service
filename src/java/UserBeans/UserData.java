@@ -7,6 +7,7 @@
  */
 package UserBeans;
 
+import com.firebase.client.Firebase;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,6 +16,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -103,23 +106,29 @@ public class UserData {
         return records;
     }
 
-    public void writeKomentar(Komentar komentar) {
-        ResultSet rs = null;
-        PreparedStatement pst = null;
-        Connection con = getConnection();
-        String sql = "INSERT INTO `blogjava`.`komentar` (`cid`, `pid`, `komentator`, `komen`, `email`, `commentdate`) VALUES (NULL, " + "'" + komentar.getPid()
-                + "', '" + komentar.getKomentator() + "', '"
-                + komentar.getKomen() + "', '"
-                + komentar.getEmail() + "', '"
-                + komentar.getCommentDate() + "')";
-        try {
-            pst = con.prepareStatement(sql);
-            pst.execute();
-            con.close();
-        } catch (SQLException ex) {
-            String exex = ex.getMessage();
-            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void writeKomentar(Komentar komentarParam) {
+        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/");
+        Firebase komenRef = ref.child("komentar");
+        Map<String, Komentar> komentar = new HashMap<String, Komentar>();
+        komentar.put("4", komentarParam);
+        komenRef.setValue(komentar);
+        
+//        ResultSet rs = null;
+//        PreparedStatement pst = null;
+//        Connection con = getConnection();
+//        String sql = "INSERT INTO `blogjava`.`komentar` (`cid`, `pid`, `komentator`, `komen`, `email`, `commentdate`) VALUES (NULL, " + "'" + komentar.getPid()
+//                + "', '" + komentar.getKomentator() + "', '"
+//                + komentar.getKomen() + "', '"
+//                + komentar.getEmail() + "', '"
+//                + komentar.getCommentDate() + "')";
+//        try {
+//            pst = con.prepareStatement(sql);
+//            pst.execute();
+//            con.close();
+//        } catch (SQLException ex) {
+//            String exex = ex.getMessage();
+//            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     public void writeKomentar(int Pid, String komentator,

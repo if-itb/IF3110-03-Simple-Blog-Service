@@ -6,7 +6,11 @@
 package UserBeans;
 
 
+import com.firebase.client.Firebase;
+import com.firebase.client.Transaction.Handler;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -14,26 +18,19 @@ import java.util.ArrayList;
  */
 public class MainUserData {
     public static void main(String[] args){
-        /*
-        UserData ud = new UserData();
-        User user = ud.getUser("ucup");
-        System.out.println("nama : "+user.getFullname());
-        System.out.println("user : "+user.getUsername());
-        System.out.println("password : "+user.getPassword());
-        */
-       
-        /*
-        userMgnt um = new userMgnt();
-        BlogPost post = new BlogPost();
-        post.setPostcontent("lalala2");
-        post.setPosttitle("dadada2");
-        post.setPostdate("12/01/2014");
-        post.setUid(2);
-        um.setPost(post);
-        um.submitPost();
-                */
-        
-        userMgnt um = new userMgnt();
-        um.publishPost(9);
+        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/");
+        ref.authWithCustomToken(null, null);
+        Firebase komenRef = ref.child("komentar");
+        Komentar komenParam = new Komentar();
+        komenParam.setPid(4);
+        komenParam.setCid(10);
+        komenParam.setKomentator("hayyu");
+        komenParam.setKomen("nyoba post ke firebase");
+        komenParam.setEmail("hayyu@gmail.com");
+//        Map<String, Komentar> komentar = new HashMap<String, Komentar>();
+//        komentar.put("4", komenParam);
+        String coba = "nyoba aja";
+        komenRef.setValue(coba);
+        komenRef.push();
     }
 }

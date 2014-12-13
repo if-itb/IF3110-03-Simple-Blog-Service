@@ -144,13 +144,13 @@ public class userMgnt implements Serializable {
     
     public void writeComment(){
         UserData ud = new UserData();
-        komen.setPid(post.getPid());
+        komen.setPid(lihatpost.getPid());
         ud.writeKomentar(komen);
     }
         
     public ArrayList<Komentar> getComments(){
         UserData ud = new UserData();
-        comments = ud.getListKomentar(post.getPid());
+        comments = ud.getListKomentar(lihatpost.getPid());
         return comments;
     }
     
