@@ -6,12 +6,35 @@ import org.wbd.heroku.helper.Comment;
 import org.wbd.heroku.helper.Post;
 import org.wbd.heroku.helper.User;
 
+import com.firebase.client.Firebase;
+
 public class FirebaseServiceImpl implements FirebaseService {
+	private static final String FIREBASE_URL = "https://flickering-inferno-5419.firebaseio.com/";
+	private static final String USER_PATH = "user";
+	private static final String COMMENT_PATH = "comment";
+	private static final String POST_PATH = "post";
+
+	private Firebase myFirebase;
+
+	public FirebaseServiceImpl() {
+		myFirebase = new Firebase(FIREBASE_URL);
+	}
 
 	@Override
-	public boolean addPost(String judul, String konten, String tanggal) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addPost(String judul, String konten, String tanggal,
+			String idAuthor) {
+		Post newPost = new Post();
+		newPost.setJudul(judul);
+		newPost.setKonten(konten);
+		newPost.setTanggal(tanggal);
+		newPost.setId_author(idAuthor);
+		newPost.setDeleted(false);
+		newPost.setPublished(false);
+
+		Firebase firebasePost = myFirebase.child(POST_PATH);
+		firebasePost.push().setValue(newPost);
+		
+		return true;
 	}
 
 	@Override
@@ -39,9 +62,18 @@ public class FirebaseServiceImpl implements FirebaseService {
 	}
 
 	@Override
-	public boolean addUser(String name, String email, String role) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addUser(String username, String password, String name, String email, String role) {
+		User newUser = new User();
+		newUser.setUsername(username);
+		newUser.setPassword(password);
+		newUser.setNama(name);
+		newUser.setNama(email);
+		newUser.setRole(role);
+		
+		Firebase firebaseUser = myFirebase.child(USER_PATH);
+		firebaseUser.push().setValue(newUser);
+		
+		return true;
 	}
 
 	@Override
@@ -63,9 +95,19 @@ public class FirebaseServiceImpl implements FirebaseService {
 	}
 
 	@Override
-	public boolean addComment(String name, String email, String kontent) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addComment(String name, String email, String kontent,
+			String tanggal, String idPost) {
+		Comment newComment = new Comment();
+		newComment.setNama(name);
+		newComment.setEmail(email);
+		newComment.setKonten(kontent);
+		newComment.setTanggal(tanggal);
+		newComment.setId_post(idPost);
+
+		Firebase firebaseComment = myFirebase.child(COMMENT_PATH);
+		firebaseComment.push().setValue(newComment);
+		
+		return true;
 	}
 
 	@Override
