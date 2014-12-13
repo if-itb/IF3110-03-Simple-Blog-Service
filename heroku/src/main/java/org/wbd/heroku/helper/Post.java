@@ -1,9 +1,20 @@
 package org.wbd.heroku.helper;
 
-public class Post {
+public final class Post {
 	private String judul, tanggal, konten, id_author;
 	private boolean deleted, published;
+	
+	public Post() {
+		
+	}
 
+	public Post(String judul, String tanggal, String konten, String id_author) {
+		setJudul(judul);
+		setTanggal(tanggal);
+		setKonten(konten);
+		setId_author(id_author);
+	}
+	
 	public boolean isDeleted() {
 		return deleted;
 	}

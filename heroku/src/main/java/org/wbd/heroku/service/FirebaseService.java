@@ -14,9 +14,10 @@ public interface FirebaseService {
 
 	boolean addPost(String judul, String konten, String tanggal, String idAuthor);
 	List<Post> listPost();
-	boolean editPost(int id, String judul, String konten, String tanggal);
-	boolean deletePost(int id);
-	boolean publishPost(int id);
+	boolean editPost(String id, String judul, String konten, String tanggal);
+	boolean deletePost(String id);
+	boolean pulverizePost(String id);
+	boolean publishPost(String id);
     
 	boolean addUser(String username, String password, String name, String email, String role);
 	List<User> listUser();

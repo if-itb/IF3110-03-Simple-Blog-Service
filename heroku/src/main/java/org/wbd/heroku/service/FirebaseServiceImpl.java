@@ -1,12 +1,19 @@
 package org.wbd.heroku.service;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.json.*;
 import org.wbd.heroku.helper.Comment;
 import org.wbd.heroku.helper.Post;
 import org.wbd.heroku.helper.User;
 
-import com.firebase.client.Firebase;
+import com.firebase.client.*;
 
 public class FirebaseServiceImpl implements FirebaseService {
 	private static final String FIREBASE_URL = "https://flickering-inferno-5419.firebaseio.com/";
@@ -33,46 +40,93 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 		Firebase firebasePost = myFirebase.child(POST_PATH);
 		firebasePost.push().setValue(newPost);
-		
+
 		return true;
 	}
 
 	@Override
 	public List<Post> listPost() {
-		// TODO Auto-generated method stub
+		try {
+			URL inferno = new URL(FIREBASE_URL + POST_PATH + ".json");
+			URLConnection fire = inferno.openConnection();
+			JSONTokener fira = new JSONTokener(fire.getInputStream());
+
+			JSONArray firaga = new JSONArray(fira);
+			int num_post = firaga.length();
+			List<Post> result = new ArrayList<Post>();
+			for (int i = 0; i < num_post; ++i) {
+				JSONObject post = firaga.getJSONObject(i);
+				Post the_post = new Post(post.getString("judul"),
+						post.getString("tanggal"), post.getString("konten"),
+						post.getString("id_author"));
+				result.add(the_post);
+			}
+
+			return result;
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
-	public boolean editPost(int id, String judul, String konten, String tanggal) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean editPost(String id, String judul, String konten, String tanggal) {
+		Post newPost = new Post();
+		newPost.setJudul(judul);
+		newPost.setKonten(konten);
+		newPost.setTanggal(tanggal);
+		newPost.setDeleted(false);
+		newPost.setPublished(false);
+
+		Firebase fire = myFirebase.child(POST_PATH).child(id);
+		fire.child("judul").setValue(judul);
+		fire.child("konten").setValue(konten);
+		fire.child("tanggal").setValue(tanggal);
+		fire.child("published").setValue(false);
+
+		return true;
 	}
 
 	@Override
-	public boolean deletePost(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deletePost(String id) {
+		myFirebase.child(POST_PATH).child(id).child("deleted").setValue(true);
+		return true;
+	}
+	
+	@Override
+	/**
+	 * Hard delete a post
+	 * @param id post
+	 * @return true
+	 */
+	public boolean pulverizePost(String id) {
+		myFirebase.child(POST_PATH).child(id).removeValue();
+		return true;
 	}
 
 	@Override
-	public boolean publishPost(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean publishPost(String id) {
+		myFirebase.child(POST_PATH).child(id).child("published").setValue(true);
+		return true;
 	}
 
 	@Override
-	public boolean addUser(String username, String password, String name, String email, String role) {
+	public boolean addUser(String username, String password, String name,
+			String email, String role) {
 		User newUser = new User();
 		newUser.setUsername(username);
 		newUser.setPassword(password);
 		newUser.setNama(name);
 		newUser.setNama(email);
 		newUser.setRole(role);
-		
+
 		Firebase firebaseUser = myFirebase.child(USER_PATH);
 		firebaseUser.push().setValue(newUser);
-		
+
 		return true;
 	}
 
@@ -106,7 +160,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 		Firebase firebaseComment = myFirebase.child(COMMENT_PATH);
 		firebaseComment.push().setValue(newComment);
-		
+
 		return true;
 	}
 
