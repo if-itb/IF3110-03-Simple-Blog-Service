@@ -34,17 +34,16 @@ import datastructure.*;
  */
 @WebService(serviceName = "PenguasaDuniaService")
 public class PenguasaDuniaService {
-    private String firebaseURl = "https://luminous-inferno-4376.firebaseio.com/";
-    private Firebase postsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/posts/"); 
-    private Firebase usersRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/users/"); 
-    private Firebase commentsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/comments/"); 
+    private String firebaseURl;
+    private Firebase postsRef;
+    private Firebase usersRef;
+    private Firebase commentsRef; 
     
-    /**
-     * This is a sample web service operation
-     */
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
+    public PenguasaDuniaService() {
+        String firebaseURl = "https://luminous-inferno-4376.firebaseio.com/";
+        Firebase postsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/posts/"); 
+        Firebase usersRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/users/"); 
+        Firebase commentsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/comments/"); 
     }
     
     @WebMethod(operationName = "addPost")
