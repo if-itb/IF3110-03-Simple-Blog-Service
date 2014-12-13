@@ -1,19 +1,18 @@
 package org.wbd.heroku.helper;
 
 public class Post {
-	private String judul, tanggal, konten;
-	private int id, id_author;
+	private String judul, tanggal, konten, id_author;
 	private boolean deleted, published;
 
 	public boolean isDeleted() {
 		return deleted;
 	}
 
-	public int getId_author() {
+	public String getId_author() {
 		return id_author;
 	}
 
-	public void setId_author(int id_author) {
+	public void setId_author(String id_author) {
 		this.id_author = id_author;
 	}
 
@@ -27,14 +26,6 @@ public class Post {
 
 	public void setPublished(boolean published) {
 		this.published = published;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getJudul() {

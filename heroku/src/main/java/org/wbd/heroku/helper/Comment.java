@@ -1,8 +1,15 @@
 package org.wbd.heroku.helper;
 
 public class Comment {
-	private String nama, email, kontent;
-	private int id, id_post;
+	private String nama, email, konten, tanggal, id_post;
+
+	public String getTanggal() {
+		return tanggal;
+	}
+
+	public void setTanggal(String tanggal) {
+		this.tanggal = tanggal;
+	}
 
 	public String getNama() {
 		return nama;
@@ -20,27 +27,19 @@ public class Comment {
 		this.email = email;
 	}
 
-	public String getKontent() {
-		return kontent;
+	public String getKonten() {
+		return konten;
 	}
 
-	public void setKontent(String kontent) {
-		this.kontent = kontent;
+	public void setKonten(String konten) {
+		this.konten = konten;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getId_post() {
+	public String getId_post() {
 		return id_post;
 	}
 
-	public void setId_post(int id_post) {
+	public void setId_post(String id_post) {
 		this.id_post = id_post;
 	}
 
