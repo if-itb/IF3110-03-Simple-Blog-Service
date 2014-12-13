@@ -21,8 +21,8 @@ public interface FirebaseService {
     
 	boolean addUser(String username, String password, String name, String email, String role);
 	List<User> listUser();
-	boolean editUser(int id, String name, String email, String role);
-	boolean deleteUser(int id);
+	boolean editUser(String id, String username, String password, String name, String email, String role);
+	boolean deleteUser(String id);
 	
 	boolean addComment(String name, String email, String kontent, String tanggal, String idPost);
 	List<Comment> listComment();

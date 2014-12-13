@@ -137,15 +137,26 @@ public class FirebaseServiceImpl implements FirebaseService {
 	}
 
 	@Override
-	public boolean editUser(int id, String name, String email, String role) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean editUser(String id, String username, String password, String name, String email, String role) {
+		User editedUser = new User();
+		editedUser.setUsername(username);
+		editedUser.setPassword(password);
+		editedUser.setNama(name);
+		editedUser.setNama(email);
+		editedUser.setRole(role);
+
+		Firebase firebaseSpecificUser = myFirebase.child(USER_PATH).child(id);
+		firebaseSpecificUser.setValue(editedUser);
+		
+		return true;
 	}
 
 	@Override
-	public boolean deleteUser(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteUser(String id) {
+		Firebase firebaseSpecificUser = myFirebase.child(USER_PATH).child(id);
+		firebaseSpecificUser.removeValue();
+		
+		return true;
 	}
 
 	@Override
