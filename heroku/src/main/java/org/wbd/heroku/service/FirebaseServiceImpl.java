@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -51,11 +52,12 @@ public class FirebaseServiceImpl implements FirebaseService {
 			URLConnection fire = inferno.openConnection();
 			JSONTokener fira = new JSONTokener(fire.getInputStream());
 
-			JSONArray firaga = new JSONArray(fira);
-			int num_post = firaga.length();
+			JSONObject firaga = new JSONObject(fira);
+			Iterator<String> firaja = firaga.keys();
 			List<Post> result = new ArrayList<Post>();
-			for (int i = 0; i < num_post; ++i) {
-				JSONObject post = firaga.getJSONObject(i);
+			while (firaja.hasNext()) {
+				String chainz = firaja.next();
+				JSONObject post = firaga.getJSONObject(chainz);
 				Post the_post = new Post(post.getString("judul"),
 						post.getString("tanggal"), post.getString("konten"),
 						post.getString("id_author"));
