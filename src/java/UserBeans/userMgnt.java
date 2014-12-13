@@ -150,7 +150,10 @@ public class userMgnt implements Serializable {
         
     public ArrayList<Komentar> getComments(){
         UserData ud = new UserData();
+
         comments = ud.getListKomentar(lihatpost.getPid());
+
+        
         return comments;
     }
     

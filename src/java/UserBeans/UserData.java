@@ -106,6 +106,7 @@ public class UserData {
         return records;
     }
 
+
     public void writeKomentar(Komentar komentarParam) {
         Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/");
         Firebase komenRef = ref.child("komentar");
@@ -129,6 +130,7 @@ public class UserData {
 //            String exex = ex.getMessage();
 //            Logger.getLogger(UserData.class.getName()).log(Level.SEVERE, null, ex);
 //        }
+
     }
 
     public void writeKomentar(int Pid, String komentator,

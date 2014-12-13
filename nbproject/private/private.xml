@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/HP/Desktop/TUBES%20on%20going/WBD%202/dikumpul/src/java/UserBeans/UserData.java</file>
             <file>file:/C:/Users/HP/Desktop/TUBES%20on%20going/WBD%202/dikumpul/web/admin_page.xhtml</file>
             <file>file:/C:/Users/HP/Desktop/TUBES%20on%20going/WBD%202/dikumpul/web/post.xhtml</file>
@@ -18,6 +19,16 @@
             <file>file:/C:/Users/HP/Desktop/TUBES%20on%20going/WBD%202/dikumpul/web/assets/style.css</file>
             <file>file:/C:/Users/HP/Desktop/TUBES%20on%20going/WBD%202/dikumpul/src/java/UserBeans/userMgnt.java</file>
             <file>file:/C:/Users/HP/Desktop/TUBES%20on%20going/WBD%202/dikumpul/web/index.xhtml</file>
+=======
+            <file>file:/D:/kuliah/IF/Materi%20Semester%205/WBD/tugas%20II%20blog/simpleblog-nisa/web/admin_page.xhtml</file>
+            <file>file:/D:/kuliah/IF/Materi%20Semester%205/WBD/tugas%20II%20blog/simpleblog-nisa/web/post.xhtml</file>
+            <file>file:/D:/kuliah/IF/Materi%20Semester%205/WBD/tugas%20II%20blog/simpleblog-nisa/web/user_management.xhtml</file>
+            <file>file:/D:/kuliah/IF/Materi%20Semester%205/WBD/tugas%20II%20blog/simpleblog-nisa/web/deleted_post.xhtml</file>
+            <file>file:/D:/kuliah/IF/Materi%20Semester%205/WBD/tugas%20II%20blog/simpleblog-nisa/web/add_post.xhtml</file>
+            <file>file:/D:/kuliah/IF/Materi%20Semester%205/WBD/tugas%20II%20blog/simpleblog-nisa/web/index.xhtml</file>
+            <file>file:/D:/kuliah/IF/Materi%20Semester%205/WBD/tugas%20II%20blog/simpleblog-nisa/web/edit_post.xhtml</file>
+            <file>file:/D:/kuliah/IF/Materi%20Semester%205/WBD/tugas%20II%20blog/simpleblog-nisa/web/publish_post.xhtml</file>
+>>>>>>> 17554dc65625416cb90d648b0e9a341c252b16ea
         </group>
     </open-files>
 </project-private>

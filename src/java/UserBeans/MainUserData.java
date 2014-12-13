@@ -5,12 +5,12 @@
  */
 package UserBeans;
 
-
 import com.firebase.client.Firebase;
 import com.firebase.client.Transaction.Handler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +18,7 @@ import java.util.Map;
  */
 public class MainUserData {
     public static void main(String[] args){
+
         Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/");
         ref.authWithCustomToken(null, null);
         Firebase komenRef = ref.child("komentar");
