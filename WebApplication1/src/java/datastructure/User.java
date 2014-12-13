@@ -14,6 +14,9 @@ public class User {
         
     private String key, username , email, role , password ; 
     
+    public User() {
+    }
+    
     public User (String key, String username, String email, String role, String password){
         this.key = key;
         this.username = username ;

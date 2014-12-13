@@ -13,6 +13,9 @@ package datastructure;
 public class Comment {
     private String key, email, guest, id_post, id_user, komentar, tanggal, username;
     
+    public Comment() {
+    }
+    
     public Comment(String key, String email, String guest, String id_post, String id_user, String komentar, String tanggal, String username) {
         this.key = key;
         this.email = email;

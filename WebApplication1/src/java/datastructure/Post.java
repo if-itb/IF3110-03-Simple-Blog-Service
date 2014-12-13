@@ -13,6 +13,9 @@ package datastructure;
 public class Post {
     private String deleted, published, id_user, judul, konten, tanggal, key;
 
+    public Post() {
+    }
+    
     public Post(String key, String deleted, String published, String id_user, String judul, String konten, String tanggal) {
         this.deleted = deleted;
         this.published = published;

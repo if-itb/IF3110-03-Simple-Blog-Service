@@ -28,22 +28,20 @@ import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import datastructure.*;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author wira gotama
  */
 @WebService(serviceName = "PenguasaDuniaService")
 public class PenguasaDuniaService {
-    private String firebaseURl;
-    private Firebase postsRef;
-    private Firebase usersRef;
-    private Firebase commentsRef; 
+    private final String firebaseURl = "https://luminous-inferno-4376.firebaseio.com/";
+    private final Firebase postsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/posts/"); ;
+    private final Firebase usersRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/users/"); ;
+    private final Firebase commentsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/comments/"); ; 
     
     public PenguasaDuniaService() {
-        String firebaseURl = "https://luminous-inferno-4376.firebaseio.com/";
-        Firebase postsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/posts/"); 
-        Firebase usersRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/users/"); 
-        Firebase commentsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/comments/"); 
     }
     
     @WebMethod(operationName = "addPost")
@@ -60,8 +58,8 @@ public class PenguasaDuniaService {
     }
     
     @WebMethod(operationName = "listPost")
-    public Vector<Post> listPost() { //outputnya Vector<Post>
-        Vector<Post> list = new Vector<Post>();
+    public List<Post> listPost() { //outputnya Vector<Post>
+        List<Post> list = new ArrayList<>();
         JSONObject json = getJSON(firebaseURl + "/posts.json");
         Map<String,Object>map = (Map<String,Object>)json;
         for(Map.Entry<String,Object> m : map.entrySet())
@@ -118,8 +116,8 @@ public class PenguasaDuniaService {
     }
     
     @WebMethod(operationName = "listUser")
-    public Vector<User> listUser() { 
-        Vector<User> list = new Vector<User>();
+    public List<User> listUser() { 
+        List<User> list = new ArrayList<>();
         JSONObject json = getJSON(firebaseURl + "/users.json");
         Map<String,Object>map = (Map<String,Object>)json;
         for(Map.Entry<String,Object> m : map.entrySet())
@@ -170,8 +168,8 @@ public class PenguasaDuniaService {
     }
     
     @WebMethod(operationName = "listComment")
-    public Vector<Comment> listComment() {
-        Vector<Comment> list = new Vector<Comment>();
+    public List<Comment> listComment() {
+        List<Comment> list = new ArrayList<>();
         JSONObject json = getJSON(firebaseURl + "/comments.json");
         Map<String,Object>map = (Map<String,Object>)json;
         for(Map.Entry<String,Object> m : map.entrySet())
@@ -202,8 +200,31 @@ public class PenguasaDuniaService {
     }
     
     @WebMethod(operationName = "search")
-    public Vector<DataSnapshot> search(@WebParam(name="query") final String query) { //result arrayPost
-        return null;
+    public List<Post> search(@WebParam(name="query") final String query) { //result arrayPost
+        List<Post> list = new ArrayList<>();
+        JSONObject json = getJSON(firebaseURl + "/posts.json");
+        Map<String,Object>map = (Map<String,Object>)json;
+        for(Map.Entry<String,Object> m : map.entrySet())
+        {
+            System.out.println("Key:" + m.getKey());
+            if(m.getKey().charAt(0)=='-')//berarti elemen
+            {
+                Map<String,String>post = (Map<String,String>) m.getValue();
+                String deleted, published, id_user, judul, konten, tanggal;
+                deleted = post.get("deleted");
+                published = post.get("published");
+                id_user = post.get("id_user");
+                judul = post.get("judul");
+                konten = post.get("konten");
+                tanggal = post.get("tanggal");
+                if (judul.toLowerCase().contains(query.toLowerCase()) || konten.toLowerCase().contains(query.toLowerCase()) || judul.equalsIgnoreCase(query) || konten.equalsIgnoreCase(query)) {
+                    Post temp = new Post(m.getKey(), deleted, published, id_user, judul, konten, tanggal);
+                    System.out.println(m.getKey()+" "+deleted+" "+published+" "+id_user+" "+judul+" "+konten+" "+tanggal);
+                    list.add(temp);
+                }
+            }
+        }
+        return list;
     }
     
     private JSONObject getJSON(String path)
