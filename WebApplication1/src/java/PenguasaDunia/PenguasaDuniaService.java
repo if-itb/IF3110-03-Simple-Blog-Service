@@ -10,27 +10,34 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import datastructure.Post;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import datastructure.*;
 /**
  *
  * @author wira gotama
  */
 @WebService(serviceName = "PenguasaDuniaService")
 public class PenguasaDuniaService {
-    public Firebase postsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/posts/"); 
-    public Firebase usersRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/users/"); 
-    public Firebase commentsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/comments/"); 
-    public Vector<DataSnapshot> Posts = new Vector<DataSnapshot>();
-    public Vector<DataSnapshot> Users = new Vector<DataSnapshot>();
-    public Vector<DataSnapshot> Comments = new Vector<DataSnapshot>();
-    public int count;
-    public boolean wait = true;
+    private String firebaseURl = "https://luminous-inferno-4376.firebaseio.com/";
+    private Firebase postsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/posts/"); 
+    private Firebase usersRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/users/"); 
+    private Firebase commentsRef = new Firebase("https://luminous-inferno-4376.firebaseio.com/comments/"); 
     
     /**
      * This is a sample web service operation
@@ -54,27 +61,29 @@ public class PenguasaDuniaService {
     }
     
     @WebMethod(operationName = "listPost")
-    public Vector<DataSnapshot> listPost() { //outputnya arrayPost
-        wait = true;
-        postsRef.addListenerForSingleValueEvent(new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                Posts.removeAll(Posts);
-                for (DataSnapshot element : ds.getChildren()) {
-                    Posts.add(element);
-                    System.out.println(element.getValue());
-                }
-                wait = false;
+    public Vector<Post> listPost() { //outputnya Vector<Post>
+        Vector<Post> list = new Vector<Post>();
+        JSONObject json = getJSON(firebaseURl + "/posts.json");
+        Map<String,Object>map = (Map<String,Object>)json;
+        for(Map.Entry<String,Object> m : map.entrySet())
+        {
+            System.out.println("Key:" + m.getKey());
+            if(m.getKey().charAt(0)=='-')//berarti elemen
+            {
+                Map<String,String>post = (Map<String,String>) m.getValue();
+                String deleted, published, id_user, judul, konten, tanggal;
+                deleted = post.get("deleted");
+                published = post.get("published");
+                id_user = post.get("id_user");
+                judul = post.get("judul");
+                konten = post.get("konten");
+                tanggal = post.get("tanggal");
+                Post temp = new Post(m.getKey(), deleted, published, id_user, judul, konten, tanggal);
+                System.out.println(m.getKey()+" "+deleted+" "+published+" "+id_user+" "+judul+" "+konten+" "+tanggal);
+                list.add(temp);
             }
-
-            @Override
-            public void onCancelled(FirebaseError fe) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        
-        });
-        while (wait);
-        return Posts;
+        }
+        return list;
     }
     
     @WebMethod(operationName = "editPost")
@@ -110,27 +119,26 @@ public class PenguasaDuniaService {
     }
     
     @WebMethod(operationName = "listUser")
-    public Vector<DataSnapshot> listUser() { //output adalah listUserResponse2
-        wait = false;
-        usersRef.addListenerForSingleValueEvent(new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                Users.removeAll(Users);
-                for (DataSnapshot element : ds.getChildren()) {
-                    Users.add(element);
-                    System.out.println(element.getValue());
-                }
-                wait = false;
+    public Vector<User> listUser() { 
+        Vector<User> list = new Vector<User>();
+        JSONObject json = getJSON(firebaseURl + "/users.json");
+        Map<String,Object>map = (Map<String,Object>)json;
+        for(Map.Entry<String,Object> m : map.entrySet())
+        {
+            System.out.println("Key:" + m.getKey());
+            if(m.getKey().charAt(0)=='-')//berarti elemen
+            {
+                Map<String,String>user = (Map<String,String>) m.getValue();
+                String key, username , email, role , password; 
+                username = user.get("username");
+                email = user.get("email");
+                role = user.get("role");
+                password = user.get("password");
+                User temp = new User(m.getKey(), username, email, role, password);
+                list.add(temp);
             }
-
-            @Override
-            public void onCancelled(FirebaseError fe) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        
-        });
-        while (wait); //tunggu sampe ada event
-        return Users;
+        }
+        return list;
     }
     
     @WebMethod(operationName = "editUser")
@@ -163,27 +171,29 @@ public class PenguasaDuniaService {
     }
     
     @WebMethod(operationName = "listComment")
-    public Vector<DataSnapshot> listComment() { //output listCommentResponse2
-        wait = true;
-        commentsRef.addListenerForSingleValueEvent(new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                Comments.removeAll(Users);
-                for (DataSnapshot element : ds.getChildren()) {
-                    Comments.add(element);
-                    System.out.println(element.getValue());
-                }
-                wait = false;
+    public Vector<Comment> listComment() {
+        Vector<Comment> list = new Vector<Comment>();
+        JSONObject json = getJSON(firebaseURl + "/comments.json");
+        Map<String,Object>map = (Map<String,Object>)json;
+        for(Map.Entry<String,Object> m : map.entrySet())
+        {
+            System.out.println("Key:" + m.getKey());
+            if(m.getKey().charAt(0)=='-')//berarti id
+            {
+                Map<String,String>comment = (Map<String,String>) m.getValue();
+                String email, guest, id_post, id_user, komentar, tanggal, username;
+                email = comment.get("email");
+                guest = comment.get("guest");
+                id_post = comment.get("id_post");
+                id_user = comment.get("id_user");
+                komentar = comment.get("komentar");
+                tanggal = comment.get("tanggal");
+                username = comment.get("username");
+                Comment temp = new Comment(m.getKey(), email, guest, id_post, id_user, komentar, tanggal, username);
+                list.add(temp);
             }
-
-            @Override
-            public void onCancelled(FirebaseError fe) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        
-        });
-        while (wait); //tunggu sampe ada event
-        return Comments;
+        }
+        return list;
     }
     
     @WebMethod(operationName = "deleteComment")
@@ -194,27 +204,37 @@ public class PenguasaDuniaService {
     
     @WebMethod(operationName = "search")
     public Vector<DataSnapshot> search(@WebParam(name="query") final String query) { //result arrayPost
-        wait = true;
-        postsRef.addListenerForSingleValueEvent(new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                Posts.removeAll(Posts);
-                for (DataSnapshot element : ds.getChildren()) {
-                    if (element.child("judul").toString().contains(query) || element.child("konten").toString().contains(query)) {
-                        Posts.add(element);
-                        System.out.println(element.getValue());
-                    }
-                }
-                wait = false;
-            }
-
-            @Override
-            public void onCancelled(FirebaseError fe) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
+        return null;
+    }
+    
+    private JSONObject getJSON(String path)
+    {
+        URL url;
+        InputStream is = null;
+        BufferedReader br;
+        String JSON = "";
+        String line = "";
+        JSONArray array = new JSONArray();
         
-        });
-        while (wait);
-        return Posts;
+        try {
+            url = new URL(path);
+            is = url.openStream();
+            br = new BufferedReader(new InputStreamReader(is));
+            while((line = br.readLine()) != null)
+            {
+                JSON += line;
+            }
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(JSON);
+            array.add(obj);
+        } catch (MalformedURLException ex) {
+            System.out.println(ex.toString());
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        } catch (ParseException ex) {
+            System.out.println(ex.toString());
+        }
+        JSONObject obj = (JSONObject) array.get(0);
+        return obj;
     }
 }
