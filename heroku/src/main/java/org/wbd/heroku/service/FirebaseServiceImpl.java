@@ -121,7 +121,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 		newUser.setUsername(username);
 		newUser.setPassword(password);
 		newUser.setNama(name);
-		newUser.setNama(email);
+		newUser.setEmail(email);
 		newUser.setRole(role);
 
 		Firebase firebaseUser = myFirebase.child(USER_PATH);
@@ -132,7 +132,35 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 	@Override
 	public List<User> listUser() {
-		// TODO Auto-generated method stub
+		try {
+			URL inferno = new URL(FIREBASE_URL + USER_PATH + ".json");
+			URLConnection fire = inferno.openConnection();
+			JSONTokener fira = new JSONTokener(fire.getInputStream());
+
+			JSONArray firaga = new JSONArray(fira);
+			int num_user = firaga.length();
+			List<User> result = new ArrayList<User>();
+			for (int i = 0; i < num_user; ++i) {
+				JSONObject user = firaga.getJSONObject(i);
+				User the_user = new User();
+				
+				the_user.setEmail(user.getString("email"));
+				the_user.setUsername(user.getString("username"));
+				the_user.setPassword(user.getString("password"));
+				the_user.setNama(user.getString("nama"));
+				the_user.setRole(user.getString("role"));
+				
+				result.add(the_user);
+			}
+
+			return result;
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
