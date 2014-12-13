@@ -86,6 +86,6 @@ public class UserRegistry {
             }
         }
         ExternalContext extcon = FacesContext.getCurrentInstance().getExternalContext();
-        extcon.redirect("/SImpleBlog/Home.xhtml");
+        extcon.redirect("/webapp/Home.xhtml");
     }
 }

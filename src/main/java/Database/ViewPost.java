@@ -52,7 +52,7 @@ public class ViewPost {
     public void Redirect(int PostID) throws IOException{
         setPostId(PostID);
         ExternalContext extcon = FacesContext.getCurrentInstance().getExternalContext();
-        extcon.redirect("/SImpleBlog/ViewPost.xhtml");
+        extcon.redirect("/webapp/ViewPost.xhtml");
     }
     
     public Post getPost() throws ClassNotFoundException, SQLException, IllegalAccessException{

@@ -82,7 +82,7 @@ public class PostingDatabase {
     
     public void toHome() throws IOException{
         ExternalContext extCont = FacesContext.getCurrentInstance().getExternalContext();
-        extCont.redirect("/SImpleBlog/Home.xhtml");
+        extCont.redirect("/webapp/Home.xhtml");
     }
     
     public Connection makeConnection() throws ClassNotFoundException, SQLException{
@@ -179,7 +179,7 @@ public class PostingDatabase {
             con.close();
         }
             ExternalContext extcon = FacesContext.getCurrentInstance().getExternalContext();
-            extcon.redirect("/SImpleBlog/Home.xhtml");
+            extcon.redirect("/webapp/Home.xhtml");
     }
 
     public void deletePost() throws ClassNotFoundException, SQLException, IOException, ParseException{
@@ -191,7 +191,7 @@ public class PostingDatabase {
             con.close();
         }
           ExternalContext extcon = FacesContext.getCurrentInstance().getExternalContext();
-          extcon.redirect("/SImpleBlog/Home.xhtml");
+          extcon.redirect("/webapp/Home.xhtml");
     }
     
     public void PublishPost() throws ClassNotFoundException, IOException, ParseException, SQLException{
@@ -204,7 +204,7 @@ public class PostingDatabase {
             con.close();
         }
             ExternalContext extcon = FacesContext.getCurrentInstance().getExternalContext();
-            extcon.redirect("/SImpleBlog/Home.xhtml");
+            extcon.redirect("/webapp/Home.xhtml");
     }
 
     public void setLoginOnLoad() throws ClassNotFoundException, SQLException, IOException{
@@ -225,19 +225,19 @@ public class PostingDatabase {
                 if (existUser>0){
                     if(getUserRole().equals("Editor"))
                     {
-                        extCont.redirect("/SImpleBlog/Role/Editor.xhtml");
+                        extCont.redirect("/webapp/Editor.xhtml");
                     }
                     if(getUserRole().equals("Owner"))
                     {
-                        extCont.redirect("/SImpleBlog/Role/Owner.xhtml");
+                        extCont.redirect("/webapp/Owner.xhtml");
                     }
                     if(getUserRole().equals("Admin"))
                     {
-                        extCont.redirect("/SImpleBlog/Role/Admin.xhtml");
+                        extCont.redirect("/webapp/Admin.xhtml");
                     }
                 }
                 else{
-                    extCont.redirect("/SImpleBlog/Home.xhtml");
+                    extCont.redirect("/webapp/Home.xhtml");
                 }
             }
             con.close();
@@ -269,20 +269,20 @@ public class PostingDatabase {
                     UserRole = rs2.getString("Role");
                     if(UserRole.equals("Editor"))
                         {
-                            extCont.redirect("/SImpleBlog/Role/Editor.xhtml");
+                            extCont.redirect("/webapp/Editor.xhtml");
                         }
                         if(UserRole.equals("Owner"))
                         {
-                            extCont.redirect("/SImpleBlog/Role/Owner.xhtml");
+                            extCont.redirect("/webapp/Owner.xhtml");
                         }
                         if(UserRole.equals("Admin"))
                         {
-                            extCont.redirect("/SImpleBlog/Role/Admin.xhtml");
+                            extCont.redirect("/webapp/Admin.xhtml");
                         } 
                     }
                 }
             else{
-                extCont.redirect("/SImpleBlog/Home.xhtml");
+                extCont.redirect("/webapp/Home.xhtml");
             }
         }
         con.close();
@@ -344,7 +344,7 @@ public class PostingDatabase {
         ExternalContext extCont = FacesContext.getCurrentInstance().getExternalContext();
         login.delUserCookie();
         login.delPassCookie();
-        extCont.redirect("/SImpleBlog/Home.xhtml");
+        extCont.redirect("/webapp/Home.xhtml");
     }
     
     public boolean getLoginState(){
@@ -388,23 +388,23 @@ public class PostingDatabase {
                     if (existUser>0){
                         if(!getUserRole().equals("Admin"))
                         {
-                            extCont.redirect("/SImpleBlog/Home.xhtml");
+                            extCont.redirect("/webapp/Home.xhtml");
                         }
                     }
                     else{
-                        extCont.redirect("/SImpleBlog/Home.xhtml");
+                        extCont.redirect("/webapp/Home.xhtml");
                     }
                 }
                 con.close();
             }
             else
             {
-                extCont.redirect("/SImpleBlog/Home.xhtml");
+                extCont.redirect("/webapp/Home.xhtml");
             }
         }
         else
         {
-            extCont.redirect("/SImpleBlog/Home.xhtml");
+            extCont.redirect("/webapp/Home.xhtml");
         }
         
     }
@@ -429,23 +429,23 @@ public class PostingDatabase {
                     if (existUser>0){
                         if(!getUserRole().equals("Editor"))
                         {
-                            extCont.redirect("/SImpleBlog/Home.xhtml");
+                            extCont.redirect("/webapp/Home.xhtml");
                         }
                     }
                     else{
-                        extCont.redirect("/SImpleBlog/Home.xhtml");
+                        extCont.redirect("/webapp/Home.xhtml");
                     }
                 }
                 con.close();
             }
             else
             {
-                extCont.redirect("/SImpleBlog/Home.xhtml");
+                extCont.redirect("/webapp/Home.xhtml");
             }
         }
         else
         {
-            extCont.redirect("/SImpleBlog/Home.xhtml");
+            extCont.redirect("/webapp/Home.xhtml");
         }
         
     }
@@ -470,23 +470,23 @@ public class PostingDatabase {
                     if (existUser>0){
                         if(!getUserRole().equals("Owner"))
                         {
-                            extCont.redirect("/SImpleBlog/Home.xhtml");
+                            extCont.redirect("/webapp/Home.xhtml");
                         }
                     }
                     else{
-                        extCont.redirect("/SImpleBlog/Home.xhtml");
+                        extCont.redirect("/webapp/Home.xhtml");
                     }
                 }
                 con.close();
             }
             else
             {
-                extCont.redirect("/SImpleBlog/Home.xhtml");
+                extCont.redirect("/webapp/Home.xhtml");
             }
         }
         else
         {
-            extCont.redirect("/SImpleBlog/Home.xhtml");
+            extCont.redirect("/webapp/Home.xhtml");
         }
     }   
     
@@ -579,7 +579,7 @@ public class PostingDatabase {
             int rs;
             rs = stmt.executeUpdate(query);
             ExternalContext extcon = FacesContext.getCurrentInstance().getExternalContext();
-            extcon.redirect("/SImpleBlog/Home.xhtml");
+            extcon.redirect("/webapp/Home.xhtml");
             con.close();
         }
     }
@@ -591,7 +591,7 @@ public class PostingDatabase {
             int rs;
             rs = stmt.executeUpdate(query);
             ExternalContext extcon = FacesContext.getCurrentInstance().getExternalContext();
-            extcon.redirect("/SImpleBlog/Home.xhtml");
+            extcon.redirect("/webapp/Home.xhtml");
             con.close();
         }
     }
