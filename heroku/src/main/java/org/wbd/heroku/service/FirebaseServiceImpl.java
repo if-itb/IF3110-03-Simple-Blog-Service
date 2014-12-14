@@ -77,7 +77,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 				Post the_post = new Post(post.getString("judul"),
 						post.getString("tanggal"), post.getString("konten"),
 						post.getString("id_author"));
-				the_post.setId(post.getString("id"));
+				the_post.setId(chainz);
 				the_post.setDeleted(post.getBoolean("deleted"));
 				the_post.setPublished(post.getBoolean("published"));
 				if ((the_post.getMask() & code) > 0)
