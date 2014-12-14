@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.DatabaseUtility;
+import org.wbd.heroku.service.FirebaseService;
+import org.wbd.heroku.service.FirebaseServiceProxy;
 
 /**
  * Servlet implementation class PostUpdater
@@ -43,35 +44,14 @@ public class PostUpdater extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
+		String id = request.getParameter("id");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		String date = request.getParameter("date");
 
-		DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-
-		
-		Connection con = dbUtil.getLiveConnection();
-		String query = "UPDATE `post` SET `judul`=?, `isi`=?, `waktu`=? WHERE `id`=?";
-		PreparedStatement pst;
-		System.out
-				.printf("UPDATE `post` SET `judul`=%s, `isi`=%s, `waktu`=%s WHERE `id`=%d\n",
-						title, content, date, id);
-
-		try {
-			pst = con.prepareStatement(query);
-			pst.setString(1, title);
-			pst.setString(2, content);
-			pst.setString(3, date);
-			pst.setInt(4, id);
-			pst.execute();
-			response.sendRedirect("index.jsf");
-			
-		} catch (SQLException e) {
-			System.out.println("Query Failed");
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		}
+		FirebaseService inferno = new FirebaseServiceProxy();
+		inferno.editPost(id, title, content, date);
+		response.sendRedirect("index.jsf");
 	}
 
 }

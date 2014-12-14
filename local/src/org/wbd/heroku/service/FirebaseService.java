@@ -23,4 +23,5 @@ public interface FirebaseService extends java.rmi.Remote {
     public org.wbd.heroku.service.User[] listUser() throws java.rmi.RemoteException;
     public boolean addComment(java.lang.String name, java.lang.String email, java.lang.String kontent, java.lang.String tanggal, java.lang.String idPost) throws java.rmi.RemoteException;
     public boolean deleteUser(java.lang.String id) throws java.rmi.RemoteException;
+    public org.wbd.heroku.service.Comment[] listPostComment(java.lang.String post_id) throws java.rmi.RemoteException;
 }

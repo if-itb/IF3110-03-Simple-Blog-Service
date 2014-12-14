@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.wbd.heroku.service.FirebaseService;
+import org.wbd.heroku.service.FirebaseServiceProxy;
+
 import constrain.Constant;
 
 /**
@@ -58,54 +61,10 @@ public class CommentPoster extends HttpServlet {
 		Date now = new Date(System.currentTimeMillis());
 		String snow = new SimpleDateFormat("yyyy-MM-dd").format(now);
 
-		Connection connection = null;
-
-		String url = Constant.DATABASE_URL;
-		String user = Constant.DATABASE_USER;
-		String password = Constant.DATABASE_PASS;
-
-		try {
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-			connection = DriverManager.getConnection(url, user, password);
-
-		} catch (SQLException exception) {
-			System.out.println("Database connection fail");
-			System.out.println(exception.getMessage());
-			// failed database response
-			failedMessage(response);
-			return;
-		}
-
-		String stm = "INSERT INTO `comment`(`id_post`,`isi`,`waktu`,`name`,`email`) VALUES (?,?,?,?,?)";
-
-		try {
-			PreparedStatement pst = connection.prepareStatement(stm);
-			pst.setInt(1, id);
-			pst.setString(2, content);
-			pst.setString(3, snow);
-			pst.setString(4, name);
-			pst.setString(5, email);
-			pst.execute();
-
-			response.setContentType("text/html");
-			PrintWriter out = response.getWriter();
-			out.print("SUCCESS");
-
-		} catch (SQLException e) {
-			System.out.println("Database update fail");
-			System.out.println(e.getMessage());
-			// failed database response
-			failedMessage(response);
-		}
+		FirebaseService inferno = new FirebaseServiceProxy();
+		inferno.addComment(name, email, content, snow, sid);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		out.print("SUCCESS");
 	}
-
-	private void failedMessage(HttpServletResponse response) {
-		try {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Doomed in CommentPoster.failedMessage()");
-		}
-	}
-
 }

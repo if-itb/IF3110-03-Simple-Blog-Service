@@ -134,5 +134,11 @@ public class FirebaseServiceProxy implements org.wbd.heroku.service.FirebaseServ
     return firebaseService.deleteUser(id);
   }
   
+  public org.wbd.heroku.service.Comment[] listPostComment(java.lang.String post_id) throws java.rmi.RemoteException{
+    if (firebaseService == null)
+      _initFirebaseServiceProxy();
+    return firebaseService.listPostComment(post_id);
+  }
+  
   
 }
