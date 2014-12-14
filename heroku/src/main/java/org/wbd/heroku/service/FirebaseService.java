@@ -25,6 +25,8 @@ public interface FirebaseService {
 	boolean pulverizePost(@WebParam(name = "id") String id);
 	@WebMethod(operationName = "setPostPublish")
 	boolean setPostPublish(@WebParam(name = "id") String id, @WebParam(name = "status") boolean status);
+	@WebMethod(operationName = "getPost")
+	Post getPost(@WebParam(name = "id") String id);
     
 	@WebMethod(operationName = "addUser")
 	boolean addUser(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "name") String name, @WebParam(name = "email") String email, @WebParam(name = "role") int role);
