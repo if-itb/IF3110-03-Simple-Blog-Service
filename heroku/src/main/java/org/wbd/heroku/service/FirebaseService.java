@@ -41,6 +41,8 @@ public interface FirebaseService {
 	boolean addComment(@WebParam(name = "name") String name, @WebParam(name = "email") String email, @WebParam(name = "kontent") String kontent, @WebParam(name = "tanggal") String tanggal, @WebParam(name = "idPost") String idPost);
 	@WebMethod(operationName = "listComment")
 	List<Comment> listComment();
+	@WebMethod(operationName = "listPostComment")
+	List<Comment> listPostComment(@WebParam(name = "post_id") String post_id);
 	@WebMethod(operationName = "deleteComment")
 	boolean deleteComment(@WebParam(name = "id") String id);
 	
