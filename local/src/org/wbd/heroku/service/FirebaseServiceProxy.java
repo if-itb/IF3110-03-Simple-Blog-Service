@@ -44,64 +44,70 @@ public class FirebaseServiceProxy implements org.wbd.heroku.service.FirebaseServ
     return firebaseService;
   }
   
-  public boolean addUser(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, int arg4) throws java.rmi.RemoteException{
+  public boolean addUser(java.lang.String username, java.lang.String password, java.lang.String name, java.lang.String email, int role) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.addUser(arg0, arg1, arg2, arg3, arg4);
+    return firebaseService.addUser(username, password, name, email, role);
   }
   
-  public boolean deleteComment(java.lang.String arg0) throws java.rmi.RemoteException{
+  public boolean deleteComment(java.lang.String id) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.deleteComment(arg0);
+    return firebaseService.deleteComment(id);
   }
   
-  public org.wbd.heroku.service.Post[] listPost(int arg0) throws java.rmi.RemoteException{
+  public org.wbd.heroku.service.Post[] listPost(int code) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.listPost(arg0);
+    return firebaseService.listPost(code);
   }
   
-  public boolean editUser(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4, int arg5) throws java.rmi.RemoteException{
+  public boolean editUser(java.lang.String id, java.lang.String username, java.lang.String password, java.lang.String name, java.lang.String email, int role) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.editUser(arg0, arg1, arg2, arg3, arg4, arg5);
+    return firebaseService.editUser(id, username, password, name, email, role);
   }
   
-  public boolean addPost(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3) throws java.rmi.RemoteException{
+  public boolean addPost(java.lang.String judul, java.lang.String konten, java.lang.String tanggal, java.lang.String idAuthor) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.addPost(arg0, arg1, arg2, arg3);
+    return firebaseService.addPost(judul, konten, tanggal, idAuthor);
   }
   
-  public boolean pulverizePost(java.lang.String arg0) throws java.rmi.RemoteException{
+  public boolean pulverizePost(java.lang.String id) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.pulverizePost(arg0);
+    return firebaseService.pulverizePost(id);
   }
   
-  public boolean setPostPublish(java.lang.String arg0, boolean arg1) throws java.rmi.RemoteException{
+  public boolean setPostPublish(java.lang.String id, boolean status) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.setPostPublish(arg0, arg1);
+    return firebaseService.setPostPublish(id, status);
   }
   
-  public boolean setPostDelete(java.lang.String arg0, boolean arg1) throws java.rmi.RemoteException{
+  public boolean setPostDelete(java.lang.String id, boolean status) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.setPostDelete(arg0, arg1);
+    return firebaseService.setPostDelete(id, status);
   }
   
-  public org.wbd.heroku.service.Post[] search(java.lang.String arg0) throws java.rmi.RemoteException{
+  public org.wbd.heroku.service.Post getPost(java.lang.String id) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.search(arg0);
+    return firebaseService.getPost(id);
   }
   
-  public boolean editPost(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3) throws java.rmi.RemoteException{
+  public org.wbd.heroku.service.Post[] search(java.lang.String query) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.editPost(arg0, arg1, arg2, arg3);
+    return firebaseService.search(query);
+  }
+  
+  public boolean editPost(java.lang.String id, java.lang.String judul, java.lang.String konten, java.lang.String tanggal) throws java.rmi.RemoteException{
+    if (firebaseService == null)
+      _initFirebaseServiceProxy();
+    return firebaseService.editPost(id, judul, konten, tanggal);
   }
   
   public org.wbd.heroku.service.Comment[] listComment() throws java.rmi.RemoteException{
@@ -116,16 +122,16 @@ public class FirebaseServiceProxy implements org.wbd.heroku.service.FirebaseServ
     return firebaseService.listUser();
   }
   
-  public boolean addComment(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4) throws java.rmi.RemoteException{
+  public boolean addComment(java.lang.String name, java.lang.String email, java.lang.String kontent, java.lang.String tanggal, java.lang.String idPost) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.addComment(arg0, arg1, arg2, arg3, arg4);
+    return firebaseService.addComment(name, email, kontent, tanggal, idPost);
   }
   
-  public boolean deleteUser(java.lang.String arg0) throws java.rmi.RemoteException{
+  public boolean deleteUser(java.lang.String id) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
-    return firebaseService.deleteUser(arg0);
+    return firebaseService.deleteUser(id);
   }
   
   

@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.wbd.heroku.service.FirebaseService;
+import org.wbd.heroku.service.FirebaseServiceProxy;
+
 import constrain.Constant;
 
 /**
@@ -56,10 +59,8 @@ public class CommentGetter extends HttpServlet {
 		int userID = Integer.parseInt(suserID);
 		Connection connection = null;
 
-		String url = Constant.DATABASE_URL;
-		String user = Constant.DATABASE_USER;
-		String password = Constant.DATABASE_PASS;
-
+		FirebaseService inferno = new FirebaseServiceProxy();
+		inferno.listComment();
 		try {
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			connection = DriverManager.getConnection(url, user, password);

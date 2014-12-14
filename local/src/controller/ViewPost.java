@@ -35,40 +35,24 @@ public class ViewPost {
 	UserData userData;
 
 	public void execute() {
+		List<Comment> result = new ArrayList<>();
+
+		FirebaseService inferno = new FirebaseServiceProxy();
+		org.wbd.heroku.service.Post wow;
 		try {
-			List<Comment> result = new ArrayList<>();
-			
-			FirebaseService inferno = new FirebaseServiceProxy();
-			org.wbd.heroku.service.Comment[] comms;
-			try {
-				comms = inferno.listComment();
-				for (org.wbd.heroku.service.Comment comm : comms) {
-					Comment comment = new Comment();
-					comment.setName(comm.getNama());
-					comment.setEmail(comm.getEmail());
-					comment.setTime(comm.getTanggal());
-					comment.setContent(comm.getKonten());
-					result.add(comment);
-				}
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			return result;
-			DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-			ResultSet rs = dbUtil.execute("SELECT * FROM `post` WHERE `id` = "
-					+ id);
-			if (rs != null) {
-				rs.next();
-				post = new Post();
-				post.setId(rs.getInt(1));
-				post.setTitle(rs.getString(3));
-				post.setContent(rs.getString(4));
-				post.setDate(rs.getDate(5));
-			}
-		} catch (SQLException ex) {
-			System.err.println("Error when getting post with id = " + id);
+			wow = inferno.getPost(id);
+			post = new Post();
+			post.setId(wow.getId());
+			post.setTitle(wow.getJudul());
+			post.setContent(wow.getKonten());
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			post.setDate(df.parse(wow.getTanggal()));
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -78,7 +62,7 @@ public class ViewPost {
 
 	public List<Comment> getComments() {
 		List<Comment> result = new ArrayList<>();
-		
+
 		FirebaseService inferno = new FirebaseServiceProxy();
 		org.wbd.heroku.service.Comment[] comms;
 		try {
@@ -95,7 +79,7 @@ public class ViewPost {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
@@ -126,29 +110,29 @@ public class ViewPost {
 	 */
 	public List<Post> getOwnerPostList() {
 		FirebaseService inferno = new FirebaseServiceProxy();
-	List<Post> result = new ArrayList<>();
-	org.wbd.heroku.service.Post[] posts;
-	try {
-		posts = inferno.listPost(6);
-		for (org.wbd.heroku.service.Post p : posts) {
-			Post post = new Post();
-			post.setId(p.getId());
-			post.setTitle(p.getJudul());
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			post.setDate(df.parse(p.getTanggal()));
-			post.setContent(p.getKonten());
-			if (p.getId_author().equals(userData.getDetails().getUserId()))
-				result.add(post);
+		List<Post> result = new ArrayList<>();
+		org.wbd.heroku.service.Post[] posts;
+		try {
+			posts = inferno.listPost(6);
+			for (org.wbd.heroku.service.Post p : posts) {
+				Post post = new Post();
+				post.setId(p.getId());
+				post.setTitle(p.getJudul());
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				post.setDate(df.parse(p.getTanggal()));
+				post.setContent(p.getKonten());
+				if (p.getId_author().equals(userData.getDetails().getUserId()))
+					result.add(post);
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	} catch (RemoteException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (ParseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	
-	return result;
+
+		return result;
 	}
 
 	public List<Post> getPublishednotDeletedPostList() {
@@ -173,7 +157,7 @@ public class ViewPost {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
@@ -199,7 +183,7 @@ public class ViewPost {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
@@ -229,7 +213,7 @@ public class ViewPost {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
@@ -250,8 +234,9 @@ public class ViewPost {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
-	public void setDummy(String lol) {}
+
+	public void setDummy(String lol) {
+	}
 
 	public void setEmail(String email) {
 		this.email = email;
