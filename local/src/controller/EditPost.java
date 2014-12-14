@@ -1,5 +1,6 @@
 package controller;
 
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -9,6 +10,9 @@ import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+
+import org.wbd.heroku.service.FirebaseService;
+import org.wbd.heroku.service.FirebaseServiceProxy;
 
 import entities.Post;
 
@@ -40,14 +44,14 @@ public class EditPost {
 		return post.getTitle();
 	}
 
-	public void HardDelete(int temp_id) {
-		DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-
-		String query = "Delete from post WHERE id = " + temp_id;
-
-		System.out.println(query);
-
-		dbUtil.execute(query);
+	public void HardDelete(String id) {
+		FirebaseService fire = new FirebaseServiceProxy();
+		try {
+			fire.pulverizePost(id);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void initialize() {

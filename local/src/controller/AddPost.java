@@ -1,5 +1,6 @@
 package controller;
 
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,9 @@ import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+
+import org.wbd.heroku.service.FirebaseService;
+import org.wbd.heroku.service.FirebaseServiceProxy;
 
 import entities.Post;
 import entities.UserData;
@@ -57,29 +61,17 @@ public class AddPost {
 
 	public String execute() {
 		if (alpha != null) {
-			DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-
+			
 			@SuppressWarnings("deprecation")
 			String date = "" + (1900 + post.getDate().getYear()) + "-"
 					+ (post.getDate().getMonth() + 1) + "-"
 					+ post.getDate().getDate();
 
-			Connection con = dbUtil.getLiveConnection();
-			String query = "INSERT INTO `post` (`id_user`, `judul`, `isi`, `waktu`, `is_deleted`, `is_published`) VALUES (?, ?, ?, ?, 0, 0)";
-			System.out
-			.printf("INSERT INTO `post` (`id_user`, `judul`, `isi`, `waktu`, `is_deleted`, `is_published`) VALUES (%d, %s, %s, %s, 0, 0)\n",
-					alpha.getUserID(), getTitle(),
-					getContent(), date);
-			PreparedStatement pst;
+			FirebaseService fire = new FirebaseServiceProxy();
 			try {
-				pst = con.prepareStatement(query);
-				pst.setInt(1, alpha.getUserID());
-				pst.setString(2, getTitle());
-				pst.setString(3, getContent());
-				pst.setString(4, date);
-				pst.execute();
-			} catch (SQLException e) {
-				System.out.println("Failed Query");
+				fire.addPost(getTitle(), getContent(), date, alpha.getUserID());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

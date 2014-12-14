@@ -1,13 +1,13 @@
 package entities;
 
 public class UserDetails {
-	private String name, email, username, password;
-	private int user_id, role;
+	private String name, email, username, password, user_id;
+	private int role;
 
 	public UserDetails() {
 	}
 
-	public UserDetails(String name, String email, int user_id) {
+	public UserDetails(String name, String email, String user_id) {
 		this.name = name;
 		this.email = email;
 		this.user_id = user_id;
@@ -52,7 +52,7 @@ public class UserDetails {
 		return str;
 	}
 
-	public int getUserId() {
+	public String getUserId() {
 		return user_id;
 	}
 
@@ -76,7 +76,7 @@ public class UserDetails {
 		this.role = role;
 	}
 
-	public void setUserId(int n) {
+	public void setUserId(String n) {
 		user_id = n;
 	}
 
