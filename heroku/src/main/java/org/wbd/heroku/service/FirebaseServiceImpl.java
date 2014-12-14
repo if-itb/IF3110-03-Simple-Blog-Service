@@ -277,4 +277,19 @@ public class FirebaseServiceImpl implements FirebaseService {
 		return result;
 	}
 
+	@Override
+	public Post getPost(String id) {
+		List<Post> listPost = listPost(15);
+		
+		Post the_post = null;
+		for(Post iteratePost : listPost){
+			if(iteratePost.getId().equals(id)){
+				the_post = iteratePost;
+				break;
+			}
+		}
+		
+		return the_post;
+	}
+
 }
