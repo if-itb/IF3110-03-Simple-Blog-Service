@@ -232,8 +232,14 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 	@Override
 	public List<Post> search(String query) {
+		List<Post> inferno = listPost(6);
+		List<Post> result = new ArrayList<Post>();
+		for (Post p: inferno) {
+			if (p.getJudul().contains(query) || p.getKonten().contains(query))
+				result.add(p);
+		}
 		// TODO Auto-generated method stub
-		return null;
+		return result;
 	}
 
 }
