@@ -20,24 +20,13 @@ public class EditUser {
 	private int user_role;	
 
 	public void addUser() {
-		DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-
-		String query = "INSERT INTO user (username, password, nama, email, role) "
-				+ "VALUES ('"
-				+ this.getUsername()
-				+ "','"
-				+ this.getPassword()
-				+ "','"
-				+ this.getName()
-				+ "',"
-				+ "'"
-				+ this.getEmail()
-				+ "'"
-				+ "," + this.getRole() + ")";
-
-		System.out.println(query);
-
-		dbUtil.execute(query);
+		FirebaseService inferno = new FirebaseServiceProxy();
+		try {
+			inferno.addUser(getUsername(), getPassword(), getName(), getEmail(), getRole());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		setUsername("");
 		setPassword("");
@@ -49,7 +38,7 @@ public class EditUser {
 	public void changeEmail() {
 		FirebaseService inferno = new FirebaseServiceProxy();
 		try {
-			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), "Editor");
+			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), this.getRole());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,7 +48,7 @@ public class EditUser {
 	public void changeName() {
 		FirebaseService inferno = new FirebaseServiceProxy();
 		try {
-			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), "Editor");
+			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), this.getRole());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,7 +58,7 @@ public class EditUser {
 	public void changePassword(){
 		FirebaseService inferno = new FirebaseServiceProxy();
 		try {
-			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), "Editor");
+			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), this.getRole());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,7 +68,7 @@ public class EditUser {
 	public void changeRole() {
 		FirebaseService inferno = new FirebaseServiceProxy();
 		try {
-			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), "Editor");
+			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), this.getRole());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -165,7 +154,7 @@ public class EditUser {
 	public String updateUser() {
 		FirebaseService inferno = new FirebaseServiceProxy();
 		try {
-			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), "regular");
+			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), this.getRole());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
