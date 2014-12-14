@@ -1,12 +1,17 @@
 package controller;
 
+import java.rmi.RemoteException;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+
+import org.wbd.heroku.service.FirebaseService;
+import org.wbd.heroku.service.FirebaseServiceProxy;
 
 @ManagedBean
 @RequestScoped
 public class EditUser {
-	private int user_id;
+	private String user_id;
 	private String user_username;
 	private String user_password;
 	private String user_name;
@@ -42,63 +47,60 @@ public class EditUser {
 	}
 
 	public void changeEmail() {
-		DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-
-		String query = "UPDATE user SET email = '" + this.getEmail()
-				+ "' WHERE id = " + this.getId();
-
-		System.out.println(query);
-
-		dbUtil.execute(query);
+		FirebaseService inferno = new FirebaseServiceProxy();
+		try {
+			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), "Editor");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void changeName() {
-		DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-
-		String query = "UPDATE user SET nama = '" + this.getName()
-				+ "' WHERE id = " + this.getId();
-
-		System.out.println(query);
-
-		dbUtil.execute(query);
+		FirebaseService inferno = new FirebaseServiceProxy();
+		try {
+			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), "Editor");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void changePassword(){
-		DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-		
-		String query = "UPDATE user SET password = '"+ this.getPassword() +"' WHERE id = " + this.getId();
-
-		System.out.println(query);
-
-		dbUtil.execute(query);
+		FirebaseService inferno = new FirebaseServiceProxy();
+		try {
+			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), "Editor");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void changeRole() {
-		DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-
-		String query = "UPDATE user SET role = " + this.getRole()
-				+ " WHERE id = " + this.getId();
-
-		System.out.println(query);
-
-		dbUtil.execute(query);
+		FirebaseService inferno = new FirebaseServiceProxy();
+		try {
+			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), "Editor");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void deleteUser(int i) {
-		DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-
-		String query = "DELETE FROM user WHERE id = " + i;
-
-		System.out.println(query);
-
-		dbUtil.execute(query);
+	public void deleteUser(String id) {
+		FirebaseService inferno = new FirebaseServiceProxy();
+		try {
+			inferno.deleteUser(id);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String getEmail() {
 		return user_email;
 	}
 
-	public int getId() {
+	public String getId() {
 		return user_id;
 	}
 
@@ -130,7 +132,7 @@ public class EditUser {
 		user_email = email;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		user_id = id;
 	}
 
@@ -160,42 +162,14 @@ public class EditUser {
 		else if (this.user_strRole=="Admin") user_role=30;
 	}
 	
-	/*public String execute() {
-		if(post!=null){
-			DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-			
-			@SuppressWarnings("deprecation")
-			String date = ""+(1900+post.getDate().getYear())+"/"+(post.getDate().getMonth()+1)+"/"+post.getDate().getDate();
-			
-			String inTitle = DatabaseUtility.forHTML(post.getTitle());
-			String inContent = DatabaseUtility.forHTML(post.getContent());
-			
-			String query = "UPDATE post SET judul ='"+ inTitle+ 
-					"', isi ='"+ inContent +"', waktu = '"+date+"' WHERE id = "+ post.getId();
-			
-			System.out.println(query);
-			
-			dbUtil.execute(query);
+	public String updateUser() {
+		FirebaseService inferno = new FirebaseServiceProxy();
+		try {
+			inferno.editUser(this.getId(), this.getUsername(), this.getPassword(), this.getName(), this.getEmail(), "regular");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return "index";
-	}
-	*/
-	
-	public String updateUser(){
-		DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-		String query = "UPDATE user SET username = '"
-				+ this.getUsername()
-				+ "', password = '"	
-				+ this.getPassword()
-				+"', nama ='"
-				+ this.getName()
-				+"', email ='"
-				+ this.getEmail()
-				+"', role = "
-				+this.getRole()
-				+ " WHERE id = " + this.getId();
-		System.out.println(query);
-		dbUtil.execute(query);
 		return "index";
 	}
 	

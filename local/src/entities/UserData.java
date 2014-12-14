@@ -2,6 +2,7 @@ package entities;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.wbd.heroku.service.FirebaseService;
+import org.wbd.heroku.service.FirebaseServiceProxy;
+import org.wbd.heroku.service.User;
+
 import constrain.Constant;
-import controller.DatabaseUtility;
 
 @ManagedBean
 @SessionScoped
@@ -100,11 +104,11 @@ public class UserData implements Serializable {
 		return ("header.xhtml");
 	}
 	
-	public int getUserID() {
+	public String getUserID() {
 		if (isLoggedIn())
 			return details.getUserId();
 		else
-			return -1;
+			return null;
 	}
 
 	public List<NavigationMenu> getUserMenu() {
@@ -149,11 +153,40 @@ public class UserData implements Serializable {
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
+	
+	private UserDetails findUser(String uname, String passw) {
+		FirebaseService fire = new FirebaseServiceProxy();
+		User dicari = null;
+		try {
+			User[] users = fire.listUser();
+			for (User user: users) {
+				if (uname.equals(user.getUsername()) && passw.equals(user.getPassword())) {
+					dicari = user;
+					break;
+				}
+			}
+			
+			if (dicari != null) {
+				UserDetails result = new UserDetails();
+				result.setUserId(dicari.getId());
+				result.setUsername(dicari.getUsername());
+				result.setPassword(dicari.getPassword());
+				result.setName(dicari.getNama());
+				result.setEmail(dicari.getEmail());
+				result.setRole(10);
+				return result;
+			}
+			
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public String login() {
-		DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-
-		details = dbUtil.findUser(username, password);
+		
+		details = findUser(username, password);
 		if (details != null) {
 			System.out.println("Login, Username and Password Found");
 			loggedIn = true;
