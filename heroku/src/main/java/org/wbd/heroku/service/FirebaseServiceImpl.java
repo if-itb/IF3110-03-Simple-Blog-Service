@@ -106,8 +106,8 @@ public class FirebaseServiceImpl implements FirebaseService {
 	}
 
 	@Override
-	public boolean deletePost(String id) {
-		myFirebase.child(POST_PATH).child(id).child("deleted").setValue(true);
+	public boolean setPostDelete(String id, boolean status) {
+		myFirebase.child(POST_PATH).child(id).child("deleted").setValue(status);
 		return true;
 	}
 	
@@ -123,8 +123,8 @@ public class FirebaseServiceImpl implements FirebaseService {
 	}
 
 	@Override
-	public boolean publishPost(String id) {
-		myFirebase.child(POST_PATH).child(id).child("published").setValue(true);
+	public boolean setPostPublish(String id, boolean status) {
+		myFirebase.child(POST_PATH).child(id).child("published").setValue(status);
 		return true;
 	}
 
