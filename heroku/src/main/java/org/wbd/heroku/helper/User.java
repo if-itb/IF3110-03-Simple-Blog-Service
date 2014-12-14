@@ -1,8 +1,16 @@
 package org.wbd.heroku.helper;
 
 public class User {
-	private String nama, role, email, username, password;
+	private String nama, role, email, username, password, id;
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getUsername() {
 		return username;
 	}

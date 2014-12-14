@@ -158,7 +158,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 				String chainz = firaja.next();
 				JSONObject user = firaga.getJSONObject(chainz);
 				User the_user = new User();
-				
+				the_user.setId(chainz);
 				the_user.setEmail(user.getString("email"));
 				the_user.setUsername(user.getString("username"));
 				the_user.setPassword(user.getString("password"));
