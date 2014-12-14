@@ -10,6 +10,8 @@ package org.wbd.heroku.service;
 public class Comment  implements java.io.Serializable {
     private java.lang.String email;
 
+    private java.lang.String id;
+
     private java.lang.String id_post;
 
     private java.lang.String konten;
@@ -23,11 +25,13 @@ public class Comment  implements java.io.Serializable {
 
     public Comment(
            java.lang.String email,
+           java.lang.String id,
            java.lang.String id_post,
            java.lang.String konten,
            java.lang.String nama,
            java.lang.String tanggal) {
            this.email = email;
+           this.id = id;
            this.id_post = id_post;
            this.konten = konten;
            this.nama = nama;
@@ -52,6 +56,26 @@ public class Comment  implements java.io.Serializable {
      */
     public void setEmail(java.lang.String email) {
         this.email = email;
+    }
+
+
+    /**
+     * Gets the id value for this Comment.
+     * 
+     * @return id
+     */
+    public java.lang.String getId() {
+        return id;
+    }
+
+
+    /**
+     * Sets the id value for this Comment.
+     * 
+     * @param id
+     */
+    public void setId(java.lang.String id) {
+        this.id = id;
     }
 
 
@@ -149,6 +173,9 @@ public class Comment  implements java.io.Serializable {
             ((this.email==null && other.getEmail()==null) || 
              (this.email!=null &&
               this.email.equals(other.getEmail()))) &&
+            ((this.id==null && other.getId()==null) || 
+             (this.id!=null &&
+              this.id.equals(other.getId()))) &&
             ((this.id_post==null && other.getId_post()==null) || 
              (this.id_post!=null &&
               this.id_post.equals(other.getId_post()))) &&
@@ -175,6 +202,9 @@ public class Comment  implements java.io.Serializable {
         if (getEmail() != null) {
             _hashCode += getEmail().hashCode();
         }
+        if (getId() != null) {
+            _hashCode += getId().hashCode();
+        }
         if (getId_post() != null) {
             _hashCode += getId_post().hashCode();
         }
@@ -200,6 +230,13 @@ public class Comment  implements java.io.Serializable {
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("email");
         elemField.setXmlName(new javax.xml.namespace.QName("", "email"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("id");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "id"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);

@@ -16,7 +16,7 @@ public class User  implements java.io.Serializable {
 
     private java.lang.String password;
 
-    private java.lang.String role;
+    private int role;
 
     private java.lang.String username;
 
@@ -28,7 +28,7 @@ public class User  implements java.io.Serializable {
            java.lang.String id,
            java.lang.String nama,
            java.lang.String password,
-           java.lang.String role,
+           int role,
            java.lang.String username) {
            this.email = email;
            this.id = id;
@@ -124,7 +124,7 @@ public class User  implements java.io.Serializable {
      * 
      * @return role
      */
-    public java.lang.String getRole() {
+    public int getRole() {
         return role;
     }
 
@@ -134,7 +134,7 @@ public class User  implements java.io.Serializable {
      * 
      * @param role
      */
-    public void setRole(java.lang.String role) {
+    public void setRole(int role) {
         this.role = role;
     }
 
@@ -182,9 +182,7 @@ public class User  implements java.io.Serializable {
             ((this.password==null && other.getPassword()==null) || 
              (this.password!=null &&
               this.password.equals(other.getPassword()))) &&
-            ((this.role==null && other.getRole()==null) || 
-             (this.role!=null &&
-              this.role.equals(other.getRole()))) &&
+            this.role == other.getRole() &&
             ((this.username==null && other.getUsername()==null) || 
              (this.username!=null &&
               this.username.equals(other.getUsername())));
@@ -211,9 +209,7 @@ public class User  implements java.io.Serializable {
         if (getPassword() != null) {
             _hashCode += getPassword().hashCode();
         }
-        if (getRole() != null) {
-            _hashCode += getRole().hashCode();
-        }
+        _hashCode += getRole();
         if (getUsername() != null) {
             _hashCode += getUsername().hashCode();
         }
@@ -258,8 +254,7 @@ public class User  implements java.io.Serializable {
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("role");
         elemField.setXmlName(new javax.xml.namespace.QName("", "role"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
-        elemField.setMinOccurs(0);
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();

@@ -44,13 +44,13 @@ public class FirebaseServiceProxy implements org.wbd.heroku.service.FirebaseServ
     return firebaseService;
   }
   
-  public boolean addUser(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4) throws java.rmi.RemoteException{
+  public boolean addUser(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, int arg4) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
     return firebaseService.addUser(arg0, arg1, arg2, arg3, arg4);
   }
   
-  public boolean deleteComment(int arg0) throws java.rmi.RemoteException{
+  public boolean deleteComment(java.lang.String arg0) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
     return firebaseService.deleteComment(arg0);
@@ -62,7 +62,7 @@ public class FirebaseServiceProxy implements org.wbd.heroku.service.FirebaseServ
     return firebaseService.listPost(arg0);
   }
   
-  public boolean editUser(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4, java.lang.String arg5) throws java.rmi.RemoteException{
+  public boolean editUser(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4, int arg5) throws java.rmi.RemoteException{
     if (firebaseService == null)
       _initFirebaseServiceProxy();
     return firebaseService.editUser(arg0, arg1, arg2, arg3, arg4, arg5);

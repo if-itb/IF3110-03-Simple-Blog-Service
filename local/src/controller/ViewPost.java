@@ -1,17 +1,24 @@
 package controller;
 
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+
+import org.wbd.heroku.service.FirebaseService;
+import org.wbd.heroku.service.FirebaseServiceProxy;
 
 import entities.Comment;
 import entities.Post;
@@ -20,8 +27,7 @@ import entities.UserData;
 @ManagedBean
 @RequestScoped
 public class ViewPost {
-	private int id;
-	private String name, email, comment;
+	private String id, name, email, comment;
 
 	private Post post;
 
@@ -30,6 +36,26 @@ public class ViewPost {
 
 	public void execute() {
 		try {
+			List<Comment> result = new ArrayList<>();
+			
+			FirebaseService inferno = new FirebaseServiceProxy();
+			org.wbd.heroku.service.Comment[] comms;
+			try {
+				comms = inferno.listComment();
+				for (org.wbd.heroku.service.Comment comm : comms) {
+					Comment comment = new Comment();
+					comment.setName(comm.getNama());
+					comment.setEmail(comm.getEmail());
+					comment.setTime(comm.getTanggal());
+					comment.setContent(comm.getKonten());
+					result.add(comment);
+				}
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return result;
 			DatabaseUtility dbUtil = DatabaseUtility.getInstance();
 			ResultSet rs = dbUtil.execute("SELECT * FROM `post` WHERE `id` = "
 					+ id);
@@ -52,27 +78,24 @@ public class ViewPost {
 
 	public List<Comment> getComments() {
 		List<Comment> result = new ArrayList<>();
-
+		
+		FirebaseService inferno = new FirebaseServiceProxy();
+		org.wbd.heroku.service.Comment[] comms;
 		try {
-			DatabaseUtility dbUtil = DatabaseUtility.getInstance();
-			ResultSet rs = dbUtil
-					.execute("SELECT * FROM `comment` WHERE `id_post` = " + id
-							+ " ORDER BY `num` DESC");
-
-			if (rs != null) {
-				while (rs.next()) {
-					Comment comment = new Comment();
-					comment.setName(rs.getString(5));
-					comment.setEmail(rs.getString(6));
-					comment.setTime(rs.getString(4));
-					comment.setContent(rs.getString(3));
-					result.add(comment);
-				}
+			comms = inferno.listComment();
+			for (org.wbd.heroku.service.Comment comm : comms) {
+				Comment comment = new Comment();
+				comment.setName(comm.getNama());
+				comment.setEmail(comm.getEmail());
+				comment.setTime(comm.getTanggal());
+				comment.setContent(comm.getKonten());
+				result.add(comment);
 			}
-		} catch (SQLException ex) {
-			System.err.println("Error when getting post with id = " + id);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
+		
 		return result;
 	}
 
@@ -88,7 +111,7 @@ public class ViewPost {
 		return email;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -102,96 +125,81 @@ public class ViewPost {
 	 * @return posts of id_user
 	 */
 	public List<Post> getOwnerPostList() {
-		List<Post> result = new ArrayList<>();
-
-		Connection con = DatabaseUtility.getInstance().getLiveConnection();
-
-		ResultSet rs;
-		try {
-			String idPostQuery = "SELECT * FROM `post` WHERE `is_deleted` = 0 AND `is_published` = 1 AND `id_user` = ?";
-
-			PreparedStatement pstmt = con.prepareStatement(idPostQuery);
-			pstmt.setInt(1, userData.getDetails().getUserId());
-			pstmt.execute();
-			rs = pstmt.getResultSet();
-
-			while (rs.next()) {
-				Post post = new Post();
-				post.setId(rs.getInt(1));
-				post.setTitle(rs.getString(3));
-				post.setContent(rs.getString(4));
-				post.setDate(rs.getDate(5));
+		FirebaseService inferno = new FirebaseServiceProxy();
+	List<Post> result = new ArrayList<>();
+	org.wbd.heroku.service.Post[] posts;
+	try {
+		posts = inferno.listPost(6);
+		for (org.wbd.heroku.service.Post p : posts) {
+			Post post = new Post();
+			post.setId(p.getId());
+			post.setTitle(p.getJudul());
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			post.setDate(df.parse(p.getTanggal()));
+			post.setContent(p.getKonten());
+			if (p.getId_author().equals(userData.getDetails().getUserId()))
 				result.add(post);
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Error in getPostList(id_user)");
-			e.printStackTrace();
 		}
-
-		return result;
+	} catch (RemoteException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return result;
 	}
 
 	public List<Post> getPublishednotDeletedPostList() {
+		FirebaseService inferno = new FirebaseServiceProxy();
 		List<Post> result = new ArrayList<>();
-
-		Connection con = DatabaseUtility.getInstance().getLiveConnection();
-
-		ResultSet rs;
+		org.wbd.heroku.service.Post[] posts;
 		try {
-			String idPostQuery = "SELECT * FROM `post` WHERE `is_deleted` = 0 and `is_published` = 1";
-
-			PreparedStatement pstmt = con.prepareStatement(idPostQuery);
-			pstmt.execute();
-			rs = pstmt.getResultSet();
-
-			while (rs.next()) {
+			posts = inferno.listPost(6);
+			for (org.wbd.heroku.service.Post p : posts) {
 				Post post = new Post();
-				post.setId(rs.getInt(1));
-				post.setTitle(rs.getString(3));
-				post.setContent(rs.getString(4));
-				post.setDate(rs.getDate(5));
+				post.setId(p.getId());
+				post.setTitle(p.getJudul());
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				post.setDate(df.parse(p.getTanggal()));
+				post.setContent(p.getKonten());
 				result.add(post);
 			}
-
-		} catch (SQLException e) {
+		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Error in getSoftDeletedPostList");
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		return result;
 	}
 
 	public List<Post> getSoftDeletedPostList() {
+		FirebaseService inferno = new FirebaseServiceProxy();
 		List<Post> result = new ArrayList<>();
-
-		Connection con = DatabaseUtility.getInstance().getLiveConnection();
-
-		ResultSet rs;
+		org.wbd.heroku.service.Post[] posts;
 		try {
-			String idPostQuery = "SELECT * FROM `post` WHERE `is_deleted` = 1";
-
-			PreparedStatement pstmt = con.prepareStatement(idPostQuery);
-			pstmt.execute();
-			rs = pstmt.getResultSet();
-
-			while (rs.next()) {
+			posts = inferno.listPost(11);
+			for (org.wbd.heroku.service.Post p : posts) {
 				Post post = new Post();
-				post.setId(rs.getInt(1));
-				post.setTitle(rs.getString(3));
-				post.setContent(rs.getString(4));
-				post.setDate(rs.getDate(5));
+				post.setId(p.getId());
+				post.setTitle(p.getJudul());
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				post.setDate(df.parse(p.getTanggal()));
+				post.setContent(p.getKonten());
 				result.add(post);
 			}
-
-		} catch (SQLException e) {
+		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Error in getSoftDeletedPostList");
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		return result;
 	}
 
@@ -200,54 +208,41 @@ public class ViewPost {
 	}
 
 	public List<Post> getUnpublishedPostList() {
+		FirebaseService inferno = new FirebaseServiceProxy();
 		List<Post> result = new ArrayList<>();
-
-		Connection con = DatabaseUtility.getInstance().getLiveConnection();
-
-		ResultSet rs;
+		org.wbd.heroku.service.Post[] posts;
 		try {
-			String idPostQuery = "SELECT * FROM `post` WHERE `is_deleted` = 0 AND `is_published` = 0";
-
-			PreparedStatement pstmt = con.prepareStatement(idPostQuery);
-			// pstmt.setInt(1, post.getId());
-			pstmt.execute();
-			rs = pstmt.getResultSet();
-
-			while (rs.next()) {
+			posts = inferno.listPost(13);
+			for (org.wbd.heroku.service.Post p : posts) {
 				Post post = new Post();
-				post.setId(rs.getInt(1));
-				post.setTitle(rs.getString(3));
-				post.setContent(rs.getString(4));
-				post.setDate(rs.getDate(5));
+				post.setId(p.getId());
+				post.setTitle(p.getJudul());
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				post.setDate(df.parse(p.getTanggal()));
+				post.setContent(p.getKonten());
 				result.add(post);
 			}
-
-		} catch (SQLException e) {
+		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Error in getUnpublishedPostList");
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		return result;
 	}
 
 	public String postComment() {
-		DatabaseUtility dbUtil = DatabaseUtility.getInstance();
+		FirebaseService inferno = new FirebaseServiceProxy();
 		Date date = new Date(System.currentTimeMillis());
 		String newstring = new SimpleDateFormat("yyyy-MM-dd").format(date);
-
-		ResultSet rs = dbUtil
-				.execute("INSERT INTO `comment`(`id_post`, `isi`, `waktu`, `name`, `email`) VALUES ("
-						+ id
-						+ ",'"
-						+ comment
-						+ "','"
-						+ newstring
-						+ "','"
-						+ name + "','" + email + "')");
-
-		System.out.println("postComment() executed");
-		assert (rs == null);
+		try {
+			inferno.addComment(name, email, comment, newstring, id);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return null;
 	}
@@ -262,7 +257,7 @@ public class ViewPost {
 		this.email = email;
 	}
 
-	public void setId(int i) {
+	public void setId(String i) {
 		id = i;
 	}
 

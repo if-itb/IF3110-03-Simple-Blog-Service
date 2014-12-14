@@ -3,9 +3,8 @@ package entities;
 import java.util.Date;
 
 public class Post {
-	private String title, content;
+	private String title, content, id;
 	private Date date;
-	private int id;
 
 	public String getTitle() {
 		return title;
@@ -31,11 +30,11 @@ public class Post {
 		date = t;
 	}
 	
-	public int getId(){
+	public String getId(){
 		return id;
 	}
 	
-	public void setId(int i){
+	public void setId(String i){
 		id = i;
 	}
 
