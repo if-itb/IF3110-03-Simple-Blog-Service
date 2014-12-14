@@ -7,7 +7,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.json.*;
 import org.wbd.heroku.helper.Comment;
@@ -152,11 +151,12 @@ public class FirebaseServiceImpl implements FirebaseService {
 			URLConnection fire = inferno.openConnection();
 			JSONTokener fira = new JSONTokener(fire.getInputStream());
 
-			JSONArray firaga = new JSONArray(fira);
-			int num_user = firaga.length();
+			JSONObject firaga = new JSONObject(fira);
+			Iterator<String> firaja = firaga.keys();
 			List<User> result = new ArrayList<User>();
-			for (int i = 0; i < num_user; ++i) {
-				JSONObject user = firaga.getJSONObject(i);
+			while (firaja.hasNext()) {
+				String chainz = firaja.next();
+				JSONObject user = firaga.getJSONObject(chainz);
 				User the_user = new User();
 				
 				the_user.setEmail(user.getString("email"));
