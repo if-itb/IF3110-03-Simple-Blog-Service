@@ -95,7 +95,8 @@ public class FirebaseServiceImpl implements FirebaseService {
 	}
 
 	@Override
-	public boolean editPost(String id, String judul, String konten, String tanggal) {
+	public boolean editPost(String id, String judul, String konten,
+			String tanggal) {
 		Firebase fire = myFirebase.child(POST_PATH).child(id);
 		fire.child("judul").setValue(judul);
 		fire.child("konten").setValue(konten);
@@ -110,7 +111,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 		myFirebase.child(POST_PATH).child(id).child("deleted").setValue(status);
 		return true;
 	}
-	
+
 	@Override
 	/**
 	 * Hard delete a post
@@ -124,13 +125,14 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 	@Override
 	public boolean setPostPublish(String id, boolean status) {
-		myFirebase.child(POST_PATH).child(id).child("published").setValue(status);
+		myFirebase.child(POST_PATH).child(id).child("published")
+				.setValue(status);
 		return true;
 	}
 
 	@Override
 	public boolean addUser(String username, String password, String name,
-			String email, String role) {
+			String email, int role) {
 		User newUser = new User();
 		newUser.setUsername(username);
 		newUser.setPassword(password);
@@ -163,8 +165,8 @@ public class FirebaseServiceImpl implements FirebaseService {
 				the_user.setUsername(user.getString("username"));
 				the_user.setPassword(user.getString("password"));
 				the_user.setNama(user.getString("nama"));
-				the_user.setRole(user.getString("role"));
-				
+				the_user.setRole(user.getInt("role"));
+
 				result.add(the_user);
 			}
 
@@ -180,7 +182,8 @@ public class FirebaseServiceImpl implements FirebaseService {
 	}
 
 	@Override
-	public boolean editUser(String id, String username, String password, String name, String email, String role) {
+	public boolean editUser(String id, String username, String password,
+			String name, String email, int role) {
 		User editedUser = new User();
 		editedUser.setUsername(username);
 		editedUser.setPassword(password);
@@ -190,7 +193,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 		Firebase firebaseSpecificUser = myFirebase.child(USER_PATH).child(id);
 		firebaseSpecificUser.setValue(editedUser);
-		
+
 		return true;
 	}
 
@@ -198,7 +201,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 	public boolean deleteUser(String id) {
 		Firebase firebaseSpecificUser = myFirebase.child(USER_PATH).child(id);
 		firebaseSpecificUser.removeValue();
-		
+
 		return true;
 	}
 
@@ -220,21 +223,53 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 	@Override
 	public List<Comment> listComment() {
-		// TODO Auto-generated method stub
+		try {
+			URL inferno = new URL(FIREBASE_URL + COMMENT_PATH + ".json");
+			URLConnection fire = inferno.openConnection();
+			JSONTokener fira = new JSONTokener(fire.getInputStream());
+
+			JSONObject firaga = new JSONObject(fira);
+			Iterator<String> firaja = firaga.keys();
+			List<Comment> result = new ArrayList<Comment>();
+			while (firaja.hasNext()) {
+				String chainz = firaja.next();
+				JSONObject comment = firaga.getJSONObject(chainz);
+				Comment the_comment = new Comment();
+				the_comment.setId(chainz);
+				the_comment.setNama(comment.getString("nama"));
+				the_comment.setEmail(comment.getString("email"));
+				the_comment.setKonten(comment.getString("konten"));
+				the_comment.setTanggal(comment.getString("tanggal"));
+				the_comment.setId_post(comment.getString("id_post"));
+
+				result.add(the_comment);
+			}
+
+			return result;
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
-	public boolean deleteComment(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteComment(String id) {
+		Firebase firebaseSpecificComment = myFirebase.child(COMMENT_PATH)
+				.child(id);
+		firebaseSpecificComment.removeValue();
+
+		return true;
 	}
 
 	@Override
 	public List<Post> search(String query) {
 		List<Post> inferno = listPost(6);
 		List<Post> result = new ArrayList<Post>();
-		for (Post p: inferno) {
+		for (Post p : inferno) {
 			if (p.getJudul().contains(query) || p.getKonten().contains(query))
 				result.add(p);
 		}
