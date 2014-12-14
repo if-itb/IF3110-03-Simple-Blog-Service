@@ -36,7 +36,7 @@ public class EditPost {
 		return post.getDate().toString();
 	}
 
-	public int getId() {
+	public String getId() {
 		return post.getId();
 	}
 
@@ -82,7 +82,7 @@ public class EditPost {
 		}
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		post.setId(id);
 	}
 

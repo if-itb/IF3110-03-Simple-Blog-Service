@@ -120,6 +120,16 @@ public class FirebaseServiceImpl implements FirebaseService {
 	 */
 	public boolean pulverizePost(String id) {
 		myFirebase.child(POST_PATH).child(id).removeValue();
+
+		Firebase firebaseComment = myFirebase.child(COMMENT_PATH);
+
+		List<Comment> commentList = listComment();
+		for (Comment iterateComment : commentList) {
+			if (iterateComment.getId_post().equals(id)) {
+				firebaseComment.child(iterateComment.getId()).removeValue();
+			}
+		}
+
 		return true;
 	}
 
@@ -275,6 +285,35 @@ public class FirebaseServiceImpl implements FirebaseService {
 		}
 		// TODO Auto-generated method stub
 		return result;
+	}
+
+	@Override
+	public Post getPost(String id) {
+		List<Post> listPost = listPost(15);
+
+		Post the_post = null;
+		for (Post iteratePost : listPost) {
+			if (iteratePost.getId().equals(id)) {
+				the_post = iteratePost;
+				break;
+			}
+		}
+
+		return the_post;
+	}
+
+	@Override
+	public List<Comment> listPostComment(String post_id) {
+		List<Comment> listComment = listComment();
+
+		List<Comment> Comments = new ArrayList<Comment>();
+		for (int i = listComment.size() - 1; i >= 0; i--) {
+			if (listComment.get(i).getId_post().equals(post_id)){
+				Comments.add(listComment.get(i));
+			}
+		}
+
+		return Comments;
 	}
 
 }

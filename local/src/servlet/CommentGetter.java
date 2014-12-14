@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.wbd.heroku.service.FirebaseService;
+import org.wbd.heroku.service.FirebaseServiceProxy;
+
 import constrain.Constant;
 
 /**
@@ -53,58 +56,13 @@ public class CommentGetter extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		String suserID = request.getParameter("id");
-		int userID = Integer.parseInt(suserID);
-		Connection connection = null;
-
-		String url = Constant.DATABASE_URL;
-		String user = Constant.DATABASE_USER;
-		String password = Constant.DATABASE_PASS;
-
-		try {
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-			connection = DriverManager.getConnection(url, user, password);
-
-		} catch (SQLException exception) {
-			System.out.println("Database connection fail");
-			System.out.println(exception.getMessage());
-			// failed database response
-			failedMessage(response);
-			return;
-		}
-
-		String stm = "SELECT * FROM `comment` WHERE `id_post` = ? ORDER BY `num` DESC";
-
-		ResultSet rs = null;
-		try {
-			PreparedStatement pst = connection.prepareStatement(stm);
-			pst.setInt(1, userID);
-			pst.execute();
-			rs = pst.getResultSet();
-
-			response.setContentType("text/html");
-			PrintWriter out = response.getWriter();
-			while (rs.next()) {
-				out.write(MessageFormat.format(templateString, rs.getString(5),
-						rs.getString(6), rs.getString(4), rs.getString(3)));
-			}
-
-		} catch (SQLException e) {
-			System.out.println("Database connection fail");
-			System.out.println(e.getMessage());
-			// failed database response
-			failedMessage(response);
+		FirebaseService inferno = new FirebaseServiceProxy();
+		org.wbd.heroku.service.Comment[] fire = inferno.listPostComment(suserID);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		for (org.wbd.heroku.service.Comment fira : fire) {
+			out.write(MessageFormat.format(templateString, fira.getNama(),
+					fira.getEmail(), fira.getTanggal(), fira.getKonten()));
 		}
 	}
-
-	private void failedMessage(HttpServletResponse response) {
-		PrintWriter out;
-		try {
-			out = response.getWriter();
-			out.write("Database failure");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("DOOMED in failedMessage()");
-		}
-	}
-
 }

@@ -16,7 +16,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
     static org.apache.axis.description.OperationDesc [] _operations;
 
     static {
-        _operations = new org.apache.axis.description.OperationDesc[14];
+        _operations = new org.apache.axis.description.OperationDesc[16];
         _initOperationDesc1();
         _initOperationDesc2();
     }
@@ -26,20 +26,19 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
         org.apache.axis.description.ParameterDesc param;
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("addUser");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "username"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg1"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "password"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg2"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "name"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg3"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "email"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg4"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        param.setOmittable(true);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "role"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), int.class, false, false);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
         oper.setReturnClass(boolean.class);
@@ -50,7 +49,8 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("deleteComment");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), int.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "id"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
         oper.setReturnClass(boolean.class);
@@ -61,7 +61,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("listPost");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), int.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "code"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), int.class, false, false);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://service.heroku.wbd.org/", "post"));
         oper.setReturnClass(org.wbd.heroku.service.Post[].class);
@@ -72,23 +72,22 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("editUser");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "id"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg1"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "username"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg2"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "password"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg3"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "name"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg4"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "email"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg5"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        param.setOmittable(true);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "role"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), int.class, false, false);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
         oper.setReturnClass(boolean.class);
@@ -99,16 +98,16 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("addPost");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "judul"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg1"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "konten"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg2"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "tanggal"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg3"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "idAuthor"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
@@ -120,7 +119,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("pulverizePost");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "id"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
@@ -132,10 +131,10 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("setPostPublish");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "id"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg1"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"), boolean.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "status"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"), boolean.class, false, false);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
         oper.setReturnClass(boolean.class);
@@ -146,10 +145,10 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("setPostDelete");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "id"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg1"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"), boolean.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "status"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"), boolean.class, false, false);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
         oper.setReturnClass(boolean.class);
@@ -159,33 +158,24 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
         _operations[7] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("search");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        oper.setName("getPost");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "id"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://service.heroku.wbd.org/", "post"));
-        oper.setReturnClass(org.wbd.heroku.service.Post[].class);
+        oper.setReturnClass(org.wbd.heroku.service.Post.class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[8] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("editPost");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        oper.setName("search");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "query"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg1"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg2"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg3"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
-        oper.setReturnClass(boolean.class);
+        oper.setReturnType(new javax.xml.namespace.QName("http://service.heroku.wbd.org/", "post"));
+        oper.setReturnClass(org.wbd.heroku.service.Post[].class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
@@ -197,13 +187,34 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
         org.apache.axis.description.OperationDesc oper;
         org.apache.axis.description.ParameterDesc param;
         oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("editPost");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "id"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "judul"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "konten"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "tanggal"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
+        oper.setReturnClass(boolean.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
+        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        _operations[10] = oper;
+
+        oper = new org.apache.axis.description.OperationDesc();
         oper.setName("listComment");
         oper.setReturnType(new javax.xml.namespace.QName("http://service.heroku.wbd.org/", "comment"));
         oper.setReturnClass(org.wbd.heroku.service.Comment[].class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[10] = oper;
+        _operations[11] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("listUser");
@@ -212,35 +223,23 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[11] = oper;
-
-        oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("addComment");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg1"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg2"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg3"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg4"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        param.setOmittable(true);
-        oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
-        oper.setReturnClass(boolean.class);
-        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
-        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
-        oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[12] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("deleteUser");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        oper.setName("addComment");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "name"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "email"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "kontent"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "tanggal"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "idPost"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         param.setOmittable(true);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
@@ -249,6 +248,30 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[13] = oper;
+
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("deleteUser");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "id"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
+        oper.setReturnClass(boolean.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
+        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        _operations[14] = oper;
+
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("listPostComment");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "post_id"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param.setOmittable(true);
+        oper.addParameter(param);
+        oper.setReturnType(new javax.xml.namespace.QName("http://service.heroku.wbd.org/", "comment"));
+        oper.setReturnClass(org.wbd.heroku.service.Comment[].class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
+        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        _operations[15] = oper;
 
     }
 
@@ -368,7 +391,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
         }
     }
 
-    public boolean addUser(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4) throws java.rmi.RemoteException {
+    public boolean addUser(java.lang.String username, java.lang.String password, java.lang.String name, java.lang.String email, int role) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -384,7 +407,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0, arg1, arg2, arg3, arg4});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {username, password, name, email, new java.lang.Integer(role)});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -402,7 +425,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 }
     }
 
-    public boolean deleteComment(int arg0) throws java.rmi.RemoteException {
+    public boolean deleteComment(java.lang.String id) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -418,7 +441,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {new java.lang.Integer(arg0)});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {id});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -436,7 +459,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 }
     }
 
-    public org.wbd.heroku.service.Post[] listPost(int arg0) throws java.rmi.RemoteException {
+    public org.wbd.heroku.service.Post[] listPost(int code) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -452,7 +475,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {new java.lang.Integer(arg0)});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {new java.lang.Integer(code)});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -470,7 +493,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 }
     }
 
-    public boolean editUser(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4, java.lang.String arg5) throws java.rmi.RemoteException {
+    public boolean editUser(java.lang.String id, java.lang.String username, java.lang.String password, java.lang.String name, java.lang.String email, int role) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -486,7 +509,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0, arg1, arg2, arg3, arg4, arg5});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {id, username, password, name, email, new java.lang.Integer(role)});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -504,7 +527,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 }
     }
 
-    public boolean addPost(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3) throws java.rmi.RemoteException {
+    public boolean addPost(java.lang.String judul, java.lang.String konten, java.lang.String tanggal, java.lang.String idAuthor) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -520,7 +543,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0, arg1, arg2, arg3});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {judul, konten, tanggal, idAuthor});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -538,7 +561,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 }
     }
 
-    public boolean pulverizePost(java.lang.String arg0) throws java.rmi.RemoteException {
+    public boolean pulverizePost(java.lang.String id) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -554,7 +577,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {id});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -572,7 +595,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 }
     }
 
-    public boolean setPostPublish(java.lang.String arg0, boolean arg1) throws java.rmi.RemoteException {
+    public boolean setPostPublish(java.lang.String id, boolean status) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -588,7 +611,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0, new java.lang.Boolean(arg1)});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {id, new java.lang.Boolean(status)});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -606,7 +629,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 }
     }
 
-    public boolean setPostDelete(java.lang.String arg0, boolean arg1) throws java.rmi.RemoteException {
+    public boolean setPostDelete(java.lang.String id, boolean status) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -622,7 +645,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0, new java.lang.Boolean(arg1)});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {id, new java.lang.Boolean(status)});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -640,7 +663,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 }
     }
 
-    public org.wbd.heroku.service.Post[] search(java.lang.String arg0) throws java.rmi.RemoteException {
+    public org.wbd.heroku.service.Post getPost(java.lang.String id) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -652,11 +675,45 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://service.heroku.wbd.org/", "getPost"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {id});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (org.wbd.heroku.service.Post) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (org.wbd.heroku.service.Post) org.apache.axis.utils.JavaUtils.convert(_resp, org.wbd.heroku.service.Post.class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+  throw axisFaultException;
+}
+    }
+
+    public org.wbd.heroku.service.Post[] search(java.lang.String query) throws java.rmi.RemoteException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[9]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setEncodingStyle(null);
+        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://service.heroku.wbd.org/", "search"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {query});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -674,12 +731,12 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 }
     }
 
-    public boolean editPost(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3) throws java.rmi.RemoteException {
+    public boolean editPost(java.lang.String id, java.lang.String judul, java.lang.String konten, java.lang.String tanggal) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[9]);
+        _call.setOperation(_operations[10]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -690,7 +747,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0, arg1, arg2, arg3});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {id, judul, konten, tanggal});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -713,7 +770,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[10]);
+        _call.setOperation(_operations[11]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -747,7 +804,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[11]);
+        _call.setOperation(_operations[12]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -776,12 +833,12 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 }
     }
 
-    public boolean addComment(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4) throws java.rmi.RemoteException {
+    public boolean addComment(java.lang.String name, java.lang.String email, java.lang.String kontent, java.lang.String tanggal, java.lang.String idPost) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[12]);
+        _call.setOperation(_operations[13]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -792,7 +849,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0, arg1, arg2, arg3, arg4});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {name, email, kontent, tanggal, idPost});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -810,12 +867,12 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 }
     }
 
-    public boolean deleteUser(java.lang.String arg0) throws java.rmi.RemoteException {
+    public boolean deleteUser(java.lang.String id) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[13]);
+        _call.setOperation(_operations[14]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -826,7 +883,7 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {id});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -837,6 +894,40 @@ public class FirebaseServiceImplServiceSoapBindingStub extends org.apache.axis.c
                 return ((java.lang.Boolean) _resp).booleanValue();
             } catch (java.lang.Exception _exception) {
                 return ((java.lang.Boolean) org.apache.axis.utils.JavaUtils.convert(_resp, boolean.class)).booleanValue();
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+  throw axisFaultException;
+}
+    }
+
+    public org.wbd.heroku.service.Comment[] listPostComment(java.lang.String post_id) throws java.rmi.RemoteException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[15]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setEncodingStyle(null);
+        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://service.heroku.wbd.org/", "listPostComment"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {post_id});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (org.wbd.heroku.service.Comment[]) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (org.wbd.heroku.service.Comment[]) org.apache.axis.utils.JavaUtils.convert(_resp, org.wbd.heroku.service.Comment[].class);
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {
