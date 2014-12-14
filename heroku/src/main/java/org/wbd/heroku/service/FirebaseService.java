@@ -19,14 +19,14 @@ public interface FirebaseService {
 	boolean pulverizePost(String id);
 	boolean setPostPublish(String id, boolean status);
     
-	boolean addUser(String username, String password, String name, String email, String role);
+	boolean addUser(String username, String password, String name, String email, int role);
 	List<User> listUser();
-	boolean editUser(String id, String username, String password, String name, String email, String role);
+	boolean editUser(String id, String username, String password, String name, String email, int role);
 	boolean deleteUser(String id);
 	
 	boolean addComment(String name, String email, String kontent, String tanggal, String idPost);
 	List<Comment> listComment();
-	boolean deleteComment(int id);
+	boolean deleteComment(String id);
 	
 	List<Post> search(String query);
 }
