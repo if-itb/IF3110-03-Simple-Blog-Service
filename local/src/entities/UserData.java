@@ -177,7 +177,7 @@ public class UserData implements Serializable {
 				result.setPassword(dicari.getPassword());
 				result.setName(dicari.getNama());
 				result.setEmail(dicari.getEmail());
-				result.setRole(10);
+				result.setRole(dicari.getRole());
 				return result;
 			}
 			

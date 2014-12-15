@@ -31,7 +31,7 @@
 				<th>role</th>
 				<th colspan="2">Commands</th>
 			</tr>
-			<ui:repeat value="#{databaseObject.userList}" var="user">
+			<ui:repeat value="#{hell.userList}" var="user">
 				<h:panelGroup rendered="#{user.userId!=user_id}">
 					<tr>
 						<td>#{user.userId}</td>

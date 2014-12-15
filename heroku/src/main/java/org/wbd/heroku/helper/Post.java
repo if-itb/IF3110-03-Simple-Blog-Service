@@ -73,10 +73,10 @@ public final class Post {
 	}
 	
 	public int getMask() {
-		int mask = 0;
+		int mask = 15;
 		
-		mask |= 1 << (deleted ? 3 : 2);
-		mask |= 1 << (published ? 1 : 0);
+		mask &= deleted ? 12 : 3;
+		mask &= published ? 10 : 5;
 		
 		return mask;
 	}

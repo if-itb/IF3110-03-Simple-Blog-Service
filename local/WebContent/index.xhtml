@@ -10,7 +10,7 @@
 	<ui:define name="title">Home</ui:define>
 	<ui:define name="content">
 		<div class="col-md-8 col-md-offset-2" style="padding-top: 100px">
-			<ui:repeat value="#{databaseObject.postList}" var="item">
+			<ui:repeat value="#{viewPost.publishednotDeletedPostList}" var="item">
 				<h2 class="text-center" style="padding-top: 20px">
 					<h:link value="#{item.title}" outcome="view_post">
 						<f:param name="post_id" value="#{item.id}" />

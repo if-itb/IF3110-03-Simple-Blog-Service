@@ -113,7 +113,7 @@ public class ViewPost {
 		List<Post> result = new ArrayList<>();
 		org.wbd.heroku.service.Post[] posts;
 		try {
-			posts = inferno.listPost(6);
+			posts = inferno.listPost(2);
 			for (org.wbd.heroku.service.Post p : posts) {
 				Post post = new Post();
 				post.setId(p.getId());
@@ -140,7 +140,7 @@ public class ViewPost {
 		List<Post> result = new ArrayList<>();
 		org.wbd.heroku.service.Post[] posts;
 		try {
-			posts = inferno.listPost(6);
+			posts = inferno.listPost(2);
 			for (org.wbd.heroku.service.Post p : posts) {
 				Post post = new Post();
 				post.setId(p.getId());
@@ -166,7 +166,7 @@ public class ViewPost {
 		List<Post> result = new ArrayList<>();
 		org.wbd.heroku.service.Post[] posts;
 		try {
-			posts = inferno.listPost(11);
+			posts = inferno.listPost(12);
 			for (org.wbd.heroku.service.Post p : posts) {
 				Post post = new Post();
 				post.setId(p.getId());
@@ -196,7 +196,7 @@ public class ViewPost {
 		List<Post> result = new ArrayList<>();
 		org.wbd.heroku.service.Post[] posts;
 		try {
-			posts = inferno.listPost(13);
+			posts = inferno.listPost(5);
 			for (org.wbd.heroku.service.Post p : posts) {
 				Post post = new Post();
 				post.setId(p.getId());

@@ -50,15 +50,15 @@ public class FirebaseServiceImpl implements FirebaseService {
 	 * code adalah sebuah int yang berukuran 4 bit, dengan struktur
 	 * 3210
 	 * abcd
-	 * a - mengambil post yang deleted 
-	 * b - mengambil post yang not deleted
-	 * c - mengambil post yang published
-	 * d - mengambil post yang not published
+	 * a - mengambil post yang deleted && published 
+	 * b - mengambil post yang deleted && not published
+	 * c - mengambil post yang not deleted && published
+	 * d - mengambil post yang not deleted && not published
 	 * code terdiri dari beberapa kemungkinan yaitu, 
 	 * 1111 (15) - seluruh post yang ada
-	 * 1011 (11) - post yang deleted
-	 * 0111 (7)  - post yang belum dihapus, 
-	 * 1110 (14) - post yang sudah di publish, etc.
+	 * 1100 (12) - post yang deleted
+	 * 0011 (3)  - post yang belum dihapus, 
+	 * 1010 (10) - post yang sudah di publish, etc.
 	 * @param code
 	 */
 	public List<Post> listPost(int code) {
@@ -198,7 +198,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 		editedUser.setUsername(username);
 		editedUser.setPassword(password);
 		editedUser.setNama(name);
-		editedUser.setNama(email);
+		editedUser.setEmail(email);
 		editedUser.setRole(role);
 
 		Firebase firebaseSpecificUser = myFirebase.child(USER_PATH).child(id);
@@ -277,7 +277,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 	@Override
 	public List<Post> search(String query) {
-		List<Post> inferno = listPost(6);
+		List<Post> inferno = listPost(2);
 		List<Post> result = new ArrayList<Post>();
 		for (Post p : inferno) {
 			if (p.getJudul().contains(query) || p.getKonten().contains(query))
