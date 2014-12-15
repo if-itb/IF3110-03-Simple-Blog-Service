@@ -156,6 +156,10 @@ public class UserData implements Serializable {
 	
 	private UserDetails findUser(String uname, String passw) {
 		FirebaseService fire = new FirebaseServiceProxy();
+
+		if (uname == null || passw == null)
+			return null;
+
 		User dicari = null;
 		try {
 			User[] users = fire.listUser();
