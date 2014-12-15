@@ -62,6 +62,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 	 * @param code
 	 */
 	public List<Post> listPost(int code) {
+		List<Post> result = new ArrayList<Post>();
 		try {
 			URL inferno = new URL(FIREBASE_URL + POST_PATH + ".json");
 			URLConnection fire = inferno.openConnection();
@@ -69,7 +70,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 			JSONObject firaga = new JSONObject(fira);
 			Iterator<String> firaja = firaga.keys();
-			List<Post> result = new ArrayList<Post>();
+			
 			while (firaja.hasNext()) {
 				String chainz = firaja.next();
 				JSONObject post = firaga.getJSONObject(chainz);
@@ -83,7 +84,6 @@ public class FirebaseServiceImpl implements FirebaseService {
 					result.add(the_post);
 			}
 
-			return result;
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,7 +91,8 @@ public class FirebaseServiceImpl implements FirebaseService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		
+		return result;
 	}
 
 	@Override
@@ -158,6 +159,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 	@Override
 	public List<User> listUser() {
+		List<User> result = new ArrayList<User>();
 		try {
 			URL inferno = new URL(FIREBASE_URL + USER_PATH + ".json");
 			URLConnection fire = inferno.openConnection();
@@ -165,7 +167,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 			JSONObject firaga = new JSONObject(fira);
 			Iterator<String> firaja = firaga.keys();
-			List<User> result = new ArrayList<User>();
+			
 			while (firaja.hasNext()) {
 				String chainz = firaja.next();
 				JSONObject user = firaga.getJSONObject(chainz);
@@ -180,7 +182,6 @@ public class FirebaseServiceImpl implements FirebaseService {
 				result.add(the_user);
 			}
 
-			return result;
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,7 +189,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return result;
 	}
 
 	@Override
@@ -233,6 +234,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 	@Override
 	public List<Comment> listComment() {
+		List<Comment> result = new ArrayList<Comment>();
 		try {
 			URL inferno = new URL(FIREBASE_URL + COMMENT_PATH + ".json");
 			URLConnection fire = inferno.openConnection();
@@ -240,7 +242,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 			JSONObject firaga = new JSONObject(fira);
 			Iterator<String> firaja = firaga.keys();
-			List<Comment> result = new ArrayList<Comment>();
+			
 			while (firaja.hasNext()) {
 				String chainz = firaja.next();
 				JSONObject comment = firaga.getJSONObject(chainz);
@@ -254,8 +256,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 				result.add(the_comment);
 			}
-
-			return result;
+	
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -263,7 +264,8 @@ public class FirebaseServiceImpl implements FirebaseService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		
+		return result;
 	}
 
 	@Override

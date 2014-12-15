@@ -32,7 +32,8 @@ public class UserData implements Serializable {
 		int now = 1;
 		if (details != null) {
 			if (!loggedIn)
-				System.err.println("when details != null, loggedIn should be = true");
+				System.err
+						.println("when details != null, loggedIn should be = true");
 			now <<= (details.getRole() / 10);
 		}
 
@@ -103,7 +104,7 @@ public class UserData implements Serializable {
 	public String getUserHeader() {
 		return ("header.xhtml");
 	}
-	
+
 	public String getUserID() {
 		if (isLoggedIn())
 			return details.getUserId();
@@ -153,7 +154,7 @@ public class UserData implements Serializable {
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
-	
+
 	private UserDetails findUser(String uname, String passw) {
 		FirebaseService fire = new FirebaseServiceProxy();
 
@@ -163,13 +164,16 @@ public class UserData implements Serializable {
 		User dicari = null;
 		try {
 			User[] users = fire.listUser();
-			for (User user: users) {
-				if (uname.equals(user.getUsername()) && passw.equals(user.getPassword())) {
-					dicari = user;
-					break;
+			if (users != null) {
+				for (User user : users) {
+					if (uname.equals(user.getUsername())
+							&& passw.equals(user.getPassword())) {
+						dicari = user;
+						break;
+					}
 				}
 			}
-			
+
 			if (dicari != null) {
 				UserDetails result = new UserDetails();
 				result.setUserId(dicari.getId());
@@ -180,7 +184,7 @@ public class UserData implements Serializable {
 				result.setRole(dicari.getRole());
 				return result;
 			}
-			
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -189,7 +193,7 @@ public class UserData implements Serializable {
 	}
 
 	public String login() {
-		
+
 		details = findUser(username, password);
 		if (details != null) {
 			System.out.println("Login, Username and Password Found");

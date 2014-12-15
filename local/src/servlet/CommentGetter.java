@@ -57,12 +57,15 @@ public class CommentGetter extends HttpServlet {
 
 		String suserID = request.getParameter("id");
 		FirebaseService inferno = new FirebaseServiceProxy();
-		org.wbd.heroku.service.Comment[] fire = inferno.listPostComment(suserID);
+		org.wbd.heroku.service.Comment[] fire = inferno
+				.listPostComment(suserID);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		for (org.wbd.heroku.service.Comment fira : fire) {
-			out.write(MessageFormat.format(templateString, fira.getNama(),
-					fira.getEmail(), fira.getTanggal(), fira.getKonten()));
+		if (fire != null) {
+			for (org.wbd.heroku.service.Comment fira : fire) {
+				out.write(MessageFormat.format(templateString, fira.getNama(),
+						fira.getEmail(), fira.getTanggal(), fira.getKonten()));
+			}
 		}
 	}
 }
