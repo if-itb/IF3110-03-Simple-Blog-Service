@@ -7,24 +7,36 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<ui:define name="content">
-		<f:metadata>
-			<f:event type="preRenderView" listener="#{userData.check(14, 'index.jsf')}" />
-		</f:metadata>
-		<div class="col-lg-offset-4 col-lg-4"
-			style="border: 5px solid blue; margin-top: 5%; border-radius: 10px;">
-			<h2 align="center">Search Post</h2>
-			<div align="center">
-				<h:form>
-					<div class="row">
-						<span class="col-md-3">Kata Kunci Pencarian</span> <span class="col-md-9">:
-							<h:inputText value="#{search.keywords}" />
-						</span>
-					</div>
-					<br />
-					<h:commandButton class="kumpul" value="Find"
-						action="#{search.searchwithFirebase}" />
-				</h:form>
+		<div class="col-lg-12" style="margin-bottom: 100px;">
+			<div class="col-lg-offset-3 col-lg-6"
+				style="border: 5px solid blue; margin-top: 5%; border-radius: 10px;">
+				<h2 align="center">Search Post</h2>
+				<div align="center">
+					<h:form>
+						<div class="row">
+							<span class="col-lg-3">Kata Kunci Pencarian</span> <span
+								class="col-lg-9">: <h:inputText
+									value="#{search.keywords}" />
+							</span>
+						</div>
+						<br />
+						<h:commandButton class="kumpul" value="Find"
+							action="#{search.find}" />
+					</h:form>
+				</div>
 			</div>
 		</div>
+		<ui:repeat var="post" value="#{search.wantedPostList}">
+			<h2 class="text-center">
+				<h:outputText value="#{post.title}" />
+			</h2>
+			<h4 class="text-center text-muted">
+				<h:outputText value="#{post.date}" />
+			</h4>
+			<p style="padding-top: 70px">
+				<h:outputText value="#{post.content}" />
+			</p>
+			<hr />
+		</ui:repeat>		
 	</ui:define>
 </ui:composition>
