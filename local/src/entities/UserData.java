@@ -23,7 +23,7 @@ import constrain.Constant;
 @SessionScoped
 public class UserData implements Serializable {
 
-	private static final long serialVersionUID = -8430435915513518517L;
+	private static final long serialVersionUID = -4904025011092622105L;
 	private String username, password;
 	private boolean loggedIn = false;
 	private UserDetails details;
