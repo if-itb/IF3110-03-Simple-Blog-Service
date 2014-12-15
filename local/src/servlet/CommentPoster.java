@@ -54,7 +54,6 @@ public class CommentPoster extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		String sid = request.getParameter("id");
-		int id = Integer.parseInt(sid);
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String content = request.getParameter("content");

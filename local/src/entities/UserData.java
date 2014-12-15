@@ -164,13 +164,12 @@ public class UserData implements Serializable {
 		User dicari = null;
 		try {
 			User[] users = fire.listUser();
-			if (users != null) {
-				for (User user : users) {
-					if (uname.equals(user.getUsername())
-							&& passw.equals(user.getPassword())) {
-						dicari = user;
-						break;
-					}
+
+			for (User user : users) {
+				if (uname.equals(user.getUsername())
+						&& passw.equals(user.getPassword())) {
+					dicari = user;
+					break;
 				}
 			}
 

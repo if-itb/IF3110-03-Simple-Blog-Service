@@ -41,8 +41,6 @@ function myfunction() {
 		var email_v = encodeURIComponent(email_tag.value);
 		var content_v = encodeURIComponent(content_tag.value);
 
-		name_tag.value = "";
-		email_tag.value = "";
 		content_tag.value = "";
 
 		var to_send = "id=" + id_v + "&name=" + name_v + "&email=" + email_v

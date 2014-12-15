@@ -1,9 +1,11 @@
 package entities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Post {
-	private String title, content, id;
+	private String title, content, id, fat;
 	private Date date;
 
 	public String getTitle() {
@@ -28,6 +30,8 @@ public class Post {
 
 	public void setDate(Date t) {
 		date = t;
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		fat = df.format(t);
 	}
 	
 	public String getId(){

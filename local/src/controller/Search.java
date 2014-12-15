@@ -38,9 +38,8 @@ public class Search {
 		FirebaseService FBServiceProxy=new FirebaseServiceProxy();
 		try {
 			List<org.wbd.heroku.service.Post> FindedPost;
-			//TODO: FBServiceProxy.search(this.keywords) bisa null, tolong diperbaiki
-			//FindedPost = new ArrayList<org.wbd.heroku.service.Post>(Arrays.asList(FBServiceProxy.search(this.keywords)));
-			throw new RemoteException();
+			
+			FindedPost = new ArrayList<org.wbd.heroku.service.Post>(Arrays.asList(FBServiceProxy.search(this.keywords)));
 		} catch (RemoteException e) {	
 			// TODO Auto-generated catch block
 			e.printStackTrace();

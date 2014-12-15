@@ -41,12 +41,15 @@ public class ViewPost {
 		org.wbd.heroku.service.Post wow;
 		try {
 			wow = inferno.getPost(id);
-			post = new Post();
-			post.setId(wow.getId());
-			post.setTitle(wow.getJudul());
-			post.setContent(wow.getKonten());
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			post.setDate(df.parse(wow.getTanggal()));
+			if (wow != null) {
+				post = new Post();
+				post.setId(wow.getId());
+				post.setTitle(wow.getJudul());
+				post.setContent(wow.getKonten());
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				post.setDate(df.parse(wow.getTanggal()));
+			}
+			
 		} catch (RemoteException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -67,16 +70,15 @@ public class ViewPost {
 		org.wbd.heroku.service.Comment[] comms;
 		try {
 			comms = inferno.listComment();
-			if (comms != null) {
-				for (org.wbd.heroku.service.Comment comm : comms) {
-					Comment comment = new Comment();
-					comment.setName(comm.getNama());
-					comment.setEmail(comm.getEmail());
-					comment.setTime(comm.getTanggal());
-					comment.setContent(comm.getKonten());
-					result.add(comment);
-				}
+			for (org.wbd.heroku.service.Comment comm : comms) {
+				Comment comment = new Comment();
+				comment.setName(comm.getNama());
+				comment.setEmail(comm.getEmail());
+				comment.setTime(comm.getTanggal());
+				comment.setContent(comm.getKonten());
+				result.add(comment);
 			}
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,19 +118,18 @@ public class ViewPost {
 		org.wbd.heroku.service.Post[] posts;
 		try {
 			posts = inferno.listPost(2);
-			if (posts != null) {
-				for (org.wbd.heroku.service.Post p : posts) {
-					Post post = new Post();
-					post.setId(p.getId());
-					post.setTitle(p.getJudul());
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					post.setDate(df.parse(p.getTanggal()));
-					post.setContent(p.getKonten());
-					if (p.getId_author().equals(
-							userData.getDetails().getUserId()))
-						result.add(post);
-				}
+
+			for (org.wbd.heroku.service.Post p : posts) {
+				Post post = new Post();
+				post.setId(p.getId());
+				post.setTitle(p.getJudul());
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				post.setDate(df.parse(p.getTanggal()));
+				post.setContent(p.getKonten());
+				if (p.getId_author().equals(userData.getDetails().getUserId()))
+					result.add(post);
 			}
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -146,17 +147,17 @@ public class ViewPost {
 		org.wbd.heroku.service.Post[] posts;
 		try {
 			posts = inferno.listPost(2);
-			if (posts != null) {
-				for (org.wbd.heroku.service.Post p : posts) {
-					Post post = new Post();
-					post.setId(p.getId());
-					post.setTitle(p.getJudul());
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					post.setDate(df.parse(p.getTanggal()));
-					post.setContent(p.getKonten());
-					result.add(post);
-				}
+
+			for (org.wbd.heroku.service.Post p : posts) {
+				Post post = new Post();
+				post.setId(p.getId());
+				post.setTitle(p.getJudul());
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				post.setDate(df.parse(p.getTanggal()));
+				post.setContent(p.getKonten());
+				result.add(post);
 			}
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -174,17 +175,17 @@ public class ViewPost {
 		org.wbd.heroku.service.Post[] posts;
 		try {
 			posts = inferno.listPost(12);
-			if (posts != null) {
-				for (org.wbd.heroku.service.Post p : posts) {
-					Post post = new Post();
-					post.setId(p.getId());
-					post.setTitle(p.getJudul());
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					post.setDate(df.parse(p.getTanggal()));
-					post.setContent(p.getKonten());
-					result.add(post);
-				}
+
+			for (org.wbd.heroku.service.Post p : posts) {
+				Post post = new Post();
+				post.setId(p.getId());
+				post.setTitle(p.getJudul());
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				post.setDate(df.parse(p.getTanggal()));
+				post.setContent(p.getKonten());
+				result.add(post);
 			}
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -206,17 +207,17 @@ public class ViewPost {
 		org.wbd.heroku.service.Post[] posts;
 		try {
 			posts = inferno.listPost(5);
-			if (posts != null) {
-				for (org.wbd.heroku.service.Post p : posts) {
-					Post post = new Post();
-					post.setId(p.getId());
-					post.setTitle(p.getJudul());
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					post.setDate(df.parse(p.getTanggal()));
-					post.setContent(p.getKonten());
-					result.add(post);
-				}
+
+			for (org.wbd.heroku.service.Post p : posts) {
+				Post post = new Post();
+				post.setId(p.getId());
+				post.setTitle(p.getJudul());
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				post.setDate(df.parse(p.getTanggal()));
+				post.setContent(p.getKonten());
+				result.add(post);
 			}
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
