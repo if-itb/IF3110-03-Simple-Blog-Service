@@ -282,7 +282,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 		List<Post> inferno = listPost(2);
 		List<Post> result = new ArrayList<Post>();
 		for (Post p : inferno) {
-			if (p.getJudul().contains(query) || p.getKonten().contains(query))
+			if (bestMatcher(p.getJudul(), query) || bestMatcher(p.getKonten(),query))
 				result.add(p);
 		}
 		// TODO Auto-generated method stub
@@ -317,5 +317,13 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 		return Comments;
 	}
-
+	
+	private boolean bestMatcher(String text, String patt) {
+		String[] words = text.split("\\W+");
+		for (String word: words) {
+			if (patt.equalsIgnoreCase(word))
+				return true;
+		}
+		return false;
+	}
 }
