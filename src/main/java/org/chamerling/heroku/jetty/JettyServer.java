@@ -1,8 +1,11 @@
-package org.wbd.heroku.jetty;
+package org.chamerling.heroku.jetty;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 public class JettyServer {
+	  /**
+     * @param args
+     */
     public static void main(String[] args) throws Exception{
         String webappDirLocation = "src/main/webapp/";
         

@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.wbd.heroku</groupId>
-	<artifactId>heroku-wbd-tubes</artifactId>
-	<version>1.0</version>
+	<groupId>org.chamerling.heroku</groupId>
+	<artifactId>heroku-cxf-jaxws</artifactId>
+	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>WBD Tubes 3</name>
+	<name>CXF JAXWS WebServices</name>
 
 	<properties>
 		<java.version>1.6</java.version>
@@ -72,16 +72,6 @@
 			<artifactId>slf4j-simple</artifactId>
 			<version>1.6.2</version>
 		</dependency>
-		<dependency>
-			<groupId>com.firebase</groupId>
-			<artifactId>firebase-client-android</artifactId>
-			<version>[2.0.3,)</version>
-		</dependency>
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20141113</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -107,7 +97,7 @@
 					<generateRepository>true</generateRepository>
 					<programs>
 						<program>
-							<mainClass>org.wbd.heroku.jetty.JettyServer</mainClass>
+							<mainClass>org.chamerling.heroku.jetty.JettyServer</mainClass>
 							<name>webapp</name>
 						</program>
 					</programs>
