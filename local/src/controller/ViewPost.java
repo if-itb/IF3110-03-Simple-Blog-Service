@@ -94,6 +94,10 @@ public class ViewPost {
 	public Date getDate() {
 		return post.getDate();
 	}
+	
+	public String getLocaleDate(){
+		return post.getLocaleDate();
+	}
 
 	public String getEmail() {
 		return email;

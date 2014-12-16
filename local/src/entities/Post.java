@@ -30,7 +30,7 @@ public class Post {
 
 	public void setDate(Date t) {
 		date = t;
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat df = new SimpleDateFormat("dd MMMMM yyyy");
 		fat = df.format(t);
 	}
 	
@@ -40,6 +40,10 @@ public class Post {
 	
 	public void setId(String i){
 		id = i;
+	}
+	
+	public String getLocaleDate(){
+		return fat;
 	}
 
 }
