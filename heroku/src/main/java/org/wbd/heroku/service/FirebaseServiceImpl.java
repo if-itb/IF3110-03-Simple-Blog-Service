@@ -324,7 +324,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 		for (String word: words) {
 			for (String pattern: patts)
 				if (word.equalsIgnoreCase(pattern))
-					return true
+					return true;
 		}
 		return false;
 	}
