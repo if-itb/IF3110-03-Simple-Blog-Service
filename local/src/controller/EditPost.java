@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +34,9 @@ public class EditPost {
 	}
 
 	public String getDate() {
-		return post.getDate().toString();
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String tempDate = df.format(post.getDate());
+		return tempDate;
 	}
 
 	public String getId() {
