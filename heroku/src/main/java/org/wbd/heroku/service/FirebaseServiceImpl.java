@@ -194,6 +194,13 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 				result.add(the_user);
 			}
+			
+			Collections.sort(result, new Comparator<User>() {
+				@Override
+				public int compare(User o1, User o2) {
+					return o1.getId().compareTo(o2.getId());
+				}
+			});
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -271,7 +278,12 @@ public class FirebaseServiceImpl implements FirebaseService {
 
 				result.add(the_comment);
 			}
-			Collections.reverse(result);
+			Collections.sort(result, new Comparator<Comment>() {
+				@Override
+				public int compare(Comment o1, Comment o2) {
+					return o2.getId().compareTo(o1.getId());
+				}
+			});
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
