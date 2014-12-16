@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -63,10 +65,9 @@ public class FirebaseServiceImpl implements FirebaseService {
 	 */
 	public List<Post> listPost(int code) {
 		List<Post> result = new ArrayList<Post>();
-		List<Post> reversed = new ArrayList<Post>();
 		try {
 			URL inferno = new URL(FIREBASE_URL + POST_PATH
-					+ ".json?orderBy=\"tanggal\"");
+					+ ".json");
 			URLConnection fire = inferno.openConnection();
 			JSONTokener fira = new JSONTokener(fire.getInputStream());
 
@@ -83,12 +84,18 @@ public class FirebaseServiceImpl implements FirebaseService {
 				the_post.setDeleted(post.getBoolean("deleted"));
 				the_post.setPublished(post.getBoolean("published"));
 				if ((the_post.getMask() & code) > 0)
-					reversed.add(the_post);
+					result.add(the_post);
 			}
-			int p = reversed.size();
-			for (int i = p - 1; i >= 0; --i) {
-				result.add(reversed.get(i));
-			}
+			Collections.sort(result, new Comparator<Post>() {
+				@Override
+				public int compare(Post o1, Post o2) {
+					int res = o1.getTanggal().compareTo(o2.getTanggal());
+					if (res != 0)
+						return res;
+					
+					return o1.getId().compareTo(o2.getId());
+				}
+			});
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -167,7 +174,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 	public List<User> listUser() {
 		List<User> result = new ArrayList<User>();
 		try {
-			URL inferno = new URL(FIREBASE_URL + USER_PATH + ".json?orderBy=\"$key\"");
+			URL inferno = new URL(FIREBASE_URL + USER_PATH + ".json");
 			URLConnection fire = inferno.openConnection();
 			JSONTokener fira = new JSONTokener(fire.getInputStream());
 
@@ -241,10 +248,10 @@ public class FirebaseServiceImpl implements FirebaseService {
 	@Override
 	public List<Comment> listComment() {
 		List<Comment> result = new ArrayList<Comment>();
-		List<Comment> reversed = new ArrayList<Comment>();
+		
 		try {
 			URL inferno = new URL(FIREBASE_URL + COMMENT_PATH
-					+ ".json?orderBy=\"$key\"");
+					+ ".json");
 			URLConnection fire = inferno.openConnection();
 			JSONTokener fira = new JSONTokener(fire.getInputStream());
 
@@ -262,12 +269,9 @@ public class FirebaseServiceImpl implements FirebaseService {
 				the_comment.setTanggal(comment.getString("tanggal"));
 				the_comment.setId_post(comment.getString("id_post"));
 
-				reversed.add(the_comment);
+				result.add(the_comment);
 			}
-			int p = reversed.size();
-			for (int i = p - 1; i >= 0; --i) {
-				result.add(reversed.get(i));
-			}
+			Collections.reverse(result);
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
