@@ -320,9 +320,11 @@ public class FirebaseServiceImpl implements FirebaseService {
 	
 	private boolean bestMatcher(String text, String patt) {
 		String[] words = text.split("\\W+");
+		String[] patts = patt.split("\\W+");
 		for (String word: words) {
-			if (patt.equalsIgnoreCase(word))
-				return true;
+			for (String pattern: patts)
+				if (word.equalsIgnoreCase(pattern))
+					return true
 		}
 		return false;
 	}
