@@ -32,42 +32,42 @@ public class Search {
 		this.keywords = katakunci;
 	}
 
-	public void find(){
-		finalkeywords=keywords;
+	public void find() {
+		finalkeywords = keywords;
 	}
-	
+
 	public List<Post> getwantedPostList() {
 		FirebaseService aeroga = new FirebaseServiceProxy();
 		List<Post> FindedPost = new ArrayList<>();
 		org.wbd.heroku.service.Post[] posts;
-		
-		//versi kmrn
-		/*try {
-			List<org.wbd.heroku.service.Post> FindedPost;
 
-			FindedPost = new ArrayList<org.wbd.heroku.service.Post>(
-					Arrays.asList(FBServiceProxy.search(this.keywords)));
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
-		try{
-			posts=aeroga.search(this.finalkeywords);
-			//System.out.println(this.finalkeywords);
-			//System.out.println(this.keywords);
-			
-			for (org.wbd.heroku.service.Post p : posts) {
-				Post post = new Post();
-				post.setId(p.getId());
-				post.setTitle(p.getJudul());
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-				post.setDate(df.parse(p.getTanggal()));
-				post.setContent(p.getKonten());				
-				FindedPost.add(post);
+		// versi kmrn
+		/*
+		 * try { List<org.wbd.heroku.service.Post> FindedPost;
+		 * 
+		 * FindedPost = new ArrayList<org.wbd.heroku.service.Post>(
+		 * Arrays.asList(FBServiceProxy.search(this.keywords))); } catch
+		 * (RemoteException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
+
+		try {
+			posts = aeroga.search(this.finalkeywords);
+			// System.out.println(this.finalkeywords);
+			// System.out.println(this.keywords);
+
+			if (posts != null) {
+				for (org.wbd.heroku.service.Post p : posts) {
+					Post post = new Post();
+					post.setId(p.getId());
+					post.setTitle(p.getJudul());
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					post.setDate(df.parse(p.getTanggal()));
+					post.setContent(p.getKonten());
+					FindedPost.add(post);
+				}
 			}
-		}
-		catch (RemoteException e) {
+		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
@@ -75,6 +75,6 @@ public class Search {
 			e.printStackTrace();
 		}
 		return FindedPost;
-		
+
 	}
 }

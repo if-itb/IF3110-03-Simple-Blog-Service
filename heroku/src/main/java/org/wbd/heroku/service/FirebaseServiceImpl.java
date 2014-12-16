@@ -63,14 +63,16 @@ public class FirebaseServiceImpl implements FirebaseService {
 	 */
 	public List<Post> listPost(int code) {
 		List<Post> result = new ArrayList<Post>();
+		List<Post> reversed = new ArrayList<Post>();
 		try {
-			URL inferno = new URL(FIREBASE_URL + POST_PATH + ".json");
+			URL inferno = new URL(FIREBASE_URL + POST_PATH
+					+ ".json?orderBy=\"tanggal\"");
 			URLConnection fire = inferno.openConnection();
 			JSONTokener fira = new JSONTokener(fire.getInputStream());
 
 			JSONObject firaga = new JSONObject(fira);
 			Iterator<String> firaja = firaga.keys();
-			
+
 			while (firaja.hasNext()) {
 				String chainz = firaja.next();
 				JSONObject post = firaga.getJSONObject(chainz);
@@ -81,7 +83,11 @@ public class FirebaseServiceImpl implements FirebaseService {
 				the_post.setDeleted(post.getBoolean("deleted"));
 				the_post.setPublished(post.getBoolean("published"));
 				if ((the_post.getMask() & code) > 0)
-					result.add(the_post);
+					reversed.add(the_post);
+			}
+			int p = reversed.size();
+			for (int i = p - 1; i >= 0; --i) {
+				result.add(reversed.get(i));
 			}
 
 		} catch (MalformedURLException e) {
@@ -91,7 +97,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
@@ -161,13 +167,13 @@ public class FirebaseServiceImpl implements FirebaseService {
 	public List<User> listUser() {
 		List<User> result = new ArrayList<User>();
 		try {
-			URL inferno = new URL(FIREBASE_URL + USER_PATH + ".json");
+			URL inferno = new URL(FIREBASE_URL + USER_PATH + ".json?orderBy=\"$key\"");
 			URLConnection fire = inferno.openConnection();
 			JSONTokener fira = new JSONTokener(fire.getInputStream());
 
 			JSONObject firaga = new JSONObject(fira);
 			Iterator<String> firaja = firaga.keys();
-			
+
 			while (firaja.hasNext()) {
 				String chainz = firaja.next();
 				JSONObject user = firaga.getJSONObject(chainz);
@@ -235,14 +241,16 @@ public class FirebaseServiceImpl implements FirebaseService {
 	@Override
 	public List<Comment> listComment() {
 		List<Comment> result = new ArrayList<Comment>();
+		List<Comment> reversed = new ArrayList<Comment>();
 		try {
-			URL inferno = new URL(FIREBASE_URL + COMMENT_PATH + ".json");
+			URL inferno = new URL(FIREBASE_URL + COMMENT_PATH
+					+ ".json?orderBy=\"$key\"");
 			URLConnection fire = inferno.openConnection();
 			JSONTokener fira = new JSONTokener(fire.getInputStream());
 
 			JSONObject firaga = new JSONObject(fira);
 			Iterator<String> firaja = firaga.keys();
-			
+
 			while (firaja.hasNext()) {
 				String chainz = firaja.next();
 				JSONObject comment = firaga.getJSONObject(chainz);
@@ -254,9 +262,13 @@ public class FirebaseServiceImpl implements FirebaseService {
 				the_comment.setTanggal(comment.getString("tanggal"));
 				the_comment.setId_post(comment.getString("id_post"));
 
-				result.add(the_comment);
+				reversed.add(the_comment);
 			}
-	
+			int p = reversed.size();
+			for (int i = p - 1; i >= 0; --i) {
+				result.add(reversed.get(i));
+			}
+
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -264,7 +276,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
@@ -282,7 +294,8 @@ public class FirebaseServiceImpl implements FirebaseService {
 		List<Post> inferno = listPost(2);
 		List<Post> result = new ArrayList<Post>();
 		for (Post p : inferno) {
-			if (bestMatcher(p.getJudul(), query) || bestMatcher(p.getKonten(),query))
+			if (bestMatcher(p.getJudul(), query)
+					|| bestMatcher(p.getKonten(), query))
 				result.add(p);
 		}
 		// TODO Auto-generated method stub
@@ -309,20 +322,20 @@ public class FirebaseServiceImpl implements FirebaseService {
 		List<Comment> listComment = listComment();
 
 		List<Comment> Comments = new ArrayList<Comment>();
-		for (int i = listComment.size() - 1; i >= 0; i--) {
-			if (listComment.get(i).getId_post().equals(post_id)){
-				Comments.add(listComment.get(i));
+		for (Comment com: listComment) {
+			if (post_id.equals(com.getId_post())) {
+				Comments.add(com);
 			}
 		}
-
+		
 		return Comments;
 	}
-	
+
 	private boolean bestMatcher(String text, String patt) {
 		String[] words = text.split("\\W+");
 		String[] patts = patt.split("\\W+");
-		for (String word: words) {
-			for (String pattern: patts)
+		for (String word : words) {
+			for (String pattern : patts)
 				if (word.equalsIgnoreCase(pattern))
 					return true;
 		}
