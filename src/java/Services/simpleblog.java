@@ -6,9 +6,18 @@
 package Services;
 
 import java.util.Date;
+import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import Database.*;
+import Model.*;
+import java.util.LinkedList;
+import net.thegreshams.firebase4j.error.FirebaseException;
+import net.thegreshams.firebase4j.model.FirebaseResponse;
+import net.thegreshams.firebase4j.service.Firebase;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 /**
  *
@@ -17,13 +26,25 @@ import javax.jws.WebParam;
 @WebService(serviceName = "simpleblog")
 public class simpleblog {
 
-
+    
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "addPost")
-    public Boolean addPost(@WebParam(name = "judul") String judul, @WebParam(name = "konten") String konten, @WebParam(name = "tanggal") Date tanggal) {
-        //TODO write your implementation code here:
-        return null;
+    @WebMethod(operationName = "listUser")
+    public List<User> listUser() throws FirebaseException, JSONException {
+        String firebase_baseUrl = "https://demoluthfi.firebaseio.com/";
+        Firebase firebase = new Firebase( firebase_baseUrl );
+
+        FirebaseResponse response = firebase.get("Users");
+
+        JSONArray arr = new JSONArray(response.getRawBody());
+        List<User> LS = new LinkedList();
+        for (int i=0;i<arr.length();i++)
+        {
+
+            User user = new User(arr.getJSONObject(i));
+            LS.add(user);
+        }
+        return LS;
     }
 }

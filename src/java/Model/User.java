@@ -3,6 +3,8 @@ package Model;
 import Helper.MD5;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Representation of User
@@ -43,6 +45,15 @@ public class User {
         this.role = role;
         this.name = name;
         this.email = email;
+    }
+    
+    public User(JSONObject obj) throws JSONException
+    {
+       username = obj.getString("username");
+       password = obj.getString("password");
+       role = obj.getString("role");
+       name = obj.getString("name");
+       email = obj.getString("email");
     }
     
     /**
