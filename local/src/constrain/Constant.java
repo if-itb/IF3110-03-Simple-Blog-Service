@@ -15,4 +15,6 @@ public final class Constant {
     public static final String MENU_POSTMANAGER_URL = "post_manager.jsf";
     public static final String MENU_USERMANAGER_NAME = "User Manager";
     public static final String MENU_USERMANAGER_URL = "crud.jsf";
+    public static final String MENU_SEARCH_NAME = "Search Post";
+    public static final String MENU_SEARCH_URL = "search.jsf";
 }

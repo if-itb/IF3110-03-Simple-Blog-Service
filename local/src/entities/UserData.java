@@ -117,10 +117,14 @@ public class UserData implements Serializable {
 		if (loggedIn == false) {
 			result.add(new NavigationMenu(Constant.MENU_HOME_NAME,
 					Constant.MENU_HOME_URL));
+			result.add(new NavigationMenu(Constant.MENU_SEARCH_NAME,
+					Constant.MENU_SEARCH_URL));
 			return result;
 		} else if (details.getRole() == 10) {
 			result.add(new NavigationMenu(Constant.MENU_HOME_NAME,
 					Constant.MENU_HOME_URL));
+			result.add(new NavigationMenu(Constant.MENU_SEARCH_NAME,
+					Constant.MENU_SEARCH_URL));
 			result.add(new NavigationMenu(Constant.MENU_ADDPOST_NAME,
 					Constant.MENU_ADDPOST_URL));
 			result.add(new NavigationMenu(Constant.MENU_MYPOST_NAME,
@@ -129,12 +133,16 @@ public class UserData implements Serializable {
 		} else if (details.getRole() == 20) {
 			result.add(new NavigationMenu(Constant.MENU_HOME_NAME,
 					Constant.MENU_HOME_URL));
+			result.add(new NavigationMenu(Constant.MENU_SEARCH_NAME,
+					Constant.MENU_SEARCH_URL));
 			result.add(new NavigationMenu(Constant.MENU_EDITOR_NAME,
 					Constant.MENU_EDITOR_URL));
 			return result;
 		} else if (details.getRole() == 30) {
 			result.add(new NavigationMenu(Constant.MENU_HOME_NAME,
 					Constant.MENU_HOME_URL));
+			result.add(new NavigationMenu(Constant.MENU_SEARCH_NAME,
+					Constant.MENU_SEARCH_URL));
 			result.add(new NavigationMenu(Constant.MENU_ADDPOST_NAME,
 					Constant.MENU_ADDPOST_URL));
 			result.add(new NavigationMenu(Constant.MENU_POSTMANAGER_NAME,
