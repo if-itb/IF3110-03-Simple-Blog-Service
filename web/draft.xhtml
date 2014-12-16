@@ -30,14 +30,24 @@
         <div class="container">
             <div class="col-md-12">
                 <div class="row">
-                    <h1 class="page-header">Home
+                    <h1 class="page-header">Draft
                     </h1>
                 </div>
             </div>
             <!-- Blog Post Row -->
-            <ui:repeat value="#{PostData.allPost}" var="post">
-            
-            <h:form>
+            <c:choose>
+                <c:when test="#{UserData.userLoggedIn().role == 'admin'}">
+                    <c:set var="posts" value="#{PostData.allDraft}" />
+                </c:when>
+                <c:when test="#{UserData.userLoggedIn().role == 'editor'}">
+                    <c:set var="posts" value="#{PostData.allDraft}" />
+                </c:when>
+                <c:otherwise>
+                    <c:set var="posts" value="#{PostData.getDraftbyAuthor(UserData.userLoggedIn())}" />
+                </c:otherwise>
+            </c:choose>
+            <ui:repeat value="#{posts}" var="post">
+                <h:form>
             <div class="row">
                 <div class="col-md-1 text-center">
                     <p><i class="fa fa-file-text fa-4x"></i>
@@ -63,24 +73,22 @@
                     <p>by <a href="#">#{post.author.username}</a>
                     </p>
                     <p>#{post.content}</p>
-                    <h:inputText class="role" value="#{UserData.userLoggedIn().role}" style="display:none;"/>
-                    <h:inputText class="username1" value="#{UserData.userLoggedIn().username}" style="display:none;"/>
-                    <h:inputText class="username2" value="#{post.author.username}" style="display:none;"/>
-                    <h:link outcome="edit_post" class="edit" style="display: none;">
+                    <h:link outcome="edit_post">
                         <f:param name="id" value="#{post.id}" />
                         <span class="glyphicon glyphicon-pencil"></span>
                     </h:link>
-
-                    <h:commandLink action="#{PostData.softDelPost(post)}" class="delete" style="display: none;" onclick="if (!confirm('Are you sure move this post to trash?')) return false;">
+                    <h:commandLink action="#{PostData.softDelPost(post)}" onclick="if (!confirm('Are you sure move this post to trash?')) return false;">
                         <span class="glyphicon glyphicon-trash"></span>
                     </h:commandLink>
-                    
+                    <h:commandLink action="#{PostData.publishPost(post)}">
+                        <span class="glyphicon glyphicon-globe"></span>
+                    </h:commandLink>
                 </div>
             </div>
         <!-- /.row -->
             
             <hr />
-            </h:form>
+                </h:form>
             </ui:repeat>
             <!-- Footer -->
             <footer>
@@ -93,35 +101,6 @@
 
         </div>
         <!-- /.container -->
-        <script type="text/javascript">
-            //<![CDATA[
-            var edit = document.getElementsByClassName("edit");
-            var del = document.getElementsByClassName("delete");
-            var role = document.getElementsByClassName("role");
-            var username1 = document.getElementsByClassName("username1");
-            var username2 = document.getElementsByClassName("username2");
-            var len = edit.length;
-            var i;
-            for (i = 0;i < len;i++)
-            {
-                if (role.item(i).value == "admin")
-                {
-                    edit.item(i).style = "display:inline";
-                    del.item(i).style = "display:inline";
-                }
-                else if (role.item(i).value == "editor")
-                {
-                    edit.item(i).style = "display:inline";
-                    del.item(i).style = "display:inline";
-                }
-                else if (username1.item(i).value == username2.item(i).value)
-                {
-                    edit.item(i).style = "display:inline";
-                    del.item(i).style = "display:inline";
-                }
-            }
-            //]]>
-        </script>
     </h:body>
 </html>
 

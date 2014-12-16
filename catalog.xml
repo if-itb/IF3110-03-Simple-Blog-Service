@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/upix/Dropbox/Kuliah/Semester%205/IF3110%20Pengembangan%20Aplikasi%20Berbasis%20Web/Tugas/Tugas%203/simpleblog.wsdl" uri="src/conf/xml-resources/web-services/simpleblog/wsdl/simpleblog.wsdl"/>
+</catalog>
