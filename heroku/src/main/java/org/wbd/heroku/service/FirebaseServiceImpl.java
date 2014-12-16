@@ -89,11 +89,11 @@ public class FirebaseServiceImpl implements FirebaseService {
 			Collections.sort(result, new Comparator<Post>() {
 				@Override
 				public int compare(Post o1, Post o2) {
-					int res = o1.getTanggal().compareTo(o2.getTanggal());
+					int res = o2.getTanggal().compareTo(o1.getTanggal());
 					if (res != 0)
 						return res;
 					
-					return o1.getId().compareTo(o2.getId());
+					return o2.getId().compareTo(o1.getId());
 				}
 			});
 
