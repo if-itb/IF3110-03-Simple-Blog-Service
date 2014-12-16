@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/D:/Project/GitHub/IF3110-03-Simple-Blog-Service/simpleblog.wsdl" uri="src/conf/xml-resources/web-services/simpleblog/wsdl/simpleblog.wsdl"/>
+</catalog>
