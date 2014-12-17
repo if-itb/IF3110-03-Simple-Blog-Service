@@ -282,7 +282,7 @@ public class TestService {
 				if(!key.equals("autoId")){
 					JSONObject child = obj.getJSONObject(key);
 					User user = new User(child.getInt("id"), child.getString("name"),
-										child.getString("email"), child.getInt("role"));
+										child.getString("email"), child.getInt("role"), child.getString("password"));
 					users.add(user);
 				}
 			}
