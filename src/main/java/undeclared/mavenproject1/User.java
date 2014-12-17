@@ -12,10 +12,14 @@ package undeclared.mavenproject1;
  */
 public class User {
 	
-	public int id;
-	public String name;
-	public String email;
-	public String role;
+	int id;
+	String name;
+	String email;
+	String role;
+	
+	public User(){
+		
+	}
 	
 	public User(int id, String name, String email, String role){
 		this.id = id;
@@ -23,4 +27,22 @@ public class User {
 		this.email = email;
 		this.role = role;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getRole() {
+		return role;
+	}
+	
+	
 }

@@ -19,6 +19,10 @@ public class Comment {
 	String email;
 	String content;
 	
+	public Comment(){
+		
+	}
+	
 	public Comment(int postId, int commentid, String name, String date, String email, String content){
 		this.postId = postId;
 		id = commentid;
@@ -26,5 +30,29 @@ public class Comment {
 		this.date = date;
 		this.email = email;
 		this.content = content;
+	}
+	
+	public int getId(){
+		return id;
+	}
+	
+	public int getPostId(){
+		return postId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getContent() {
+		return content;
 	}
 }
