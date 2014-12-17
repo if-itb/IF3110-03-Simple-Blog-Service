@@ -213,7 +213,6 @@ public class UsersController implements Serializable {
 
 	public void logout() throws IOException {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
 		Cookie email_cookie = new Cookie("email","");
 		Cookie username_cookie = new Cookie("username","");
 		Cookie role_cookie = new Cookie("role","");

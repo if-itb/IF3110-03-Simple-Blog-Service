@@ -39,10 +39,4 @@ public class CommentsController implements Serializable {
 		return mysql.getAllComments(post_id);
 	}
 
-	public boolean deleteComment(String id) {
-		MySQL mysql = new MySQL();
-		
-		return mysql.deleteComment(id);
-	}
-
 }

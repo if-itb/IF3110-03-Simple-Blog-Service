@@ -5,10 +5,7 @@
  */
 package model.database;
 
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import model.Comment;
 import model.Post;
