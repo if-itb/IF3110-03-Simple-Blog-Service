@@ -1,4 +1,5 @@
 package source;
+import com.firebase.client.Firebase;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -63,6 +64,13 @@ public class KoneksiDatabase {
         }
         return koneksi;
     }
+    
+    public static Firebase getFirebase()
+    {
+        Firebase ref = new Firebase("https://if3110-4.firebaseio.com/");
+        return ref;
+    }
+    
     public static void main(String[] args){
         
     }

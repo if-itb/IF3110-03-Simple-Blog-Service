@@ -17,6 +17,7 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.ejb.Stateless;
+import source.KoneksiDatabase;
 
 /**
  *
@@ -71,7 +72,7 @@ private static String readUrl(String urlString) throws Exception {
             //User user = new User("usernameAkhfa", "passwordAkhfa", "namaAkhfa", "emailAkhfa", "roleAkhfa");
             //User user2 = new User("username2Akhfa", "password2Akhfa", "nama2Akhfa", "email2Akhfa", "role2Akhfa");
             
-            Firebase ref = new Firebase("https://if3110-4.firebaseio.com/");
+            Firebase ref = KoneksiDatabase.getFirebase();
             Firebase userRef = ref.child("user");
             Map <String, String> users = new HashMap<>();
             users.put("username", username);
