@@ -80,7 +80,7 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
             
             // update id and update the value in firebase
             id++;
-            firebasePost.child(FIREBASE_POST_ID_COUNTER).setValue(id);
+            firebaseRoot.child(FIREBASE_POST_ID_COUNTER).setValue(id);
         }
         catch (IOException e) {
             // do nothing
