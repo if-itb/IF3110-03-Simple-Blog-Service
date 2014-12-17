@@ -35,35 +35,4 @@ public class Post {
 		this.deleted = deleted;
 	}
 	
-	public int getId(){
-		return id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public String getDate() {
-		return date;
-	}
-	
-	public boolean isPublished(){
-		return published;
-	}
-	
-	public boolean isDeleted(){
-		return deleted;
-	}
-	
-	@Override
-	public String toString(){
-		String str = "id : " + id + " title : " + title + " content : " + content + " date : " + date +
-						" published : " + published + " deleted : " + deleted;
-		return str;
-	}
-	
 }

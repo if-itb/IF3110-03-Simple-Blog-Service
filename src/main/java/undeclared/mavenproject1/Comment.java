@@ -31,28 +31,4 @@ public class Comment {
 		this.email = email;
 		this.content = content;
 	}
-	
-	public int getId(){
-		return id;
-	}
-	
-	public int getPostId(){
-		return postId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getContent() {
-		return content;
-	}
 }
