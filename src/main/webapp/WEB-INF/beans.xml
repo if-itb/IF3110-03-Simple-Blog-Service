@@ -23,6 +23,6 @@
 	<jaxws:endpoint id="hello"
 		implementor="org.chamerling.heroku.service.HelloServiceImpl" address="/HelloService" />
 	<jaxws:endpoint id="simpleblog"
-		implementor="services.SimpleBlogServiceImplementation" address="/SimpleBlogService" />
+		implementor="SimpleBlogServiceImplementation" address="/SimpleBlogService" />
 
 </beans>
