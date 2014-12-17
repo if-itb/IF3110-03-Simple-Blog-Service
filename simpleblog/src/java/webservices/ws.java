@@ -5,6 +5,8 @@
  */
 package webservices;
 
+import com.corejsf.Comment;
+import com.corejsf.ListComment;
 import com.corejsf.ListMember;
 import com.corejsf.ListPost;
 import com.corejsf.Member1;
@@ -220,5 +222,85 @@ public class ws {
             Logger.getLogger(ws.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    @WebMethod(operationName = "GetCommentPost")
+    public ListComment GetCommentPost(@WebParam(name = "Key") String Key){
+        try {
+            URL url = new URL(fburl + "post/" + Key + "/comment/.json");
+            URLConnection con = url.openConnection();
+            JSONTokener json = new JSONTokener(con.getInputStream());
+            JSONObject obj = new JSONObject(json);
+            Iterator<String> datacomment = obj.keys();
+            ListComment list = new ListComment();
+            ArrayList<Comment> comments = new ArrayList<>();
+
+            while(datacomment.hasNext()){
+                String id_comment = datacomment.next();
+                JSONObject getcomment = obj.getJSONObject(id_comment);
+
+                Comment c = new Comment();
+                c.setEmail(getcomment.getString("Email"));
+                c.setId(id_comment);
+                c.setIdPost(Key);
+                c.setKomentar(getcomment.getString("Komentar"));
+                c.setNama(getcomment.getString("Nama"));
+                c.setTanggal(getcomment.getString("Tanggal"));
+                comments.add(c);
+            }
+            
+            list.setComments(comments);
+
+            for(Comment c:list.getComments()){
+                System.out.println(c.getEmail() + " " + c.getId() + " " + c.getIdPost() + " " + c.getKomentar() + " " + c.getNama() + " " + c.getTanggal());
+            }
+            return list;
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ws.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    @WebMethod(operationName = "EditPost")
+    public boolean EditPost(@WebParam(name = "Key") String Key, @WebParam(name = "Judul") String Judul,@WebParam(name = "Tanggal") String Tanggal,@WebParam(name = "Konten") String Konten,@WebParam(name = "Status") String Status,@WebParam(name = "Deleted") String Deleted) {
+        Firebase temp = root.child("post/" + Key);
+        Map<String,Object> post = new HashMap<>();
+        post.put("Judul", Judul);
+        post.put("Tanggal", Tanggal);
+        post.put("Status", Status);
+        post.put("Konten", Konten);
+        post.put("Deleted", Deleted);
+        temp.updateChildren(post);
+        
+        return true;
+    }
+ 
+    @WebMethod(operationName = "EditMember")
+    public boolean EditMember(@WebParam(name = "Key") String Key, @WebParam(name = "Email") String Email,@WebParam(name = "Name") String Name,@WebParam(name = "Password") String Password,@WebParam(name = "Role") String Role) {
+        Firebase temp = root.child("member/" + Key);
+        Map<String,Object> member = new HashMap<>();
+        member.put("Email", Email);
+        member.put("Name", Name);
+        member.put("Password", Password);
+        member.put("Role", Role);
+        temp.updateChildren(member);
+        
+        return true;
+    }
+    
+    @WebMethod(operationName = "DeleteMember")
+    public boolean DeleteMember(@WebParam(name = "Key") String Key) {
+        Firebase temp = root.child("member/" + Key);
+        temp.removeValue();
+        
+        return true;
+    }
+    
+    @WebMethod(operationName = "DeletePost")
+    public boolean DeletePost(@WebParam(name = "Key") String Key) {
+        Firebase temp = root.child("post/" + Key);
+        temp.removeValue();
+        
+        return true;
     }
 }

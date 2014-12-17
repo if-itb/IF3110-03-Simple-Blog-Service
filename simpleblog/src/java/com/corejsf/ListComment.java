@@ -36,7 +36,7 @@ public class ListComment {
         this.comments = comments;
     }
     
-    public ArrayList<Comment> execute(int id_post){
+    public ArrayList<Comment> execute(String id_post){
         System.out.println("NYUUU "+ id_post);
         comments = new ArrayList<Comment>();
         Connection con = null;
@@ -51,7 +51,7 @@ public class ListComment {
             ResultSet res = sm.executeQuery("SELECT * FROM comment WHERE id_post="+id_post+" ORDER BY Tanggal DESC, id DESC");
             while(res.next()){
                 Comment com = new Comment();
-                com.setId(res.getInt("id"));
+                com.setId(res.getString("id"));
                 com.setIdPost(id_post);
                 com.setEmail(res.getString("Email"));
                 com.setNama(res.getString("Nama"));

@@ -22,13 +22,13 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name="commentAdd", eager=true)
 @ViewScoped
 public class CommentAdd implements Serializable {
-    private int id_pos;
+    private String id_pos;
 
-    public int getId_pos() {
+    public String getId_pos() {
         return id_pos;
     }
 
-    public void setId_pos(int id_pos) {
+    public void setId_pos(String id_pos) {
         this.id_pos = id_pos;
     }
 
@@ -59,7 +59,7 @@ public class CommentAdd implements Serializable {
             String query = "INSERT INTO comment (id_post, Nama, Email, Tanggal, Komentar) "
                     + "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, id_pos);
+            ps.setString(1, id_pos);
             ps.setString(2, name);
             ps.setString(3, email);
             CurrentDate cd = new CurrentDate();
@@ -91,7 +91,7 @@ public class CommentAdd implements Serializable {
         }
     }
 
-    public void execute(int i){
+    public void execute(String i){
         id_pos = i;
     }
 }
