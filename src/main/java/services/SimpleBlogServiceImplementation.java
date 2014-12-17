@@ -28,7 +28,6 @@ import model.User;
 import org.apache.cxf.helpers.IOUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.json.JSONTokener;
 
 /**
  *
@@ -439,10 +438,11 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
         // masukkan konten ke HashMap
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("id", getNewCommentId());
+        map.put("postId", postId);
         map.put("name", nama);
         map.put("email", email);
         map.put("content", konten);
-        map.put("time", (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(Calendar.getInstance().getTime()));
+        map.put("time", (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(Calendar.getInstance().getTime()) + " UTC");
         
         // push ke firebase
         TransactionResult result = new TransactionResult();
@@ -466,6 +466,7 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
                 JSONObject jsonComment = json.getJSONObject(keys.next());
                 Comment comment = new Comment();
                 comment.setId(jsonComment.getInt("id"));
+                comment.setPost_id(jsonComment.getInt("postId"));
                 comment.setName(jsonComment.getString("name"));
                 comment.setEmail(jsonComment.getString("email"));
                 comment.setContent(jsonComment.getString("content"));
