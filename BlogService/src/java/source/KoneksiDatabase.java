@@ -9,6 +9,7 @@ public class KoneksiDatabase {
     private static String user;
     private static String password;
     private static String url;
+    private static final String urlFirebase = "https://if3110-4.firebaseio.com/";
     
     
     public static void setUser(String _user)
@@ -67,7 +68,13 @@ public class KoneksiDatabase {
     
     public static Firebase getFirebase()
     {
-        Firebase ref = new Firebase("https://if3110-4.firebaseio.com/");
+        Firebase ref = new Firebase(urlFirebase);
+        return ref;
+    }
+    
+    public static Firebase getFirebaseForComment(String _idFirebasePost)
+    {
+        Firebase ref = new Firebase(urlFirebase + _idFirebasePost);
         return ref;
     }
     
