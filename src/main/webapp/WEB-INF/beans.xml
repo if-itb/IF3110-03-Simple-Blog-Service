@@ -20,7 +20,7 @@
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-extension-http.xml" />
 
-	<jaxws:endpoint id="hello"
-		implementor="org.chamerling.heroku.service.HelloServiceImpl" address="/HelloService" />
+	<jaxws:endpoint id="test"
+		implementor="undeclared.mavenproject1" address="/TestService" />
 
 </beans>
