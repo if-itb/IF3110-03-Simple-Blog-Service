@@ -15,10 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.json.JsonObject;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 /**
  *
  * @author user
@@ -63,16 +66,43 @@ public class Service {
         refcomment.push().setValue(kom);
         return "success";
     }
-//    @WebMethod (operationName="listComment")
-//    public ArrayList listCommet(@WebParam(name = "id")String id){
-//        Firebase commentRef = new Firebase ("https://simpleblogjsf.firebaseio.com/blogpost/"+id+"/komentar");
-//        String url= commentRef.toString()+".json";
-//        String json=readURL(url);
-//        
-//        
-//        
-//        
-//    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @WebMethod (operationName="listComment")
+    public Object listCommet(@WebParam(name = "id")String id) throws ParseException{
+        String url="https://simpleblogjsf.firebaseio.com/blogpost/"+id+"/komentar.json";
+        String json=readURL(url);
+        ArrayList<String> ArrayKomen = new ArrayList<String>();
+        JSONParser Parser = new JSONParser();
+        try{
+            Object obj = Parser.parse(json);
+            JSONArray array = new JSONArray();
+            array.add(obj);
+            JSONObject obj2= (JSONObject) array.get(1);
+//            return array.get(1).toString();
+        }catch(ParseException pe){
+         System.out.println("position: " + pe.getPosition());
+         System.out.println(pe);
+      }
+        
+//        JSONParser parser=new JSONParser();
+//        Object ob=new Object();
+//        ob =parser.parse(json);
+//        JSONArray array = (JSONArray)ob;
+//        for(int i=0;i<array.size();i++)
+//        {
+//            JSONObject obj2 = (JSONObject)array.get(i);
+//            Komentar kom=new Komentar();
+//            kom.setKomen((String) obj2.get("komen"));
+//            kom.setKomentator((String) obj2.get("nama"));
+//            ArrayKomen.add((String) obj2.get("nama"));
+//        }
+        return json;
+    }
     
     public ArrayList search(String query){
         return null;
@@ -90,17 +120,16 @@ public class Service {
                 }
                 return buffer.toString();
         } catch (IOException ex) {
-                ex.printStackTrace();
-        } finally {
-                if (reader != null) {
-                        try {
-                                reader.close();
-                        } catch (IOException ex) {
-                                ex.printStackTrace();
-                        }
+                Logger.getLogger(Firebase.class.getName()).log(Level.SEVERE, null, ex);
+        }  finally {
+            if (reader != null) {
+                try {
+                        reader.close();
+                } catch (IOException ex) {
+                        Logger.getLogger(Firebase.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
         }
-
         return null;
     }
 }
