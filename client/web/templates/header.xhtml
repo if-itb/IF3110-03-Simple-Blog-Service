@@ -18,7 +18,7 @@
         <ui:fragment rendered="#{userController.user.role eq 'admin' or userController.user.role eq 'editor'}">
             <li><h:link outcome="unpublished_post">UnpublishedPost</h:link></li>
         </ui:fragment>
-        <ui:fragment rendered="#{userController.user.role eq 'admin' or userController.user.role eq 'editor'}">
+        <ui:fragment rendered="#{userController.user.role eq 'admin'}">
             <li><h:link outcome="deleted_post">DeletedPost</h:link></li>
         </ui:fragment>
         <ui:fragment rendered="#{userController.user.role eq 'guest'}">
