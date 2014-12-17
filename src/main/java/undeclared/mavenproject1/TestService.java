@@ -254,13 +254,13 @@ public class TestService {
 //	-------------- User Method -------------------------------------------------------------------------------------------
 	
 	@WebMethod(operationName = "addUser")
-	public boolean addUser(@WebParam(name = "nama") String name, @WebParam(name = "email") String email, @WebParam(name = "role") String role) {
+	public boolean addUser(@WebParam(name = "nama") String name, @WebParam(name = "email") String email, @WebParam(name = "role") String role, @WebParam(name="password") String password) {
 		try {
 			String json = readUrl("https://tubeswbd.firebaseio.com/user/.json");
 			JSONObject obj = new JSONObject(json);
 			int autoId = obj.getInt("autoId") + 1;
 			Firebase base = new Firebase("https://tubeswbd.firebaseio.com/user/");
-			User user = new User(autoId, name, email, role);
+			User user = new User(autoId, name, email, role, password);
 			base.push().setValue(user);
 			base.child("autoId").setValue(autoId);
 			return true;
