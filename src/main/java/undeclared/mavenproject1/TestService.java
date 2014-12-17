@@ -304,7 +304,7 @@ public class TestService {
 				String key = (String)keys.next();
 				if(!key.equals("autoId")){
 					JSONObject child = obj.getJSONObject(key);
-					if(child.getString("nama").equals(nama)){
+					if(child.getString("name").equals(nama)){
 						Firebase base = new Firebase("https://tubeswbd.firebaseio.com/user/");
 						base.child(key).child("name").setValue(nama);
 						base.child(key).child("email").setValue(email);
@@ -333,7 +333,7 @@ public class TestService {
 				String key = (String)keys.next();
 				if(!key.equals("autoId")){
 					JSONObject child = obj.getJSONObject(key);
-					if(child.getString("nama").equals(nama)){
+					if(child.getString("name").equals(nama)){
 						Firebase base = new Firebase("https://tubeswbd.firebaseio.com/user/");
 						base.child(key).removeValue();
 						found = true;
