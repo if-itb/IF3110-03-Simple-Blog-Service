@@ -105,7 +105,7 @@ public class TestService {
 					JSONObject child = obj.getJSONObject(key);
 					Post post = new Post(child.getInt("id"), child.getString("title"),
 										child.getString("content"), child.getString("date"), child.getBoolean("published"), child.getBoolean("deleted"));
-					if(child.getBoolean("published") == published)
+					if(child.getBoolean("published") == published && !child.getBoolean("deleted"))
 						posts.add(post);
 				}
 			}
