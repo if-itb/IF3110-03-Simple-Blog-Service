@@ -4,6 +4,7 @@
  */
 package paket;
 
+import com.firebase.client.Firebase;
 import java.util.Formatter;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -19,6 +20,13 @@ import javax.xml.ws.ResponseWrapper;
 @WebService(serviceName = "simpleblog")
 public class simpleblog {
 
+    private Firebase fbase;
+    String dbname = "https://sizzling-heat-3244.firebaseio.com/";
+        
+    public simpleblog(){
+        fbase = new Firebase(dbname);
+    }
+    
     /**
      * This is a sample web service operation
      */
