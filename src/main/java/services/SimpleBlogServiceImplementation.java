@@ -471,7 +471,10 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
                 comment.setEmail(jsonComment.getString("email"));
                 comment.setContent(jsonComment.getString("content"));
                 comment.setTime(jsonComment.getString("time"));
-                list.add(comment);
+                
+                if (comment.getPost_id() == postId) {
+                    list.add(comment);
+                }
             }
         } catch (JSONException ex) {
             Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
