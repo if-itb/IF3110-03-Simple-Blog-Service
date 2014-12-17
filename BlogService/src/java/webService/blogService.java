@@ -9,6 +9,7 @@ import com.firebase.client.Firebase;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.ejb.Stateless;
 import source.KoneksiDatabase;
+import source.dataUser;
 
 /**
  *
@@ -61,6 +63,12 @@ private static String readUrl(String urlString) throws Exception {
 
     /**
      * Web service operation
+     * @param username
+     * @param nama
+     * @param password
+     * @param email
+     * @param role
+     * @return 
      */
     @WebMethod(operationName = "addUser")
     public String addUser(@WebParam(name = "username") String username, @WebParam(name = "nama") String nama, @WebParam(name = "password") String password, @WebParam(name = "email") String email, @WebParam(name = "role") String role) {
@@ -89,6 +97,22 @@ private static String readUrl(String urlString) throws Exception {
         }
         return "success";
     }
+
+    /**
+     * Web service operation
+     * @return 
+     */
+    @WebMethod(operationName = "getAllUser")
+    public ArrayList <dataUser> getAllUser() {
+        try {
+            //TODO write your implementation code here:
+            readUrl("https://if3110-4.firebaseio.com/user.json");
+        } catch (Exception ex) {
+            Logger.getLogger(blogService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 
 
 }
