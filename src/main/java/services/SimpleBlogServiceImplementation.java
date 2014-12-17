@@ -38,6 +38,8 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     private final String FIREBASE_USER = "user";
     private final String FIREBASE_COMMENT = "comment";
     private final String FIREBASE_POST_ID_COUNTER = "post_id_counter";
+    private final String FIREBASE_USER_ID_COUNTER = "user_id_counter";
+    private final String FIREBASE_COMMENT_ID_COUNTER = "comment_id_counter";
     private final Firebase firebaseRoot = new Firebase(FIREBASE_URL);
     private final Firebase firebasePost = firebaseRoot.child(FIREBASE_POST);
     private final Firebase firebaseUser = firebaseRoot.child(FIREBASE_USER);
@@ -89,11 +91,75 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
         return id;
     }
     
+    /* Mengembalikan user id baru */
+    private Integer getNewUserId() {
+        Integer id = 0;
+        try {
+            // retrieve value from firebase
+            URL url = new URL(FIREBASE_URL + FIREBASE_USER_ID_COUNTER + ".json");
+            URLConnection connection = url.openConnection();
+            id = Integer.parseInt(IOUtils.toString(connection.getInputStream()));
+            
+            // update id and update the value in firebase
+            id++;
+            firebaseRoot.child(FIREBASE_USER_ID_COUNTER).setValue(id);
+        }
+        catch (IOException e) {
+            // do nothing
+            e.printStackTrace();
+        }
+        return id;
+    }
+    
+    /* Mengembalikan user id baru */
+    private Integer getNewComentId() {
+        Integer id = 0;
+        try {
+            // retrieve value from firebase
+            URL url = new URL(FIREBASE_URL + FIREBASE_COMMENT_ID_COUNTER + ".json");
+            URLConnection connection = url.openConnection();
+            id = Integer.parseInt(IOUtils.toString(connection.getInputStream()));
+            
+            // update id and update the value in firebase
+            id++;
+            firebaseRoot.child(FIREBASE_COMMENT_ID_COUNTER).setValue(id);
+        }
+        catch (IOException e) {
+            // do nothing
+            e.printStackTrace();
+        }
+        return id;
+    }
+
     /* Mengembalikan key dari post dengan id tertentu */
     private String getPostKey(Integer id) {
         String key = null;
         try {
             URL url = new URL(FIREBASE_URL + FIREBASE_POST + ".json");
+            URLConnection connection = url.openConnection();
+            JSONObject json = new JSONObject(IOUtils.toString(connection.getInputStream()));
+            
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                String currentKey = keys.next();
+                if (json.getJSONObject(currentKey).getInt("id") == id) {
+                    key = currentKey;
+                    break;
+                }
+            }
+        } catch (JSONException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return key;
+    }
+    
+    /* Mengembalikan key dari post dengan id tertentu */
+    private String getUserKey(Integer id) {
+        String key = null;
+        try {
+            URL url = new URL(FIREBASE_URL + FIREBASE_USER + ".json");
             URLConnection connection = url.openConnection();
             JSONObject json = new JSONObject(IOUtils.toString(connection.getInputStream()));
             
@@ -263,33 +329,106 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
 
     @Override
     public boolean addUser(String username, String password, String email, String role) {
-        return true;
+        // masukkan konten ke HashMap
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", getNewUserId());
+        map.put("username", username);
+        map.put("password", password);
+        map.put("email", email);
+        map.put("role", role);
+        
+        // push ke firebase
+        TransactionResult result = new TransactionResult();
+        firebaseUser.push().setValue(map, result);
+        
+        // tunggu hingga transaksi nya selesai
+        while (!result.done());
+        return result.success();
     }
 
     @Override
     public List<User> listUser() {
         List<User> list = new ArrayList<User>();
+        try {
+            URL url = new URL(FIREBASE_URL + FIREBASE_USER + ".json");
+            URLConnection connection = url.openConnection();
+            JSONObject json = new JSONObject(IOUtils.toString(connection.getInputStream()));
+            
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                JSONObject jsonUser = json.getJSONObject(keys.next());
+                User user = new User();
+                user.setId(jsonUser.getInt("id"));
+                user.setUsername(jsonUser.getString("username"));
+                user.setPassword(jsonUser.getString("password"));
+                user.setEmail(jsonUser.getString("email"));
+                user.setRole(jsonUser.getString("role"));
+                list.add(user);
+            }
+        } catch (JSONException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return list;
     }
 
     @Override
     public User getUserById(Integer id) {
-        return new User();
+        List<User> list = listUser();
+        for (User user : list) {
+            if (user.getId() == id) {
+                return user;
+            }
+        }
+        return null;
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return new User();
+        List<User> list = listUser();
+        for (User user : list) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     @Override
     public boolean modifyUser(Integer id, String username, String password, String email, String role) {
-        return true;
+        String key = getUserKey(id);
+        if (key == null) return false;
+        
+        // masukkan konten ke HashMap
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", id);
+        map.put("username", username);
+        map.put("password", password);
+        map.put("email", email);
+        map.put("role", role);
+        
+        // push ke firebase
+        TransactionResult result = new TransactionResult();
+        firebaseUser.push().setValue(map, result);
+        
+        // tunggu hingga transaksi nya selesai
+        while (!result.done());
+        return result.success();
     }
 
     @Override
     public boolean removeUser(Integer id) {
-        return true;
+        String key = getUserKey(id);
+        if (key == null) return false;
+        
+        // push ke firebase
+        TransactionResult result = new TransactionResult();
+        firebaseUser.child(key).removeValue(result);
+        
+        // tunggu hingga transaksi nya selesai
+        while (!result.done());
+        return result.success();
     }
 
     @Override
