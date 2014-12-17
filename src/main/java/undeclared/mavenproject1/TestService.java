@@ -333,7 +333,7 @@ public class TestService {
 				String key = (String)keys.next();
 				if(!key.equals("autoId")){
 					JSONObject child = obj.getJSONObject(key);
-					if(child.getString("id").equals(nama)){
+					if(child.getString("nama").equals(nama)){
 						Firebase base = new Firebase("https://tubeswbd.firebaseio.com/user/");
 						base.child(key).removeValue();
 						found = true;
