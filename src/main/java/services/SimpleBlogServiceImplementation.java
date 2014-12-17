@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     private final Firebase firebasePost = firebaseRoot.child(FIREBASE_POST);
     private final Firebase firebaseUser = firebaseRoot.child(FIREBASE_USER);
     private final Firebase firebaseComment = firebaseRoot.child(FIREBASE_COMMENT);
-    
+
     /* Kelas yang menangani hasil transaksi dengan Firebase */
     public class TransactionResult implements Firebase.CompletionListener {
         
@@ -82,9 +83,9 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
         }
         return id;
     }
-    
+
     @Override
-    public boolean addPost(String judul, String konten, String tanggal) {
+    public boolean addPost(String judul, String konten, String tanggal, Integer status) {
         // masukkan konten ke HashMap
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", getNewPostId().toString());
@@ -103,63 +104,96 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     }
 
     @Override
-    public List<Post> listPost() {
-        return null;
+    public Post getPostById(Integer id) {
+        return new Post();
     }
 
     @Override
-    public boolean listPost(Integer id, String judul, String konten, String tanggal) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Post> listPost() {
+        List<Post> list = new ArrayList<Post>();
+        Post post = new Post();
+        post.setTitle("Ahmad Ganteng");
+        post.setContent("Eldwin si Coy");
+        list.add(post);
+        return list;
+    }
+
+    @Override
+    public boolean updatePost(Integer id, String judul, String tanggal, String konten, Integer status) {
+        return true;
     }
 
     @Override
     public boolean deletePost(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
+    }
+
+    @Override
+    public boolean restorePost(Integer id) {
+        return true;
+    }
+
+    @Override
+    public boolean permanentDeletePost(Integer id) {
+        return true;
     }
 
     @Override
     public boolean publishPost(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override
-    public boolean addUser(String nama, String email, String role) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean unpublishPost(Integer id) {
+        return true;
+    }
+
+    @Override
+    public boolean addUser(String username, String password, String email, String role) {
+        return true;
     }
 
     @Override
     public List<User> listUser() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<User> list = new ArrayList<User>();
+        return list;
     }
 
     @Override
-    public boolean editUser(Integer id, String nama, String email, String role) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public User getUserById(Integer id) {
+        return new User();
     }
 
     @Override
-    public boolean deleteUser(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public User getUserByUsername(String username) {
+        return new User();
+    }
+
+    @Override
+    public boolean modifyUser(Integer id, String username, String password, String email, String role) {
+        return true;
+    }
+
+    @Override
+    public boolean removeUser(Integer id) {
+        return true;
     }
 
     @Override
     public boolean addComment(Integer postId, String nama, String email, String konten) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override
-    public List<Comment> listComment() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean deleteComment(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Comment> listComment(Integer postId) {
+        List<Comment> list = new ArrayList<Comment>();
+        return list;
     }
 
     @Override
     public List<Post> search(String query) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Post> list = new ArrayList<Post>();
+        return list;
     }
     
 }

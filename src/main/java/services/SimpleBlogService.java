@@ -18,27 +18,45 @@ public interface SimpleBlogService {
     /* KELOMPOK SERVICE POST */
     
     @WebMethod(operationName = "addPost")
-    boolean addPost(
+    public boolean addPost(
             @WebParam(name = "judul") String judul,
             @WebParam(name = "konten") String konten,
-            @WebParam(name = "tanggal") String tanggal);
+            @WebParam(name = "tanggal") String tanggal,
+            @WebParam(name = "statusPublikasi") Integer status);
     
     @WebMethod(operationName = "listPost")
-    List<Post> listPost();
+    public Post getPostById(
+            @WebParam(name = "id") Integer id);
     
-    @WebMethod(operationName = "editPost")
-    boolean listPost(
+    @WebMethod(operationName = "listPost")
+    public List<Post> listPost();
+    
+    @WebMethod(operationName = "updatePost")
+    boolean updatePost(
             @WebParam(name = "id") Integer id,
             @WebParam(name = "judul") String judul,
+            @WebParam(name = "tanggal") String tanggal,
             @WebParam(name = "konten") String konten,
-            @WebParam(name = "tanggal") String tanggal);
+            @WebParam(name = "statusPublikasi") Integer status);
     
     @WebMethod(operationName = "deletePost")
     boolean deletePost(
             @WebParam(name = "id") Integer id );
     
+    @WebMethod(operationName = "restorePost")
+    boolean restorePost(
+            @WebParam(name = "id") Integer id );
+    
+    @WebMethod(operationName = "permanentDeletePost")
+    boolean permanentDeletePost(
+            @WebParam(name = "id") Integer id );
+    
     @WebMethod(operationName = "publishPost")
     boolean publishPost(
+            @WebParam(name = "id") Integer id );
+    
+    @WebMethod(operationName = "unpublishPost")
+    boolean unpublishPost(
             @WebParam(name = "id") Integer id );
     
     /* END OF KELOMPOK SERVICE POST */
@@ -48,22 +66,32 @@ public interface SimpleBlogService {
     
     @WebMethod(operationName = "addUser")
     boolean addUser(
-            @WebParam(name = "nama") String nama,
+            @WebParam(name = "username") String username,
+            @WebParam(name = "password") String password,
             @WebParam(name = "email") String email,
             @WebParam(name = "role") String role);
     
     @WebMethod(operationName = "listUser")
     List<User> listUser();
     
-    @WebMethod(operationName = "editUser")
-    boolean editUser(
+    @WebMethod(operationName = "getUserById")
+    User getUserById(
+            @WebParam(name = "id") Integer id);
+    
+    @WebMethod(operationName = "getUserByUsername")
+    User getUserByUsername(
+            @WebParam(name = "username") String username);
+    
+    @WebMethod(operationName = "modifyUser")
+    boolean modifyUser(
             @WebParam(name = "id") Integer id,
-            @WebParam(name = "nama") String nama,
+            @WebParam(name = "username") String username,
+            @WebParam(name = "password") String password,
             @WebParam(name = "email") String email,
             @WebParam(name = "role") String role);
     
-    @WebMethod(operationName = "deleteUser")
-    boolean deleteUser(
+    @WebMethod(operationName = "removeUser")
+    boolean removeUser(
             @WebParam(name = "id") Integer id);
     
     /* END OF KELOMPOK SERVICE USER */
@@ -79,11 +107,8 @@ public interface SimpleBlogService {
             @WebParam(name = "konten") String konten);
     
     @WebMethod(operationName = "listComment")
-    List<Comment> listComment();
-    
-    @WebMethod(operationName = "deleteComment")
-    boolean deleteComment(
-            @WebParam(name = "id") Integer id);
+    List<Comment> listComment(
+            @WebParam(name = "postid") Integer postId);
     
     /* END OF KELOMPOK SERVICE COMMENT */
     
