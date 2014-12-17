@@ -1,3 +1,5 @@
+package services;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,7 +9,6 @@
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -15,7 +16,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Comment;
+import model.User;
+import model.Post;
 import org.apache.cxf.helpers.IOUtils;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  *
@@ -27,7 +36,7 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     private final String FIREBASE_POST = "post";
     private final String FIREBASE_USER = "user";
     private final String FIREBASE_COMMENT = "comment";
-    private final String FIREBASE_ID_COUNTER = "id_counter";
+    private final String FIREBASE_POST_ID_COUNTER = "post_id_counter";
     private final Firebase firebaseRoot = new Firebase(FIREBASE_URL);
     private final Firebase firebasePost = firebaseRoot.child(FIREBASE_POST);
     private final Firebase firebaseUser = firebaseRoot.child(FIREBASE_USER);
@@ -64,13 +73,13 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
         Integer id = 0;
         try {
             // retrieve value from firebase
-            URL url = new URL(FIREBASE_URL + FIREBASE_POST + "/" + FIREBASE_ID_COUNTER + ".json");
+            URL url = new URL(FIREBASE_URL + FIREBASE_POST_ID_COUNTER + ".json");
             URLConnection connection = url.openConnection();
             id = Integer.parseInt(IOUtils.toString(connection.getInputStream()));
             
             // update id and update the value in firebase
             id++;
-            firebasePost.child(FIREBASE_ID_COUNTER).setValue(id);
+            firebasePost.child(FIREBASE_POST_ID_COUNTER).setValue(id);
         }
         catch (IOException e) {
             // do nothing
@@ -99,14 +108,30 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     }
 
     @Override
-    public model.Post getPostById(Integer id) {
-        return new model.Post();
+    public Post getPostById(Integer id) {
+        List<Post> list = listPost();
+        for (Post post : list) {
+            if (post.getId() == id) {
+                return post;
+            }
+        }
+        return null;
     }
 
     @Override
-    public List<model.Post> listPost() {
-        List<model.Post> list = new ArrayList<model.Post>();
-        model.Post post = new model.Post();
+    public List<Post> listPost() {
+        try {
+            URL url = new URL(FIREBASE_URL + FIREBASE_POST + ".json");
+            URLConnection connection = url.openConnection();
+            JSONObject object = new JSONObject(IOUtils.toString(connection.getInputStream()));
+        } catch (JSONException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        List<Post> list = new ArrayList<Post>();
+        Post post = new Post();
         post.setTitle("Ahmad Ganteng");
         post.setContent("Eldwin si Coy");
         list.add(post);
@@ -149,19 +174,19 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     }
 
     @Override
-    public List<model.User> listUser() {
-        List<model.User> list = new ArrayList<model.User>();
+    public List<User> listUser() {
+        List<User> list = new ArrayList<User>();
         return list;
     }
 
     @Override
-    public model.User getUserById(Integer id) {
-        return new model.User();
+    public User getUserById(Integer id) {
+        return new User();
     }
 
     @Override
-    public model.User getUserByUsername(String username) {
-        return new model.User();
+    public User getUserByUsername(String username) {
+        return new User();
     }
 
     @Override
@@ -180,14 +205,14 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     }
 
     @Override
-    public List<model.Comment> listComment(Integer postId) {
-        List<model.Comment> list = new ArrayList<model.Comment>();
+    public List<Comment> listComment(Integer postId) {
+        List<Comment> list = new ArrayList<Comment>();
         return list;
     }
 
     @Override
-    public List<model.Post> search(String query) {
-        List<model.Post> list = new ArrayList<model.Post>();
+    public List<Post> search(String query) {
+        List<Post> list = new ArrayList<Post>();
         return list;
     }
     
