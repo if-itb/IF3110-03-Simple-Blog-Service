@@ -12,10 +12,10 @@ package undeclared.mavenproject1;
  */
 public class User {
 	
-	int id;
-	String name;
-	String email;
-	String role;
+	public int id;
+	public String name;
+	public String email;
+	public String role;
 	
 	public User(){
 		

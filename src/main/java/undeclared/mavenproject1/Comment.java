@@ -12,12 +12,12 @@ package undeclared.mavenproject1;
  */
 public class Comment {
 	
-	int id;
-	int postId;
-	String name;
-	String date;
-	String email;
-	String content;
+	public int id;
+	public int postId;
+	public String name;
+	public String date;
+	public String email;
+	public String content;
 	
 	public Comment(){
 		

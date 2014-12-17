@@ -15,12 +15,12 @@ import java.util.List;
  */
 public class Post {
 	
-	int id;
-	String title;
-	String content;
-	String date;
-	boolean published;
-	boolean deleted;
+	public int id;
+	public String title;
+	public String content;
+	public String date;
+	public boolean published;
+	public boolean deleted;
 	
 	public Post(){
 		
