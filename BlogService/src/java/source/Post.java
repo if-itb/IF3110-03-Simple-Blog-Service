@@ -18,6 +18,7 @@ public class Post {
     /**
      * Atribut-atribut
      */
+    private String idFirebase;
     private int idPost;
     private String judulPost;
     private String tanggalPost;
@@ -31,6 +32,20 @@ public class Post {
      */
     public Post() {
         user = new User();
+    }
+
+    public String getIdFirebase()
+    {
+        return idFirebase;
+    }
+    
+    /**
+     * Untuk menyimpan id post hasil dari menyimpan firebase
+     * @param id 
+     */
+    public void setIdFirebase(String id)
+    {
+        idFirebase = id;
     }
     
     /**
