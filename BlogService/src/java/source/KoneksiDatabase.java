@@ -78,6 +78,11 @@ public class KoneksiDatabase {
         return ref;
     }
     
+    public static String getFirebaseUrl()
+    {
+        return urlFirebase;
+    }
+    
     public static void main(String[] args){
         
     }
