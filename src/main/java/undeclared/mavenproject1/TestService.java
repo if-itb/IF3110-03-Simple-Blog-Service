@@ -294,7 +294,7 @@ public class TestService {
 	}
 	
 	@WebMethod(operationName = "editUser")
-	public boolean editUser(@WebParam(name = "nama") String nama, @WebParam(name = "role") String role, @WebParam(name = "email") String email) {
+	public boolean editUser(@WebParam(name = "nama") String nama, @WebParam(name = "role") int role, @WebParam(name = "email") String email) {
 		try {
 			boolean finish = false;
 			String json = readUrl("https://tubeswbd.firebaseio.com/user/.json");
