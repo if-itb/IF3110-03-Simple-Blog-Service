@@ -11,7 +11,10 @@ import com.firebase.client.FirebaseError;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -112,7 +115,7 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     }
     
     /* Mengembalikan user id baru */
-    private Integer getNewComentId() {
+    private Integer getNewCommentId() {
         Integer id = 0;
         try {
             // retrieve value from firebase
@@ -433,12 +436,47 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
 
     @Override
     public boolean addComment(Integer postId, String nama, String email, String konten) {
-        return true;
+        // masukkan konten ke HashMap
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", getNewCommentId());
+        map.put("name", nama);
+        map.put("email", email);
+        map.put("content", konten);
+        map.put("time", (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(Calendar.getInstance().getTime()));
+        
+        // push ke firebase
+        TransactionResult result = new TransactionResult();
+        firebaseComment.push().setValue(map, result);
+        
+        // tunggu hingga transaksi nya selesai
+        while (!result.done());
+        return result.success();
     }
 
     @Override
     public List<Comment> listComment(Integer postId) {
         List<Comment> list = new ArrayList<Comment>();
+        try {
+            URL url = new URL(FIREBASE_URL + FIREBASE_COMMENT + ".json");
+            URLConnection connection = url.openConnection();
+            JSONObject json = new JSONObject(IOUtils.toString(connection.getInputStream()));
+            
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                JSONObject jsonComment = json.getJSONObject(keys.next());
+                Comment comment = new Comment();
+                comment.setId(jsonComment.getInt("id"));
+                comment.setName(jsonComment.getString("name"));
+                comment.setEmail(jsonComment.getString("email"));
+                comment.setContent(jsonComment.getString("content"));
+                comment.setTime(jsonComment.getString("time"));
+                list.add(comment);
+            }
+        } catch (JSONException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return list;
     }
 
