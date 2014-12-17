@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(roleCookie);
                 response.sendRedirect("admin/index.jsp");
             }else{
-                response.sendRedirect("/IF3110-02-Simple-Blog-Java/login/index.html");
+                response.sendRedirect("/IF3110-02-Simple-Blog-Java/index.jsp");
                 PrintWriter out= response.getWriter();
                 out.println("<font color=red>Either user name or password is wrong.</font>");
 //                rd.include(request, response);
