@@ -23,7 +23,7 @@ import model.Post;
 @SessionScoped
 public class PostsController implements Serializable {
 	
-	private int active_id;
+	private String active_id;
 	private String active_title;
 	private long active_date;
 	private String active_content;
@@ -35,11 +35,11 @@ public class PostsController implements Serializable {
 	public PostsController() {
 	}
 
-	public int getActive_id() {
+	public String getActive_id() {
 		return active_id;
 	}
 
-	public void setActive_id(int active_id) {
+	public void setActive_id(String active_id) {
 		this.active_id = active_id;
 	}
 
@@ -119,12 +119,12 @@ public class PostsController implements Serializable {
 		mysql.deletePost(id);
 	}
 	
-	public void viewPost(int id) throws IOException {
+	public void viewPost(String id) throws IOException {
 		active_id = id;
 		FacesContext.getCurrentInstance().getExternalContext().redirect("view_post.xhtml");
 	}
 	
-	public void editPost(int id, String title, long date, String content, boolean status) throws IOException {
+	public void editPost(String id, String title, long date, String content, boolean status) throws IOException {
 		active_id = id;
 		active_title = title;
 		active_date = date;
