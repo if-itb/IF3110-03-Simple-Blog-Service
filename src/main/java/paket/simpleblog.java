@@ -5,6 +5,7 @@
 package paket;
 
 import com.firebase.client.Firebase;
+import java.util.ArrayList;
 import java.util.Formatter;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -31,7 +32,7 @@ public class simpleblog {
      * Web service operation
      */
     @WebMethod(operationName = "listPost")
-    public String listPost() {
+    public ArrayList<Post> listPost() {
         //TODO write your implementation code here:
         return null;
     }
@@ -67,7 +68,7 @@ public class simpleblog {
      * Web service operation
      */
     @WebMethod(operationName = "listUser")
-    public String listUser() {
+    public ArrayList<User> listUser() {
         //TODO write your implementation code here:
         return null;
     }
@@ -103,7 +104,7 @@ public class simpleblog {
      * Web service operation
      */
     @WebMethod(operationName = "listComment")
-    public String listComment() {
+    public ArrayList<Comment> listComment() {
         //TODO write your implementation code here:
         return null;
     }
@@ -121,7 +122,7 @@ public class simpleblog {
      * Web service operation
      */
     @WebMethod(operationName = "search")
-    public String search(@WebParam(name = "query") String query) {
+    public ArrayList<Post> search(@WebParam(name = "query") String query) {
         //TODO write your implementation code here:
         return null;
     }
