@@ -64,6 +64,7 @@ private static String readUrl(String urlString) throws Exception {
      * @param email
      * @param role
      * @return 
+     * @throws java.lang.InterruptedException 
      */
     @WebMethod(operationName = "addUser")
     public boolean addUser(@WebParam(name = "username") String username, @WebParam(name = "nama") String nama, @WebParam(name = "password") String password, @WebParam(name = "email") String email, @WebParam(name = "role") String role) throws InterruptedException {
@@ -126,12 +127,19 @@ private static String readUrl(String urlString) throws Exception {
 
     /**
      * Web service operation
+     * @param _idFirebase
+     * @param _username
+     * @param _password
+     * @param _nama
+     * @param _email
+     * @param _role
+     * @return 
+     * @throws java.lang.InterruptedException
      */
     @WebMethod(operationName = "updateUser")
     public Boolean updateUser(@WebParam(name = "_idFirebase") String _idFirebase, @WebParam(name = "_username") String _username, @WebParam(name = "_password") String _password, @WebParam(name = "_nama") String _nama, @WebParam(name = "_email") String _email, @WebParam(name = "_role") String _role) throws InterruptedException {
         //TODO write your implementation code here:
         status = false;
-        blogService service = new blogService();
         
         Firebase ref = KoneksiDatabase.getFirebase();
         Firebase userRef = ref.child("user").child(_idFirebase);
@@ -157,6 +165,11 @@ private static String readUrl(String urlString) throws Exception {
 
     /**
      * Web service operation
+     * @param _judulPost
+     * @param _tanggalPost
+     * @param _kontenPost
+     * @return 
+     * @throws java.lang.InterruptedException
      */
     @WebMethod(operationName = "addPost")
     public Boolean addPost(@WebParam(name = "_judulPost") String _judulPost, @WebParam(name = "_tanggalPost") String _tanggalPost, @WebParam(name = "_kontenPost") String _kontenPost) throws InterruptedException {
@@ -182,7 +195,33 @@ private static String readUrl(String urlString) throws Exception {
         return status;
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "editPost")
+    public Boolean editPost(@WebParam(name = "_idFirebase") String _idFirebase, @WebParam(name = "_judulPost") String _judulPost, @WebParam(name = "_tanggalPost") String _tanggalPost, @WebParam(name = "_kontenPost") String _kontenPost, @WebParam(name = "_publishStatus") String _publishStatus) throws InterruptedException {
+        //TODO write your implementation code here:
+        status = false;
+        
+        Firebase ref = KoneksiDatabase.getFirebase();
+        Firebase userRef = ref.child("post").child(_idFirebase);
+        Map <String, Object> users = new HashMap<>();
+        users.put("judul", _judulPost);
+        users.put("tanggal", _tanggalPost);
+        users.put("konten", _kontenPost);
+        users.put("publishStatus",_publishStatus);
+        
+        final CountDownLatch done = new CountDownLatch(1);
+        userRef.updateChildren(users,new Firebase.CompletionListener() {
 
-    
+            @Override
+            public void onComplete(FirebaseError fe, Firebase frbs) {
+                status = true;
+                done.countDown();
+            }
+        });
+        done.await();
+        return status;
+    }
 
 }
