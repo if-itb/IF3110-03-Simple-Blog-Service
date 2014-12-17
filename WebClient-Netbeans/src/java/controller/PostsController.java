@@ -82,12 +82,6 @@ public class PostsController implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
 	}
 	
-	public List<Post> getAllPosts() {
-		MySQL mysql = new MySQL();
-		
-		return mysql.getAllPosts();
-	}
-	
 	public List<Post> getAllPublishedPosts() {
 		MySQL mysql = new MySQL();
 		
@@ -106,20 +100,20 @@ public class PostsController implements Serializable {
 		return mysql.getAllDeletedPosts();
 	}
 	
-	public Post getPost(int id) {
+	public Post getPost(String id) {
 		MySQL mysql = new MySQL();
 		
 		return mysql.getPost(id);
 	}
 	
-	public void updatePost(int id, String title, long date, String content, boolean status) throws IOException {
+	public void updatePost(String id, String title, long date, String content, boolean status) throws IOException {
 		MySQL mysql = new MySQL();
 		
 		mysql.updatePost(id, title, date, content, status);
 		FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
 	}
 	
-	public void deletePost(int id) {
+	public void deletePost(String id) {
 		MySQL mysql = new MySQL();
 		
 		mysql.deletePost(id);
@@ -139,7 +133,7 @@ public class PostsController implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().redirect("edit_post.xhtml");
 	}
 	
-	public void restorePost(int id) throws IOException {
+	public void restorePost(String id) throws IOException {
 		MySQL mysql = new MySQL();
 		
 		mysql.restorePost(id);

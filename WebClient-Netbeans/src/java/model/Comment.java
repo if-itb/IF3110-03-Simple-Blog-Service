@@ -6,14 +6,16 @@
 
 package model;
 
+import org.ccw.heroku.service.CommentModel;
+
 /**
  *
  * @author christangga
  */
 public class Comment {
 	
-	private int id;
-	private int post_id;
+	private String id;
+	private String post_id;
 	private String name;
 	private String email;
 	private long date;
@@ -25,19 +27,19 @@ public class Comment {
 	public Comment() {
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public int getPost_id() {
+	public String getPost_id() {
 		return post_id;
 	}
 
-	public void setPost_id(int post_id) {
+	public void setPost_id(String post_id) {
 		this.post_id = post_id;
 	}
 
@@ -71,6 +73,15 @@ public class Comment {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	
+	public void setCommentFromCommentmodel (CommentModel commentModel) {
+		this.id = commentModel.getId();
+		this.post_id = commentModel.getPostId();
+		this.name = commentModel.getName();
+		this.comment = commentModel.getComment();
+		this.date = commentModel.getCreatedAt();
+		this.email = commentModel.getEmail();
 	}
 	
 	@Override

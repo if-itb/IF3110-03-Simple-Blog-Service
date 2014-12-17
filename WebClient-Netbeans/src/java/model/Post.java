@@ -6,13 +6,15 @@
 
 package model;
 
+import org.ccw.heroku.service.PostModel;
+
 /**
  *
  * @author christangga
  */
 public class Post {
 
-	private int id;
+	private String id;
 	private String title;
 	private long date;
 	private String content;
@@ -24,11 +26,11 @@ public class Post {
 	public Post() {
 	}
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -62,6 +64,14 @@ public class Post {
 
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+	
+	public void setPostFromPostmodel(PostModel postModel) {
+		this.id = postModel.getId();
+		this.title = postModel.getTitle();
+		this.date = postModel.getDate();
+		this.content = postModel.getContent();
+		this.status = postModel.isStatus();
 	}
 
 	@Override

@@ -6,13 +6,15 @@
 
 package model;
 
+import org.ccw.heroku.service.UserModel;
+
 /**
  *
  * @author christangga
  */
 public class User {
 
-	private int id;
+	private String id;
 	private String email;
 	private String username;
 	private String password;
@@ -24,11 +26,11 @@ public class User {
 	public User() {
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -62,6 +64,14 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	public void setUserFromUsermodel(UserModel userModel) {
+		this.id = userModel.getId();
+		this.username = userModel.getUsername();
+		this.password = userModel.getPassword();
+		this.email = userModel.getEmail();
+		this.role = userModel.getRole();
 	}
 	
 	@Override
