@@ -15,14 +15,14 @@ public class User {
 	public int id;
 	public String name;
 	public String email;
-	public String role;
+	public int role;
 	public String password;
 	
 	public User(){
 		
 	}
 	
-	public User(int id, String name, String email, String role, String password){
+	public User(int id, String name, String email, int role, String password){
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -30,7 +30,7 @@ public class User {
 		this.password = password;
 	}
 	
-	public User(int id, String name, String email, String role){
+	public User(int id, String name, String email, int role){
 		this.id = id;
 		this.name = name;
 		this.email = email;

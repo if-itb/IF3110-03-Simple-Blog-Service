@@ -254,7 +254,7 @@ public class TestService {
 //	-------------- User Method -------------------------------------------------------------------------------------------
 	
 	@WebMethod(operationName = "addUser")
-	public boolean addUser(@WebParam(name = "nama") String name, @WebParam(name = "email") String email, @WebParam(name = "role") String role, @WebParam(name="password") String password) {
+	public boolean addUser(@WebParam(name = "nama") String name, @WebParam(name = "email") String email, @WebParam(name = "role") int role, @WebParam(name="password") String password) {
 		try {
 			String json = readUrl("https://tubeswbd.firebaseio.com/user/.json");
 			JSONObject obj = new JSONObject(json);
@@ -282,7 +282,7 @@ public class TestService {
 				if(!key.equals("autoId")){
 					JSONObject child = obj.getJSONObject(key);
 					User user = new User(child.getInt("id"), child.getString("name"),
-										child.getString("email"), child.getString("role"));
+										child.getString("email"), child.getInt("role"));
 					users.add(user);
 				}
 			}
@@ -294,7 +294,7 @@ public class TestService {
 	}
 	
 	@WebMethod(operationName = "editUser")
-	public boolean editUser(@WebParam(name = "id") int id, @WebParam(name = "nama") String nama, @WebParam(name = "role") String role, @WebParam(name = "email") String email) {
+	public boolean editUser(@WebParam(name = "nama") String nama, @WebParam(name = "role") String role, @WebParam(name = "email") String email) {
 		try {
 			boolean finish = false;
 			String json = readUrl("https://tubeswbd.firebaseio.com/user/.json");
@@ -304,7 +304,7 @@ public class TestService {
 				String key = (String)keys.next();
 				if(!key.equals("autoId")){
 					JSONObject child = obj.getJSONObject(key);
-					if(child.getInt("id") == id){
+					if(child.getString("nama").equals(nama)){
 						Firebase base = new Firebase("https://tubeswbd.firebaseio.com/user/");
 						base.child(key).child("name").setValue(nama);
 						base.child(key).child("email").setValue(email);
@@ -323,7 +323,7 @@ public class TestService {
 	}
 
 	@WebMethod(operationName = "deleteUser")
-	public boolean deleteUser(@WebParam(name = "id") int id) {
+	public boolean deleteUser(@WebParam(name = "nama") String nama) {
 		try {
 			boolean found = false;
 			String json = readUrl("https://tubeswbd.firebaseio.com/user/.json");
@@ -333,7 +333,7 @@ public class TestService {
 				String key = (String)keys.next();
 				if(!key.equals("autoId")){
 					JSONObject child = obj.getJSONObject(key);
-					if(child.getInt("id") == id){
+					if(child.getString("id").equals(nama)){
 						Firebase base = new Firebase("https://tubeswbd.firebaseio.com/user/");
 						base.child(key).removeValue();
 						found = true;
