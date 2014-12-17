@@ -30,13 +30,6 @@ import source.dataUser;
 @Stateless()
 public class blogService {
     boolean status;
-    /**
-     * This is a sample web service operation
-     */
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
-    }
     
 private static String readUrl(String urlString) throws Exception {
     BufferedReader reader = null;
@@ -197,6 +190,13 @@ private static String readUrl(String urlString) throws Exception {
 
     /**
      * Web service operation
+     * @param _idFirebase
+     * @param _judulPost
+     * @param _kontenPost
+     * @param _tanggalPost
+     * @param _publishStatus
+     * @return 
+     * @throws java.lang.InterruptedException
      */
     @WebMethod(operationName = "editPost")
     public Boolean editPost(@WebParam(name = "_idFirebase") String _idFirebase, @WebParam(name = "_judulPost") String _judulPost, @WebParam(name = "_tanggalPost") String _tanggalPost, @WebParam(name = "_kontenPost") String _kontenPost, @WebParam(name = "_publishStatus") String _publishStatus) throws InterruptedException {
@@ -204,7 +204,7 @@ private static String readUrl(String urlString) throws Exception {
         status = false;
         
         Firebase ref = KoneksiDatabase.getFirebase();
-        Firebase userRef = ref.child("post").child(_idFirebase);
+        Firebase postRef = ref.child("post").child(_idFirebase);
         Map <String, Object> users = new HashMap<>();
         users.put("judul", _judulPost);
         users.put("tanggal", _tanggalPost);
@@ -212,7 +212,7 @@ private static String readUrl(String urlString) throws Exception {
         users.put("publishStatus",_publishStatus);
         
         final CountDownLatch done = new CountDownLatch(1);
-        userRef.updateChildren(users,new Firebase.CompletionListener() {
+        postRef.updateChildren(users,new Firebase.CompletionListener() {
 
             @Override
             public void onComplete(FirebaseError fe, Firebase frbs) {
@@ -223,5 +223,39 @@ private static String readUrl(String urlString) throws Exception {
         done.await();
         return status;
     }
+
+    /**
+     * Web service operation
+     * @param _idFirebasePost
+     * @param _nama
+     * @param _email
+     * @param _comment
+     * @return 
+     * @throws java.lang.InterruptedException 
+     */
+    @WebMethod(operationName = "addComment")
+    public Boolean addComment(@WebParam(name = "_idFirebasePost") String _idFirebasePost, @WebParam(name = "_nama") String _nama, @WebParam(name = "_email") String _email, @WebParam(name = "_comment") String _comment) throws InterruptedException {
+        //TODO write your implementation code here:
+        status = false;
+        
+        Firebase ref = KoneksiDatabase.getFirebaseForComment(_idFirebasePost);
+        
+        Firebase postRef = ref.child("komentar");
+        Map <String, String> post = new HashMap<>();
+        post.put("nama", _nama);
+        post.put("email", _email);
+        post.put("comment", _comment);
+        final CountDownLatch done = new CountDownLatch(1);
+        postRef.push().setValue(post,new Firebase.CompletionListener() {
+            @Override
+            public void onComplete(FirebaseError fe, Firebase frbs) {
+                status = true;
+                done.countDown();
+            }
+        });
+        done.await();
+        return status;
+    }
+
 
 }
