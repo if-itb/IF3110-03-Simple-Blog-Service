@@ -75,7 +75,7 @@
           <div class="post">
               <div class="post-title">Edit User</div>
             #{memberController.execute(param['id'])}
-              <h:form role="form" id="userform" onsubmit="return userValidation(2);">
+              <h:form id="userform" onsubmit="return userValidation(2);">
               <div class="form-group">
                 <label for="exampleInputEmail1">Email</label>
                 <h:inputText styleClass="form-control" id="email" value="#{memberController.mem.email}" />

@@ -75,7 +75,7 @@
           <div class="post">
             <div class="post-title">Edit Post</div>
             #{postedit.execute(param['id'])}
-            <h:form role="form" id="addform" onsubmit="return formAddValidation(2);">                       
+            <h:form id="addform" onsubmit="return formAddValidation(2);">                       
               <div class="form-group">
                 <label for="exampleInputEmail1">Title</label>
                 <h:inputText styleClass="form-control" id="judul" value="#{postedit.pos.judul}" />
