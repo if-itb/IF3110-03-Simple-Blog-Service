@@ -28,13 +28,12 @@ import java.util.logging.Logger;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+//import org.json.JSONException;
+//import org.json.JSONObject;
+//import org.json.JSONTokener;
 
 /**
  *
@@ -96,31 +95,31 @@ public class Service {
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "listUser")
-    public List<User> listUser() throws MalformedURLException, IOException, JSONException {
-        //TODO write your implementation code here:
-//        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/user");
-        URL linkJson = new URL("https://simpleblogjsf.firebaseio.com/user.json");
-        URLConnection con = linkJson.openConnection();
-        List<User> list_user = new ArrayList<>();
-        JSONTokener tokenListUser = new JSONTokener(con.getInputStream());
-        JSONObject list = new JSONObject(tokenListUser);
-        Iterator<String> key_user = list.keys();
-        while(key_user.hasNext()){
-            String ch = key_user.next();
-            JSONObject user = list.getJSONObject(ch);
-            User usr = new User();
-            usr.setUid(ch);
-            usr.setEmail(user.getString("email"));
-            usr.setFullname(user.getString("fullname"));
-            usr.setUsername(user.getString("username"));
-            usr.setPassword(user.getString("password"));
-            usr.setRole(user.getString("role"));
-            list_user.add(usr);
-        }
-        
-        return list_user;
-    }
+//    @WebMethod(operationName = "listUser")
+//    public List<User> listUser() throws MalformedURLException, IOException, JSONException {
+//        //TODO write your implementation code here:
+////        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/user");
+//        URL linkJson = new URL("https://simpleblogjsf.firebaseio.com/user.json");
+//        URLConnection con = linkJson.openConnection();
+//        List<User> list_user = new ArrayList<>();
+//        JSONTokener tokenListUser = new JSONTokener(con.getInputStream());
+//        JSONObject list = new JSONObject(tokenListUser);
+//        Iterator<String> key_user = list.keys();
+//        while(key_user.hasNext()){
+//            String ch = key_user.next();
+//            JSONObject user = list.getJSONObject(ch);
+//            User usr = new User();
+//            usr.setUid(ch);
+//            usr.setEmail(user.getString("email"));
+//            usr.setFullname(user.getString("fullname"));
+//            usr.setUsername(user.getString("username"));
+//            usr.setPassword(user.getString("password"));
+//            usr.setRole(user.getString("role"));
+//            list_user.add(usr);
+//        }
+//        
+//        return list_user;
+//    }
     
 
     @WebMethod(operationName = "deleteUser")
@@ -149,22 +148,30 @@ public class Service {
      * @return
      */
     @WebMethod (operationName="listComment")
-    public Object listCommet(@WebParam(name = "id")String id) throws ParseException{
-        String url="https://simpleblogjsf.firebaseio.com/blogpost/"+id+"/komentar.json";
-        String json=readURL(url);
-        ArrayList<String> ArrayKomen = new ArrayList<String>();
-        JSONParser Parser = new JSONParser();
-        try{
-            Object obj = Parser.parse(json);
-            JSONArray array = new JSONArray();
-            array.add(obj);
-            JSONObject obj2= (JSONObject) array.get(1);
-//            return array.get(1).toString();
-        }catch(ParseException pe){
-         System.out.println("position: " + pe.getPosition());
-         System.out.println(pe);
-      }
-        
+    public ArrayList<JSONObject> listCommet(@WebParam(name = "id")String id) throws JSONException{
+        String json=readURL("https://simpleblogjsf.firebaseio.com/blogpost/"+id+"/komentar.json");
+        JSONObject obj =new JSONObject(json);
+        ArrayList<JSONObject> Komentar=new ArrayList<>();
+        Iterator<String> ids=obj.keys();
+        String allKomen="";
+        while(ids.hasNext()){
+            String id_Comment=ids.next();
+            JSONObject getcom=obj.getJSONObject(id_Comment);
+            Komentar.add(getcom);
+            allKomen+="Nama:    "+getcom.getString("nama")+"\nKomen: "+getcom.getString("komen")+"\nTanggal:    "+getcom.getString("tanggal")+"\n";
+//            Komentar Kom=new Komentar();
+//            Kom.setKomen(getcom.getString("Komen"));
+//            Kom.setEmail(getcom.getString("email"));
+//            Kom.setKomentator(getcom.getString("nama"));
+//            Kom.setCommentDate(getcom.getString("tanggal"));
+//            Komentar.add(Kom);
+//        }
+//        String allKomen="test \n";
+//        for(int i=0;i<Komentar.size();i++){
+//            allKomen+="Nama:    "+Komentar.get(i).getKomentator()+"\nKomen: "+Komentar.get(i).getKomen()+"\nTanggal:    "+Komentar.get(i).getCommentDate()+"\n";
+        }
+        return Komentar;
+//        return Komentar;
 //        JSONParser parser=new JSONParser();
 //        Object ob=new Object();
 //        ob =parser.parse(json);
@@ -177,7 +184,6 @@ public class Service {
 //            kom.setKomentator((String) obj2.get("nama"));
 //            ArrayKomen.add((String) obj2.get("nama"));
 //        }
-        return json;
     }
     
     public ArrayList search(String query){
