@@ -30,13 +30,6 @@ import source.dataUser;
 @Stateless()
 public class blogService {
     boolean status;
-    /**
-     * This is a sample web service operation
-     */
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
-    }
     
 private static String readUrl(String urlString) throws Exception {
     BufferedReader reader = null;
@@ -197,6 +190,13 @@ private static String readUrl(String urlString) throws Exception {
 
     /**
      * Web service operation
+     * @param _idFirebase
+     * @param _judulPost
+     * @param _kontenPost
+     * @param _tanggalPost
+     * @param _publishStatus
+     * @return 
+     * @throws java.lang.InterruptedException
      */
     @WebMethod(operationName = "editPost")
     public Boolean editPost(@WebParam(name = "_idFirebase") String _idFirebase, @WebParam(name = "_judulPost") String _judulPost, @WebParam(name = "_tanggalPost") String _tanggalPost, @WebParam(name = "_kontenPost") String _kontenPost, @WebParam(name = "_publishStatus") String _publishStatus) throws InterruptedException {
