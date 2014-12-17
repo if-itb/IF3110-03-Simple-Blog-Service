@@ -482,7 +482,23 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
 
     @Override
     public List<Post> search(String query) {
+        List<Post> allPost = listPost();
         List<Post> list = new ArrayList<Post>();
+        
+        String[] token = query.toLowerCase().split(" \t\n\r");
+        for (Post post : allPost) {
+            String text = post.getTitle().toLowerCase() + " " + post.getContent().toLowerCase();
+            boolean match = true;
+            for (String word : token) {
+                if (!text.contains(word)) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) {
+                list.add(post);
+            }
+        }
         return list;
     }
     
