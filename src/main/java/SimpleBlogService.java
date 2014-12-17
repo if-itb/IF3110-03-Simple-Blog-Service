@@ -1,12 +1,7 @@
-package services;
-
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
-import model.Comment;
-import model.Post;
-import model.User;
 
 /**
  *
@@ -25,11 +20,11 @@ public interface SimpleBlogService {
             @WebParam(name = "statusPublikasi") Integer status);
     
     @WebMethod(operationName = "getPostById")
-    public Post getPostById(
+    public model.Post getPostById(
             @WebParam(name = "id") Integer id);
     
     @WebMethod(operationName = "listPost")
-    public List<Post> listPost();
+    public List<model.Post> listPost();
     
     @WebMethod(operationName = "updatePost")
     boolean updatePost(
@@ -72,14 +67,14 @@ public interface SimpleBlogService {
             @WebParam(name = "role") String role);
     
     @WebMethod(operationName = "listUser")
-    List<User> listUser();
+    List<model.User> listUser();
     
     @WebMethod(operationName = "getUserById")
-    User getUserById(
+    model.User getUserById(
             @WebParam(name = "id") Integer id);
     
     @WebMethod(operationName = "getUserByUsername")
-    User getUserByUsername(
+    model.User getUserByUsername(
             @WebParam(name = "username") String username);
     
     @WebMethod(operationName = "modifyUser")
@@ -107,7 +102,7 @@ public interface SimpleBlogService {
             @WebParam(name = "konten") String konten);
     
     @WebMethod(operationName = "listComment")
-    List<Comment> listComment(
+    List<model.Comment> listComment(
             @WebParam(name = "postid") Integer postId);
     
     /* END OF KELOMPOK SERVICE COMMENT */
@@ -116,7 +111,7 @@ public interface SimpleBlogService {
     /* KELOMPOK SERVICE SEARCH */
     
     @WebMethod(operationName = "search")
-    List<Post> search(
+    List<model.Post> search(
             @WebParam(name = "query") String query);
     
     /* END OF KELOMPOK SERVICE SEARCH */

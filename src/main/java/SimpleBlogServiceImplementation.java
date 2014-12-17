@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-package services;
-
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import java.io.IOException;
@@ -17,9 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import model.Comment;
-import model.Post;
-import model.User;
 import org.apache.cxf.helpers.IOUtils;
 
 /**
@@ -104,14 +99,14 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     }
 
     @Override
-    public Post getPostById(Integer id) {
-        return new Post();
+    public model.Post getPostById(Integer id) {
+        return new model.Post();
     }
 
     @Override
-    public List<Post> listPost() {
-        List<Post> list = new ArrayList<Post>();
-        Post post = new Post();
+    public List<model.Post> listPost() {
+        List<model.Post> list = new ArrayList<model.Post>();
+        model.Post post = new model.Post();
         post.setTitle("Ahmad Ganteng");
         post.setContent("Eldwin si Coy");
         list.add(post);
@@ -154,19 +149,19 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     }
 
     @Override
-    public List<User> listUser() {
-        List<User> list = new ArrayList<User>();
+    public List<model.User> listUser() {
+        List<model.User> list = new ArrayList<model.User>();
         return list;
     }
 
     @Override
-    public User getUserById(Integer id) {
-        return new User();
+    public model.User getUserById(Integer id) {
+        return new model.User();
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return new User();
+    public model.User getUserByUsername(String username) {
+        return new model.User();
     }
 
     @Override
@@ -185,14 +180,14 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     }
 
     @Override
-    public List<Comment> listComment(Integer postId) {
-        List<Comment> list = new ArrayList<Comment>();
+    public List<model.Comment> listComment(Integer postId) {
+        List<model.Comment> list = new ArrayList<model.Comment>();
         return list;
     }
 
     @Override
-    public List<Post> search(String query) {
-        List<Post> list = new ArrayList<Post>();
+    public List<model.Post> search(String query) {
+        List<model.Post> list = new ArrayList<model.Post>();
         return list;
     }
     
