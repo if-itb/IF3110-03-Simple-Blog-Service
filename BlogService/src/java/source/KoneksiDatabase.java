@@ -74,7 +74,7 @@ public class KoneksiDatabase {
     
     public static Firebase getFirebaseForComment(String _idFirebasePost)
     {
-        Firebase ref = new Firebase(urlFirebase + _idFirebasePost);
+        Firebase ref = new Firebase(urlFirebase +"post/" +_idFirebasePost);
         return ref;
     }
     
