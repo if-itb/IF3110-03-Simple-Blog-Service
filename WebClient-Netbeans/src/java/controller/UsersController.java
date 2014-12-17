@@ -27,7 +27,7 @@ import model.database.MySQL;
 @SessionScoped
 public class UsersController implements Serializable {
 
-	private int saved_id;
+	private String saved_id;
 	private String saved_email;
 	private String saved_username;
 	private String saved_password;
@@ -39,11 +39,11 @@ public class UsersController implements Serializable {
 	public UsersController() {
 	}
 
-	public int getSaved_id() {
+	public String getSaved_id() {
 		return saved_id;
 	}
 
-	public void setSaved_id(int saved_id) {
+	public void setSaved_id(String saved_id) {
 		this.saved_id = saved_id;
 	}
 
@@ -134,12 +134,12 @@ public class UsersController implements Serializable {
 		
 		if (mysql.createUser(email, username, password, role)) {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("view_user.xhtml");
-                } else {
-                    
-                }
+		} else {
+
+		}
 	}
 
-	public User getUser(int id) {
+	public User getUser(String id) {
 		MySQL mysql = new MySQL();
 		
 		return mysql.getUser(id);
@@ -151,25 +151,25 @@ public class UsersController implements Serializable {
 		return mysql.getAllUsers();
 	}
 
-	public void updateUser(int id, String email, String username, String password, String role) throws IOException {
+	public void updateUser(String id, String email, String username, String password, String role) throws IOException {
 		MySQL mysql = new MySQL();
 		
 		mysql.updateUser(id, email, username, password, role);
 		FacesContext.getCurrentInstance().getExternalContext().redirect("view_user.xhtml");
 	}
 
-	public void deleteUser(int id) {
+	public void deleteUser(String id) {
 		MySQL mysql = new MySQL();
 		
 		mysql.deleteUser(id);
 	}
 
-	public void viewUser(int id) throws IOException {
+	public void viewUser(String id) throws IOException {
 		saved_id = id;
 		FacesContext.getCurrentInstance().getExternalContext().redirect("view_user.xhtml");
 	}
 	
-	public void editUser(int id, String email, String username, String password, String role) throws IOException {
+	public void editUser(String id, String email, String username, String password, String role) throws IOException {
 		saved_id = id;
 		saved_email = email;
 		saved_username = username;

@@ -27,19 +27,19 @@ public class CommentsController implements Serializable {
 	public CommentsController() {
 	}
 
-	public void createComment(int post_id, String name, String email, String comment) {
+	public void createComment(String post_id, String name, String email, String comment) {
 		MySQL mysql = new MySQL();
 		
 		mysql.createComment(post_id, name, email, comment);
 	}
 	
-	public List<Comment> getAllComments(int post_id) {
+	public List<Comment> getAllComments(String post_id) {
 		MySQL mysql = new MySQL();
 	
 		return mysql.getAllComments(post_id);
 	}
 
-	public boolean deleteComment(int id) {
+	public boolean deleteComment(String id) {
 		MySQL mysql = new MySQL();
 		
 		return mysql.deleteComment(id);
