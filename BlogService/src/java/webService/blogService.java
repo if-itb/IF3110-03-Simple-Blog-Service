@@ -114,6 +114,11 @@ private static String readUrl(String urlString) throws Exception {
             user.password = (hasil.get(key).get("password"));
             user.email = (hasil.get(key).get("email"));
             user.role = (hasil.get(key).get("role"));
+            System.out.println("username = "+user.username);
+            System.out.println(user.nama);
+            System.out.println(user.password);
+            System.out.println(user.email);
+            System.out.println(user.role);
             daftarUser.add(user);
         }
 
