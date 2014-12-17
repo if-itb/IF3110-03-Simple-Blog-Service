@@ -15,55 +15,19 @@ import java.util.List;
  */
 public class Post {
 	
-	int id;
-	String title;
-	String content;
-	String date;
-	boolean published;
-	boolean deleted;
+	public int id;
+	public String title;
+	public String content;
+	public String date;
+	public boolean published;
+	public boolean deleted;
 	
-	public Post(){
-		
-	}
-	
-	public Post(int postid, String title, String content, String date, boolean published, boolean deleted){
-		id = postid;
+	public Post(int postId, String title, String content, String date, boolean published, boolean deleted){
+		id = postId;
 		this.title = title;
 		this.content = content;
 		this.date = date;
 		this.published = published;
 		this.deleted = deleted;
 	}
-	
-	public int getId(){
-		return id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public String getDate() {
-		return date;
-	}
-	
-	public boolean isPublished(){
-		return published;
-	}
-	
-	public boolean isDeleted(){
-		return deleted;
-	}
-	
-	@Override
-	public String toString(){
-		String str = "id : " + id + " title : " + title + " content : " + content + " date : " + date +
-						" published : " + published + " deleted : " + deleted;
-		return str;
-	}
-	
 }
