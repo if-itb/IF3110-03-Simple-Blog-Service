@@ -69,7 +69,6 @@ private static String readUrl(String urlString) throws Exception {
     public boolean addUser(@WebParam(name = "username") String username, @WebParam(name = "nama") String nama, @WebParam(name = "password") String password, @WebParam(name = "email") String email, @WebParam(name = "role") String role) throws InterruptedException {
         //TODO write your implementation code here:
         status = false;
-        blogService service = new blogService();
         
         Firebase ref = KoneksiDatabase.getFirebase();
         Firebase userRef = ref.child("user");
@@ -125,6 +124,37 @@ private static String readUrl(String urlString) throws Exception {
         return daftarUser;
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "updateUser")
+    public Boolean updateUser(@WebParam(name = "_idFirebase") String _idFirebase, @WebParam(name = "_username") String _username, @WebParam(name = "_password") String _password, @WebParam(name = "_nama") String _nama, @WebParam(name = "_email") String _email, @WebParam(name = "_role") String _role) throws InterruptedException {
+        //TODO write your implementation code here:
+        status = false;
+        blogService service = new blogService();
+        
+        Firebase ref = KoneksiDatabase.getFirebase();
+        Firebase userRef = ref.child("user").child(_idFirebase);
+        Map <String, Object> users = new HashMap<>();
+        users.put("username", _username);
+        users.put("password", _password);
+        users.put("nama", _nama);
+        users.put("email", _email);
+        users.put("role",_role);
+        
+        final CountDownLatch done = new CountDownLatch(1);
+        userRef.updateChildren(users,new Firebase.CompletionListener() {
 
+            @Override
+            public void onComplete(FirebaseError fe, Firebase frbs) {
+                status = true;
+                done.countDown();
+            }
+        });
+        done.await();
+        return status;
+    }
+
+    
 
 }
