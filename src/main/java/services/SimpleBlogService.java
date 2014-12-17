@@ -24,7 +24,7 @@ public interface SimpleBlogService {
             @WebParam(name = "tanggal") String tanggal,
             @WebParam(name = "statusPublikasi") Integer status);
     
-    @WebMethod(operationName = "listPost")
+    @WebMethod(operationName = "getPostById")
     public Post getPostById(
             @WebParam(name = "id") Integer id);
     
