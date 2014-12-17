@@ -133,7 +133,7 @@ public class UsersController implements Serializable {
 		MySQL mysql = new MySQL();
 		
 		if (mysql.createUser(email, username, password, role)) {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("view_user.xhtml");
+			FacesContext.getCurrentInstance().getExternalContext().redirect("view_user.xhtml");
 		} else {
 
 		}
@@ -164,11 +164,6 @@ public class UsersController implements Serializable {
 		mysql.deleteUser(id);
 	}
 
-	public void viewUser(String id) throws IOException {
-		saved_id = id;
-		FacesContext.getCurrentInstance().getExternalContext().redirect("view_user.xhtml");
-	}
-	
 	public void editUser(String id, String email, String username, String password, String role) throws IOException {
 		saved_id = id;
 		saved_email = email;
@@ -235,14 +230,12 @@ public class UsersController implements Serializable {
 	public String getCookieValue(String name) {
 	    FacesContext facesContext = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-		Cookie cookie = null;
 
 		Cookie[] userCookies = request.getCookies();
 		if (userCookies != null && userCookies.length > 0 ) {
-			for (int i = 0; i < userCookies.length; i++) {
-				if (userCookies[i].getName().equals(name)) {
-					cookie = userCookies[i];
-					return cookie.getValue();
+			for (Cookie userCookie : userCookies) {
+				if (userCookie.getName().equals(name)) {
+					return userCookie.getValue();
 				}
 			}
 		}
