@@ -39,7 +39,7 @@ public class Coba {
                 out.print("Tanggal : ");
                 tanggal = in.nextLine();
                 
-                boolean result = blog.addPost(judul, konten, tanggal);
+                boolean result = blog.addPost(judul, konten, tanggal, 0);
                 out.println("Hasil: " + result);
             }
         }

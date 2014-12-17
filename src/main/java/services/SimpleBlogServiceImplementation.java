@@ -92,7 +92,7 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
         map.put("title", judul);
         map.put("content", konten);
         map.put("date", tanggal);
-        map.put("published", "false");
+        map.put("published", status.toString());
         
         // push ke firebase
         TransactionResult result = new TransactionResult();
