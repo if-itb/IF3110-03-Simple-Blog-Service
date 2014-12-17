@@ -264,15 +264,53 @@ private static String readUrl(String urlString) throws Exception {
      * @throws java.lang.InterruptedException 
      */
     @WebMethod(operationName = "deleteUser")
-    public Boolean deleteUser(@WebParam(name = "_idFirebaseUser") String _idFirebaseUser) throws InterruptedException {
+    public Boolean deleteUser(@WebParam(name = "_idFirebaseUser") String _idFirebaseUser) throws InterruptedException, Exception {
         status = false;
         
         Firebase ref = KoneksiDatabase.getFirebase();
         Firebase userRef = ref.child("user").child(_idFirebaseUser);
         
-        userRef.removeValue();
+        final CountDownLatch done = new CountDownLatch(1);
+        userRef.removeValue(new Firebase.CompletionListener() {
+
+            @Override
+            public void onComplete(FirebaseError fe, Firebase frbs) {
+                status = true;
+                done.countDown();
+            }
+        });
         
-        return true;
+        done.await();
+        
+        return status;
+    }
+
+    /**
+     * Web service operation
+     * @param _idFirebasePost
+     * @return 
+     * @throws java.lang.InterruptedException 
+     */
+    @WebMethod(operationName = "deletePost")
+    public Boolean deletePost(@WebParam(name = "_idFirebasePost") String _idFirebasePost) throws InterruptedException {
+        status = false;
+        
+        Firebase ref = KoneksiDatabase.getFirebase();
+        Firebase userRef = ref.child("post").child(_idFirebasePost);
+        
+        final CountDownLatch done = new CountDownLatch(1);
+        userRef.removeValue(new Firebase.CompletionListener() {
+
+            @Override
+            public void onComplete(FirebaseError fe, Firebase frbs) {
+                status = true;
+                done.countDown();
+            }
+        });
+        
+        done.await();
+        
+        return status;
     }
     
     
