@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -109,11 +107,13 @@ private static String readUrl(String urlString) throws Exception {
         for(String key : hasil.keySet())
         {
             dataUser user = new dataUser();
+            user.idFirebase = key;
             user.username = (hasil.get(key).get("username"));
             user.nama = (hasil.get(key).get("nama"));
             user.password = (hasil.get(key).get("password"));
             user.email = (hasil.get(key).get("email"));
             user.role = (hasil.get(key).get("role"));
+            System.out.println("idFirebase = " + user.idFirebase);
             System.out.println("username = "+user.username);
             System.out.println(user.nama);
             System.out.println(user.password);

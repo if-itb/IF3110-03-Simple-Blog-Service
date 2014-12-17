@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  * @author akhfa
  */
 public class User {
+    private String idFirebase;
     private String username;
     private String password;
     private String nama;
@@ -62,6 +63,20 @@ public class User {
         nama = _nama;
         email = _email;
         role = _role;
+    }
+    
+    public String getIdFirebase()
+    {
+        return idFirebase;
+    }
+    
+    /**
+     * Untuk menyimpan id user hasil dari menyimpan firebase
+     * @param id 
+     */
+    public void setIdFirebase(String id)
+    {
+        idFirebase = id;
     }
     
     public void setUsername(String _username)

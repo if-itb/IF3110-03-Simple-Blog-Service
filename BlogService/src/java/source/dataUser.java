@@ -10,6 +10,7 @@ package source;
  * @author akhfa
  */
 public class dataUser {
+    public String idFirebase;
     public String username;
     public String password;
     public String nama;
