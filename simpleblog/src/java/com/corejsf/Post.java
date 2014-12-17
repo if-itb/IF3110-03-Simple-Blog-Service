@@ -17,25 +17,25 @@ import javax.faces.bean.RequestScoped;
 @ManagedBean(name = "post")
 @RequestScoped
 public class Post {
-    private int id;
+    private String id;
     private String status;
     private String judul;
     private String tanggal;
     private String konten;
-    private int deleted;
+    private String deleted;
     
     public Post() {
     }
 
-    public int getDeleted() {
+    public String getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(int deleted) {
+    public void setDeleted(String deleted) {
         this.deleted = deleted;
     }
     
-    public int getId(){
+    public String getId(){
         return id;
     }
     
@@ -55,7 +55,7 @@ public class Post {
         return konten;
     }
     
-    public void setId(int id){
+    public void setId(String id){
         this.id = id;
     }
     

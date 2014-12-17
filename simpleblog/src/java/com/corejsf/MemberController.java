@@ -20,20 +20,20 @@ import javax.faces.context.FacesContext;
 @ViewScoped
 
 public class MemberController {
-    private int id;
+    private String id;
     private Member1 mem;
     
     public MemberController(){
         mem = new Member1();
     }
     
-    public int getId(){
+    public String getId(){
         return id;
     }
     public Member1 getMem(){
         return mem;
     }
-    public void setId(int id){
+    public void setId(String id){
         this.id = id;
     }
     public void setMem(Member1 mem){
@@ -96,7 +96,7 @@ public class MemberController {
             ps.setString(2, mem.getName());            
             ps.setString(3, mem.getPassword());
             ps.setString(4, mem.getRole());
-            ps.setInt(5, mem.getId());               
+            ps.setString(5, mem.getId());               
             ps.executeUpdate();
             FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
             con.close();
@@ -105,7 +105,7 @@ public class MemberController {
         }
     }
     
-    public void execute(int id){
+    public void execute(String id){
         Connection con = null;
         String url = "jdbc:mysql://localhost:3306/simpleblog";
         String user = "root";

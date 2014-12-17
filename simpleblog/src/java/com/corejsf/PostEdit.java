@@ -21,19 +21,19 @@ import javax.faces.context.FacesContext;
 @ViewScoped
 
 public class PostEdit implements Serializable {
-    private int id;
+    private String id;
     
     private Post pos;
     public PostEdit(){
         pos = new Post();
     }
-    public int getId(){
+    public String getId(){
         return id;
     }
     public Post getPos(){
         return pos;
     }
-    public void setId(int id){
+    public void setId(String id){
         this.id = id;
     }
     public void setPos(Post pos){
@@ -59,7 +59,8 @@ public class PostEdit implements Serializable {
             ps.setString(1, pos.getJudul());
             ps.setString(2, pos.getKonten());            
             ps.setString(3, pos.getTanggal());
-            ps.setInt(4, pos.getId());               
+            ps.setString(4, pos.getId());   
+            
             ps.executeUpdate();
             FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
             con.close();
@@ -68,7 +69,7 @@ public class PostEdit implements Serializable {
         }
     }
     
-    public void execute(int id){
+    public void execute(String id){
         Connection con = null;
         String url = "jdbc:mysql://localhost:3306/simpleblog";
         String user = "root";
@@ -84,7 +85,7 @@ public class PostEdit implements Serializable {
                 pos.setKonten(res.getString("Konten"));
                 pos.setStatus(res.getString("Status"));
                 pos.setTanggal(res.getString("Tanggal"));
-                pos.setDeleted(res.getInt("deleted"));
+                pos.setDeleted(res.getString("deleted"));
                 pos.setId(id);
                 this.id = id;
             }            

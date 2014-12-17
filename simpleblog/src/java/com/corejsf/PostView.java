@@ -18,22 +18,22 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 
 public class PostView {
-    private int id;
+    private String id;
     
     private Post pos;
     public PostView(){
         pos = new Post();
     }
-    public int getId(){
+    public String getId(){
         return id;
     }
     public Post getPos(){
         return pos;
     }
-    public void setId(int id){
+    public void setId(String id){
         this.id = id;
         pos.setId(id);
-        Connection con = null;
+        /*Connection con = null;
         String url = "jdbc:mysql://localhost:3306/simpleblog";
         String user = "root";
         String driver = "com.mysql.jdbc.Driver";
@@ -52,7 +52,7 @@ public class PostView {
             con.close();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             System.out.println(ex.getMessage());
-        }
+        }*/
     }
     public void setPos(Post pos){
         this.pos = new Post();

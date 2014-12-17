@@ -76,7 +76,7 @@ public class Database {
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()){
                 Member1 member = new Member1();
-                member.setId(rs.getInt("id"));
+                member.setId(rs.getString("id"));
                 member.setName(rs.getString("Name"));
                 member.setEmail(rs.getString("Email"));
                 member.setPassword(rs.getString("Password"));

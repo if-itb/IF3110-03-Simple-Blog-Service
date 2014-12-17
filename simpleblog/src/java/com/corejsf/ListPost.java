@@ -27,7 +27,7 @@ public class ListPost {
         published_posts = new ArrayList<Post>();
         unpublished_posts = new ArrayList<Post>();
         deleted_posts = new ArrayList<Post>();
-        Connection con = null;
+       /* Connection con = null;
         String url = "jdbc:mysql://localhost:3306/simpleblog";
         String user = "root";
         String driver = "com.mysql.jdbc.Driver";
@@ -39,13 +39,13 @@ public class ListPost {
             ResultSet res = sm.executeQuery("SELECT * FROM post ORDER BY Tanggal DESC, id DESC");
             while(res.next()){
                 Post pos = new Post();
-                pos.setId(res.getInt("id"));
+                pos.setId(res.getString("id"));
                 pos.setJudul(res.getString("Judul"));
                 pos.setKonten(res.getString("Konten"));
                 pos.setStatus(res.getString("Status"));
                 pos.setTanggal(res.getString("Tanggal"));
-                pos.setDeleted(res.getInt("deleted"));
-                if(pos.getDeleted()==1){
+                pos.setDeleted(res.getString("deleted"));
+                if(pos.getDeleted().equals(1)){
                     deleted_posts.add(pos);
                 }else if(pos.getStatus().equalsIgnoreCase("unpublished")){
                     unpublished_posts.add(pos);
@@ -58,7 +58,7 @@ public class ListPost {
             System.out.println(ex.getMessage());
         }
         finally{
-        }
+        }*/
     }
 
     public ArrayList<Post> getDeleted_posts() {

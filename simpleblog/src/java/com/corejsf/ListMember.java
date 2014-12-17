@@ -29,7 +29,7 @@ public class ListMember {
      */
     public ListMember() {
         members = new ArrayList<Member1>();
-        Connection con = null;
+        /*Connection con = null;
         String url = "jdbc:mysql://localhost:3306/simpleblog";
         String user = "root";
         String driver = "com.mysql.jdbc.Driver";
@@ -41,7 +41,7 @@ public class ListMember {
             ResultSet res = sm.executeQuery("SELECT * FROM member");
             while(res.next()){
                 Member1 member = new Member1();
-                member.setId(res.getInt("id"));
+                member.setId(res.getString("id"));
                 member.setEmail(res.getString("Email"));
                 member.setName(res.getString("Name"));
                 member.setPassword(res.getString("Password"));
@@ -53,8 +53,14 @@ public class ListMember {
             System.out.println(ex.getMessage());
         }
         finally{
-        }
+        }*/
     }
+
+    public void setMembers(ArrayList<Member1> members) {
+        this.members = members;
+    }
+    
+    
     
     public ArrayList<Member1> getMembers(){
         return members;
