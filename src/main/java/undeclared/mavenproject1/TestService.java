@@ -360,7 +360,7 @@ public class TestService {
 			JSONObject obj = new JSONObject(json);
 			int autoId = obj.getInt("autoId") + 1;
 			Firebase base = new Firebase("https://tubeswbd.firebaseio.com/comment/");
-			Comment comment = new Comment(postId, autoId, nama, date.toString(), email, content);
+			Comment comment = new Comment(postId, autoId, nama, dateFormat.format(date), email, content);
 			base.push().setValue(comment);
 			base.child("autoId").setValue(autoId);
 			return true;
