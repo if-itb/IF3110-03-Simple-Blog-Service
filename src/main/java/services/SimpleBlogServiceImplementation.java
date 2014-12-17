@@ -41,7 +41,7 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
     public class TransactionResult implements Firebase.CompletionListener {
         
         private AtomicBoolean _done = new AtomicBoolean(false);
-        private boolean _success;
+        private boolean _success = true;
         
         @Override
         public void onComplete(FirebaseError error, Firebase frbs) {
