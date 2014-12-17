@@ -13,14 +13,15 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Comment;
-import model.User;
 import model.Post;
+import model.User;
 import org.apache.cxf.helpers.IOUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -87,6 +88,30 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
         }
         return id;
     }
+    
+    /* Mengembalikan key dari post dengan id tertentu */
+    private String getPostKey(Integer id) {
+        String key = null;
+        try {
+            URL url = new URL(FIREBASE_URL + FIREBASE_POST + ".json");
+            URLConnection connection = url.openConnection();
+            JSONObject json = new JSONObject(IOUtils.toString(connection.getInputStream()));
+            
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                String currentKey = keys.next();
+                if (json.getJSONObject(currentKey).getInt("id") == id) {
+                    key = currentKey;
+                    break;
+                }
+            }
+        } catch (JSONException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return key;
+    }
 
     @Override
     public boolean addPost(String judul, String konten, String tanggal, Integer status) {
@@ -120,52 +145,120 @@ public class SimpleBlogServiceImplementation implements SimpleBlogService {
 
     @Override
     public List<Post> listPost() {
+        List<Post> list = new ArrayList<Post>();
         try {
             URL url = new URL(FIREBASE_URL + FIREBASE_POST + ".json");
             URLConnection connection = url.openConnection();
-            JSONObject object = new JSONObject(IOUtils.toString(connection.getInputStream()));
+            JSONObject json = new JSONObject(IOUtils.toString(connection.getInputStream()));
+            
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                JSONObject jsonPost = json.getJSONObject(keys.next());
+                Post post = new Post();
+                post.setId(jsonPost.getInt("id"));
+                post.setTitle(jsonPost.getString("title"));
+                post.setContent(jsonPost.getString("content"));
+                post.setDate(jsonPost.getString("date"));
+                post.setPublished(jsonPost.getInt("published"));
+                list.add(post);
+            }
         } catch (JSONException ex) {
             Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        List<Post> list = new ArrayList<Post>();
-        Post post = new Post();
-        post.setTitle("Ahmad Ganteng");
-        post.setContent("Eldwin si Coy");
-        list.add(post);
         return list;
     }
 
     @Override
     public boolean updatePost(Integer id, String judul, String tanggal, String konten, Integer status) {
-        return true;
+        String key = getPostKey(id);
+        if (key == null) return false;
+        
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", id);
+        map.put("title", judul);
+        map.put("content", konten);
+        map.put("date", tanggal);
+        map.put("published", status);
+        
+        // push ke firebase
+        TransactionResult result = new TransactionResult();
+        firebasePost.child(key).setValue(map, result);
+        
+        // tunggu hingga transaksi nya selesai
+        while (!result.done());
+        return result.success();
     }
 
     @Override
     public boolean deletePost(Integer id) {
-        return true;
+        String key = getPostKey(id);
+        if (key == null) return false;
+        
+        // push ke firebase
+        TransactionResult result = new TransactionResult();
+        firebasePost.child(key).child("published").setValue(-1, result);
+        
+        // tunggu hingga transaksi nya selesai
+        while (!result.done());
+        return result.success();
     }
 
     @Override
     public boolean restorePost(Integer id) {
-        return true;
+        String key = getPostKey(id);
+        if (key == null) return false;
+        
+        // push ke firebase
+        TransactionResult result = new TransactionResult();
+        firebasePost.child(key).child("published").setValue(0, result);
+        
+        // tunggu hingga transaksi nya selesai
+        while (!result.done());
+        return result.success();
     }
 
     @Override
     public boolean permanentDeletePost(Integer id) {
-        return true;
+        String key = getPostKey(id);
+        if (key == null) return false;
+        
+        // push ke firebase
+        TransactionResult result = new TransactionResult();
+        firebasePost.child(key).removeValue(result);
+        
+        // tunggu hingga transaksi nya selesai
+        while (!result.done());
+        return result.success();
     }
 
     @Override
     public boolean publishPost(Integer id) {
-        return true;
+        String key = getPostKey(id);
+        if (key == null) return false;
+        
+        // push ke firebase
+        TransactionResult result = new TransactionResult();
+        firebasePost.child(key).child("published").setValue(1, result);
+        
+        // tunggu hingga transaksi nya selesai
+        while (!result.done());
+        return result.success();
     }
 
     @Override
     public boolean unpublishPost(Integer id) {
-        return true;
+        String key = getPostKey(id);
+        if (key == null) return false;
+        
+        // push ke firebase
+        TransactionResult result = new TransactionResult();
+        firebasePost.child(key).child("published").setValue(0, result);
+        
+        // tunggu hingga transaksi nya selesai
+        while (!result.done());
+        return result.success();
     }
 
     @Override
