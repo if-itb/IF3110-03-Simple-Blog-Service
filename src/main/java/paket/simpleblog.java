@@ -13,7 +13,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -51,13 +53,17 @@ public class simpleblog {
         
     /**
      * Web service operation
+     * @param mode
      * @return 
+     * @throws java.io.IOException 
+     * @throws java.text.ParseException 
+     * @throws org.codehaus.jettison.json.JSONException 
      */
     
     @WebMethod(operationName = "listPost")
-    public List<Post> listPost(@WebParam(name = "mode")String mode) throws IOException, ParseException, JSONException {
+    public List<Post> listPost() throws IOException, ParseException, JSONException {
         //TODO write your implementation code here:
-        List<Post> list = new ArrayList<Post>();
+        List<Post> list = new ArrayList<>();
          
         try{ 
             URL url = new URL(fbase + "post.json");
@@ -89,8 +95,11 @@ public class simpleblog {
      */
     @WebMethod(operationName = "deletePost")
     public Boolean deletePost(@WebParam(name = "id") Integer id) {
-        Firebase post = fbase.child("post").child(id.toString());
-        post.removeValue();
+        String key = getPostKey(id);
+        if (key == null) return false;
+        
+        // push ke firebase
+        fbase.child("post").child(key).child("published").setValue(-1, true);
         return true;
     }
 
@@ -101,8 +110,13 @@ public class simpleblog {
      */
     @WebMethod(operationName = "publishPost")
     public Boolean publishPost(@WebParam(name = "id") Integer id) {
-        //TODO write your implementation code here:
-        return null;
+        String key = getPostKey(id);
+        if (key == null) return false;
+        
+        // push ke firebase
+        fbase.child("post").child(key).child("published").setValue(1, true);
+        
+        return true;
     }
 
     /**
@@ -130,11 +144,32 @@ public class simpleblog {
      * Web service operation
      * @return 
      */
-//    @WebMethod(operationName = "listUser")
-//    public ArrayList<User> listUser() {
-//        //TODO write your implementation code here:
-//        return null;
-//    }
+    @WebMethod(operationName = "listUser")
+    public List<User> listUser() {
+        List<User> list = new ArrayList<>();
+        try {
+            URL url = new URL(fbase + "user" + ".json");
+            URLConnection connection = url.openConnection();
+            JSONObject json = new JSONObject(IOUtils.toString(connection.getInputStream()));
+            
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                JSONObject jsonUser = json.getJSONObject(keys.next());
+                User user = new User();
+                user.setId(jsonUser.getInt("id"));
+                user.setNama(jsonUser.getString("username"));
+                user.setPass(jsonUser.getString("password"));
+                user.setEmail(jsonUser.getString("email"));
+                user.setRole(jsonUser.getString("role"));
+                list.add(user);
+            }
+        } catch (JSONException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 
     /**
      * Web service operation
@@ -142,12 +177,26 @@ public class simpleblog {
      * @param nama
      * @param role
      * @param email
+     * @param password
      * @return 
      */
     @WebMethod(operationName = "editUser")
-    public Boolean editUser(@WebParam(name = "id") Integer id, @WebParam(name = "nama") String nama, @WebParam(name = "role") String role, @WebParam(name = "email") String email) {
-        //TODO write your implementation code here:
-        return null;
+    public Boolean editUser(@WebParam(name = "id") Integer id, @WebParam(name = "nama") String nama, @WebParam(name = "role") String role, @WebParam(name = "email") String email, @WebParam(name = "password") String password) {
+        String key = getUserKey(id);
+        if (key == null) return false;
+        
+        // masukkan konten ke HashMap
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("username", nama);
+        map.put("password", password);
+        map.put("email", email);
+        map.put("role", role);
+        
+        // push ke firebase
+        fbase.child("user").push().setValue(map, true);
+        
+        return true;
     }
 
     /**
@@ -157,32 +206,74 @@ public class simpleblog {
      */
     @WebMethod(operationName = "deleteUser")
     public Boolean deleteUser(@WebParam(name = "id") Integer id) {
-        //TODO write your implementation code here:
-        return null;
+        String key = getUserKey(id);
+        if (key == null) return false;
+        
+        // push ke firebase
+        fbase.child("user").child(key).removeValue();
+        
+        return true;
     }
 
     /**
      * Web service operation
+     * @param postId
      * @param nama
      * @param email
      * @param konten
      * @return 
      */
     @WebMethod(operationName = "addComment")
-    public Boolean addComment(@WebParam(name = "nama") String nama, @WebParam(name = "email") String email, @WebParam(name = "konten") String konten) {
-        //TODO write your implementation code here:
-        return null;
+    public Boolean addComment(@WebParam(name = "postId") String postId, @WebParam(name = "nama") String nama, @WebParam(name = "email") String email, @WebParam(name = "konten") String konten) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", getNewCommentId());
+        map.put("postId", postId);
+        map.put("name", nama);
+        map.put("email", email);
+        map.put("content", konten);
+        map.put("time", (new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(Calendar.getInstance().getTime()) + " UTC");
+        
+        // push ke firebase
+        fbase.child("comment").push().setValue(map, true);
+        
+        return true;
     }
 
     /**
      * Web service operation
+     * @param postId
      * @return 
      */
-//    @WebMethod(operationName = "listComment")
-//    public ArrayList<Comment> listComment() {
-//        //TODO write your implementation code here:
-//        return null;
-//    }
+    @WebMethod(operationName = "listComment")
+    public List<Comment> listComment(Integer postId) {
+         List<Comment> list = new ArrayList<>();
+        try {
+            URL url = new URL(fbase + "comment" + ".json");
+            URLConnection connection = url.openConnection();
+            JSONObject json = new JSONObject(IOUtils.toString(connection.getInputStream()));
+            
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                JSONObject jsonComment = json.getJSONObject(keys.next());
+                Comment comment = new Comment();
+                comment.setId(jsonComment.getInt("id"));
+                comment.setPost_id(jsonComment.getInt("postId"));
+                comment.setNama(jsonComment.getString("name"));
+                comment.setEmail(jsonComment.getString("email"));
+                comment.setKonten(jsonComment.getString("content"));
+                comment.setTanggal(jsonComment.getString("time"));
+                
+                if (comment.getPost_id() == postId) {
+                    list.add(comment);
+                }
+            }
+        } catch (JSONException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 
     /**
      * Web service operation
@@ -199,12 +290,31 @@ public class simpleblog {
      * Web service operation
      * @param query
      * @return 
+     * @throws java.io.IOException 
+     * @throws java.text.ParseException 
+     * @throws org.codehaus.jettison.json.JSONException 
      */
-//    @WebMethod(operationName = "search")
-//    public ArrayList<Post> search(@WebParam(name = "query") String query) {
-//        //TODO write your implementation code here:
-//        return null;
-//    }
+    @WebMethod(operationName = "search")
+    public List<Post> search(@WebParam(name = "query") String query) throws IOException, ParseException, JSONException {
+        List<Post> allPost = listPost();
+        List<Post> list = new ArrayList<>();
+        
+        String[] token = query.toLowerCase().split(" \t\n\r");
+        for (Post post : allPost) {
+            String text = post.getJudul().toLowerCase() + " " + post.getKonten().toLowerCase();
+            boolean match = true;
+            for (String word : token) {
+                if (!text.contains(word)) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) {
+                list.add(post);
+            }
+        }
+        return list;
+    }
 
     /**
      * Web service operation
@@ -247,26 +357,111 @@ public class simpleblog {
         return true;
     }
     
-//    private JSONObject getJSONObject(String url) throws IOException, ParseException {
-//        JSONArray array = new JSONArray();
-//        try {
-//            InputStream is = new URL(url).openStream();
-//            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-//            String line = "";
-//            String JSONString = "";
-//            while((line = br.readLine()) != null)
-//            {
-//            JSONString += line;
-//            }
-//            JSONParser parser = new JSONParser();
-//            Object obj = parser.parse(JSONString);
-//            array.add(obj);
-//        } catch (MalformedURLException ex) {
-//        System.out.println(ex.toString());
-//        } catch (IOException ex) {
-//        System.out.println(ex.toString());
-//        }
-//        JSONObject object = (JSONObject) array.get(0);
-//        return object;
-//     }
+    /* Mengembalikan key dari post dengan id tertentu */
+    private String getPostKey(Integer id) {
+        String key = null;
+        try {
+            URL url = new URL(fbase + "post" + ".json");
+            URLConnection connection = url.openConnection();
+            JSONObject json = new JSONObject(IOUtils.toString(connection.getInputStream()));
+            
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                String currentKey = keys.next();
+                if (json.getJSONObject(currentKey).getInt("id") == id) {
+                    key = currentKey;
+                    break;
+                }
+            }
+        } catch (JSONException ex) {
+            Logger.getLogger(simpleblog.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(simpleblog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return key;
+    }
+    
+    /* Mengembalikan key dari post dengan id tertentu */
+    private String getUserKey(Integer id) {
+        String key = null;
+        try {
+            URL url = new URL(fbase + "post" + ".json");
+            URLConnection connection = url.openConnection();
+            JSONObject json = new JSONObject(IOUtils.toString(connection.getInputStream()));
+            
+            Iterator<String> keys = json.keys();
+            while (keys.hasNext()) {
+                String currentKey = keys.next();
+                if (json.getJSONObject(currentKey).getInt("id") == id) {
+                    key = currentKey;
+                    break;
+                }
+            }
+        } catch (JSONException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return key;
+    }
+    
+    /* Mengembalikan post id baru */
+    private Integer getNewPostId() {
+        Integer id = 0;
+        try {
+            // retrieve value from firebase
+            URL url = new URL(fbase + "post_id_counter" + ".json");
+            URLConnection connection = url.openConnection();
+            id = Integer.parseInt(IOUtils.toString(connection.getInputStream()));
+            
+            // update id and update the value in firebase
+            id++;
+            fbase.child("post_id_counter").setValue(id);
+        }
+        catch (IOException e) {
+            // do nothing
+            e.printStackTrace();
+        }
+        return id;
+    }
+    
+    /* Mengembalikan user id baru */
+    private Integer getNewUserId() {
+        Integer id = 0;
+        try {
+            // retrieve value from firebase
+            URL url = new URL(fbase + "user_id_counter" + ".json");
+            URLConnection connection = url.openConnection();
+            id = Integer.parseInt(IOUtils.toString(connection.getInputStream()));
+            
+            // update id and update the value in firebase
+            id++;
+            fbase.child("user_id_counter").setValue(id);
+        }
+        catch (IOException e) {
+            // do nothing
+            e.printStackTrace();
+        }
+        return id;
+    }
+    
+    /* Mengembalikan user id baru */
+    private Integer getNewCommentId() {
+        Integer id = 0;
+        try {
+            // retrieve value from firebase
+            URL url = new URL(fbase + "comment_id_counter" + ".json");
+            URLConnection connection = url.openConnection();
+            id = Integer.parseInt(IOUtils.toString(connection.getInputStream()));
+            
+            // update id and update the value in firebase
+            id++;
+            fbase.child("comment_id_counter").setValue(id);
+        }
+        catch (IOException e) {
+            // do nothing
+            e.printStackTrace();
+        }
+        return id;
+    }
 }
