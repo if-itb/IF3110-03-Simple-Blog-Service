@@ -1,0 +1,733 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="HelloServiceImplService" targetNamespace="http://service.heroku.chamerling.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.heroku.chamerling.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.heroku.chamerling.org/" xmlns:tns="http://service.heroku.chamerling.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="addKomentar" type="tns:addKomentar"/>
+  <xs:element name="addKomentarResponse" type="tns:addKomentarResponse"/>
+  <xs:element name="addPost" type="tns:addPost"/>
+  <xs:element name="addPostResponse" type="tns:addPostResponse"/>
+  <xs:element name="createUser" type="tns:createUser"/>
+  <xs:element name="createUserResponse" type="tns:createUserResponse"/>
+  <xs:element name="deletePost" type="tns:deletePost"/>
+  <xs:element name="deletePostResponse" type="tns:deletePostResponse"/>
+  <xs:element name="deleteUser" type="tns:deleteUser"/>
+  <xs:element name="deleteUserResponse" type="tns:deleteUserResponse"/>
+  <xs:element name="editPost" type="tns:editPost"/>
+  <xs:element name="editPostResponse" type="tns:editPostResponse"/>
+  <xs:element name="getListKomentar" type="tns:getListKomentar"/>
+  <xs:element name="getListKomentarResponse" type="tns:getListKomentarResponse"/>
+  <xs:element name="getListPost" type="tns:getListPost"/>
+  <xs:element name="getListPostResponse" type="tns:getListPostResponse"/>
+  <xs:element name="getListUser" type="tns:getListUser"/>
+  <xs:element name="getListUserResponse" type="tns:getListUserResponse"/>
+  <xs:element name="publishPost" type="tns:publishPost"/>
+  <xs:element name="publishPostResponse" type="tns:publishPostResponse"/>
+  <xs:element name="restorePost" type="tns:restorePost"/>
+  <xs:element name="restorePostResponse" type="tns:restorePostResponse"/>
+  <xs:element name="sayHi" type="tns:sayHi"/>
+  <xs:element name="sayHiResponse" type="tns:sayHiResponse"/>
+  <xs:element name="showPost" type="tns:showPost"/>
+  <xs:element name="showPostResponse" type="tns:showPostResponse"/>
+  <xs:element name="showUser" type="tns:showUser"/>
+  <xs:element name="showUserResponse" type="tns:showUserResponse"/>
+  <xs:element name="updateUser" type="tns:updateUser"/>
+  <xs:element name="updateUserResponse" type="tns:updateUserResponse"/>
+  <xs:complexType name="addPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+      <xs:element minOccurs="0" name="name2" type="xs:string"/>
+      <xs:element minOccurs="0" name="name3" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addPostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+      <xs:element minOccurs="0" name="name2" type="xs:string"/>
+      <xs:element minOccurs="0" name="name3" type="xs:string"/>
+      <xs:element minOccurs="0" name="name4" type="xs:string"/>
+      <xs:element minOccurs="0" name="name5" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sayHi">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sayHiResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletePost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletePostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getListKomentar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getListKomentarResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:komentar"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="komentar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="commentid" type="xs:string"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="komentar" type="xs:string"/>
+      <xs:element minOccurs="0" name="nama" type="xs:string"/>
+      <xs:element minOccurs="0" name="pid" type="xs:string"/>
+      <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType abstract="true" name="abstractCollection">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType abstract="true" name="abstractList">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractCollection">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="arrayList">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractList">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="restorePost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="restorePostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="showUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="showUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:user"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="password" type="xs:string"/>
+      <xs:element minOccurs="0" name="role" type="xs:string"/>
+      <xs:element name="uidToDelete" type="xs:int"/>
+      <xs:element name="uidToUpdate" type="xs:int"/>
+      <xs:element minOccurs="0" name="userID" type="xs:string"/>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+      <xs:element minOccurs="0" name="name2" type="xs:string"/>
+      <xs:element minOccurs="0" name="name3" type="xs:string"/>
+      <xs:element minOccurs="0" name="name4" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getListPost">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="getListPostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:post"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="post">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="content" type="xs:string"/>
+      <xs:element minOccurs="0" name="date" type="xs:string"/>
+      <xs:element minOccurs="0" name="deletedStatus" type="xs:string"/>
+      <xs:element minOccurs="0" name="IDPost" type="xs:string"/>
+      <xs:element minOccurs="0" name="status" type="xs:string"/>
+      <xs:element minOccurs="0" name="title" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="editPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+      <xs:element minOccurs="0" name="name2" type="xs:string"/>
+      <xs:element minOccurs="0" name="name3" type="xs:string"/>
+      <xs:element minOccurs="0" name="name4" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="editPostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="showPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="showPostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:post"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getListUser">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="getListUserResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:user"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addKomentar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+      <xs:element minOccurs="0" name="name2" type="xs:string"/>
+      <xs:element minOccurs="0" name="name3" type="xs:string"/>
+      <xs:element minOccurs="0" name="name4" type="xs:string"/>
+      <xs:element minOccurs="0" name="name5" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addKomentarResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="publishPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="publishPostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IOException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="IOException" type="tns:IOException"/>
+  <xs:complexType name="ParseException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="ParseException" type="tns:ParseException"/>
+  <xs:complexType name="MalformedURLException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="MalformedURLException" type="tns:MalformedURLException"/>
+  <xs:complexType name="JSONException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="JSONException" type="tns:JSONException"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="IOException">
+    <wsdl:part element="tns:IOException" name="IOException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListPostResponse">
+    <wsdl:part element="tns:getListPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addPost">
+    <wsdl:part element="tns:addPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateUser">
+    <wsdl:part element="tns:updateUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="JSONException">
+    <wsdl:part element="tns:JSONException" name="JSONException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addKomentarResponse">
+    <wsdl:part element="tns:addKomentarResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHiResponse">
+    <wsdl:part element="tns:sayHiResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListKomentar">
+    <wsdl:part element="tns:getListKomentar" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="restorePost">
+    <wsdl:part element="tns:restorePost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="showUser">
+    <wsdl:part element="tns:showUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="showPostResponse">
+    <wsdl:part element="tns:showPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createUserResponse">
+    <wsdl:part element="tns:createUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ParseException">
+    <wsdl:part element="tns:ParseException" name="ParseException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createUser">
+    <wsdl:part element="tns:createUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteUser">
+    <wsdl:part element="tns:deleteUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteUserResponse">
+    <wsdl:part element="tns:deleteUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListUserResponse">
+    <wsdl:part element="tns:getListUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editPostResponse">
+    <wsdl:part element="tns:editPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addPostResponse">
+    <wsdl:part element="tns:addPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editPost">
+    <wsdl:part element="tns:editPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="showPost">
+    <wsdl:part element="tns:showPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="showUserResponse">
+    <wsdl:part element="tns:showUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListUser">
+    <wsdl:part element="tns:getListUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHi">
+    <wsdl:part element="tns:sayHi" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="restorePostResponse">
+    <wsdl:part element="tns:restorePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MalformedURLException">
+    <wsdl:part element="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListKomentarResponse">
+    <wsdl:part element="tns:getListKomentarResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deletePost">
+    <wsdl:part element="tns:deletePost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deletePostResponse">
+    <wsdl:part element="tns:deletePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListPost">
+    <wsdl:part element="tns:getListPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateUserResponse">
+    <wsdl:part element="tns:updateUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishPostResponse">
+    <wsdl:part element="tns:publishPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addKomentar">
+    <wsdl:part element="tns:addKomentar" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishPost">
+    <wsdl:part element="tns:publishPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="HelloService">
+    <wsdl:operation name="addPost">
+      <wsdl:input message="tns:addPost" name="addPost">
+    </wsdl:input>
+      <wsdl:output message="tns:addPostResponse" name="addPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateUser">
+      <wsdl:input message="tns:updateUser" name="updateUser">
+    </wsdl:input>
+      <wsdl:output message="tns:updateUserResponse" name="updateUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sayHi">
+      <wsdl:input message="tns:sayHi" name="sayHi">
+    </wsdl:input>
+      <wsdl:output message="tns:sayHiResponse" name="sayHiResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deletePost">
+      <wsdl:input message="tns:deletePost" name="deletePost">
+    </wsdl:input>
+      <wsdl:output message="tns:deletePostResponse" name="deletePostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getListKomentar">
+      <wsdl:input message="tns:getListKomentar" name="getListKomentar">
+    </wsdl:input>
+      <wsdl:output message="tns:getListKomentarResponse" name="getListKomentarResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ParseException" name="ParseException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="restorePost">
+      <wsdl:input message="tns:restorePost" name="restorePost">
+    </wsdl:input>
+      <wsdl:output message="tns:restorePostResponse" name="restorePostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="showUser">
+      <wsdl:input message="tns:showUser" name="showUser">
+    </wsdl:input>
+      <wsdl:output message="tns:showUserResponse" name="showUserResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ParseException" name="ParseException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createUser">
+      <wsdl:input message="tns:createUser" name="createUser">
+    </wsdl:input>
+      <wsdl:output message="tns:createUserResponse" name="createUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getListPost">
+      <wsdl:input message="tns:getListPost" name="getListPost">
+    </wsdl:input>
+      <wsdl:output message="tns:getListPostResponse" name="getListPostResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ParseException" name="ParseException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteUser">
+      <wsdl:input message="tns:deleteUser" name="deleteUser">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteUserResponse" name="deleteUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editPost">
+      <wsdl:input message="tns:editPost" name="editPost">
+    </wsdl:input>
+      <wsdl:output message="tns:editPostResponse" name="editPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="showPost">
+      <wsdl:input message="tns:showPost" name="showPost">
+    </wsdl:input>
+      <wsdl:output message="tns:showPostResponse" name="showPostResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ParseException" name="ParseException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getListUser">
+      <wsdl:input message="tns:getListUser" name="getListUser">
+    </wsdl:input>
+      <wsdl:output message="tns:getListUserResponse" name="getListUserResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ParseException" name="ParseException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addKomentar">
+      <wsdl:input message="tns:addKomentar" name="addKomentar">
+    </wsdl:input>
+      <wsdl:output message="tns:addKomentarResponse" name="addKomentarResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="publishPost">
+      <wsdl:input message="tns:publishPost" name="publishPost">
+    </wsdl:input>
+      <wsdl:output message="tns:publishPostResponse" name="publishPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HelloServiceImplServiceSoapBinding" type="tns:HelloService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="updateUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sayHi">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sayHi">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sayHiResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deletePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deletePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deletePostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getListKomentar">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getListKomentar">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getListKomentarResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ParseException">
+        <soap:fault name="ParseException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="restorePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="restorePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="restorePostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="showUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="showUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="showUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ParseException">
+        <soap:fault name="ParseException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getListPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getListPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getListPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ParseException">
+        <soap:fault name="ParseException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="editPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="editPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="showPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="showPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="showPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ParseException">
+        <soap:fault name="ParseException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getListUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getListUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getListUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ParseException">
+        <soap:fault name="ParseException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addKomentar">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addKomentar">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addKomentarResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="publishPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="publishPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="publishPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HelloServiceImplService">
+    <wsdl:port binding="tns:HelloServiceImplServiceSoapBinding" name="HelloServiceImplPort">
+      <soap:address location="http://simpleblog3service.herokuapp.com/HelloService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://webservicesimpleblog3.herokuapp.com/HelloService?wsdl" uri="src/conf/xml-resources/web-service-references/HelloService/wsdl/webservicesimpleblog3.herokuapp.com/HelloService.wsdl"/>
+    <system systemId="http://simpleblog3service.herokuapp.com/HelloService?wsdl" uri="src/conf/xml-resources/web-service-references/HelloService_1/wsdl/simpleblog3service.herokuapp.com/HelloService.wsdl"/>
+</catalog>
