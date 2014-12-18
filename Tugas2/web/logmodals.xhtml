@@ -1,0 +1,28 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:panelGroup layout="block"  id="loginModal" class="modalDialog">
+        <div>
+            <a href="#close" title="Close" class="close">X</a>
+            <p>Masukkan username dan password</p>
+                <h:form>
+                <h:inputText a:placeholder="username" id="ipTxt1" value="#{user.name}"/><br/>
+                <h:inputSecret a:placeholder="password" id="isec" value="#{user.password}"/><br/>
+                <h:commandButton class="button" id="cBtn2" value="Login" action="Published_Posts?faces-redirect=true"/> <!--?faces-redirect=true-->
+                <br/>
+            </h:form>
+        </div>
+    </h:panelGroup>
+    <h:panelGroup layout="block"  id="logoutModal" class="modalDialog">
+        <div>
+            <a href="#close" title="Close" class="close">X</a>
+                <h:form>
+                <p>Keluar dari sistem ini?</p>
+                <h:commandButton id="logout" value="Log Out" action="#{user.logOut(cookiehandler)}"/>
+            </h:form>
+        </div>
+    </h:panelGroup>  
+</ui:composition>

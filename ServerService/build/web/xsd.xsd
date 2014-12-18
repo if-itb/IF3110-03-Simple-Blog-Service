@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-hudson-740-. --><xs:schema xmlns:tns="http://simpleblog/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://simpleblog/">
+
+<xs:element name="addComment" type="tns:addComment" />
+
+<xs:element name="addCommentResponse" type="tns:addCommentResponse" />
+
+<xs:element name="addPost" type="tns:addPost" />
+
+<xs:element name="addPostResponse" type="tns:addPostResponse" />
+
+<xs:element name="addUser" type="tns:addUser" />
+
+<xs:element name="addUserResponse" type="tns:addUserResponse" />
+
+<xs:element name="deleteComment" type="tns:deleteComment" />
+
+<xs:element name="deleteCommentResponse" type="tns:deleteCommentResponse" />
+
+<xs:element name="deletePost" type="tns:deletePost" />
+
+<xs:element name="deletePostResponse" type="tns:deletePostResponse" />
+
+<xs:element name="deleteUser" type="tns:deleteUser" />
+
+<xs:element name="deleteUserResponse" type="tns:deleteUserResponse" />
+
+<xs:element name="editPost" type="tns:editPost" />
+
+<xs:element name="editPostResponse" type="tns:editPostResponse" />
+
+<xs:element name="editUser" type="tns:editUser" />
+
+<xs:element name="editUserResponse" type="tns:editUserResponse" />
+
+<xs:element name="listComment" type="tns:listComment" />
+
+<xs:element name="listCommentResponse" type="tns:listCommentResponse" />
+
+<xs:element name="listPost" type="tns:listPost" />
+
+<xs:element name="listPostResponse" type="tns:listPostResponse" />
+
+<xs:element name="listUser" type="tns:listUser" />
+
+<xs:element name="listUserResponse" type="tns:listUserResponse" />
+
+<xs:element name="publishPost" type="tns:publishPost" />
+
+<xs:element name="publishPostResponse" type="tns:publishPostResponse" />
+
+<xs:element name="search" type="tns:search" />
+
+<xs:element name="searchResponse" type="tns:searchResponse" />
+
+<xs:complexType name="deleteComment">
+<xs:sequence>
+<xs:element name="id_komen" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteCommentResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="publishPost">
+<xs:sequence>
+<xs:element name="id" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="publishPostResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listComment">
+<xs:sequence>
+<xs:element name="id_post" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listCommentResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:komentar" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="komentar">
+<xs:sequence>
+<xs:element name="id" type="xs:int" />
+<xs:element name="nama" type="xs:string" minOccurs="0" />
+<xs:element name="email" type="xs:string" minOccurs="0" />
+<xs:element name="komentar" type="xs:string" minOccurs="0" />
+<xs:element name="time" type="xs:dateTime" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listUser">
+<xs:sequence />
+</xs:complexType>
+
+<xs:complexType name="listUserResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:akun" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="akun">
+<xs:sequence>
+<xs:element name="id" type="xs:int" />
+<xs:element name="username" type="xs:string" minOccurs="0" />
+<xs:element name="password" type="xs:string" minOccurs="0" />
+<xs:element name="email" type="xs:string" minOccurs="0" />
+<xs:element name="role" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="editUser">
+<xs:sequence>
+<xs:element name="id" type="xs:int" />
+<xs:element name="nama" type="xs:string" minOccurs="0" />
+<xs:element name="email" type="xs:string" minOccurs="0" />
+<xs:element name="password" type="xs:string" minOccurs="0" />
+<xs:element name="role" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="editUserResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addUser">
+<xs:sequence>
+<xs:element name="nama" type="xs:string" minOccurs="0" />
+<xs:element name="email" type="xs:string" minOccurs="0" />
+<xs:element name="password" type="xs:string" minOccurs="0" />
+<xs:element name="role" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addUserResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deletePost">
+<xs:sequence>
+<xs:element name="id" type="xs:int" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deletePostResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addComment">
+<xs:sequence>
+<xs:element name="id_post" type="xs:string" minOccurs="0" />
+<xs:element name="nama" type="xs:string" minOccurs="0" />
+<xs:element name="email" type="xs:string" minOccurs="0" />
+<xs:element name="konten" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addCommentResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="search">
+<xs:sequence>
+<xs:element name="query" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addPost">
+<xs:sequence>
+<xs:element name="judul" type="xs:string" minOccurs="0" />
+<xs:element name="konten" type="xs:string" minOccurs="0" />
+<xs:element name="tanggal" type="xs:dateTime" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addPostResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="editPost">
+<xs:sequence>
+<xs:element name="id" type="xs:int" minOccurs="0" />
+<xs:element name="judul" type="xs:string" minOccurs="0" />
+<xs:element name="konten" type="xs:string" minOccurs="0" />
+<xs:element name="tanggal" type="xs:dateTime" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="editPostResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteUser">
+<xs:sequence>
+<xs:element name="id" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteUserResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listPost">
+<xs:sequence />
+</xs:complexType>
+
+<xs:complexType name="listPostResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:posting" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="posting">
+<xs:sequence>
+<xs:element name="id" type="xs:int" />
+<xs:element name="judul" type="xs:string" minOccurs="0" />
+<xs:element name="konten" type="xs:string" minOccurs="0" />
+<xs:element name="tanggal" type="xs:dateTime" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

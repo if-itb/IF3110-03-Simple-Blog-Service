@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <definitions 
+ xmlns="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="simpleblogws" targetNamespace="http://simpleblog/" xmlns:tns="http://simpleblog/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:fi="http://java.sun.com/xml/ns/wsit/2006/09/policy/fastinfoset/service" xmlns:tcp="http://java.sun.com/xml/ns/wsit/2006/09/policy/soaptcp/service" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" 
+ >
+    <message name="addPost"/>
+    <message name="addPostResponse"/>
+    <message name="listPost"/>
+    <message name="listPostResponse"/>
+    <message name="editPost"/>
+    <message name="editPostResponse"/>
+    <message name="deletePost"/>
+    <message name="deletePostResponse"/>
+    <message name="publishPost"/>
+    <message name="publishPostResponse"/>
+    <message name="addUser"/>
+    <message name="addUserResponse"/>
+    <message name="listUser"/>
+    <message name="listUserResponse"/>
+    <message name="editUser"/>
+    <message name="editUserResponse"/>
+    <message name="deleteUser"/>
+    <message name="deleteUserResponse"/>
+    <message name="addComment"/>
+    <message name="addCommentResponse"/>
+    <message name="listComment"/>
+    <message name="listCommentResponse"/>
+    <message name="deleteComment"/>
+    <message name="deleteCommentResponse"/>
+    <message name="search"/>
+    <message name="searchResponse"/>
+    <message name="getPost"/>
+    <message name="getPostResponse"/>
+    <message name="login"/>
+    <message name="loginResponse"/>
+    <message name="getUser"/>
+    <message name="getUserResponse"/>
+    <portType name="simpleblogws">
+        <operation name="addPost">
+            <input message="tns:addPost"/>
+            <output message="tns:addPostResponse"/>
+        </operation>
+        <operation name="listPost">
+            <input message="tns:listPost"/>
+            <output message="tns:listPostResponse"/>
+        </operation>
+        <operation name="editPost">
+            <input message="tns:editPost"/>
+            <output message="tns:editPostResponse"/>
+        </operation>
+        <operation name="deletePost">
+            <input message="tns:deletePost"/>
+            <output message="tns:deletePostResponse"/>
+        </operation>
+        <operation name="publishPost">
+            <input message="tns:publishPost"/>
+            <output message="tns:publishPostResponse"/>
+        </operation>
+        <operation name="addUser">
+            <input message="tns:addUser"/>
+            <output message="tns:addUserResponse"/>
+        </operation>
+        <operation name="listUser">
+            <input message="tns:listUser"/>
+            <output message="tns:listUserResponse"/>
+        </operation>
+        <operation name="editUser">
+            <input message="tns:editUser"/>
+            <output message="tns:editUserResponse"/>
+        </operation>
+        <operation name="deleteUser">
+            <input message="tns:deleteUser"/>
+            <output message="tns:deleteUserResponse"/>
+        </operation>
+        <operation name="addComment">
+            <input message="tns:addComment"/>
+            <output message="tns:addCommentResponse"/>
+        </operation>
+        <operation name="listComment">
+            <input message="tns:listComment"/>
+            <output message="tns:listCommentResponse"/>
+        </operation>
+        <operation name="deleteComment">
+            <input message="tns:deleteComment"/>
+            <output message="tns:deleteCommentResponse"/>
+        </operation>
+        <operation name="search">
+            <input message="tns:search"/>
+            <output message="tns:searchResponse"/>
+        </operation>
+        <operation name="getPost">
+            <input message="tns:getPost"/>
+            <output message="tns:getPostResponse"/>
+        </operation>
+        <operation name="login">
+            <input message="tns:login"/>
+            <output message="tns:loginResponse"/>
+        </operation>
+        <operation name="getUser">
+            <input message="tns:getUser"/>
+            <output message="tns:getUserResponse"/>
+        </operation>
+    </portType>
+    <binding name="simpleblogwsPortBinding" type="tns:simpleblogws">
+        <wsp:PolicyReference URI="#simpleblogwsPortBindingPolicy"/>
+        <operation name="addPost">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="listPost">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="editPost">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="deletePost">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="publishPost">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addUser">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="listUser">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="editUser">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="deleteUser">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addComment">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="listComment">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="deleteComment">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="search">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getPost">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="login">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getUser">
+            <input/>
+            <output/>
+        </operation>
+    </binding>
+    <service name="simpleblogws">
+        <port name="simpleblogwsPort" binding="tns:simpleblogwsPortBinding"/>
+    </service>
+    <wsp:Policy wsu:Id="simpleblogwsPortBindingPolicy">
+        <wsp:ExactlyOne>
+            <wsp:All/>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="simpleblogwsPortBinding_operation_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="simpleblogwsPortBinding_operation_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+</definitions>
