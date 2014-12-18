@@ -25,6 +25,11 @@ and open the template in the editor.
         <managed-bean-class>beans.Post</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>    
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>search</managed-bean-name>
+        <managed-bean-class>beans.search</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>    
+    </managed-bean>
     <navigation-rule>
         <description>Manajemen User</description>
         <from-view-id>/manajemen_user.xhtml</from-view-id>
@@ -60,6 +65,15 @@ and open the template in the editor.
             <from-action>#{User.insertUser}</from-action>
             <from-outcome>insert</from-outcome>
             <to-view-id>/manajemen_user.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <description>Search</description>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{search.doSearch}</from-action>
+            <from-outcome>search</from-outcome>
+            <to-view-id>/search.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

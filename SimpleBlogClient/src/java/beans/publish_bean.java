@@ -6,14 +6,10 @@
 
 package beans;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.xml.ws.WebServiceRef;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 /**
  *
@@ -22,27 +18,31 @@ import javax.xml.ws.WebServiceRef;
 @ManagedBean
 @SessionScoped
 public class publish_bean {
-    int id;
-    Connection con;
-    Statement ps;
-    String SQL_Str;
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/frozen-badlands-5271.herokuapp.com/HelloService.wsdl")
+    private HelloServiceImplService service;
+    String id;
     /**
      * Creates a new instance of publish_bean
      */
     public publish_bean() {
     }
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
-    public String changeStatus(int id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tubeswbd", "root", "");
-        ps = con.createStatement();
-        SQL_Str = "UPDATE post SET status=true WHERE id_post=" + id;
-        ps.executeUpdate(SQL_Str);
-        con.close();
-        
+    public String getId(){
+        return id;
+    }
+    
+    public String changeStatus(String id) throws ClassNotFoundException {
+        publishPost(id);
         return "publish";
+    }
+
+    private boolean publishPost(java.lang.String arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+        return port.publishPost(arg0);
     }
 
 }

@@ -27,11 +27,7 @@ and open the template in the editor.
 
             <nav class="nav">
                 <a style="border:none;" id="logo" href="index.xhtml"><h1>Simple<span>-</span>Blog</h1></a>
-                <ul class="nav-primary">
-                        <li><h:link value="+ Tambah Post" outcome="/new_post" /></li>
-                        <li><h:link value="Publish Post" outcome="/publish_post" /></li>
-                        <li><h:link value="Manajemen User" outcome="/manajemen_user" /></li>
-                </ul>
+                
                 <h:form>
                     <h:inputText size="25" value="#{search.query}"></h:inputText>
                     <h:commandButton value="search" action="#{search.doSearch}" type="submit"></h:commandButton>
@@ -41,9 +37,12 @@ and open the template in the editor.
             <div id="home">
                 <div class="posts">
                     <nav class="art-list">
+                        
                       <ul class="art-list-body">
-
-                          <c:forEach var="item" items="#{post_bean.dbData()}">  
+                          <li class="art-list-item">
+                              <h2>Search Result</h2>
+                          </li>
+                          <c:forEach var="item" items="#{search.getResult()}">  
                             <c:if test="#{item.status}">
 
                             <li class="art-list-item">

@@ -25,70 +25,74 @@ and open the template in the editor.
     <body class="default">
         <div class="wrapper">
 
-        <nav class="nav">
-            <a style="border:none;" id="logo" href="index.xhtml"><h1>Simple<span>-</span>Blog</h1></a>
-            <ul class="nav-primary">
-                    <li><h:link value="+ Tambah Post" outcome="/new_post" /></li>
-                    <li><h:link value="Publish Post" outcome="/publish_post" /></li>
-                    <li><h:link value="Manajemen User" outcome="/manajemen_user" /></li>
-            </ul>
-        </nav>
+            <nav class="nav">
+                <a style="border:none;" id="logo" href="index.xhtml"><h1>Simple<span>-</span>Blog</h1></a>
+                <ul class="nav-primary">
+                        <li><h:link value="+ Tambah Post" outcome="/new_post" /></li>
+                        <li><h:link value="Publish Post" outcome="/publish_post" /></li>
+                        <li><h:link value="Manajemen User" outcome="/manajemen_user" /></li>
+                </ul>
+                <h:form>
+                    <h:inputText size="25" value="#{search.query}"></h:inputText>
+                    <h:commandButton value="search" action="#{search.doSearch}" type="submit"></h:commandButton>
+                </h:form>
+            </nav>
+            
+            <div id="home">
+                <div class="posts">
+                    <nav class="art-list">
+                      <ul class="art-list-body">
 
-        <div id="home">
-            <div class="posts">
-                <nav class="art-list">
-                  <ul class="art-list-body">
-                      
-                      <c:forEach var="item" items="#{post_bean.dbData()}">  
-                        <c:if test="#{item.status}">
-                            
-                        <li class="art-list-item">
-                            <div class="art-list-item-title-and-time">
+                          <c:forEach var="item" items="#{post_bean.dbData()}">  
+                            <c:if test="#{item.status}">
+
+                            <li class="art-list-item">
+                                <div class="art-list-item-title-and-time">
+                                    <h:form>
+                                        <h2 class="art-list-title"><h:commandLink value="#{item.judul}" action="#{Post.setDBP(item.id_post)}" /></h2>
+                                    </h:form>
+                                    <div class="art-list-time">#{item.tanggal}</div>
+                                </div>
+                                <c:set var="string1" value="#{item.konten}"/>
+                                <c:set var="string2" value="${fn:substring(string1, 0, 225)}" />
+                                <p>${fn:substring(string1, 0, 225)} ...</p>
                                 <h:form>
-                                    <h2 class="art-list-title"><h:commandLink value="#{item.judul}" action="#{Post.setDBP(item.id_post)}" /></h2>
+                                <p>
+                                    <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'owner')}" >
+                                        <h:commandLink value="Edit" action="#{Post.setDBE(item.id_post)}" /> |
+                                    </c:if>
+                                    <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'owner') || (login_bean.role == 'editor')}" >
+                                        <h:commandLink value="Hapus" onclick="return confirm('Apakah Anda yakin menghapus pos ini?')" action="#{Post.hapusPost(item.id_post)}" />
+                                    </c:if>
+                                </p>
                                 </h:form>
-                                <div class="art-list-time">#{item.tanggal}</div>
-                            </div>
-                            <c:set var="string1" value="#{item.konten}"/>
-                            <c:set var="string2" value="${fn:substring(string1, 0, 225)}" />
-                            <p>${fn:substring(string1, 0, 225)} ...</p>
-                            <h:form>
-                            <p>
-                                <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'owner')}" >
-                                    <h:commandLink value="Edit" action="#{Post.setDBE(item.id_post)}" /> |
-                                </c:if>
-                                <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'owner') || (login_bean.role == 'editor')}" >
-                                    <h:commandLink value="Hapus" onclick="return confirm('Apakah Anda yakin menghapus pos ini?')" action="#{Post.hapusPost(item.id_post)}" />
-                                </c:if>
-                            </p>
-                            </h:form>
-                        </li>
-                        </c:if>
-                    </c:forEach>
-                    
-                  </ul>
-                </nav>
+                            </li>
+                            </c:if>
+                        </c:forEach>
+
+                      </ul>
+                    </nav>
+                </div>
             </div>
-        </div>
 
-        <footer class="footer">
-            <div class="back-to-top"><a href="">Back to top</a></div>
-            <!-- <div class="footer-nav"><p></p></div> -->
-            <!-- <div class="psi">&Psi;</div> -->
-            <aside class="offsite-links">
-                Asisten IF3110 /
-                <a class="rss-link" href="#rss">RSS</a> /
-                <br />
-                <a class="twitter-link" href="http://twitter.com/YoGiiSinaga">Yogi</a> /
-                <a class="twitter-link" href="http://twitter.com/sonnylazuardi">Sonny</a> /
-                <a class="twitter-link" href="http://twitter.com/fathanpranaya">Fathan</a> /
-                <br />
-                <a class="twitter-link" href="#">Renusa</a> /
-                <a class="twitter-link" href="#">Kelvin</a> /
-                <a class="twitter-link" href="#">Yanuar</a> /
+            <footer class="footer">
+                <div class="back-to-top"><a href="">Back to top</a></div>
+                <!-- <div class="footer-nav"><p></p></div> -->
+                <!-- <div class="psi">&Psi;</div> -->
+                <aside class="offsite-links">
+                    Asisten IF3110 /
+                    <a class="rss-link" href="#rss">RSS</a> /
+                    <br />
+                    <a class="twitter-link" href="http://twitter.com/YoGiiSinaga">Yogi</a> /
+                    <a class="twitter-link" href="http://twitter.com/sonnylazuardi">Sonny</a> /
+                    <a class="twitter-link" href="http://twitter.com/fathanpranaya">Fathan</a> /
+                    <br />
+                    <a class="twitter-link" href="#">Renusa</a> /
+                    <a class="twitter-link" href="#">Kelvin</a> /
+                    <a class="twitter-link" href="#">Yanuar</a> /
 
-            </aside>
-        </footer>
+                </aside>
+            </footer>
 
         </div>
         <script type="text/javascript">
