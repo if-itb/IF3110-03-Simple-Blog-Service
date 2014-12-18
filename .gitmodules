@@ -1,0 +1,6 @@
+[submodule "IF3110-03-Simple-Blog-Service-LOCAL"]
+	path = IF3110-03-Simple-Blog-Service-LOCAL
+	url = https://github.com/IF3110-II-27/IF3110-03-Simple-Blog-Service-LOCAL
+[submodule "IF3110-03-Simple-Blog-Service-HEROKU"]
+	path = IF3110-03-Simple-Blog-Service-HEROKU
+	url = https://github.com/IF3110-II-27/IF3110-03-Simple-Blog-Service-HEROKU
