@@ -13,6 +13,17 @@ public class Post {
     
     String judul, tanggal, konten, id;
     Boolean ispublished, del;
+
+//    Post(String id, String judul, String tanggal, String konten, boolean ispublished, boolean del) {
+//        throw new UnsupportedOperationException("Not supported yet."); 
+//        //To change body of generated methods, choose Tools | Templates.
+//        this.id=id;
+//        this.judul=judul;
+//        this.tanggal=tanggal;
+//        this.konten=konten;
+//        this.ispublished=ispublished;
+//        this.del=del;
+//    }
     
     public String getJudul() {
         return judul;

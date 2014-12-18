@@ -14,5 +14,6 @@ That way multiple projects can share the same settings (useful for formatting ru
 Any value defined here will override the pom.xml file value but is only applicable to the current project.
 -->
         <netbeans.hint.j2eeVersion>1.7-web</netbeans.hint.j2eeVersion>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_simpleblog>http://localhost:8080/IF3110-03-Simple-Blog-Service/simpleblog?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_simpleblog>
     </properties>
 </project-shared-configuration>
