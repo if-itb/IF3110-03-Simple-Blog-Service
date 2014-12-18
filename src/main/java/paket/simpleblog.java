@@ -164,9 +164,9 @@ public class simpleblog {
                 list.add(user);
             }
         } catch (JSONException ex) {
-            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(simpleblog.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(simpleblog.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -268,9 +268,9 @@ public class simpleblog {
                 }
             }
         } catch (JSONException ex) {
-            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(simpleblog.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(simpleblog.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -398,9 +398,9 @@ public class simpleblog {
                 }
             }
         } catch (JSONException ex) {
-            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(simpleblog.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(SimpleBlogServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(simpleblog.class.getName()).log(Level.SEVERE, null, ex);
         }
         return key;
     }
