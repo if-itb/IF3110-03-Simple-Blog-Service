@@ -1,0 +1,1 @@
+wsimport -keep -d build/classes -s src http://tranquil-river-3466.herokuapp.com/HelloService?wsdl

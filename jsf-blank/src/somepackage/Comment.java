@@ -6,7 +6,7 @@ import javax.faces.bean.ManagedBean;
 public class Comment {
 	
 	private String nama, email, tanggal, komentar, stringTanggal;
-	private int postID;
+	private String postID;
 	
 	public String getNama() {
 		return nama;
@@ -20,7 +20,7 @@ public class Comment {
 	public String getKomentar() {
 		return komentar;
 	}
-	public int getPostID() {
+	public String getPostID() {
 		return postID;
 	}
 	public String getStringTanggal() {
@@ -43,7 +43,7 @@ public class Comment {
 	public void setKomentar(String komentar) {
 		this.komentar = komentar;
 	}
-	public void setPostID(int postID) {
+	public void setPostID(String postID) {
 		this.postID = postID;
 	}
 	

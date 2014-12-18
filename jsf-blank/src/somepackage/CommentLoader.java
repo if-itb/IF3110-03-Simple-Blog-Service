@@ -11,17 +11,17 @@ public class CommentLoader {
 	
 	Connector con;
 	ArrayList<Comment> listComment;
-	private int postID;
+	private String postID;
 	
 	public CommentLoader() throws SQLException {
 		con = new Connector("db_simple_blog","root","");
 		postID = ContentLoader.staticCurrentID;
 	}
 	
-	public int getPostID() {
+	public String getPostID() {
 		return postID;
 	}
-	public void setPostID(int id) {
+	public void setPostID(String id) {
 		postID=id;
 	}
 	

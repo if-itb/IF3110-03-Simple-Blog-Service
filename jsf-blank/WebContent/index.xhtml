@@ -21,7 +21,7 @@
 						</h2>
 						<div class="art-list-time">Tanggal: #{posting.tanggal}</div>
 					</div>
-					<p>#{posting.descContent}</p>
+					<p>#{posting.content}</p>
 					<h:form class="alter_link" rendered="#{!userLoader.isLoggedIn()}">
 						<h:commandLink value="Edit" action="#{contentLoader.toEditPage(posting.ID)}"/> |
 						<h:commandLink value="Hapus" onclick="return confirm('Apakah anda yakin menghapus post ini?');" 

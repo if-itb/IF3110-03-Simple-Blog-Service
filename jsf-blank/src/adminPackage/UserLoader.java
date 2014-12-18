@@ -14,9 +14,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.omg.PortableInterceptor.USER_EXCEPTION;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
+import org.chamerling.heroku.service.User;
 
 import somepackage.Connector;
 
@@ -28,9 +28,10 @@ public class UserLoader {
 	private static Connector con;
 	private ArrayList<User> user, users;
 	public static int UNDEFINED = -999;
-	public static int currentUserID = UNDEFINED;
+	public static String currentUserID = "";
 	private User currentUser;
-	private Map<String, Integer> roleMap;
+	private Map<String, String> roleMap;
+	private HelloService tes;
 	
 	private UserAdder userAdder;
 	
@@ -38,7 +39,8 @@ public class UserLoader {
 	
 	public UserLoader(){
 		try {
-			con = new Connector("db_simple_blog", "root","");
+			tes = new HelloServiceImplService().getHelloServiceImplPort();
+			//con = new Connector("db_simple_blog", "root","");
 			retrieveUsers();
 			buildRoleMap();
 //			changeCurrentUser();
@@ -84,7 +86,7 @@ public class UserLoader {
 		this.user = user;
 	}
 	
-	public Map<String, Integer> getRoleMap() {
+	public Map<String, String> getRoleMap() {
 		return roleMap;
 	}
 	
@@ -93,20 +95,20 @@ public class UserLoader {
 	}
 	
 	private void retrieveUsers() throws SQLException {
-		users = new ArrayList<>();
-		try(ResultSet rs = con.executeQuery("SELECT * FROM `tbl_user`")){
-			while(rs.next()) {
-				User temp = new User();
-				temp.setUsername(rs.getString("username"));
-				temp.setPassword(rs.getString("password"));
-				temp.setName(rs.getString("name"));
-				temp.setID(Integer.parseInt(rs.getString("user_id")));				
-				temp.setEmail(rs.getString("email"));
-				temp.setRole_id(Integer.parseInt(rs.getString("role_id")));
-				users.add(temp);
-			}
-		}
-		con.closeConnection();
+		users = (ArrayList)tes.loadUser();
+//		try(ResultSet rs = con.executeQuery("SELECT * FROM `tbl_user`")){
+//			while(rs.next()) {
+//				User temp = new User();
+//				temp.setUsername(rs.getString("username"));
+//				temp.setPassword(rs.getString("password"));
+//				temp.setName(rs.getString("name"));
+//				temp.setID(Integer.parseInt(rs.getString("user_id")));				
+//				temp.setEmail(rs.getString("email"));
+//				temp.setRole_id(Integer.parseInt(rs.getString("role_id")));
+//				users.add(temp);
+//			}
+//		}
+//		con.closeConnection();
 	}
 	
 	public void updateUsers() {
@@ -118,16 +120,16 @@ public class UserLoader {
 		}
 	}
 	
-	public String toEditUser(int id) {
+	public String toEditUser(String id) {
 		currentUserID = id;
 		changeCurrentUser();
 		return("edit-user?faces-redirect=true");
 	}
 	
 	private void changeCurrentUser() {
-		if (currentUserID != UNDEFINED) {
+		if (!currentUserID.equals("")) {
 			for (User user : users) {
-				if (user.getID() == currentUserID) {
+				if (user.getId().equals(currentUserID)) {
 					currentUser = user;
 					break;
 				}
@@ -136,28 +138,32 @@ public class UserLoader {
 	}
 	
 	private void buildRoleMap() throws SQLException {
-		roleMap = new LinkedHashMap<String, Integer>();
-		try(ResultSet rs = con.executeQuery("SELECT * FROM `tbl_role`")){
-			while(rs.next()) {
-				roleMap.put(rs.getString("role_name"), Integer.parseInt(rs.getString("role_id")));
-			}
-		}
-		con.closeConnection();
+		roleMap = new LinkedHashMap<String, String>();
+//		try(ResultSet rs = con.executeQuery("SELECT * FROM `tbl_role`")){
+//			while(rs.next()) {
+//				roleMap.put(rs.getString("role_name"), Integer.parseInt(rs.getString("role_id")));
+//			}
+//		}
+//		con.closeConnection();
+		roleMap.put ("Admin", "admin");
+		roleMap.put ("Owner", "owner");
+		roleMap.put ("Editor", "editor");
+		roleMap.put ("Guest", "guest");
 	}
 	
-	public String editUser() throws SQLException {
-		String username = "'" + currentUser.getUsername() + "'";
-		String password = "'" + currentUser.getPassword() + "'";
-		String name = "'" + currentUser.getName() + "'";
-		String email = "'" + currentUser.getEmail() + "'";
-		
-		con.executeUpdate("UPDATE tbl_user SET username=" + username + ", password=" + password + 
-				", name=" + name + ", email=" + email + ", role_id=" + currentUser.getRole_id() + 
-				" WHERE user_id=" + currentUser.getID());
-		retrieveUsers();
-		
-		return("manajemen-user?faces-redirect=true");
-	}
+//	public String editUser() throws SQLException {
+//		String username = "'" + currentUser.getUsername() + "'";
+//		String password = "'" + currentUser.getPassword() + "'";
+//		String name = "'" + currentUser.getName() + "'";
+//		String email = "'" + currentUser.getEmail() + "'";
+//		
+//		con.executeUpdate("UPDATE tbl_user SET username=" + username + ", password=" + password + 
+//				", name=" + name + ", email=" + email + ", role_id=" + currentUser.getRole_id() + 
+//				" WHERE user_id=" + currentUser.getID());
+//		retrieveUsers();
+//		
+//		return("manajemen-user?faces-redirect=true");
+//	}
 	
 	public String deleteUser(int id) throws SQLException {		
 		con.executeUpdate("DELETE FROM tbl_user WHERE user_id=" + id);
@@ -165,21 +171,29 @@ public class UserLoader {
 		return("manajemen-user?faces-redirect=true");
 	}
 
-	public void getUserFromDatabase() throws SQLException {
+	public void getUserFromDatabase(){
 		user = new ArrayList<>();
-		try (ResultSet rs = con.executeQuery("select * from tbl_user where username = '" + usname + "'")) {
-			while(rs.next()) {
-				User temp = new User();
-				temp.setID(Integer.parseInt(rs.getString("user_id")));
-				temp.setUsername(rs.getString("username"));
-				temp.setPassword(rs.getString("password"));
-				temp.setName(rs.getString("name"));
-				temp.setRole_id(Integer.parseInt(rs.getString("role_id")));
-				user.add(temp);
+		for(User u : users){
+			if (u.getUsername().equals(usname)) {
+				user.add(u);
+				setUser(user);
+				break;
 			}
 		}
-		con.closeConnection();
-		setUser(user);
+//		
+//		try (ResultSet rs = con.executeQuery("select * from tbl_user where username = '" + usname + "'")) {
+//			while(rs.next()) {
+//				User temp = new User();
+//				temp.setID(Integer.parseInt(rs.getString("user_id")));
+//				temp.setUsername(rs.getString("username"));
+//				temp.setPassword(rs.getString("password"));
+//				temp.setName(rs.getString("name"));
+//				temp.setRole_id(Integer.parseInt(rs.getString("role_id")));
+//				user.add(temp);
+//			}
+//		}
+//		con.closeConnection();
+//		setUser(user);
 	}
 	
 	
@@ -259,7 +273,7 @@ public class UserLoader {
 	}
 	
 	public boolean isAdmin(){
-		if(getUser().get(0).getRole_id()==2){
+		if(getUser().get(0).getRole().equals("admin")){
 			return true;
 		}
 		else{
@@ -268,7 +282,7 @@ public class UserLoader {
 	}
 	
 	public boolean isOwner(){
-		if(getUser().get(0).getRole_id()==3){
+		if(getUser().get(0).getRole().equals("owner")){
 			return true;
 		}
 		else{
@@ -277,7 +291,7 @@ public class UserLoader {
 	}
 	
 	public boolean isEditor(){
-		if(getUser().get(0).getRole_id()==4){
+		if(getUser().get(0).getRole().equals("editor")){
 			return true;
 		}
 		else{

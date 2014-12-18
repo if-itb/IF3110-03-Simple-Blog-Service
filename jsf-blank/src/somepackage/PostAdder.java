@@ -1,25 +1,28 @@
 package somepackage;
 
-import java.sql.SQLException;
+//import java.sql.SQLException;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 
 @ManagedBean
 public class PostAdder {
 	
-	private Connector con;
+	//private Connector con;
 	private String judul, content, tanggal;
 	
 	
 	public PostAdder() {
-		try {
+		/*try {
 			con = new Connector("db_simple_blog", "root", "");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public String getJudul() {
@@ -41,13 +44,15 @@ public class PostAdder {
 		this.tanggal = tanggal;
 	}
 	
-	public String addPost() throws SQLException {
+	public String addPost() /*throws SQLException*/ {
 		tanggal = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tanggal");
-		String sjudul = "'" + judul + "'";
+		/*String sjudul = "'" + judul + "'";
 		String scontent = "'" + content + "'";
 		String stanggal = "'" + tanggal + "'";
 		con.executeUpdate("INSERT into tbl_posting (judul, tanggal, konten) VALUES ("+sjudul+", "+stanggal+", "+scontent+")");
-		
+		*/
+		HelloService tes = new HelloServiceImplService().getHelloServiceImplPort();
+		tes.addPost(judul, tanggal, content);
 		return("index?faces-redirect=true");
 	}
 	

@@ -11,15 +11,13 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import adminPackage.UserLoader;
 
 @ManagedBean (name="commentAdder", eager=true)
 public class CommentAdder {
 
 	private Connector con;
 	private String nama, email, tanggal, komentar;
-	private int postID;
-	private UserLoader user;
+	private String postID;
 	
 	public CommentAdder() throws SQLException {
 		con = new Connector("db_simple_blog", "root","");
