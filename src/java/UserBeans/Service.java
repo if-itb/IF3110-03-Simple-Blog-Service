@@ -5,15 +5,7 @@
  */
 package UserBeans;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,7 +13,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,10 +21,6 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
-//import org.json.JSONException;
-//import org.json.JSONObject;
-//import org.json.JSONTokener;
 
 /**
  *
@@ -153,42 +140,35 @@ public class Service {
         JSONObject obj =new JSONObject(json);
         ArrayList<JSONObject> Komentar=new ArrayList<>();
         Iterator<String> ids=obj.keys();
-        String allKomen="";
+        //String allKomen="";
         while(ids.hasNext()){
             String id_Comment=ids.next();
             JSONObject getcom=obj.getJSONObject(id_Comment);
             Komentar.add(getcom);
-            allKomen+="Nama:    "+getcom.getString("nama")+"\nKomen: "+getcom.getString("komen")+"\nTanggal:    "+getcom.getString("tanggal")+"\n";
-//            Komentar Kom=new Komentar();
-//            Kom.setKomen(getcom.getString("Komen"));
-//            Kom.setEmail(getcom.getString("email"));
-//            Kom.setKomentator(getcom.getString("nama"));
-//            Kom.setCommentDate(getcom.getString("tanggal"));
-//            Komentar.add(Kom);
-//        }
-//        String allKomen="test \n";
-//        for(int i=0;i<Komentar.size();i++){
-//            allKomen+="Nama:    "+Komentar.get(i).getKomentator()+"\nKomen: "+Komentar.get(i).getKomen()+"\nTanggal:    "+Komentar.get(i).getCommentDate()+"\n";
+            //allKomen+="Nama:    "+getcom.getString("nama")+"\nKomen: "+getcom.getString("komen")+"\nTanggal:    "+getcom.getString("tanggal")+"\n";
         }
         return Komentar;
-//        return Komentar;
-//        JSONParser parser=new JSONParser();
-//        Object ob=new Object();
-//        ob =parser.parse(json);
-//        JSONArray array = (JSONArray)ob;
-//        for(int i=0;i<array.size();i++)
-//        {
-//            JSONObject obj2 = (JSONObject)array.get(i);
-//            Komentar kom=new Komentar();
-//            kom.setKomen((String) obj2.get("komen"));
-//            kom.setKomentator((String) obj2.get("nama"));
-//            ArrayKomen.add((String) obj2.get("nama"));
-//        }
     }
     
-    public ArrayList search(String query){
-        return null;
+    public ArrayList<JSONObject> search(String query) throws JSONException{
+        query=query.toUpperCase();
+        String json=readURL("https://simpleblogjsf.firebaseio.com/blogpost.json");
+        JSONObject obj =new JSONObject(json);
+        ArrayList<JSONObject> Post=new ArrayList<>();
+        Iterator<String> ids=obj.keys();
+        int i=0;
+        while(ids.hasNext()){
+            String id_Comment=ids.next();
+            JSONObject getcom=obj.getJSONObject(id_Comment);
+            if(getcom.getString("judul").toUpperCase().contains(query) ||getcom.getString("konten").toUpperCase().contains(query)){
+                Post.add(getcom);
+                System.out.println("yang masuk "+i);
+            }
+            i++;
+        }
+        return Post;
     }
+    
     public static String readURL(String urlString) {
         BufferedReader reader = null;
         try {
