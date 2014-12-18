@@ -1,5 +1,5 @@
+# Java class files
+*.class
 
-.settings/org.eclipse.jdt.core.prefs
-.project
-.classpath
-target/
+#netbeans ignore personal stuff
+nbproject/private/
