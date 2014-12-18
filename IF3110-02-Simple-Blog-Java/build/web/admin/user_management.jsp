@@ -4,8 +4,9 @@
     Author     : akhfa
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="org.chamerling.heroku.service.DataUser"%>
 <%@page import="source.Post"%>
-<%@page import="source.dataUser"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="source.User"%>
 <%@page import="java.io.PrintWriter"%>
@@ -82,7 +83,7 @@
                                 if(cookie.getRole().equals("admin"))
                                 {
                                     User user = new User();
-                                    ArrayList<dataUser> listUser = user.getAllUser();
+                                    List<DataUser> listUser = user.getAllUser();
                                     out.println("<table style='width:100%' id=\"t01\">");
                                     %>
                                     <tr>
@@ -92,13 +93,13 @@
                                       <th <tr style=\"vertical-align:center\" rowspan=\"2\" id=\"column4\">Role</th>
                                     </tr>
                                     <%
-                                    for(dataUser oneuser:listUser)
+                                    for(DataUser oneuser:listUser)
                                     {
                                         out.println("<tr>");
-                                        out.println("<td><a href='formuser.jsp?id=" + oneuser.username + "'>"+ oneuser.username+"<a></td>");
-                                        out.println("<td>" + oneuser.nama + "</td>");
-                                        out.println("<td>" + oneuser.email + "</td>");
-                                        out.println("<td>" + oneuser.role + "</td>");
+                                        out.println("<td><a href='formuser.jsp?id=" + oneuser.getIdFirebase() + "'>"+ oneuser.getUsername()+"<a></td>");
+                                        out.println("<td>" + oneuser.getNama() + "</td>");
+                                        out.println("<td>" + oneuser.getEmail() + "</td>");
+                                        out.println("<td>" + oneuser.getRole() + "</td>");
                                         out.println("<tr>");
                                     }
                                     out.println("</table>");
