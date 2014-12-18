@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -15,6 +16,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.SABService;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -47,7 +49,7 @@ public class UserController {
     
     
     public ArrayList<User> getUsers() throws Exception{
-        int nid;
+        /*int nid;
         String nusername,npassword,nnama,nemail,ntipe;
         ArrayList<User> nusers=new ArrayList<>();
         User nuser;
@@ -69,13 +71,19 @@ public class UserController {
             nemail= resultset.getString("email");
             nuser = new User(nid,nusername,npassword,nnama,nemail,ntipe);
             nusers.add(nuser);
-        }
-        
+        }*/
+        List<service.User> users = new ArrayList<>();
+        ArrayList<User> nusers = new ArrayList<>();
+        users = ServiceContainer.listUser();
+        User usertoadd = new User();
+        for (service.User u : users){
+            nusers.add(new User(u));
+        }        
         return nusers;
     } 
             
     public void addUsers(User U) throws Exception{
-        FacesContext facesContext = FacesContext.getCurrentInstance();
+        /*FacesContext facesContext = FacesContext.getCurrentInstance();
         
         if(!U.isNull()){
             try{
@@ -91,11 +99,12 @@ public class UserController {
             catch(Exception e){
 
             }
-        }
+        }*/
+        ServiceContainer.addUser(U.getUsername(), U.getPassword(), U.getNama(), U.getEmail(), U.getTipe());
 
     }
     
-    public User getSpecifiedUser(int userid) {        
+    public User getSpecifiedUser(String userid) {        
         User user = new User();
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -103,7 +112,7 @@ public class UserController {
             statement=connect.createStatement();
             resultset = statement.executeQuery("select * from user where `id`='"+userid+"';");           
             if(resultset.next()){
-            user.setId(resultset.getInt("id"));
+            user.setId(resultset.getString("id"));
             user.setUsername(resultset.getString("username"));
             user.setPassword(resultset.getString("password"));
             user.setNama(resultset.getString("nama"));
@@ -113,11 +122,12 @@ public class UserController {
         }
         catch (Exception e){
         }
+        //User user = new User(ServiceContainer.getUser(userid));
         return user;
     }
     
     public void editUsers(User U) throws Exception{
-        FacesContext facesContext = FacesContext.getCurrentInstance();
+        /*FacesContext facesContext = FacesContext.getCurrentInstance();
         try{
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.getConnection(url+db,dbuser,dbpw);
@@ -130,13 +140,13 @@ public class UserController {
         }
         catch(Exception e){
             System.out.println(e);
-        }
-        
+        }*/
+        ServiceContainer.editUser(U.getId(), U.getNama(), U.getEmail(), U.getTipe());
     }
 
     
-    public void deleteUsers(int userid) throws Exception{
-        System.out.println(userid);
+    public void deleteUsers(String userid) throws Exception{
+        /*System.out.println(userid);
         FacesContext facesContext = FacesContext.getCurrentInstance();
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -149,7 +159,8 @@ public class UserController {
         }
         catch(Exception e){
             
-        }
+        }*/
+        ServiceContainer.deleteUser(userid);
     }
     
     public String checkCookie() throws IOException{

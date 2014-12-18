@@ -19,7 +19,7 @@
                     #{post.Copy(postController.getSpecifiedPost(param['pid']))}
                     <h1>#{post.judul}</h1>
                     <h3>#{post.tanggal}</h3>
-                    <p><h:outputText value="#{post.kontenHTML}" escape="false"/></p>
+                    <p><h:outputText value="#{post.konten}" escape="false"/></p>
                     <div class="postbut" style="display:#{postController.DelEditpublishedpost(usercontroller.cookieType)}"> 
                             <a href="editpost.xhtml?pid=#{post.id}"><button class="button">UBAH</button> </a> | 
                             <a onclick="deletePost(#{post.id})"><button class="button">HAPUS</button></a> 

@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean(name="user")
 @RequestScoped
 public class User {
-    private int id;
+    private String id;
     private String username;
     private String password;
     private String tipe;
@@ -47,7 +47,7 @@ public class User {
     public User(){
     }
     
-    public User(int _id,String _username, String _password, String _tipe, String _nama, String _email){
+    public User(String _id,String _username, String _password, String _tipe, String _nama, String _email){
         id=_id;
         username=_username;
         password=_password;
@@ -67,11 +67,11 @@ public class User {
         }
     }
     
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     
@@ -158,11 +158,11 @@ public class User {
             tipe=resultset.getString("tipe");
             nama=resultset.getString("nama");
             email=resultset.getString("email");
-            id = resultset.getInt("id");
+            id = resultset.getString("id");
             String nusername = username;
             String npassword = password;
             String ntipe = tipe;
-            int nid = id;
+            String nid = id;
 
             System.out.println(nama);
             System.out.println(nusername);
@@ -196,7 +196,7 @@ public class User {
             tipeCookie.setMaxAge(3600);
             ((HttpServletResponse) facesContext.getExternalContext()
            .getResponse()).addCookie(tipeCookie);
-            Cookie idCookie = new Cookie("currentid",Integer.toString(nid));
+            Cookie idCookie = new Cookie("currentid",nid);
             idCookie.setMaxAge(3600);
             ((HttpServletResponse) facesContext.getExternalContext()
            .getResponse()).addCookie(idCookie);
@@ -247,7 +247,7 @@ public class User {
             ((HttpServletResponse) facesContext.getExternalContext().getResponse()).addCookie(idCookie);
         }
         ((HttpServletResponse) facesContext.getExternalContext().getResponse()).sendRedirect("cookie.xhtml");
-        id=0;
+        id="0";
         username="";
         password="";
         tipe="";
@@ -306,4 +306,13 @@ public class User {
         tipe=U.getTipe();
     }
     
+    public User(service.User U){
+        id=U.getId();
+        username=U.getUsername();
+        password=U.getPassword();
+        nama=U.getNama();
+        email=U.getEmail();
+        tipe=U.getTipe();
+    }
+   
 }

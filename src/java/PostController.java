@@ -12,9 +12,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.WebServiceRef;
+import service.SABService;
 /**
  *
  * @author Bagaskara Pramudita
@@ -31,7 +35,16 @@ public class PostController {
     private ResultSet resultset;
     private Statement statement;
     private boolean isEdit;
+    private String keyword;
 
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+    
     public int getCurpid() {
         return curpid;
     }
@@ -53,8 +66,8 @@ public class PostController {
         this.specifiedPost = specifiedPost;
     }
     
-    public Post getSpecifiedPost(int targetid) {
-        System.out.println("fetching post id="+targetid);
+    public Post getSpecifiedPost(String targetid) {
+        /*System.out.println("fetching post id="+targetid);
         Post outpost;
         String njudul, nkonten, ntanggal;
         int nid, nstatus;
@@ -84,8 +97,20 @@ public class PostController {
         else{
             isEdit=true;
             System.out.println("isEdit="+isEdit);
-        }
-        return outpost;
+        }*/
+        Post posttarget = new Post(ServiceContainer.getPost(targetid));
+        /*List<service.Post> posts = new ArrayList<>();
+        service.Post specifiedpost = new service.Post();
+        Post posttarget = new Post();
+        posts = ServiceContainer.listPost();
+        for (service.Post p : posts){
+            if(p.getId()==targetid){
+                posttarget = new Post(p);
+                System.out.println(posttarget.getKonten());
+            }
+        }*/
+        System.out.println("returning: " + posttarget.getKonten());
+        return posttarget;
     }
     
     public String UnpubCheck(int stat){
@@ -108,7 +133,7 @@ public class PostController {
     }
     
     public String NewPost(Post P){
-        try{
+        /*try{
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Driver passed");
             connect = DriverManager.getConnection("jdbc:mysql://localhost/wbdsimpleblog", "root","");
@@ -128,7 +153,11 @@ public class PostController {
         catch(Exception e){
             System.out.println("masuk exception");
         }
-        return"unpublished.xhtml?redirect=true";
+        service.SABService_Service serv = new service.SABService_Service();
+        service.SABService port = serv.getSABServicePort();
+        port.addPost(P.getJudul(), P.getTanggal(), P.getKonten());*/
+        ServiceContainer.addPost(P.getJudul(), P.getTanggal(), P.getKonten());
+        return"cookie.xhtml?redirect=true";
     }
 
     /**
@@ -137,11 +166,10 @@ public class PostController {
     public PostController() {
     }
     
-    public ArrayList<Post> getPosts(){
-        String njudul, nkonten, ntanggal;
-        int nid;
-        ArrayList<Post> outposts = new ArrayList<>();
-        Post outpost;
+    public List<Post> getPosts(){
+        //String njudul, nkonten, ntanggal;
+        //int nid;
+        /*Post outpost;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://localhost/wbdsimpleblog", "root","");
@@ -161,12 +189,21 @@ public class PostController {
         catch(Exception e){
             outpost = new Post(-1,"exception alert","","exception encountered");
             outposts.add(outpost);
+        }*/
+        List<service.Post> posts = new ArrayList<>();
+        List<Post> outposts = new ArrayList<>();
+        posts = ServiceContainer.listPost();
+        Post posttoadd = new Post();
+        for (service.Post p : posts){
+            if(p.getStatus()==1){
+                outposts.add(new Post(p));
+            }
         }
         return outposts;
     }
     
-    public ArrayList<Post> getUnpubPosts(){
-        String njudul, nkonten, ntanggal;
+    public List<Post> getUnpubPosts(){
+        /*String njudul, nkonten, ntanggal;
         int nid;
         ArrayList<Post> outposts = new ArrayList<>();
         Post outpost;
@@ -189,12 +226,28 @@ public class PostController {
         catch(Exception e){
             outpost = new Post(-1,"exception alert","","exception encountered");
             outposts.add(outpost);
+        }*/
+        List<service.Post> posts = new ArrayList<>();
+        List<Post> outposts = new ArrayList<>();
+        Post newpost = new Post();
+        posts = ServiceContainer.listPost();
+        for (int i=0;i<posts.size();i++){
+            System.out.println(posts.get(i).getId());
+            if(posts.get(i).getStatus()==0){
+                newpost = new Post(posts.get(i));
+                //System.out.println(newpost.getStatus());
+                outposts.add(new Post(posts.get(i)));
+                //System.out.println(outposts.get(0).getId());
+                //System.out.println(outposts.get(0).getJudul());
+            }
         }
+        System.out.println("id kedua: " + outposts.get(2).getId());
+        System.out.println("judul kedua: " + outposts.get(2).getJudul());
         return outposts;
     }
     
-    public ArrayList<Post> getDeletedPosts(){
-        String njudul, nkonten, ntanggal;
+    public List<Post> getDeletedPosts(){
+        /*String njudul, nkonten, ntanggal;
         int nid;
         ArrayList<Post> outposts = new ArrayList<>();
         Post outpost;
@@ -217,12 +270,21 @@ public class PostController {
         catch(Exception e){
             outpost = new Post(-1,"exception alert","","exception encountered");
             outposts.add(outpost);
+        }*/
+        List<service.Post> posts = new ArrayList<>();
+        List<Post> outposts = new ArrayList<>();
+        posts = ServiceContainer.listPost();
+        Post posttoadd = new Post();
+        for (service.Post p : posts){
+            if(p.getStatus()==2){
+                outposts.add(new Post(p));
+            }
         }
         return outposts;
     }
     
-    public ArrayList<Comment> getComments(int pid){
-        System.out.println("Fetching comments for post pid="+pid);
+    public List<Comment> getComments(String pid){
+        /*System.out.println("Fetching comments for post pid="+pid);
         String nnama, nemail, nkomen, ntanggal;
         Comment outcomment;
         ArrayList<Comment> outcomments = new ArrayList<>();
@@ -244,13 +306,20 @@ public class PostController {
         }
         catch(Exception e){
             System.out.println("exception thrown");
-        }
-        return outcomments;
+        }*/
+        /*List<service.Comment> comments = new ArrayList<>();
+        List<Comment> outcomment = new ArrayList<>();
+        comments = ServiceContainer.listComment(pid);
+        for (service.Comment c : comments){
+            Comment cmt = new Comment(c);
+            outcomment.add(cmt);
+        }*/
+        return new ArrayList<>();
     }
     
-    public void RemovePost(int pid){
+    public void RemovePost(String pid){
         System.out.println("prepare to delete post pid="+pid);
-        try{
+        /*try{
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Driver passed");
             connect = DriverManager.getConnection("jdbc:mysql://localhost/wbdsimpleblog", "root","");
@@ -263,11 +332,12 @@ public class PostController {
        }
         catch(Exception e){
             System.out.println("exception encountered");
-        }
+        }*/
+        ServiceContainer.deletePost(pid);
     }
     
-    public void PostComment(Comment C, int pid){
-        try{
+    public void PostComment(Comment C, String pid){
+        /*try{
             System.out.println("Posting comment on pid="+pid);
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Driver passed");
@@ -286,11 +356,12 @@ public class PostController {
        }
         catch(Exception e){
             System.out.println("masuk exception");
-        }
+        }*/
+        ServiceContainer.addComment(pid, C.getNama(), C.getEmail(), C.getKomen());
     }
     
     public String EditPost(Post P){
-        try{
+        /*try{
             System.out.println("preparing to edit record, pid="+P.getId());
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Driver passed");
@@ -310,7 +381,8 @@ public class PostController {
         catch(Exception e){
             System.out.println("exception thrown");
            System.out.println(e.getStackTrace()); 
-        }
+        }*/
+        ServiceContainer.editPost(P.getId(), P.getJudul(), P.getKonten(), P.getTanggal());
         if(P.getStatus()==0){
             return "unpublishedpost.xhtml?pid="+P.getId()+"&faces-redirect=true";
         }
@@ -320,9 +392,9 @@ public class PostController {
         //return "index";
     }
 
-    public void SoftDeletePost(int pid){
+    public void SoftDeletePost(String pid){
         System.out.println("preparing to edit record, pid="+pid);
-        try{    
+        /*try{    
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Driver passed");
             connect = DriverManager.getConnection("jdbc:mysql://localhost/wbdsimpleblog", "root","");
@@ -337,11 +409,12 @@ public class PostController {
             //ext.redirect("index.xhtml");
         }
         catch(Exception e){
-        }
+        }*/
+        ServiceContainer.softDeletePost(pid);
     }
     
-    public String PublishPost(int pid, boolean restore){
-        System.out.println("preparing to publish post, pid="+pid);
+    public String PublishPost(String pid, boolean restore){
+        /*System.out.println("preparing to publish post, pid="+pid);
         try{    
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Driver passed");
@@ -361,13 +434,33 @@ public class PostController {
             connect.close();
         }
         catch(Exception e){
-        }
+        }*/
+        ServiceContainer.publishPost(pid);
         if (restore){
             return "unpublished.xhtml?faces-redirect=true?";
         }
         else{
             return "post.xhtml?pid="+pid+"&faces-redirect=true";
         }
+    }
+    
+    public void SearchStart(String keyword){
+        try{FacesContext facesContext = FacesContext.getCurrentInstance();
+        ((HttpServletResponse) facesContext.getExternalContext().getResponse()).sendRedirect("searchpage.xhtml?keyword="+keyword);
+        }
+        catch(Exception e){}
+        //return "searchpage.xhtml?keyword="+keyword+"&faces-redirect=true";
+    }
+    
+    public ArrayList<Post> SearchPost(String keyword){
+        List<service.Post> posts = ServiceContainer.searchPost(keyword);
+        ArrayList<Post> searchedpost = new ArrayList<>();
+        Post newpost = new Post();
+        for(service.Post p: posts){
+            newpost = new Post(p);
+            searchedpost.add(newpost);
+        }
+        return searchedpost;
     }
        
     public String DelEditpublishedpost(String usertype){

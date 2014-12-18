@@ -76,6 +76,13 @@ public class Comment {
         this.komen=C.komen;
     }
     
+    public Comment(service.Comment C){
+        this.nama=C.getNama();
+        this.email=C.getEmail();
+        this.tanggal=C.getTanggal();
+        this.komen=C.getKomen();
+    }
+    
     public void NewComment(String _nama, String _email, String _komen){
         nama=_nama;
         email=_email;

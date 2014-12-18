@@ -78,7 +78,23 @@
 
                         </ul>                     
                     </div>                    
-                </h:form>            
+                </h:form>
+                <h:form>
+                        <div id="LOGIN">
+                                 <ul>           
+                                     <!--<label for="search">Search</label>-->
+                                     <h:inputText id="search" value="#{postController.keyword}" />
+                                     <br></br>
+                                     <h:commandButton type="submit" action="#{postController.SearchStart(postController.keyword)}" value="Search" class="button"/>
+                                     <br></br>
+                                 </ul>
+                         </div>
+                     </h:form>
+        <script type="text/javascript">
+            function searchPost(keyword){
+                location.href = 'searchpage.xhtml?keyword='+keyword;    
+            };
+	</script>
             </div>
 	</div>    
     </div>

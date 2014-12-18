@@ -1,0 +1,1 @@
+wsimport -keep -d nbproject -s src http://fathomless-ravine-2465.herokuapp.com/service?wsdl

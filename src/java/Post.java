@@ -19,7 +19,7 @@ public class Post {
     private String tanggal;
     private int status;
     private String konten;
-    private int id;
+    private String id;
 
     public int getStatus() {
         return status;
@@ -37,11 +37,11 @@ public class Post {
         this.tanggal = tanggal;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     
@@ -81,14 +81,14 @@ public class Post {
     public Post() {
     }
     
-    public Post(int _id, String _judul, String _tanggal, String _konten){
+    public Post(String _id, String _judul, String _tanggal, String _konten){
         id = _id;
         judul=_judul;
         tanggal=_tanggal;
         konten=_konten;
     }
     
-        public Post(int id, String judul, String tanggal, String konten, int status) {
+        public Post(String id, String judul, String tanggal, String konten, int status) {
         this.judul = judul;
         this.tanggal = tanggal;
         this.status = status;
@@ -102,6 +102,14 @@ public class Post {
         tanggal = P.tanggal;
         konten= P.konten;
         status=P.status;
+    }
+    
+    public Post(service.Post P){
+        id = P.getId();
+        judul = P.getJudul();
+        tanggal = P.getTanggal();
+        konten= P.getKonten();
+        status=P.getStatus();
     }
     
 }
