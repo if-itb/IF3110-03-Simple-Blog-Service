@@ -14,19 +14,27 @@
     <h:body>
         <f:event type="preRenderView" listener="#{user.notAdminNotOwnerRedirectToPub()}" />
         #{post.makeEmpty()}
-        <div id="menubar" class="bluegrad">
-            <div id="menulist">
-                <ul>
-                    <li><a href="#{facesContext.externalContext.requestContextPath}/">Home</a></li>
-                    <li style="display:#{user.addButton()}"><a href="Add_Post.xhtml">Add Post +</a></li>
-                    <li style="display:#{user.logInButton()}"><a href="#loginModal">Login</a></li>
-                    <li style="display:#{user.logOutButton()}"><a href="#logoutModal">Logout</a></li>
-                    <li><a href=""><h:outputText value="#{user.name}"/></a></li>
-                </ul>
-            </div>
-        </div>
+        <ui:include src="Topbar.xhtml" />
         <div id="container" class="postmanip">
-            <ui:include src="Topbar.xhtml" />
+            <div id="dashmenu">
+                <div id="title">
+                    <h1>Add Post</h1>
+                    Halaman ini merupakan halaman untuk menambah pos baru
+                </div>
+                <div id="menus">
+                    <h2>Halo, #{user.name}</h2>
+                    Silakan gunakan menu berikut ini,
+                    <ul>
+                        <li><a href="#{facesContext.externalContext.requestContextPath}/">Home</a></li>
+                        <li style="display:#{user.addButton()}"><a href="Add_Post.xhtml">Add Post +</a></li>
+                        <li style="display:#{user.userMgtButton()}"><a href="User_Management.xhtml">User Management</a></li>
+                        <li style="display:#{user.unPubButton()}"><a href="Unpublished_Posts.xhtml">Unpublished Posts</a></li>
+                        <li style="display:#{user.logInButton()}"><a href="#loginModal">Login</a></li>
+                        <li style="display:#{user.logOutButton()}"><a href="#logoutModal">Logout</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
             <div id="body">
                 <div id="rightContainer">
                     <h:form id="inputanpos" onsubmit="return validateForm()">
