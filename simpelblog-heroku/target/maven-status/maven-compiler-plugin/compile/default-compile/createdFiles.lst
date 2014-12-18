@@ -1,0 +1,11 @@
+Database\PostingDatabase.class
+Database\ViewPost.class
+Database\EditPost.class
+Database\User.class
+Login\Login.class
+Database\Post.class
+Database\UserBean.class
+Database\UserData.class
+Database\Register.class
+Database\UserRegistry.class
+Database\PublishPost.class
