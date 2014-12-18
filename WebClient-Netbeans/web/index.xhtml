@@ -21,8 +21,7 @@
 							<hide2><h:commandLink action="#{usersController.logout()}" rendered="#{usersController.login}">logout</h:commandLink></hide2>
 							<hide2><h:commandLink action="login_user" rendered="#{!usersController.login}">login</h:commandLink></hide2>
 							<h:graphicImage name="img/user1.png" height="30px"></h:graphicImage><br></br>
-							<h:inputText class="searchbox" value="#{postsController.search_key}"></h:inputText>
-							<h:commandLink action="search_post"><h:graphicImage name="img/search.png" height="30px" title="search post"></h:graphicImage></h:commandLink>
+							
 						</div>
 					</h:form>
                 </div>
@@ -35,7 +34,12 @@
                     <h:commandLink action="publish_post" rendered="#{usersController.editor || usersController.admin}"><h:graphicImage name="img/hide1.png" height="30px" title="unpublished post"></h:graphicImage></h:commandLink>
                     <h:commandLink action="view_user" rendered="#{usersController.admin}"><h:graphicImage name="img/adduser1.png" height="30px" title="manage users"></h:graphicImage></h:commandLink>
                 </h:form>
+                <h:form>
+                <h:inputText class="searchbox" value="#{postsController.search_key}"></h:inputText>
+                <h:commandLink action="search_post"><h:graphicImage name="img/search.png" height="30px" title="search post"></h:graphicImage></h:commandLink>
+                </h:form>
             </div>
+            
             <div class="content">
 				
                 <h:form>
