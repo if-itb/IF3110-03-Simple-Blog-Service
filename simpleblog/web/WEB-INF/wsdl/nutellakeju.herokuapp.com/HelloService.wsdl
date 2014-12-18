@@ -25,6 +25,8 @@
 <xs:element name="GetPostById" type="tns:GetPostById"/>
 <xs:element name="GetPostByIdResponse" type="tns:GetPostByIdResponse"/>
 <xs:element name="GetPostResponse" type="tns:GetPostResponse"/>
+<xs:element name="GetSearchPost" type="tns:GetSearchPost"/>
+<xs:element name="GetSearchPostResponse" type="tns:GetSearchPostResponse"/>
 <xs:element name="sayHi" type="tns:sayHi"/>
 <xs:element name="sayHiResponse" type="tns:sayHiResponse"/>
 <xs:complexType name="AddComment">
@@ -140,6 +142,16 @@
 <xs:complexType name="listMember">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="members" nillable="true" type="tns:member1"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="GetSearchPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="GetSearchPostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:post"/>
     </xs:sequence>
   </xs:complexType>
 <xs:complexType name="EditMember">
@@ -270,6 +282,10 @@
     <wsdl:part element="tns:GetMember" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="GetSearchPost">
+    <wsdl:part element="tns:GetSearchPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="EditMember">
     <wsdl:part element="tns:EditMember" name="parameters">
     </wsdl:part>
@@ -322,6 +338,10 @@
     <wsdl:part element="tns:GetMemberById" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="GetSearchPostResponse">
+    <wsdl:part element="tns:GetSearchPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="EditPostResponse">
     <wsdl:part element="tns:EditPostResponse" name="parameters">
     </wsdl:part>
@@ -371,6 +391,12 @@
       <wsdl:input message="tns:GetMember" name="GetMember">
     </wsdl:input>
       <wsdl:output message="tns:GetMemberResponse" name="GetMemberResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSearchPost">
+      <wsdl:input message="tns:GetSearchPost" name="GetSearchPost">
+    </wsdl:input>
+      <wsdl:output message="tns:GetSearchPostResponse" name="GetSearchPostResponse">
     </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="EditMember">
@@ -472,6 +498,15 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="GetMemberResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSearchPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="GetSearchPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetSearchPostResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>

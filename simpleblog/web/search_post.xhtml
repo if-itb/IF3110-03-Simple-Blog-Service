@@ -74,15 +74,16 @@
             <div class="sidebar"><h:form>
               <ul class="nav nav-pills nav-stacked text-center">
                 <div class="input-group custom-search-form">
+                    <h:form>
                     <h:inputText styleClass="form-control" id="judul" binding="#{query}" />
                             <span class="input-group-btn">
-                                <h:commandLink type="button" class="btn btn-default" action="search_post" >
+                                <h:commandLink type="button" action="search_post" class="btn btn-default">
                                 <span class="glyphicon glyphicon-search"></span>
                                 <f:param name="query" value="#{query.value}" />
-                                </h:commandLink>
-                            </span>  
-                </div>
-                <br></br>
+                            </h:commandLink>
+                            </span>
+                    </h:form>
+                </div><br></br>
                 <c:choose>
                 <c:when test="${cookie.cRole.value eq 'Owner' || cookie.cRole.value eq 'Admin' || cookie.cRole.value eq 'Editor'}">
                     <li role="presentation" class="active"><a> You are #{cookie.cRole.value}. </a></li>
@@ -124,7 +125,8 @@
           </div>
             
           <div class="col-md-8">
-              <ui:repeat var="thepost" value="#{listpost.published_posts}">
+              #{postSearch.execute(param['query'])}
+              <ui:repeat var="thepost" value="#{postSearch.psearch}">
             <div class="edit">
                 <c:choose>
 

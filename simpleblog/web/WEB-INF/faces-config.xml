@@ -20,6 +20,11 @@
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
+        <managed-bean-name>postSearch</managed-bean-name>
+        <managed-bean-class>com.corejsf.PostSearch</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
         <managed-bean-name>listpost</managed-bean-name>
         <managed-bean-class>com.corejsf.ListPost</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
