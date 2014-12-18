@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -17,6 +18,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -165,41 +168,29 @@ public class login
     public void setValidationComplete(boolean validationComplete) 
         { this.validationComplete = validationComplete; } 
     
-     private void SetupDB() throws ClassNotFoundException, SQLException{
-        String host = "jdbc:mysql://localhost:3306/simple_blog_java?zeroDateTimeBehavior=convertToNull";
-        String user = "root";
-        String pwd = "";
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        con = (Connection) DriverManager.getConnection(host, user, pwd);
-        stmt = (Statement) con.createStatement();        
-    }
     
-    public void dbData(String user)
-    {
-        try
-        {
-            SetupDB();
-            SQLuser="Select * from tb_user where username like ('" + user +"')";
-            rs = stmt.executeQuery(SQLuser);
-            rs.next();
-            dbuser = rs.getString(2).toString();
-            dbpassword = rs.getString(3).toString();
-            dbrole = rs.getString(5).toString();
-        }
-        catch(ClassNotFoundException | SQLException ex)
-        {
-            
-        }
-    }
+   
     
     public String checkValidity() throws IOException, ClassNotFoundException, SQLException
     { 
-        dbData(username);
-        if(username.equalsIgnoreCase(dbuser))
+        //dbData(username);
+        boolean userFound = false;
+        org.chamerling.heroku.service.User tempU = null;
+        
+        HelloService api = new HelloServiceImplService().getHelloServiceImplPort();
+        List<org.chamerling.heroku.service.User> tempL = api.listUser();
+        
+        for(int i = 0; i < tempL.size(); ++i){
+            if(tempL.get(i).getUsername().equalsIgnoreCase(username)){
+                dbpassword = tempL.get(i).getPassword();
+                dbrole = tempL.get(i).getRole();
+                dbuser = tempL.get(i).getUsername();
+                
+                userFound = true;
+            }
+        }
+        
+        if(userFound)
         {  
             if(password.equals(dbpassword))
             {
