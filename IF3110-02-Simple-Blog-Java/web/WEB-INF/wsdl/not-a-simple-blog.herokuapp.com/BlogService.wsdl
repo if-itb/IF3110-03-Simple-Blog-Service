@@ -13,6 +13,8 @@
   <xs:element name="deleteUserResponse" type="tns:deleteUserResponse"/>
   <xs:element name="editPost" type="tns:editPost"/>
   <xs:element name="editPostResponse" type="tns:editPostResponse"/>
+  <xs:element name="getAllCommentar" type="tns:getAllCommentar"/>
+  <xs:element name="getAllCommentarResponse" type="tns:getAllCommentarResponse"/>
   <xs:element name="getAllPost" type="tns:getAllPost"/>
   <xs:element name="getAllPostResponse" type="tns:getAllPostResponse"/>
   <xs:element name="getAllUser" type="tns:getAllUser"/>
@@ -175,6 +177,24 @@
       <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="getAllCommentar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAllCommentarResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:komentar"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="komentar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idFirebase" type="xs:string"/>
+      <xs:element minOccurs="0" name="nama" type="xs:string"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="comment" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="InterruptedException">
     <xs:sequence/>
   </xs:complexType>
@@ -199,12 +219,20 @@
     <wsdl:part element="tns:updateUserResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getAllCommentarResponse">
+    <wsdl:part element="tns:getAllCommentarResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="editPostResponse">
     <wsdl:part element="tns:editPostResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="editPost">
     <wsdl:part element="tns:editPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllCommentar">
+    <wsdl:part element="tns:getAllCommentar" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getAllUserResponse">
@@ -354,6 +382,12 @@
       <wsdl:output message="tns:getAllPostResponse" name="getAllPostResponse">
     </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getAllCommentar">
+      <wsdl:input message="tns:getAllCommentar" name="getAllCommentar">
+    </wsdl:input>
+      <wsdl:output message="tns:getAllCommentarResponse" name="getAllCommentarResponse">
+    </wsdl:output>
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BlogServiceImplServiceSoapBinding" type="tns:BlogService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
@@ -471,6 +505,15 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getAllPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllCommentar">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAllCommentar">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllCommentarResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>

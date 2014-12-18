@@ -5,11 +5,6 @@
  */
 package source;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -122,8 +117,8 @@ public class User {
         if(role == null)
         {
             for(DataUser user : userlist) {
-                if(user.username.equals(this.username)) {
-                    this.role = user.role;
+                if(user.getUsername().equals(this.username)) {
+                    this.role = user.getRole();
                     break;
                 }
             }
@@ -170,11 +165,11 @@ public class User {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         List<DataUser> userlist = blog.getAllUser();
         for(DataUser user : userlist) {
-            if(user.username.equals(this.username)) {
-                this.nama = user.nama;
-                this.password = user.password;
-                this.email = user.email;
-                this.role = user.role;
+            if(user.getUsername().equals(this.username)) {
+                this.nama = user.getNama();
+                this.password = user.getPassword();
+                this.email = user.getEmail();
+                this.role = user.getRole();
                 break;
             }
         }
@@ -207,25 +202,8 @@ public class User {
      */
     public void updateUser() throws SQLException
     {
-        KoneksiDatabase.setUser(userSQL);
-        KoneksiDatabase.setPassword(passSQL);
-        KoneksiDatabase.setDatabase(urlSQL,databaseName);
         
-        Connection koneksi = KoneksiDatabase.getKoneksi();
-        Statement statement = koneksi.createStatement();
-        String query = "UPDATE user SET password = ?, "
-                                        + "nama = ?,"
-                                        + "email = ?,"
-                                        + "role = ?"
-                        + "WHERE username = ?";
-        try (PreparedStatement preStat = koneksi.prepareStatement(query)) {
-            preStat.setString(1, password);
-            preStat.setString(2, nama);
-            preStat.setString(3, email);
-            preStat.setString(4, role);
-            preStat.setString(5, username);
-            preStat.executeUpdate();
-        }
+        
     }
     
     /**
@@ -238,7 +216,7 @@ public class User {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         List<DataUser> userlist = blog.getAllUser();
         for(DataUser user : userlist) {
-            if(user.username.equals(this.username)) {
+            if(user.getUsername().equals(this.username)) {
                 blog.deleteUser(user.getIdFirebase());
             }
         }
@@ -265,31 +243,8 @@ public class User {
      */
     public boolean successLogin() throws SQLException
     {
-        KoneksiDatabase.setUser(userSQL);
-        KoneksiDatabase.setPassword(passSQL);
-        KoneksiDatabase.setDatabase(urlSQL,databaseName);
         
-        Connection koneksi = KoneksiDatabase.getKoneksi();
-        Statement statement = koneksi.createStatement();
-        String query = "SELECT username, password FROM user WHERE username = '" + username +"'";
-        System.out.println(query);
         
-        ResultSet result = statement.executeQuery(query);
-        while(result.next())
-        {
-            System.out.println("User = " + result.getString(1));
-            System.out.println("password = " + result.getString(2));
-            if(username.equalsIgnoreCase(result.getString(1)) && password.equals(result.getString(2)))
-            {
-                result.close();
-                statement.close();
-//                koneksi.close();
-                return true;
-            }
-        }
-        result.close();
-        statement.close();
-//        koneksi.close();
         return false;
     }
     
@@ -303,31 +258,8 @@ public class User {
      */
     public boolean successLogin(String _userDatabase, String _passwordDatabase) throws SQLException
     {
-        KoneksiDatabase.setUser(_userDatabase);
-        KoneksiDatabase.setPassword(_passwordDatabase);
-        KoneksiDatabase.setDatabase("localhost","blog");
         
-        Connection koneksi = KoneksiDatabase.getKoneksi();
-        Statement statement = koneksi.createStatement();
-        String query = "SELECT username, password FROM user WHERE username = '" + username +"'";
-        System.out.println(query);
         
-        ResultSet result = statement.executeQuery(query);
-        while(result.next())
-        {
-            System.out.println("User = " + result.getString(1));
-            System.out.println("password = " + result.getString(2));
-            if(username.equalsIgnoreCase(result.getString(1)) && password.equals(result.getString(2)))
-            {
-                result.close();
-                statement.close();
-//                koneksi.close();
-                return true;
-            }
-        }
-        result.close();
-        statement.close();
-//        koneksi.close();
         return false;
     }
     
@@ -343,31 +275,8 @@ public class User {
      */
     public boolean successLogin(String _userDatabase, String _passwordDatabase, String _domain, String _namaDatabase) throws SQLException
     {
-        KoneksiDatabase.setUser(_userDatabase);
-        KoneksiDatabase.setPassword(_passwordDatabase);
-        KoneksiDatabase.setDatabase(_domain,_namaDatabase);
         
-        Connection koneksi = KoneksiDatabase.getKoneksi();
-        Statement statement = koneksi.createStatement();
-        String query = "SELECT username, password FROM user WHERE username = '" + username +"'";
-        System.out.println(query);
         
-        ResultSet result = statement.executeQuery(query);
-        while(result.next())
-        {
-            System.out.println("User = " + result.getString(1));
-            System.out.println("password = " + result.getString(2));
-            if(username.equalsIgnoreCase(result.getString(1)) && password.equals(result.getString(2)))
-            {
-                result.close();
-                statement.close();
-//                koneksi.close();
-                return true;
-            }
-        }
-        result.close();
-        statement.close();
-//        koneksi.close();
         return false;
     }
     
@@ -378,22 +287,8 @@ public class User {
      */
     public void masukDatabase() throws SQLException
     {
-        KoneksiDatabase.setUser(userSQL);
-        KoneksiDatabase.setPassword(passSQL);
-        KoneksiDatabase.setDatabase(urlSQL,databaseName);
-        Connection koneksi = KoneksiDatabase.getKoneksi();
-        String query = "INSERT INTO user (username,password,nama,email,role) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement preStat = koneksi.prepareStatement(query)) {
-            preStat.setString(1, username);
-            preStat.setString(2, password);
-            preStat.setString(3, nama);
-            preStat.setString(4, email);
-            preStat.setString(5, role);
-            
-            preStat.executeUpdate();
-            preStat.close();
-        }
-//        koneksi.close();
+        
+        
     }
     
     /**
@@ -403,22 +298,7 @@ public class User {
      */
     public void masukDatabase(String _userDatabase, String _passwordDatabase) throws SQLException
     {
-        KoneksiDatabase.setUser(_userDatabase);
-        KoneksiDatabase.setPassword(_passwordDatabase);
-        KoneksiDatabase.setDatabase("localhost","blog");
-        Connection koneksi = KoneksiDatabase.getKoneksi();
-        String query = "INSERT INTO user (username,password,nama,email,role) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement preStat = koneksi.prepareStatement(query)) {
-            preStat.setString(1, username);
-            preStat.setString(2, password);
-            preStat.setString(3, nama);
-            preStat.setString(4, email);
-            preStat.setString(5, role);
-            
-            preStat.executeUpdate();
-            preStat.close();
-        }
-//        koneksi.close();
+        
     }
     
     /**
