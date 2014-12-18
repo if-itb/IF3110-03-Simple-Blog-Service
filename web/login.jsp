@@ -6,6 +6,41 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    
+       /*
+    Cookie[] cookies = request.getCookies();
+    boolean c1=false,c2=false,c3=false,c4=false;
+    if(cookies!=null){
+        for(Cookie cookie : cookies){
+            if(cookie.getName().equals("id_user")){
+                session.setAttribute( "id_user", cookie.getValue());
+                c1 = true;
+            }
+            
+            if(cookie.getName().equals("username")){
+                session.setAttribute( "username", cookie.getValue());
+                c2 = true;
+            }
+            
+            if(cookie.getName().equals("role")){
+                session.setAttribute( "role", cookie.getValue());
+                c3 = true;
+            }
+            
+            if(cookie.getName().equals("email")){
+                session.setAttribute( "email", cookie.getValue());
+                session.setAttribute("firsttimer", "no");
+                c4 = true;
+            }
+            
+            if(c1&&c2&&c3&&c4){
+                response.sendRedirect("mainpage.jspx");
+            }
+        }
+    }*/
+%>
+
 <!DOCTYPE html>
 <html>
     <head>

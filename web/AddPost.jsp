@@ -72,14 +72,12 @@
                 UPDATE `tucildb_13511097`.`listpost` SET `title`='<%= request.getParameter("Judul")%>',`date`='<%= request.getParameter("Tanggal")%>',`post`='<%= request.getParameter("Konten")%>' WHERE `id`=<%= request.getParameter("id_post")%>;
               </sql:update>
           </c:when>
-
+                
           <c:otherwise> <!-- berarti mode=2 , delete-->
               <sql:update dataSource="${snapshot}" var="result">
-                    DELETE FROM `tucildb_13511097`.`listpost` WHERE `id`= <%= request.getParameter("id_post")%>;
+                    UPDATE `tucildb_13511097`.`listpost` SET `published`='d' WHERE `id`=<%= request.getParameter("id_post")%>;
               </sql:update>
-              <sql:update dataSource="${snapshot}" var="result">
-                    DELETE FROM `tucildb_13511097`.`post-komen` WHERE `id_post`= <%= request.getParameter("id_post")%>;
-              </sql:update>
+                    
           </c:otherwise>
           </c:choose>
           

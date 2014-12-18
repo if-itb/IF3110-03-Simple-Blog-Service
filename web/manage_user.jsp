@@ -12,6 +12,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 
 <%
+    String role =StringUtils.isNullOrEmpty(session.getAttribute("role").toString()) ? "" : session.getAttribute("role").toString();
+    out.print("ROLE" + role);
+    if(!role.equals("admin") || role.equals("")){
+        response.sendRedirect("forbidden.jsp");
+    }
+%>
+
+<%
     String action = StringUtils.isNullOrEmpty(request.getParameter("action")) ? "" : request.getParameter("action");
         
     if(action.equals("create")){

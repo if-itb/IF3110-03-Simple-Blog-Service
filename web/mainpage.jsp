@@ -112,7 +112,7 @@
         <% if (role.equals("admin")){%>
         <li><a href="manage_user.jsp">manage user</a></li>
         <%} %> 
-         <li><a href="index.jsp">Log Out</a></li>
+         <li><a href="index.jsp?action=logout">Log Out</a></li>
         <%}else{//berarti guest%>
         <li><a href="login.jsp">Login</a></li>
         <%} %> 
@@ -121,7 +121,7 @@
 </nav>
 
 <sql:query dataSource="${snapshot}" var="result">
-SELECT * FROM `tucilDB_13511097`.`listpost` ORDER BY `date` DESC;
+SELECT * FROM `tucilDB_13511097`.`listpost` where `published`='t' ORDER BY `date` DESC;
 </sql:query> 
     
 <div id="home">
@@ -141,6 +141,7 @@ SELECT * FROM `tucilDB_13511097`.`listpost` ORDER BY `date` DESC;
                   <c:set var="myTest" value="${row.date}"/>
                     <%! String d; %>
                     <%  d =  pageContext.getAttribute("myTest").toString(); %>
+                    <a href="mainpage.jsp"></a>
                   
                 <li class="art-list-item">
                 <div class="art-list-item-title-and-time">
