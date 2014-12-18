@@ -34,9 +34,9 @@
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
        
         <script type="text/javascript">
-            var msg = '<%= session.getAttribute("errMsg") %>';
             function al() {
-                if (msg != "Sukses") {
+                var msg = '<%= session.getAttribute("errMsg") %>';
+                if (msg != "Sukses" && msg != "null") {
                     alert(msg);
                 }
             }
@@ -49,8 +49,9 @@
         <title>Not a Simple Blog</title>
     </head>
     <body class="default">
-        
+        <script type="text/javascript"> al() </script>
         <% 
+            request.getSession().removeAttribute("errMsg");  
             //instantiasi kelas Post dan pemanggilan dari database
             Post listPost = new Post();
             CookieHelper cookie = new CookieHelper(request.getCookies());
@@ -58,9 +59,6 @@
                 listPost.cookieHeaderCheck(cookie);
             }
         %>
-        
-        <script type="text/javascript"> al() </script>
-        <c:remove var="errMsg" scope="session" /> 
         
         <div class="wrapper">
 
@@ -74,6 +72,7 @@
         <div id="home">
             <div class="posts">
                 <nav class="art-list">
+                    <ul><center><i>Check out our newest feature <a href="posts/search_form.jsp">Search!</a></i></center></ul>
                   <ul class="art-list-body">
                     <%= listPost.listPublishedPosts() %>
                   </ul>

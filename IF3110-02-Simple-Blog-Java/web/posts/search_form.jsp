@@ -1,7 +1,7 @@
 <%-- 
-    Document   : edit_post
-    Created on : Nov 22, 2014, 10:23:33 PM
-    Author     : Imburden
+    Document   : index
+    Created on : Nov 22, 2014, 12:39:12 PM
+    Author     : ART
 --%>
 
 <%@page import="source.CookieHelper"%>
@@ -37,58 +37,46 @@
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         
-        <title>Ubah Post - Not a Simple Blog</title>
+        <title>Search Post - Not a Simple Blog</title>
     </head>
-    <body class = "default">
-        <% Post post = new Post(); %>
-        <% post.setAtribut(Integer.valueOf(request.getParameter("id")));
-           CookieHelper cookie = new CookieHelper(request.getCookies());
-           //apabila tidak ada cookie
-           if(cookie.thereIsCookie()) {
-               post.cookieHeaderCheck(cookie);
-           }
-           else {
-               response.sendRedirect("../login/index.html");
-           }
-         %>
+    <body class="default">
+        
+        <% 
+            //instantiasi kelas Post dan pemanggilan dari database
+            Post listPost = new Post();
+            CookieHelper cookie = new CookieHelper(request.getCookies());
+            if(cookie.thereIsCookie()) {
+                listPost.cookieHeaderCheck(cookie);
+            }
+        %>
         
         <div class="wrapper">
 
         <nav class="nav">
-            <a style="border:none;" id="logo" href="../admin/index.jsp"><h1>Not<span>-</span>a<span>-</span>Simple<span>-</span>Blog</h1></a>
+            <a style="border:none;" id="logo" href="../index.jsp"><h1>Not<span>-</span>a<span>-</span>Simple<span>-</span>Blog</h1></a>
             <ul class="nav-primary">
-                
+                <li><%= listPost.showManagementHeader() %> </li>
             </ul>
         </nav>
-
-        <article class="art simple post">
-
-
-            <h2 class="art-title" style="margin-bottom:40px">-</h2>
-
-            <div class="art-body">
-                <div class="art-body-inner">
-                    <h2>Ubah Post</h2>
-                    
-                    <div id="contact-area">
-                        <form method="post" action="edit_post_red.jsp?id=<%=request.getParameter("id")%>">
-                            <label for="Judul">Judul:</label>
-                            <input type="text" name="Judul" id="Judul" value="<%= post.getJudul() %>" aria-required="true" required="">
-
-                            <label for="Tanggal">Tanggal:</label>
-                            <input type="text" name="Tanggal" id="Tanggal" value="<%= post.getTanggal() %>" aria-required="true" required="return IsValidDate()">
-
-                            <label for="Konten">Konten:</label><br>
-                            <textarea name="Konten" rows="20" cols="20" id="Konten" aria-required="true" required=""><%= post.getKonten() %></textarea>
-
-                            <input type="submit" name="submit" value="Simpan" class="submit-button" onclick="return IsValidDate()">
-                        </form>
-                    </div>
-                </div>
+        <div id="home">
+            <div class="posts">
+                <nav class="art-list">
+                <ul>
+                    <form name="Post" method="post" action="#">
+                        <label for="Judul">Keyword:</label>
+                        <input type="text" name="sParam" size="35" id="sParam" aria-required="true" required="">
+                        <input type="submit" name="submit" value="search" class="submit-button">
+                    </form>
+                </ul>
+                  <ul class="art-list-body">
+                    <li class="art-list-item">
+                        <!-- Isi post yang disearch  -->
+                    </li>
+                  </ul>
+                </nav>
             </div>
-
-        </article>
-
+        </div>
+                 
         <footer class="footer">
             <div class="back-to-top"><a href="">Back to top</a></div>
             <!-- <div class="footer-nav"><p></p></div> -->
@@ -105,10 +93,10 @@
 
         </div>
 
-        <script type="text/javascript" src="../assets/js/function.js"></script>
-        <script type="text/javascript" src="../assets/js/fittext.js"></script>
-        <script type="text/javascript" src="../assets/js/app.js"></script>
-        <script type="text/javascript" src="../assets/js/respond.min.js"></script>
+        <script type="text/javascript" src="assets/js/function.js"></script>
+        <script type="text/javascript" src="assets/js/fittext.js"></script>
+        <script type="text/javascript" src="assets/js/app.js"></script>
+        <script type="text/javascript" src="assets/js/respond.min.js"></script>
         <script type="text/javascript">
           var ga_ua = '{{! TODO: ADD GOOGLE ANALYTICS UA HERE }}';
 
