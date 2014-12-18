@@ -45,11 +45,6 @@
                     </div>
                 </div>
 
-                <div class="search">
-                    <input type="text" class="form-control status-box" placeholder="Search"/>
-                    <h:commandButton type="submit" action="#{addPost.add(judul.value, tanggal.value, konten.value)}" value="Submit"/>
-                </div>
-                
                 <div id="summary-posts">
                     <ui:repeat value="#{listPost.loadPublishedPost()}" var="post">
                         <h:form>
@@ -79,3 +74,4 @@
         </div>
     </h:body>
 </html>
+

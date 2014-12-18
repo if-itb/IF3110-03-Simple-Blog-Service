@@ -5,64 +5,24 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <meta charset="utf-8"> </meta>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"> </meta>
-        <meta name="viewport" content="width=device-width, initial-scale=1"> </meta>
-        <title>Simple Blog</title>
-        <script src="js/jquery.js"></script>
-
-        <!-- Bootstrap -->
-        <h:outputStylesheet name="css/custom.css" />
-        <h:outputStylesheet name="css/bootstrap.css" />
+        <title>Facelet Title</title>
     </h:head>
-	<h:body>
-        <div id="wrapper">
-				<div id="header">
-					<div class="nav">
-						<h:form styleClass="nav nav-tabs pull-left">
-							<li><h:commandLink action="index">Simple Blog</h:commandLink></li>
-						</h:form>
-
-						<ul>
-							<h:form styleClass="nav nav-tabs pull-right">
-								<li><h:commandLink action="add">Add Post</h:commandLink></li>
-								<li><h:commandLink action="publish">Publish</h:commandLink></li>
-								<li><h:commandLink action="deleted">Deleted</h:commandLink></li>
-								<li><h:commandLink action="user">Manage User</h:commandLink></li>
-								<li><h:commandLink action="about">About</h:commandLink></li>
-								<li><h:commandLink action="#{login.logout()}">Logout</h:commandLink></li>
-							</h:form>
-						</ul>
-					</div>
-				</div>
-
-			<div id="content post">
-				<div class="jumbotron"> 
-				   <div class="text-center">
-						<h2>Find an article to read</h2>
-						<p>Choose from over than 100 articles</p>
-					</div>
-				</div>
-				
-				<ui:repeat value="#{listUser.loadUser()}" var="u">
-					<h:form>
-						<label>Username: </label>
-						<h:outputText value="#{u.username}"></h:outputText><br/>
-						<label>Role: </label>
-						<h:outputText value="#{u.role}"></h:outputText><br/>
-						<h:commandLink action="#{listUser.delete(u.id)}" value="Delete User"></h:commandLink>
-						<h:commandLink action="edituser" value="Edit User">
-							<f:param name="user" value="#{u.id}"/>
-						</h:commandLink><br/>
-						<br/>
-					</h:form>
-				</ui:repeat>
-				<h:form>
-					<h:commandLink action="adduser" value="Add User"></h:commandLink><br/>
-					<h:commandLink action="index" value="Home"></h:commandLink>
-				</h:form>
-			</div>
-		</div>
+    <h:body>
+        <ui:repeat value="#{listUser.loadUser()}" var="u">
+            <h:form>
+                <h:outputText value="#{u.username}"></h:outputText><br/>
+                <h:outputText value="#{u.role}"></h:outputText><br/>
+                <h:commandLink action="#{listUser.delete(u.id)}" value="Delete User"></h:commandLink>
+                <h:commandLink action="edituser" value="Edit User">
+                    <f:param name="user" value="#{u.id}"/>
+                </h:commandLink><br/>
+                <br/>
+            </h:form>
+        </ui:repeat>
+        <h:form>
+            <h:commandLink action="adduser" value="Add User"></h:commandLink><br/>
+            <h:commandLink action="index" value="Home"></h:commandLink>
+        </h:form>
     </h:body>
 </html>
 
