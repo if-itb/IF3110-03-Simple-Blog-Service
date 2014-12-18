@@ -5,12 +5,7 @@
  */
 package source;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +20,7 @@ import org.chamerling.heroku.service.InterruptedException_Exception;
  * @author akhfa
  */
 public class User {
+    private String idFirebase;
     private String username;
     private String password;
     private String nama;
@@ -64,6 +60,16 @@ public class User {
         nama = _nama;
         email = _email;
         role = _role;
+    }
+    
+    public void setIdFirebase(String _idFirebase)
+    {
+        idFirebase = _idFirebase;
+    }
+    
+    public String getIdFirebase()
+    {
+        return idFirebase;
     }
     
     public void setUsername(String _username)
@@ -198,11 +204,25 @@ public class User {
     
     /**
      * Fungsi untuk mengupdate user berdasarkan username
-     * Semua attribut yang akan di update harus diset terlebih dahulu menggunakan setter.
-     * @throws SQLException 
+     * Semua attribut yang akan di update harus diset terlebih dahulu menggunakan setter. 
+     * @throws org.chamerling.heroku.service.InterruptedException_Exception 
+     * @throws org.chamerling.heroku.service.Exception_Exception 
      */
-    public void updateUser() throws SQLException
+    public void updateUser() throws Exception_Exception, InterruptedException_Exception
     {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        List<DataUser> daftarUser = blog.getAllUser();
+        String idFirebaseLocal = "";
+        
+        for(DataUser user: daftarUser)
+        {
+            if(username.equals(user.getUsername()))
+            {
+                idFirebaseLocal = user.getIdFirebase();
+            }
+        }
+        if(!idFirebaseLocal.equals(""))
+            blog.updateUser(idFirebaseLocal, username, password, nama, email, role);
         /*
         KoneksiDatabase.setUser(userSQL);
         KoneksiDatabase.setPassword(passSQL);
@@ -228,7 +248,8 @@ public class User {
     /**
      * Fungsi untuk menghapus 1 user dengan username tertentu.
      * username harus diset terlebih dahulu dengan prosedure user.setUsername("username").
-     * @throws SQLException 
+     * @throws org.chamerling.heroku.service.InterruptedException_Exception
+     * @throws org.chamerling.heroku.service.Exception_Exception 
      */
     public void deleteUser() throws InterruptedException_Exception, Exception_Exception
     {
@@ -259,6 +280,8 @@ public class User {
      * yang telah di set sebelumnya
      * @return True jika login berhasil, dan false jika gagal
      * @throws java.sql.SQLException
+     * @throws org.chamerling.heroku.service.Exception_Exception
+     * @throws org.chamerling.heroku.service.InterruptedException_Exception
      */
     public boolean successLogin() throws SQLException, Exception_Exception, InterruptedException_Exception
     {
@@ -303,6 +326,7 @@ public class User {
      * Memasukkan user ke dalam database. 
      * User di create terlebih dahulu dengan constructor dengan parameter (username, password, dan role).
      * @throws SQLException 
+     * @throws org.chamerling.heroku.service.InterruptedException_Exception 
      */
     public void masukDatabase() throws SQLException, InterruptedException_Exception
     {
@@ -331,6 +355,7 @@ public class User {
      * Testing untuk user
      * @param args 
      * @throws org.chamerling.heroku.service.Exception_Exception 
+     * @throws org.chamerling.heroku.service.InterruptedException_Exception 
      */
     public static void main(String[] args) throws Exception_Exception, InterruptedException_Exception {
         try {
