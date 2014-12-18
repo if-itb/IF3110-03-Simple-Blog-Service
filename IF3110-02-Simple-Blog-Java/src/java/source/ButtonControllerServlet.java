@@ -14,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.chamerling.heroku.service.Exception_Exception;
+import org.chamerling.heroku.service.InterruptedException_Exception;
 
 /**
  *
@@ -33,6 +35,8 @@ public class ButtonControllerServlet extends HttpServlet{
             try {
                 tambahUser.masukDatabase();
             } catch (SQLException ex) {
+                Logger.getLogger(ButtonControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException_Exception ex) {
                 Logger.getLogger(ButtonControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
             response.sendRedirect("admin/user_management.jsp");
@@ -55,8 +59,9 @@ public class ButtonControllerServlet extends HttpServlet{
             {
                 hapusUser.setUsername(request.getParameter("username"));
                 hapusUser.deleteUser();
-            }
-            catch (SQLException ex) {
+            } catch (InterruptedException_Exception ex) {
+                Logger.getLogger(ButtonControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception_Exception ex) {
                 Logger.getLogger(ButtonControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
             response.sendRedirect("admin/user_management.jsp");
