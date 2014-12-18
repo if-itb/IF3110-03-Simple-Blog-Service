@@ -13,6 +13,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -22,6 +24,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
+import org.chamerling.heroku.service.IOException_Exception;
+import org.chamerling.heroku.service.JSONException_Exception;
+import org.chamerling.heroku.service.MalformedURLException_Exception;
+import org.chamerling.heroku.service.ParseException_Exception;
 
 /**
  *
@@ -39,30 +47,41 @@ public class Login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, IOException_Exception, JSONException_Exception, MalformedURLException_Exception, ParseException_Exception {
         System.out.println("masuk login");
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String uname= request.getParameter("uname");
         String pass= request.getParameter("pass");
-        Connection conn = null;
-        String url = "jdbc:mysql://localhost:3306/";
-        String dbName = "datapost";
-        String driver = "com.mysql.jdbc.Driver";
+//        Connection conn = null;
+//        String url = "jdbc:mysql://localhost:3306/";
+//        String dbName = "datapost";
+//        String driver = "com.mysql.jdbc.Driver";
         try {
-            Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection(url+dbName,"root","");
-            String strQuery = "select * from user where username='" + uname + "' and password = '" + pass + "'";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(strQuery);
-
-            if(rs.next())
+//            Class.forName(driver).newInstance();
+//            conn = DriverManager.getConnection(url+dbName,"root","");
+//            String strQuery = "select * from user where username='" + uname + "' and password = '" + pass + "'";
+//            Statement st = conn.createStatement();
+//            ResultSet rs = st.executeQuery(strQuery);
+            boolean ketemu = false;
+            List<org.chamerling.heroku.service.User> userList = new ArrayList<>();
+            HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+            userList = hello.getListUser();
+            org.chamerling.heroku.service.User tempUser = new org.chamerling.heroku.service.User();
+            while(!userList.isEmpty() && !ketemu){
+                tempUser = userList.remove(0);
+                if(tempUser.getUsername().equals(uname) && tempUser.getPassword().equals(pass)){
+                    ketemu = true;
+                }
+            }
+            
+            if(ketemu)
             {
                String msg = "login Successful";
                HttpSession session=request.getSession();
                session.setAttribute("user",uname);
-               session.setAttribute("role",rs.getString("role"));
-               session.setAttribute("email",rs.getString("email"));
+               session.setAttribute("role",tempUser.getRole());
+               session.setAttribute("email",tempUser.getEmail());
                 out.print(msg);
                int i = 0;
                Cookie[] cookies = request.getCookies();
@@ -109,8 +128,8 @@ public class Login extends HttpServlet {
                 rd.include (request,response);
                  out.print(msg);
             }
-            rs.close();
-            st.close();
+//            rs.close();
+//            st.close();
            
         /*try  {
             if(uname.equalsIgnoreCase("admin")&& pass.equalsIgnoreCase("admin")){
@@ -149,6 +168,14 @@ public class Login extends HttpServlet {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException_Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException_Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException_Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException_Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -172,6 +199,14 @@ public class Login extends HttpServlet {
         } catch (InstantiationException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException_Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException_Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException_Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException_Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

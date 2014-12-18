@@ -39,7 +39,7 @@ and open the template in the editor.
             <h:form> 
                 <br/>Username: <h:inputText id="kname" value="#{user.username}" />
                 <br/>Password: <h:inputSecret id="kpass" value="#{user.password}" />
-                <br/>Password: <h:inputSecret id="kemail" value="#{user.email}" />
+                <br/>Email: <h:inputText id="kemail" value="#{user.email}" />
                 <br/>Role: <h:inputText id="krole" value="#{user.role}" />
                 <br/><h:commandButton value="Submit" action="#{user.createUser()}" onclick="return check();"/>
             </h:form>

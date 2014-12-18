@@ -59,6 +59,11 @@
                 <br/>Password : <input type ="password" name="pass"/>
                 <br/><input type="submit" value="Login"/>
             </form>
+            
+            <h:form id="formsearchh">
+                <br/>Search: <h:inputText id="judul" value="#{listPost.keyword}"/>
+                <h:commandButton value="Submit" action="#{listPost.searchPost()}"/>
+            </h:form>
         </div><br/>
 		
 	<div id="footer">rita | cilvia | linda </div>		

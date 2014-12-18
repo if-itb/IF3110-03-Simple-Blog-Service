@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="style.css" type="text/css" />
 
     <h:head>
-        <title>Simple Blog</title>
+        <title>Simple Blog - Search Result </title>
     </h:head>
     <h:body>
 	<div class="header"> 
@@ -31,9 +31,9 @@
         </div>
 	
         <div id="main">
-            <h1> List Post </h1>
+            <h1> Search Result </h1>
             <hr/>
-            <p><c:forEach items="#{listPost.arrPostPublished}" var="pos">			
+            <p><c:forEach items="#{searchPost.searchResult}" var="pos">			
                     <h:form>	<p>			
                     <br/><h2><h:commandLink action="#{viewPost.showPage(pos.IDPost)}" value="#{pos.title}" style="color:maroon"></h:commandLink>      </h2>
                     <h3><h:outputText value="#{pos.date}"></h:outputText></h3>
@@ -58,8 +58,8 @@
             </form>
             
             <h:form id="formsearchh">
-                <br/>Search: <h:inputText id="judul" value="#{searchPost.keyword}"/>
-                <h:commandButton value="Submit" action="#{searchPost.search()}"/>
+                <br/>Search: <h:inputText id="judul" value="#{listPost.keyword}"/>
+                <h:commandButton value="Submit" action="#{listPost.searchPost()}"/>
             </h:form>
         </div><br/>
 		

@@ -7,21 +7,27 @@
 package Function;
 
 import java.util.Date;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.event.ComponentSystemEvent;
+import javax.xml.ws.WebServiceRef;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
+import org.chamerling.heroku.service.IOException_Exception;
+import org.chamerling.heroku.service.JSONException_Exception;
+import org.chamerling.heroku.service.MalformedURLException_Exception;
+import org.chamerling.heroku.service.ParseException_Exception;
+import org.chamerling.heroku.service.Post;
 
 /**
  *
@@ -30,37 +36,54 @@ import javax.faces.event.ComponentSystemEvent;
 @ManagedBean(name = "viewPost", eager = true)
 @SessionScoped
 public class ViewPost{
-    private int postId;
+
+    private String postId;
     private String judul;
     private String konten;
     private Date tanggal;
 	
-    public String showPage(int id){
-        postId = id;
-        System.out.println("viewpost="+id);
-        String url = "jdbc:mysql://localhost:3306/datapost";
-        String driver = "com.mysql.jdbc.Driver";
-        String userName = "root"; 
-        String password = "";
-         try {
-            Class.forName(driver).newInstance();
-            Connection conn = DriverManager.getConnection(url,userName,password);
-            Statement st = conn.createStatement();
-            ResultSet res= st.executeQuery("Select * from posts where PID = "+id);
-
-            if(res.next()){
-                judul=res.getString("Judul");
-                tanggal = res.getDate("Tanggal");                
-                konten = res.getString("Konten");
+    public String showPage(String id) throws ParseException{
+        try {
+            //        postId = id;
+//        System.out.println("viewpost="+id);
+//        String url = "jdbc:mysql://localhost:3306/datapost";
+//        String driver = "com.mysql.jdbc.Driver";
+//        String userName = "root"; 
+//        String password = "";
+//         try {
+//            Class.forName(driver).newInstance();
+//            Connection conn = DriverManager.getConnection(url,userName,password);
+//            Statement st = conn.createStatement();
+//            ResultSet res= st.executeQuery("Select * from posts where PID = "+id);
+//
+//            if(res.next()){
+//                judul=res.getString("Judul");
+//                tanggal = res.getDate("Tanggal");                
+//                konten = res.getString("Konten");
+//                postId = id;
+//            }
+//            conn.close();
+//            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+//            }
+            HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+         org.chamerling.heroku.service.Post temp = new org.chamerling.heroku.service.Post();
+                temp = hello.showPost(id);
+                judul = temp.getTitle();
+                
+                DateFormat dformatter = new SimpleDateFormat("yyyy-MM-DD"); 
+                tanggal = (Date)dformatter.parse(temp.getDate());
+                
+                konten = temp.getContent();
                 postId = id;
-            }
-            conn.close();
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
-            }
+                System.out.println("postid="+postId);
+            
+        } catch (JSONException_Exception | IOException_Exception | MalformedURLException_Exception | ParseException_Exception ex) {
+            Logger.getLogger(ViewPost.class.getName()).log(Level.SEVERE, null, ex);
+        }
          return "view_post";
     }
 	
-    public int getPostId(){
+    public String getPostId(){
             return postId;
     }
     
@@ -76,7 +99,7 @@ public class ViewPost{
             return tanggal;
     }
 	
-    public void setPostId(int postId){
+    public void setPostId(String postId){
             this.postId = postId;
     }
     public void setJudul(String judul){
@@ -88,5 +111,8 @@ public class ViewPost{
     public void setTanggal(Date tanggal){
             this.tanggal = tanggal;
     }
+
+
+    
 
  }
