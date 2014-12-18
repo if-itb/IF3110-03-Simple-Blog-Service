@@ -4,6 +4,8 @@
     Author     : Rakhmatullah Yoga S
 --%>
 
+<%@page import="org.chamerling.heroku.service.BlogServiceImplService"%>
+<%@page import="org.chamerling.heroku.service.BlogService"%>
 <%@page import="source.Post"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,4 +18,5 @@
     post.setAtribut(idPost);
     post.AddComment(idPost, nama, email, komentar);
     out.println(post.LoadComment(idPost));
+    BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
 %>
