@@ -31,6 +31,12 @@ and open the template in the editor.
         <managed-bean-scope>session</managed-bean-scope>    
     </managed-bean>
     <navigation-rule>
+        <description>Login</description>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{login_bean.login}</from-action>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
         <description>Manajemen User</description>
         <from-view-id>/manajemen_user.xhtml</from-view-id>
         <navigation-case>
