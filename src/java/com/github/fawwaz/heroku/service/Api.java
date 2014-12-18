@@ -143,13 +143,13 @@ public interface Api {
      * 
      * @param arg0
      * @return
-     *     returns boolean
+     *     returns com.github.fawwaz.heroku.service.User
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getUser", targetNamespace = "http://service.heroku.fawwaz.github.com/", className = "com.github.fawwaz.heroku.service.GetUser")
     @ResponseWrapper(localName = "getUserResponse", targetNamespace = "http://service.heroku.fawwaz.github.com/", className = "com.github.fawwaz.heroku.service.GetUserResponse")
-    public boolean getUser(
+    public User getUser(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 
@@ -163,6 +163,23 @@ public interface Api {
     @RequestWrapper(localName = "getSemuaUser", targetNamespace = "http://service.heroku.fawwaz.github.com/", className = "com.github.fawwaz.heroku.service.GetSemuaUser")
     @ResponseWrapper(localName = "getSemuaUserResponse", targetNamespace = "http://service.heroku.fawwaz.github.com/", className = "com.github.fawwaz.heroku.service.GetSemuaUserResponse")
     public String getSemuaUser();
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "login", targetNamespace = "http://service.heroku.fawwaz.github.com/", className = "com.github.fawwaz.heroku.service.Login")
+    @ResponseWrapper(localName = "loginResponse", targetNamespace = "http://service.heroku.fawwaz.github.com/", className = "com.github.fawwaz.heroku.service.LoginResponse")
+    public boolean login(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
 
     /**
      * 
