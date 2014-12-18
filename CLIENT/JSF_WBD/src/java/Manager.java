@@ -27,7 +27,7 @@ import org.chamerling.heroku.service.HelloServiceImplService;
 @ManagedBean
 @ApplicationScoped
 public class Manager {
-
+    HelloService api = null;
     Connection con = null;
     Statement stmt = null;
 
@@ -38,56 +38,17 @@ public class Manager {
      * @throws java.sql.SQLException
      */
     public Manager() throws ClassNotFoundException, SQLException {
-        SetupDB();
+        api = new HelloServiceImplService().getHelloServiceImplPort();
     }
     
-    private void SetupDB() throws ClassNotFoundException, SQLException{
-        String host = "jdbc:mysql://localhost:3306/simple_blog_java?zeroDateTimeBehavior=convertToNull";
-        String user = "root";
-        String pwd = "";
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        con = (Connection) DriverManager.getConnection(host, user, pwd);
-        stmt = (Statement) con.createStatement();        
-    }
+    
     public List<org.chamerling.heroku.service.Post> getPublishedPosts() throws SQLException{
-        HelloService api = new HelloServiceImplService().getHelloServiceImplPort();
         return api.listPublishedPost();
-//        ArrayList<Post> result;
-//        result = new ArrayList<>();
-//        String q = "SELECT * FROM tb_post WHERE isPublished = true ORDER BY pdate DESC;";
-//        ResultSet rs = stmt.executeQuery(q);
-//        while (rs.next()) {
-//            Post mPost = new Post();
-//            mPost.Judul = rs.getString("ptitle");
-//            mPost.Konten = rs.getString("pcontent");
-//            mPost.Pid = rs.getInt("pid");
-//            mPost.Tanggal = rs.getDate("pdate");
-//            result.add(mPost);
-//        }
-//        return result;
     }
-    public List<org.chamerling.heroku.service.Post> getUnPublishedPosts() throws SQLException{
-        HelloService api = new HelloServiceImplService().getHelloServiceImplPort();
+    public List<org.chamerling.heroku.service.Post> getUnPublishedPosts() throws SQLException{        
         return api.listUnpublishedPost();
-//    ArrayList<Post> result;
-//    result = new ArrayList<>();
-//    String q = "SELECT * FROM tb_post WHERE isPublished = false;";
-//    ResultSet rs = stmt.executeQuery(q);
-//    while (rs.next()) {
-//        Post mPost = new Post();
-//        mPost.Judul = rs.getString("ptitle");
-//        mPost.Konten = rs.getString("pcontent");
-//        mPost.Pid = rs.getString("pid");
-//        mPost.Tanggal = rs.getString("pdate");
-//    
-//        result.add(mPost);
-//        }
-//        return result;
     }
+    
     public Post getPost(int pid) throws SQLException{
         String q = "SELECT * FROM tb_post WHERE pid="+pid+";";
         ResultSet rs = stmt.executeQuery(q);
@@ -98,18 +59,17 @@ public class Manager {
         mPost.Tanggal = rs.getString("pdate");
         return mPost;
     }
-    public void deletePost(int pid) throws SQLException, IOException{
-        String q = "DELETE FROM tb_post WHERE pid = "+pid+";";
-        PreparedStatement ps = (PreparedStatement) con.prepareStatement(q);
-        int i = ps.executeUpdate(q);
+    
+    public void deletePost(String pid) throws SQLException, IOException{
+        api.deletePost(pid);
+        
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
         response.sendRedirect("home.xhtml");
     }
-    public void publishPost(int pid) throws SQLException, IOException{
-        String q = "UPDATE tb_post SET isPublished = '1' WHERE pid = "+pid+";";
-        PreparedStatement ps = (PreparedStatement) con.prepareStatement(q);
-        int i = ps.executeUpdate(q);
+    public void publishPost(String pid) throws SQLException, IOException{
+        api.publishPost(pid);
+        
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
         response.sendRedirect("home.xhtml");

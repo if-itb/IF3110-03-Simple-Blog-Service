@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 /**
  
@@ -28,7 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean(name="tempPost", eager = true)
 @RequestScoped
 public class TempPost {
-    public int Id;
+    HelloService api = null;
+    public String Id;
     public String Judul = "";
     public String Tanggal = "";
     public String Konten = "";
@@ -36,38 +39,17 @@ public class TempPost {
      * Creates a new instance of TempPost
      */
     public TempPost() {        
+        api = new HelloServiceImplService().getHelloServiceImplPort();
     }
     public void reset(){
-            Id = -1;
+            Id = "";
             Judul = "";
             Tanggal = "";
             Konten = "";
     }
     public void submitPost() throws ClassNotFoundException, SQLException, IOException{
-            String host = "jdbc:mysql://localhost:3306/simple_blog_java?zeroDateTimeBehavior=convertToNull";
-            String user = "root";
-            String pwd = "";
-            Connection con = null;
-            PreparedStatement stmt = null;
-    
-            try {
-                Class.forName("com.mysql.jdbc.Driver").newInstance();
-            } catch (InstantiationException | IllegalAccessException ex) {
-                Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            con = (Connection) DriverManager.getConnection(host, user, pwd);
+            api.addPost(Judul, Konten, Tanggal);
             
-            String q="INSERT INTO tb_post (`pid`, `pdate`, `ptitle`, `pcontent`, `timestamp`, `isPublished`) "
-            + "VALUES (NULL, "
-            + "'"+ Tanggal +"', "
-            + "'"+ Judul +"', "
-            + "'"+ Konten +"', "
-            + "CURRENT_TIMESTAMP, '0');";
-            
-            stmt = (PreparedStatement) con.prepareStatement(q); 
-            
-            System.out.println(q);
-            int i = stmt.executeUpdate(q);
 
             FacesContext context = FacesContext.getCurrentInstance();
             HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
@@ -84,7 +66,7 @@ public class TempPost {
     public String getKonten(){
         return Konten;
     }
-    public int getId(){
+    public String getId(){
         return Id;
     }
     public void setJudul(String s){
@@ -96,7 +78,7 @@ public class TempPost {
     public void setKonten(String s){
         Konten = s;
     }
-    public void setId(int i){
+    public void setId(String i){
         Id = i;
     }
 }
