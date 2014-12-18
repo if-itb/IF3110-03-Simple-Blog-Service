@@ -1,0 +1,826 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="HelloServiceImplService" targetNamespace="http://service.heroku.chamerling.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.heroku.chamerling.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.heroku.chamerling.org/" xmlns:tns="http://service.heroku.chamerling.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="AddComment" type="tns:AddComment"/>
+  <xs:element name="AddCommentResponse" type="tns:AddCommentResponse"/>
+  <xs:element name="AddNewPost" type="tns:AddNewPost"/>
+  <xs:element name="AddNewPostResponse" type="tns:AddNewPostResponse"/>
+  <xs:element name="DeletePost" type="tns:DeletePost"/>
+  <xs:element name="DeletePostResponse" type="tns:DeletePostResponse"/>
+  <xs:element name="GetAllComment" type="tns:GetAllComment"/>
+  <xs:element name="GetAllCommentResponse" type="tns:GetAllCommentResponse"/>
+  <xs:element name="GetAllUser" type="tns:GetAllUser"/>
+  <xs:element name="GetAllUserResponse" type="tns:GetAllUserResponse"/>
+  <xs:element name="GetDeletedPost" type="tns:GetDeletedPost"/>
+  <xs:element name="GetDeletedPostResponse" type="tns:GetDeletedPostResponse"/>
+  <xs:element name="GetPost" type="tns:GetPost"/>
+  <xs:element name="GetPostResponse" type="tns:GetPostResponse"/>
+  <xs:element name="GetPublishedPost" type="tns:GetPublishedPost"/>
+  <xs:element name="GetPublishedPostResponse" type="tns:GetPublishedPostResponse"/>
+  <xs:element name="GetUnpublishedPost" type="tns:GetUnpublishedPost"/>
+  <xs:element name="GetUnpublishedPostResponse" type="tns:GetUnpublishedPostResponse"/>
+  <xs:element name="Login" type="tns:Login"/>
+  <xs:element name="LoginResponse" type="tns:LoginResponse"/>
+  <xs:element name="PublishPost" type="tns:PublishPost"/>
+  <xs:element name="PublishPostResponse" type="tns:PublishPostResponse"/>
+  <xs:element name="RecoverPost" type="tns:RecoverPost"/>
+  <xs:element name="RecoverPostResponse" type="tns:RecoverPostResponse"/>
+  <xs:element name="Search" type="tns:Search"/>
+  <xs:element name="SearchResponse" type="tns:SearchResponse"/>
+  <xs:element name="UpdatePost" type="tns:UpdatePost"/>
+  <xs:element name="UpdatePostResponse" type="tns:UpdatePostResponse"/>
+  <xs:element name="addPost" type="tns:addPost"/>
+  <xs:element name="addPostResponse" type="tns:addPostResponse"/>
+  <xs:element name="addUser" type="tns:addUser"/>
+  <xs:element name="addUserResponse" type="tns:addUserResponse"/>
+  <xs:element name="delUser" type="tns:delUser"/>
+  <xs:element name="delUserResponse" type="tns:delUserResponse"/>
+  <xs:element name="readUser" type="tns:readUser"/>
+  <xs:element name="readUserResponse" type="tns:readUserResponse"/>
+  <xs:element name="updateUser" type="tns:updateUser"/>
+  <xs:element name="updateUserResponse" type="tns:updateUserResponse"/>
+  <xs:complexType name="delUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="delUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddComment">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddCommentResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetPost">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetPostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeletePost">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DeletePostResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="readUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="readUserResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType abstract="true" name="abstractCollection">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType abstract="true" name="abstractList">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractCollection">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="arrayList">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractList">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GetPublishedPost">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="GetPublishedPostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Login">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LoginResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetUnpublishedPost">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="GetUnpublishedPostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecoverPost">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RecoverPostResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+      <xs:element name="arg3" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addPostResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetAllComment">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetAllCommentResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetAllUser">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="GetAllUserResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Search">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SearchResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddNewPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddNewPostResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PublishPost">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PublishPostResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetDeletedPost">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="GetDeletedPostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UpdatePost">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg4" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UpdatePostResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IOException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="IOException" type="tns:IOException"/>
+  <xs:complexType name="MalformedURLException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="MalformedURLException" type="tns:MalformedURLException"/>
+  <xs:complexType name="JSONException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="JSONException" type="tns:JSONException"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetPost">
+    <wsdl:part element="tns:GetPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="delUserResponse">
+    <wsdl:part element="tns:delUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="LoginResponse">
+    <wsdl:part element="tns:LoginResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetPublishedPost">
+    <wsdl:part element="tns:GetPublishedPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addPost">
+    <wsdl:part element="tns:addPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RecoverPost">
+    <wsdl:part element="tns:RecoverPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PublishPostResponse">
+    <wsdl:part element="tns:PublishPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IOException">
+    <wsdl:part element="tns:IOException" name="IOException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDeletedPostResponse">
+    <wsdl:part element="tns:GetDeletedPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addUserResponse">
+    <wsdl:part element="tns:addUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddComment">
+    <wsdl:part element="tns:AddComment" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetAllUser">
+    <wsdl:part element="tns:GetAllUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Login">
+    <wsdl:part element="tns:Login" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Search">
+    <wsdl:part element="tns:Search" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="delUser">
+    <wsdl:part element="tns:delUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SearchResponse">
+    <wsdl:part element="tns:SearchResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addUser">
+    <wsdl:part element="tns:addUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetPublishedPostResponse">
+    <wsdl:part element="tns:GetPublishedPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetPostResponse">
+    <wsdl:part element="tns:GetPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateUserResponse">
+    <wsdl:part element="tns:updateUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PublishPost">
+    <wsdl:part element="tns:PublishPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetUnpublishedPostResponse">
+    <wsdl:part element="tns:GetUnpublishedPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddCommentResponse">
+    <wsdl:part element="tns:AddCommentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetUnpublishedPost">
+    <wsdl:part element="tns:GetUnpublishedPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddNewPost">
+    <wsdl:part element="tns:AddNewPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeletePostResponse">
+    <wsdl:part element="tns:DeletePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateUser">
+    <wsdl:part element="tns:updateUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeletePost">
+    <wsdl:part element="tns:DeletePost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDeletedPost">
+    <wsdl:part element="tns:GetDeletedPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetAllUserResponse">
+    <wsdl:part element="tns:GetAllUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdatePostResponse">
+    <wsdl:part element="tns:UpdatePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="RecoverPostResponse">
+    <wsdl:part element="tns:RecoverPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="readUserResponse">
+    <wsdl:part element="tns:readUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MalformedURLException">
+    <wsdl:part element="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addPostResponse">
+    <wsdl:part element="tns:addPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddNewPostResponse">
+    <wsdl:part element="tns:AddNewPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetAllComment">
+    <wsdl:part element="tns:GetAllComment" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="JSONException">
+    <wsdl:part element="tns:JSONException" name="JSONException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetAllCommentResponse">
+    <wsdl:part element="tns:GetAllCommentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="readUser">
+    <wsdl:part element="tns:readUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UpdatePost">
+    <wsdl:part element="tns:UpdatePost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="HelloService">
+    <wsdl:operation name="delUser">
+      <wsdl:input message="tns:delUser" name="delUser">
+    </wsdl:input>
+      <wsdl:output message="tns:delUserResponse" name="delUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddComment">
+      <wsdl:input message="tns:AddComment" name="AddComment">
+    </wsdl:input>
+      <wsdl:output message="tns:AddCommentResponse" name="AddCommentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPost">
+      <wsdl:input message="tns:GetPost" name="GetPost">
+    </wsdl:input>
+      <wsdl:output message="tns:GetPostResponse" name="GetPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePost">
+      <wsdl:input message="tns:DeletePost" name="DeletePost">
+    </wsdl:input>
+      <wsdl:output message="tns:DeletePostResponse" name="DeletePostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="readUser">
+      <wsdl:input message="tns:readUser" name="readUser">
+    </wsdl:input>
+      <wsdl:output message="tns:readUserResponse" name="readUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPublishedPost">
+      <wsdl:input message="tns:GetPublishedPost" name="GetPublishedPost">
+    </wsdl:input>
+      <wsdl:output message="tns:GetPublishedPostResponse" name="GetPublishedPostResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:Login" name="Login">
+    </wsdl:input>
+      <wsdl:output message="tns:LoginResponse" name="LoginResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUnpublishedPost">
+      <wsdl:input message="tns:GetUnpublishedPost" name="GetUnpublishedPost">
+    </wsdl:input>
+      <wsdl:output message="tns:GetUnpublishedPostResponse" name="GetUnpublishedPostResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecoverPost">
+      <wsdl:input message="tns:RecoverPost" name="RecoverPost">
+    </wsdl:input>
+      <wsdl:output message="tns:RecoverPostResponse" name="RecoverPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addPost">
+      <wsdl:input message="tns:addPost" name="addPost">
+    </wsdl:input>
+      <wsdl:output message="tns:addPostResponse" name="addPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateUser">
+      <wsdl:input message="tns:updateUser" name="updateUser">
+    </wsdl:input>
+      <wsdl:output message="tns:updateUserResponse" name="updateUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllComment">
+      <wsdl:input message="tns:GetAllComment" name="GetAllComment">
+    </wsdl:input>
+      <wsdl:output message="tns:GetAllCommentResponse" name="GetAllCommentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUser">
+      <wsdl:input message="tns:GetAllUser" name="GetAllUser">
+    </wsdl:input>
+      <wsdl:output message="tns:GetAllUserResponse" name="GetAllUserResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addUser">
+      <wsdl:input message="tns:addUser" name="addUser">
+    </wsdl:input>
+      <wsdl:output message="tns:addUserResponse" name="addUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <wsdl:input message="tns:Search" name="Search">
+    </wsdl:input>
+      <wsdl:output message="tns:SearchResponse" name="SearchResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewPost">
+      <wsdl:input message="tns:AddNewPost" name="AddNewPost">
+    </wsdl:input>
+      <wsdl:output message="tns:AddNewPostResponse" name="AddNewPostResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PublishPost">
+      <wsdl:input message="tns:PublishPost" name="PublishPost">
+    </wsdl:input>
+      <wsdl:output message="tns:PublishPostResponse" name="PublishPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDeletedPost">
+      <wsdl:input message="tns:GetDeletedPost" name="GetDeletedPost">
+    </wsdl:input>
+      <wsdl:output message="tns:GetDeletedPostResponse" name="GetDeletedPostResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePost">
+      <wsdl:input message="tns:UpdatePost" name="UpdatePost">
+    </wsdl:input>
+      <wsdl:output message="tns:UpdatePostResponse" name="UpdatePostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HelloServiceImplServiceSoapBinding" type="tns:HelloService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="AddComment">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="AddComment">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="AddCommentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="delUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="delUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="delUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="GetPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="DeletePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DeletePostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="readUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="readUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="readUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPublishedPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="GetPublishedPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetPublishedPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="Login">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="LoginResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUnpublishedPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="GetUnpublishedPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetUnpublishedPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecoverPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="RecoverPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="RecoverPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllComment">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="GetAllComment">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetAllCommentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="GetAllUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetAllUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Search">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="Search">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="SearchResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNewPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="AddNewPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="AddNewPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PublishPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="PublishPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="PublishPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDeletedPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="GetDeletedPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetDeletedPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="UpdatePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="UpdatePostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HelloServiceImplService">
+    <wsdl:port binding="tns:HelloServiceImplServiceSoapBinding" name="HelloServiceImplPort">
+      <soap:address location="http://fathomless-scrubland-8196.herokuapp.com/HelloService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
