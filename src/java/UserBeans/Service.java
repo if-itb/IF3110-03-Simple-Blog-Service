@@ -9,6 +9,7 @@ import com.firebase.client.Firebase;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,31 +83,23 @@ public class Service {
     /**
      * Web service operation
      */
-//    @WebMethod(operationName = "listUser")
-//    public List<User> listUser() throws MalformedURLException, IOException, JSONException {
-//        //TODO write your implementation code here:
-////        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/user");
-//        URL linkJson = new URL("https://simpleblogjsf.firebaseio.com/user.json");
-//        URLConnection con = linkJson.openConnection();
-//        List<User> list_user = new ArrayList<>();
-//        JSONTokener tokenListUser = new JSONTokener(con.getInputStream());
-//        JSONObject list = new JSONObject(tokenListUser);
-//        Iterator<String> key_user = list.keys();
-//        while(key_user.hasNext()){
-//            String ch = key_user.next();
-//            JSONObject user = list.getJSONObject(ch);
-//            User usr = new User();
-//            usr.setUid(ch);
-//            usr.setEmail(user.getString("email"));
-//            usr.setFullname(user.getString("fullname"));
-//            usr.setUsername(user.getString("username"));
-//            usr.setPassword(user.getString("password"));
-//            usr.setRole(user.getString("role"));
-//            list_user.add(usr);
-//        }
-//        
-//        return list_user;
-//    }
+    @WebMethod(operationName = "listUser")
+    public ArrayList<JSONObject> listUser() throws JSONException, MalformedURLException {
+        //TODO write your implementation code here:
+//        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/user");
+        String linkJson = readURL("https://simpleblogjsf.firebaseio.com/user.json");
+        JSONObject obj =new JSONObject(linkJson);
+        ArrayList<JSONObject> list_user = new ArrayList<>();
+        Iterator<String> ids=obj.keys();
+        String allUser="";
+        while(ids.hasNext()){
+            String id_User=ids.next();
+            JSONObject getuser = obj.getJSONObject(id_User);
+            list_user.add(getuser);
+            allUser+="Fullname:    "+getuser.getString("fullname")+"\nUsername: "+getuser.getString("username")+"\nPassword:    "+getuser.getString("password")+"\nEmail:    "+getuser.getString("email")+"\nRole:    "+getuser.getString("role")+"\n";
+        }
+        return list_user;
+    }
     
 
     @WebMethod(operationName = "deleteUser")
@@ -199,17 +192,31 @@ public class Service {
      * Web service operation
      */
     @WebMethod(operationName = "editUser")
-    public boolean editUser(@WebParam(name = "id") String id, @WebParam(name = "fullname") String fullname, @WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "role") String role, @WebParam(name = "email") String email) {
+    public boolean editUser(@WebParam(name = "id") String id, @WebParam(name = "username") String username, @WebParam(name = "role") String role, @WebParam(name = "email") String email) {
         //TODO write your implementation code here:
-        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/user" + id);
-        Map<String, Object> user = new HashMap<String, Object>();
-        user.put("fullname", fullname);
-        user.put("username", username);
-        user.put("password", password);
-        user.put("email", email);
-        user.put("role", role);
-        ref.updateChildren(user);
-        return true;
+        try {
+            //mengambil data dari json
+            String jsonString = readURL("https://simpleblogjsf.firebaseio.com/user/"+id+".json");
+            JSONObject userJson = new JSONObject(jsonString);
+            String f_name = userJson.getString("fullname");
+            String pass = userJson.getString("password");
+           //menuliskan update ke firebase
+            Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/user/"+id);
+            Map<String, Object> usr = new HashMap<String, Object>();
+            usr.put("id", id);
+            usr.put("fullname", f_name);
+            usr.put("username", username);
+            usr.put("password", pass);
+            usr.put("role", role);
+            usr.put("email", email);
+            ref.updateChildren(usr);
+            return true;
+        } catch (JSONException ex) {
+            Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        
     }
     
      /**
