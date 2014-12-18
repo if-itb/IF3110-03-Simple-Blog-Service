@@ -65,7 +65,7 @@ public class Post {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	
+
 	public void setPostFromPostmodel(PostModel postModel) {
 		this.id = postModel.getId();
 		this.title = postModel.getTitle();

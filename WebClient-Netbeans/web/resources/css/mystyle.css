@@ -330,3 +330,13 @@ a.rollover:hover {
 	position: absolute;
 	left: -5000px;
 	}
+	
+.searchbox{
+	-webkit-border-radius: 20%;
+	-moz-border-radius:10px;
+	width:20%;
+	}
+
+	.signin > graphicImage {
+		margin-top: 2px;
+	}

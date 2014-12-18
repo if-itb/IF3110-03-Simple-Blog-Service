@@ -119,6 +119,20 @@ public class MySQL {
 	public boolean restorePost(String id) {
 		return new RMIPost().restorePost(id);
 	}
+	
+	public List<Post> searchPost(String key) {
+		List<Post> posts = new ArrayList<>();
+		List<PostModel> postModels = new RMIPost().searchPost(key);
+		if (postModels != null) {
+			for(PostModel pm : postModels) {
+				Post p = new Post();
+				p.setPostFromPostmodel(pm);
+				posts.add(p);
+			}
+		}
+		return posts;
+	}
+	
 	// </editor-fold>
 	
 	// <editor-fold defaultstate="collapsed" desc="Comment">

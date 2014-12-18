@@ -28,6 +28,7 @@ public class PostsController implements Serializable {
 	private long active_date;
 	private String active_content;
 	private boolean active_status;
+	private String search_key;
 	
 	/**
 	 * Creates a new instance of PostsController
@@ -73,6 +74,14 @@ public class PostsController implements Serializable {
 
 	public void setActive_status(boolean active_status) {
 		this.active_status = active_status;
+	}
+
+	public String getSearch_key() {
+		return search_key;
+	}
+
+	public void setSearch_key(String search_key) {
+		this.search_key = search_key;
 	}
 
 	public void createPost(String title, long date, String content) throws IOException {
@@ -122,6 +131,12 @@ public class PostsController implements Serializable {
 	public void viewPost(String id) throws IOException {
 		active_id = id;
 		FacesContext.getCurrentInstance().getExternalContext().redirect("view_post.xhtml");
+	}
+	
+	public List<Post> searchPost() {
+		MySQL mysql = new MySQL();
+		
+		return mysql.searchPost(search_key);
 	}
 	
 	public void editPost(String id, String title, long date, String content, boolean status) throws IOException {

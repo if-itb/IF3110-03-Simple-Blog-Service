@@ -76,28 +76,28 @@
 						</div>
 						<br />
 						<hr></hr>
-                                                <h:panelGroup id="commentsTable">
-						<ui:repeat value="#{commentsController.getAllComments(viewpostid.value)}" var="comment">
-							<div class="komentarbox">
-								<h:inputHidden value="#{comment.id}" binding="#{commentid}" />
-								<div class="komentarattr">
-									<div class="komentarname">
-										<b><h:outputText value="#{comment.name}" binding="#{commentname}" ></h:outputText></b>
+                        <h:panelGroup id="commentsTable">
+							<ui:repeat value="#{commentsController.getAllComments(viewpostid.value)}" var="comment">
+								<div class="komentarbox">
+									<h:inputHidden value="#{comment.id}" binding="#{commentid}" />
+									<div class="komentarattr">
+										<div class="komentarname">
+											<b><h:outputText value="#{comment.name}" binding="#{commentname}" ></h:outputText></b>
+										</div>
+										<div class="komentartime">
+											<h:outputText value="#{comment.date}" binding="#{commentdate}" >
+												<f:convertDateTime type="date" dateStyle="long" timeZone="GMT+7"/>
+											</h:outputText>
+										</div>
 									</div>
-									<div class="komentartime">
-										<h:outputText value="#{comment.date}" binding="#{commentdate}" >
-											<f:convertDateTime type="date" dateStyle="long" timeZone="GMT+7"/>
-										</h:outputText>
-									</div>
-								</div>
 
-								<div class="komentarcontent">
-									<h:outputText value="#{comment.comment}" binding="#{commentcomment}" ></h:outputText>
+									<div class="komentarcontent">
+										<h:outputText value="#{comment.comment}" binding="#{commentcomment}" ></h:outputText>
+									</div>
 								</div>
-							</div>
-							<br />
-						</ui:repeat>
-                                                </h:panelGroup>
+								<br />
+							</ui:repeat>
+                        </h:panelGroup>
 					</div>
 				</h:form>
 			</div>

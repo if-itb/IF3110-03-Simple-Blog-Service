@@ -18,6 +18,12 @@ public class RMIPost {
 		
 	}
 	
+	public List<PostModel> searchPost(String key) {
+		org.ccw.heroku.service.CCWwebserviceService service = new org.ccw.heroku.service.CCWwebserviceService();
+		org.ccw.heroku.service.CCWwebservice port = service.getCCWwebservicePort();
+		return port.searchPost(key);
+	}
+	
 	public boolean updatePost(String id, String title, long date, String content, boolean status) {
 		org.ccw.heroku.service.CCWwebserviceService service = new org.ccw.heroku.service.CCWwebserviceService();
 		org.ccw.heroku.service.CCWwebservice port = service.getCCWwebservicePort();
