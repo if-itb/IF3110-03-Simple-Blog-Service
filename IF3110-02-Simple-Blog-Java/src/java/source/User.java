@@ -124,8 +124,8 @@ public class User {
         if(role == null)
         {
             for(DataUser user : userlist) {
-                if(user.username.equals(this.username)) {
-                    this.role = user.role;
+                if(user.getUsername().equals(this.username)) {
+                    this.role = user.getRole();
                     break;
                 }
             }
@@ -172,11 +172,11 @@ public class User {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         List<DataUser> userlist = blog.getAllUser();
         for(DataUser user : userlist) {
-            if(user.username.equals(this.username)) {
-                this.nama = user.nama;
-                this.password = user.password;
-                this.email = user.email;
-                this.role = user.role;
+            if(user.getUsername().equals(this.username)) {
+                setNama(user.getNama());
+                setPassword(user.getPassword());
+                setEmail(user.getEmail());
+                setRole(user.getRole());
                 break;
             }
         }
@@ -256,7 +256,7 @@ public class User {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         List<DataUser> userlist = blog.getAllUser();
         for(DataUser user : userlist) {
-            if(user.username.equals(this.username)) {
+            if(user.getUsername().equals(this.username)) {
                 blog.deleteUser(user.getIdFirebase());
             }
         }
@@ -288,7 +288,7 @@ public class User {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         List<DataUser> userlist = blog.getAllUser();
         for(DataUser user : userlist) {
-            if(user.username.equals(this.username)&&user.password.equals(this.password)) {
+            if(user.getUsername().equals(this.getUsername())&&user.getPassword().equals(this.getPassword())) {
                 return true;
             }
         }

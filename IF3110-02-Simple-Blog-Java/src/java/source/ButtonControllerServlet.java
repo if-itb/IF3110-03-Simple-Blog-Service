@@ -47,7 +47,9 @@ public class ButtonControllerServlet extends HttpServlet{
                                         request.getParameter("nama"), request.getParameter("email"), request.getParameter("role"));
             try {
                 tambahUser.updateUser();
-            } catch (SQLException ex) {
+            } catch (Exception_Exception ex) {
+                Logger.getLogger(ButtonControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException_Exception ex) {
                 Logger.getLogger(ButtonControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
             response.sendRedirect("admin/user_management.jsp");
