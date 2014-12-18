@@ -30,10 +30,6 @@ public class User {
     private String nama;
     private String email;
     private String role;
-    private final String userSQL = "root2";
-    private final String passSQL = "akhfa";
-    private final String urlSQL = "localhost";
-    private final String databaseName = "blog";
     
     /**
      * Konstruktor ini digunakan jika ingin menggunakan fungsi fungsi yang ada
@@ -207,6 +203,7 @@ public class User {
      */
     public void updateUser() throws SQLException
     {
+        /*
         KoneksiDatabase.setUser(userSQL);
         KoneksiDatabase.setPassword(passSQL);
         KoneksiDatabase.setDatabase(urlSQL,databaseName);
@@ -225,7 +222,7 @@ public class User {
             preStat.setString(4, role);
             preStat.setString(5, username);
             preStat.executeUpdate();
-        }
+        } */
     }
     
     /**
@@ -263,8 +260,17 @@ public class User {
      * @return True jika login berhasil, dan false jika gagal
      * @throws java.sql.SQLException
      */
-    public boolean successLogin() throws SQLException
+    public boolean successLogin() throws SQLException, Exception_Exception, InterruptedException_Exception
     {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        List<DataUser> userlist = blog.getAllUser();
+        for(DataUser user : userlist) {
+            if(user.username.equals(this.username)&&user.password.equals(this.password)) {
+                return true;
+            }
+        }
+        return false;
+        /*
         KoneksiDatabase.setUser(userSQL);
         KoneksiDatabase.setPassword(passSQL);
         KoneksiDatabase.setDatabase(urlSQL,databaseName);
@@ -290,85 +296,7 @@ public class User {
         result.close();
         statement.close();
 //        koneksi.close();
-        return false;
-    }
-    
-    /**
-     * Fungsi untuk mengecek apakah login sukses atau tidak 
-     * dengan user database dan password database yang custom
-     * @param _userDatabase
-     * @param _passwordDatabase
-     * @return
-     * @throws SQLException 
-     */
-    public boolean successLogin(String _userDatabase, String _passwordDatabase) throws SQLException
-    {
-        KoneksiDatabase.setUser(_userDatabase);
-        KoneksiDatabase.setPassword(_passwordDatabase);
-        KoneksiDatabase.setDatabase("localhost","blog");
-        
-        Connection koneksi = KoneksiDatabase.getKoneksi();
-        Statement statement = koneksi.createStatement();
-        String query = "SELECT username, password FROM user WHERE username = '" + username +"'";
-        System.out.println(query);
-        
-        ResultSet result = statement.executeQuery(query);
-        while(result.next())
-        {
-            System.out.println("User = " + result.getString(1));
-            System.out.println("password = " + result.getString(2));
-            if(username.equalsIgnoreCase(result.getString(1)) && password.equals(result.getString(2)))
-            {
-                result.close();
-                statement.close();
-//                koneksi.close();
-                return true;
-            }
-        }
-        result.close();
-        statement.close();
-//        koneksi.close();
-        return false;
-    }
-    
-    /**
-     * Fungsi untuk mengecek apakah login sukses atau tidak 
-     * dengan user, password, domain, dan nama database yang custom
-     * @param _userDatabase
-     * @param _passwordDatabase
-     * @param _domain
-     * @param _namaDatabase
-     * @return
-     * @throws SQLException 
-     */
-    public boolean successLogin(String _userDatabase, String _passwordDatabase, String _domain, String _namaDatabase) throws SQLException
-    {
-        KoneksiDatabase.setUser(_userDatabase);
-        KoneksiDatabase.setPassword(_passwordDatabase);
-        KoneksiDatabase.setDatabase(_domain,_namaDatabase);
-        
-        Connection koneksi = KoneksiDatabase.getKoneksi();
-        Statement statement = koneksi.createStatement();
-        String query = "SELECT username, password FROM user WHERE username = '" + username +"'";
-        System.out.println(query);
-        
-        ResultSet result = statement.executeQuery(query);
-        while(result.next())
-        {
-            System.out.println("User = " + result.getString(1));
-            System.out.println("password = " + result.getString(2));
-            if(username.equalsIgnoreCase(result.getString(1)) && password.equals(result.getString(2)))
-            {
-                result.close();
-                statement.close();
-//                koneksi.close();
-                return true;
-            }
-        }
-        result.close();
-        statement.close();
-//        koneksi.close();
-        return false;
+        return false; */
     }
     
     /**
@@ -376,8 +304,11 @@ public class User {
      * User di create terlebih dahulu dengan constructor dengan parameter (username, password, dan role).
      * @throws SQLException 
      */
-    public void masukDatabase() throws SQLException
+    public void masukDatabase() throws SQLException, InterruptedException_Exception
     {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        blog.addUser(username, nama, password, email, role);
+        /*
         KoneksiDatabase.setUser(userSQL);
         KoneksiDatabase.setPassword(passSQL);
         KoneksiDatabase.setDatabase(urlSQL,databaseName);
@@ -393,32 +324,7 @@ public class User {
             preStat.executeUpdate();
             preStat.close();
         }
-//        koneksi.close();
-    }
-    
-    /**
-     * Memasukkan user ke dalam database dengan userdatabase dan passwordDatabase yang custom
-     * User di create terlebih dahulu dengan constructor dengan parameter (username, password, dan role).
-     * @throws SQLException 
-     */
-    public void masukDatabase(String _userDatabase, String _passwordDatabase) throws SQLException
-    {
-        KoneksiDatabase.setUser(_userDatabase);
-        KoneksiDatabase.setPassword(_passwordDatabase);
-        KoneksiDatabase.setDatabase("localhost","blog");
-        Connection koneksi = KoneksiDatabase.getKoneksi();
-        String query = "INSERT INTO user (username,password,nama,email,role) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement preStat = koneksi.prepareStatement(query)) {
-            preStat.setString(1, username);
-            preStat.setString(2, password);
-            preStat.setString(3, nama);
-            preStat.setString(4, email);
-            preStat.setString(5, role);
-            
-            preStat.executeUpdate();
-            preStat.close();
-        }
-//        koneksi.close();
+//        koneksi.close(); */
     }
     
     /**
@@ -426,7 +332,7 @@ public class User {
      * @param args 
      * @throws org.chamerling.heroku.service.Exception_Exception 
      */
-    public static void main(String[] args) throws Exception_Exception {
+    public static void main(String[] args) throws Exception_Exception, InterruptedException_Exception {
         try {
             User pertama = new User("akhfa3","akhfa2");
             if(pertama.successLogin())

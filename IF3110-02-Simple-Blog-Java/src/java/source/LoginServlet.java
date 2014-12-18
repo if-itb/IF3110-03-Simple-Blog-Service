@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.chamerling.heroku.service.Exception_Exception;
+import org.chamerling.heroku.service.InterruptedException_Exception;
  
 /**
  * Servlet implementation class LoginServlet
@@ -63,6 +64,8 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception_Exception ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException_Exception ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
  
