@@ -61,17 +61,20 @@
         <div id="home">
             <div class="posts">
                 <nav class="art-list">
-                <ul>
-                    <form name="Post" method="post" action="#">
+                
+                    <form name="Post" method="post" action="search_form_red.jsp">
                         <label for="Judul">Keyword:</label>
                         <input type="text" name="sParam" size="35" id="sParam" aria-required="true" required="">
-                        <input type="submit" name="submit" value="search" class="submit-button">
+                        <input type="submit" name="search" value="search" class="submit-button">
                     </form>
-                </ul>
+                
                   <ul class="art-list-body">
                     <li class="art-list-item">
-                        <!-- Isi post yang disearch  -->
+                        <%= 
+                           session.getAttribute("filter") 
+                        %>
                     </li>
+                    <% request.getSession().removeAttribute("filter"); %>
                   </ul>
                 </nav>
             </div>
