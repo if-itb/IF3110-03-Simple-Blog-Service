@@ -231,4 +231,92 @@ public class Service {
         ref.updateChildren(user);
         return true;
     }
+    
+     /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "addPost")
+    public Boolean addPost(@WebParam(name = "uid") String uid, @WebParam(name = "judul") String judul, @WebParam(name = "konten") String konten, @WebParam(name = "tanggal") String tanggal) {
+        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/");
+        Firebase postRef = ref.child("blogpost");
+        Map<String, Object> post = new HashMap<String, Object>();
+        post.put("delete", false);
+        post.put("judul", judul);
+        post.put("konten", konten);
+        post.put("publish", false);
+        post.put("tanggal", tanggal);
+        post.put("uid", uid);
+        postRef.push().setValue(post);
+        Firebase lastId = postRef.child("lastId");
+        lastId.setValue(1);
+        
+        return true;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "listPost")
+    public String listPost() {
+        try {
+            //Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/blogpost");
+            String postJson = readURL("https://simpleblogjsf.firebaseio.com/blogpost.json");
+            JSONObject obj = new JSONObject(postJson);
+            ArrayList<JSONObject> Posts = new ArrayList<>();
+            Iterator<String> jsonIterator = obj.keys();
+            String retval = "";
+            while(jsonIterator.hasNext()){
+                String postID = jsonIterator.next();
+                JSONObject postAtom = obj.getJSONObject(postID);
+                Posts.add(postAtom);
+                retval += "Judul : "+postAtom.getString("judul")+"\n";
+                retval += "Konten : "+postAtom.getString("konten")+"\n";
+                retval += "tanggal :"+postAtom.getString("tanggal")+"\n";
+            }
+            return retval;
+        } catch (JSONException ex) {
+            Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, ex);
+            return "error";
+        }
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "editPost")
+    public Boolean editPost(@WebParam(name = "id") String id, @WebParam(name = "judul") String judul, @WebParam(name = "konten") String konten, @WebParam(name = "tanggal") String tanggal) {
+        try {
+            //mengambil data dari json
+            String jsonString = readURL("https://simpleblogjsf.firebaseio.com/blogpost/"+id+".json");
+            JSONObject postJson = new JSONObject(jsonString);
+            Boolean delete = postJson.getBoolean("delete");
+            Boolean publish = postJson.getBoolean("publish");
+            String uid = postJson.getString("uid");
+               
+            //menuliskan update ke firebase
+            Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/blogpost/"+id);
+            Map<String, Object> post = new HashMap<String, Object>();
+            post.put("judul", judul);
+            post.put("konten", konten);
+            post.put("tanggal", tanggal);
+            post.put("delete", delete);
+            post.put("publish", publish);
+            post.put("uid", uid);
+            ref.updateChildren(post);
+            return true;
+        } catch (JSONException ex) {
+            Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "deletePost")
+    public Boolean deletePost(@WebParam(name = "id") String id) {
+        Firebase post = new Firebase("https://simpleblogjsf.firebaseio.com/blogpost/"+id);
+        post.removeValue();
+        return true;
+    }
 }
