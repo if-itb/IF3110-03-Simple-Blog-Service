@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="http://not-a-simple-blog.herokuapp.com/BlogService?wsdl" uri="src/conf/xml-resources/web-service-references/BlogService/wsdl/not-a-simple-blog.herokuapp.com/BlogService.wsdl"/>
+    <system systemId="http://not-a-simple-blog.herokuapp.com/BlogService?wsdl" uri="src/conf/xml-resources/web-service-references/BlogService_1/wsdl/not-a-simple-blog.herokuapp.com/BlogService.wsdl"/>
 </catalog>
