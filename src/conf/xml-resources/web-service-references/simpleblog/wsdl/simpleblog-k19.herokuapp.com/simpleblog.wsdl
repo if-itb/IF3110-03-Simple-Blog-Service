@@ -13,20 +13,24 @@
 <xs:element name="deletePostResponse" type="tns:deletePostResponse"/>
 <xs:element name="deleteUser" type="tns:deleteUser"/>
 <xs:element name="deleteUserResponse" type="tns:deleteUserResponse"/>
-<xs:element name="dummyTest" type="tns:dummyTest"/>
-<xs:element name="dummyTestResponse" type="tns:dummyTestResponse"/>
 <xs:element name="editPost" type="tns:editPost"/>
 <xs:element name="editPostResponse" type="tns:editPostResponse"/>
 <xs:element name="editUser" type="tns:editUser"/>
 <xs:element name="editUserResponse" type="tns:editUserResponse"/>
 <xs:element name="listComment" type="tns:listComment"/>
 <xs:element name="listCommentResponse" type="tns:listCommentResponse"/>
+<xs:element name="listDeletedPost" type="tns:listDeletedPost"/>
+<xs:element name="listDeletedPostResponse" type="tns:listDeletedPostResponse"/>
 <xs:element name="listPost" type="tns:listPost"/>
 <xs:element name="listPostResponse" type="tns:listPostResponse"/>
+<xs:element name="listUnpublishedPost" type="tns:listUnpublishedPost"/>
+<xs:element name="listUnpublishedPostResponse" type="tns:listUnpublishedPostResponse"/>
 <xs:element name="listUser" type="tns:listUser"/>
 <xs:element name="listUserResponse" type="tns:listUserResponse"/>
 <xs:element name="publishPost" type="tns:publishPost"/>
 <xs:element name="publishPostResponse" type="tns:publishPostResponse"/>
+<xs:element name="search" type="tns:search"/>
+<xs:element name="searchResponse" type="tns:searchResponse"/>
 <xs:element name="softDelete" type="tns:softDelete"/>
 <xs:element name="softDeleteResponse" type="tns:softDeleteResponse"/>
 <xs:complexType name="deletePost">
@@ -37,16 +41,6 @@
 <xs:complexType name="deletePostResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="dummyTest">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="query" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="dummyTestResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:anyType"/>
     </xs:sequence>
   </xs:complexType>
 <xs:complexType name="addUser">
@@ -71,6 +65,25 @@
 <xs:complexType name="deleteCommentResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listUnpublishedPost">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="listUnpublishedPostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:post"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="post">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="author" type="xs:string"/>
+      <xs:element name="deleted" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="judul" type="xs:string"/>
+      <xs:element minOccurs="0" name="konten" type="xs:string"/>
+      <xs:element name="published" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 <xs:complexType name="addPost">
@@ -108,15 +121,14 @@
       <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:post"/>
     </xs:sequence>
   </xs:complexType>
-<xs:complexType name="post">
+<xs:complexType name="search">
     <xs:sequence>
-      <xs:element minOccurs="0" name="author" type="xs:string"/>
-      <xs:element name="deleted" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="id" type="xs:string"/>
-      <xs:element minOccurs="0" name="judul" type="xs:string"/>
-      <xs:element minOccurs="0" name="konten" type="xs:string"/>
-      <xs:element name="published" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="searchResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:post"/>
     </xs:sequence>
   </xs:complexType>
 <xs:complexType name="editPost">
@@ -169,7 +181,24 @@
   </xs:complexType>
 <xs:complexType name="listCommentResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:komentar"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="komentar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="konten" type="xs:string"/>
+      <xs:element minOccurs="0" name="nama" type="xs:string"/>
+      <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listDeletedPost">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="listDeletedPostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:post"/>
     </xs:sequence>
   </xs:complexType>
 <xs:complexType name="addComment">
@@ -177,6 +206,7 @@
       <xs:element minOccurs="0" name="nama" type="xs:string"/>
       <xs:element minOccurs="0" name="email" type="xs:string"/>
       <xs:element minOccurs="0" name="konten" type="xs:string"/>
+      <xs:element minOccurs="0" name="date" type="xs:string"/>
       <xs:element minOccurs="0" name="idPost" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
@@ -190,7 +220,16 @@
   </xs:complexType>
 <xs:complexType name="listUserResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:pengguna"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="pengguna">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="nama" type="xs:string"/>
+      <xs:element minOccurs="0" name="password" type="xs:string"/>
+      <xs:element minOccurs="0" name="role" type="xs:string"/>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
@@ -199,8 +238,8 @@
     <wsdl:part element="tns:addCommentResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="dummyTest">
-    <wsdl:part element="tns:dummyTest" name="parameters">
+  <wsdl:message name="listUnpublishedPost">
+    <wsdl:part element="tns:listUnpublishedPost" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="addPost">
@@ -223,6 +262,10 @@
     <wsdl:part element="tns:editPost" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="searchResponse">
+    <wsdl:part element="tns:searchResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="softDelete">
     <wsdl:part element="tns:softDelete" name="parameters">
     </wsdl:part>
@@ -241,6 +284,10 @@
   </wsdl:message>
   <wsdl:message name="deleteUserResponse">
     <wsdl:part element="tns:deleteUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDeletedPost">
+    <wsdl:part element="tns:listDeletedPost" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="listCommentResponse">
@@ -279,8 +326,20 @@
     <wsdl:part element="tns:editUser" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="listUnpublishedPostResponse">
+    <wsdl:part element="tns:listUnpublishedPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDeletedPostResponse">
+    <wsdl:part element="tns:listDeletedPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="softDeleteResponse">
     <wsdl:part element="tns:softDeleteResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="search">
+    <wsdl:part element="tns:search" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="publishPostResponse">
@@ -289,10 +348,6 @@
   </wsdl:message>
   <wsdl:message name="publishPost">
     <wsdl:part element="tns:publishPost" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="dummyTestResponse">
-    <wsdl:part element="tns:dummyTestResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="listComment">
@@ -314,12 +369,6 @@
       <wsdl:output message="tns:deletePostResponse" name="deletePostResponse">
     </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="dummyTest">
-      <wsdl:input message="tns:dummyTest" name="dummyTest">
-    </wsdl:input>
-      <wsdl:output message="tns:dummyTestResponse" name="dummyTestResponse">
-    </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="addUser">
       <wsdl:input message="tns:addUser" name="addUser">
     </wsdl:input>
@@ -330,6 +379,12 @@
       <wsdl:input message="tns:deleteComment" name="deleteComment">
     </wsdl:input>
       <wsdl:output message="tns:deleteCommentResponse" name="deleteCommentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listUnpublishedPost">
+      <wsdl:input message="tns:listUnpublishedPost" name="listUnpublishedPost">
+    </wsdl:input>
+      <wsdl:output message="tns:listUnpublishedPostResponse" name="listUnpublishedPostResponse">
     </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="addPost">
@@ -348,6 +403,12 @@
       <wsdl:input message="tns:listPost" name="listPost">
     </wsdl:input>
       <wsdl:output message="tns:listPostResponse" name="listPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="search">
+      <wsdl:input message="tns:search" name="search">
+    </wsdl:input>
+      <wsdl:output message="tns:searchResponse" name="searchResponse">
     </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="editPost">
@@ -380,6 +441,12 @@
       <wsdl:output message="tns:listCommentResponse" name="listCommentResponse">
     </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="listDeletedPost">
+      <wsdl:input message="tns:listDeletedPost" name="listDeletedPost">
+    </wsdl:input>
+      <wsdl:output message="tns:listDeletedPostResponse" name="listDeletedPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="addComment">
       <wsdl:input message="tns:addComment" name="addComment">
     </wsdl:input>
@@ -404,21 +471,21 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="dummyTest">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="dummyTest">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="dummyTestResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="addUser">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="addUser">
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="addUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listUnpublishedPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listUnpublishedPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listUnpublishedPostResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
@@ -455,6 +522,15 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="listPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="search">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="search">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="searchResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
@@ -500,6 +576,15 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="listCommentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listDeletedPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listDeletedPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listDeletedPostResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>

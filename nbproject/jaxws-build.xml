@@ -28,7 +28,7 @@
     </target>
     <target name="wsimport-client-simpleblog" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/simpleblog"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/simpleblog" destdir="${build.generated.dir}/jax-wsCache/simpleblog" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/simpleblog/wsdl/simpleblog-k19.herokuapp.com/simpleblog.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="https://simpleblog-k19.herokuapp.com/simpleblog?wsdl" xnocompile="true" xendorsed="true">
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/simpleblog" destdir="${build.generated.dir}/jax-wsCache/simpleblog" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/simpleblog/wsdl/simpleblog-k19.herokuapp.com/simpleblog.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="https://simpleblog-k19.herokuapp.com/simpleblog?wsdl" xnocompile="true" xendorsed="true" package="blog">
             <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/simpleblog/wsdl/simpleblog-k19.herokuapp.com/simpleblog.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/simpleblog"/>
         </wsimport>

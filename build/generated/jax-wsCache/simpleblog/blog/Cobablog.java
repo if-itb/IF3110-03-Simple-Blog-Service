@@ -41,20 +41,6 @@ public interface Cobablog {
 
     /**
      * 
-     * @param query
-     * @return
-     *     returns java.util.List<java.lang.Object>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "dummyTest", targetNamespace = "http://blog/", className = "blog.DummyTest")
-    @ResponseWrapper(localName = "dummyTestResponse", targetNamespace = "http://blog/", className = "blog.DummyTestResponse")
-    public List<Object> dummyTest(
-        @WebParam(name = "query", targetNamespace = "")
-        String query);
-
-    /**
-     * 
      * @param password
      * @param role
      * @param nama
@@ -75,6 +61,17 @@ public interface Cobablog {
         String role,
         @WebParam(name = "password", targetNamespace = "")
         String password);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<blog.Post>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listUnpublishedPost", targetNamespace = "http://blog/", className = "blog.ListUnpublishedPost")
+    @ResponseWrapper(localName = "listUnpublishedPostResponse", targetNamespace = "http://blog/", className = "blog.ListUnpublishedPostResponse")
+    public List<Post> listUnpublishedPost();
 
     /**
      * 
@@ -155,6 +152,20 @@ public interface Cobablog {
 
     /**
      * 
+     * @param query
+     * @return
+     *     returns java.util.List<blog.Post>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "search", targetNamespace = "http://blog/", className = "blog.Search")
+    @ResponseWrapper(localName = "searchResponse", targetNamespace = "http://blog/", className = "blog.SearchResponse")
+    public List<Post> search(
+        @WebParam(name = "query", targetNamespace = "")
+        String query);
+
+    /**
+     * 
      * @param konten
      * @param tanggal
      * @param judul
@@ -222,18 +233,30 @@ public interface Cobablog {
      * 
      * @param idPost
      * @return
-     *     returns java.lang.String
+     *     returns java.util.List<blog.Komentar>
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "listComment", targetNamespace = "http://blog/", className = "blog.ListComment")
     @ResponseWrapper(localName = "listCommentResponse", targetNamespace = "http://blog/", className = "blog.ListCommentResponse")
-    public String listComment(
+    public List<Komentar> listComment(
         @WebParam(name = "idPost", targetNamespace = "")
         String idPost);
 
     /**
      * 
+     * @return
+     *     returns java.util.List<blog.Post>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listDeletedPost", targetNamespace = "http://blog/", className = "blog.ListDeletedPost")
+    @ResponseWrapper(localName = "listDeletedPostResponse", targetNamespace = "http://blog/", className = "blog.ListDeletedPostResponse")
+    public List<Post> listDeletedPost();
+
+    /**
+     * 
+     * @param date
      * @param nama
      * @param konten
      * @param email
@@ -252,18 +275,20 @@ public interface Cobablog {
         String email,
         @WebParam(name = "konten", targetNamespace = "")
         String konten,
+        @WebParam(name = "date", targetNamespace = "")
+        String date,
         @WebParam(name = "idPost", targetNamespace = "")
         String idPost);
 
     /**
      * 
      * @return
-     *     returns java.lang.String
+     *     returns java.util.List<blog.Pengguna>
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "listUser", targetNamespace = "http://blog/", className = "blog.ListUser")
     @ResponseWrapper(localName = "listUserResponse", targetNamespace = "http://blog/", className = "blog.ListUserResponse")
-    public String listUser();
+    public List<Pengguna> listUser();
 
 }

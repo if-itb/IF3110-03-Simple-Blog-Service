@@ -25,17 +25,19 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _AddCommentResponse_QNAME = new QName("http://blog/", "addCommentResponse");
-    private final static QName _DummyTest_QNAME = new QName("http://blog/", "dummyTest");
+    private final static QName _ListUnpublishedPost_QNAME = new QName("http://blog/", "listUnpublishedPost");
     private final static QName _AddPost_QNAME = new QName("http://blog/", "addPost");
     private final static QName _ListUserResponse_QNAME = new QName("http://blog/", "listUserResponse");
     private final static QName _ListPost_QNAME = new QName("http://blog/", "listPost");
     private final static QName _AddPostResponse_QNAME = new QName("http://blog/", "addPostResponse");
     private final static QName _EditPost_QNAME = new QName("http://blog/", "editPost");
+    private final static QName _SearchResponse_QNAME = new QName("http://blog/", "searchResponse");
     private final static QName _SoftDelete_QNAME = new QName("http://blog/", "softDelete");
     private final static QName _DeleteCommentResponse_QNAME = new QName("http://blog/", "deleteCommentResponse");
     private final static QName _DeleteUser_QNAME = new QName("http://blog/", "deleteUser");
     private final static QName _ListPostResponse_QNAME = new QName("http://blog/", "listPostResponse");
     private final static QName _DeleteUserResponse_QNAME = new QName("http://blog/", "deleteUserResponse");
+    private final static QName _ListDeletedPost_QNAME = new QName("http://blog/", "listDeletedPost");
     private final static QName _ListCommentResponse_QNAME = new QName("http://blog/", "listCommentResponse");
     private final static QName _EditPostResponse_QNAME = new QName("http://blog/", "editPostResponse");
     private final static QName _ListUser_QNAME = new QName("http://blog/", "listUser");
@@ -45,10 +47,12 @@ public class ObjectFactory {
     private final static QName _AddUser_QNAME = new QName("http://blog/", "addUser");
     private final static QName _DeleteComment_QNAME = new QName("http://blog/", "deleteComment");
     private final static QName _EditUser_QNAME = new QName("http://blog/", "editUser");
+    private final static QName _ListUnpublishedPostResponse_QNAME = new QName("http://blog/", "listUnpublishedPostResponse");
+    private final static QName _ListDeletedPostResponse_QNAME = new QName("http://blog/", "listDeletedPostResponse");
     private final static QName _SoftDeleteResponse_QNAME = new QName("http://blog/", "softDeleteResponse");
+    private final static QName _Search_QNAME = new QName("http://blog/", "search");
     private final static QName _PublishPostResponse_QNAME = new QName("http://blog/", "publishPostResponse");
     private final static QName _PublishPost_QNAME = new QName("http://blog/", "publishPost");
-    private final static QName _DummyTestResponse_QNAME = new QName("http://blog/", "dummyTestResponse");
     private final static QName _ListComment_QNAME = new QName("http://blog/", "listComment");
     private final static QName _AddComment_QNAME = new QName("http://blog/", "addComment");
     private final static QName _AddUserResponse_QNAME = new QName("http://blog/", "addUserResponse");
@@ -117,11 +121,35 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ListDeletedPostResponse }
+     * 
+     */
+    public ListDeletedPostResponse createListDeletedPostResponse() {
+        return new ListDeletedPostResponse();
+    }
+
+    /**
+     * Create an instance of {@link ListUnpublishedPostResponse }
+     * 
+     */
+    public ListUnpublishedPostResponse createListUnpublishedPostResponse() {
+        return new ListUnpublishedPostResponse();
+    }
+
+    /**
      * Create an instance of {@link PublishPostResponse }
      * 
      */
     public PublishPostResponse createPublishPostResponse() {
         return new PublishPostResponse();
+    }
+
+    /**
+     * Create an instance of {@link Search }
+     * 
+     */
+    public Search createSearch() {
+        return new Search();
     }
 
     /**
@@ -157,14 +185,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DummyTestResponse }
-     * 
-     */
-    public DummyTestResponse createDummyTestResponse() {
-        return new DummyTestResponse();
-    }
-
-    /**
      * Create an instance of {@link AddCommentResponse }
      * 
      */
@@ -173,11 +193,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DummyTest }
+     * Create an instance of {@link ListUnpublishedPost }
      * 
      */
-    public DummyTest createDummyTest() {
-        return new DummyTest();
+    public ListUnpublishedPost createListUnpublishedPost() {
+        return new ListUnpublishedPost();
     }
 
     /**
@@ -226,6 +246,14 @@ public class ObjectFactory {
      */
     public SoftDelete createSoftDelete() {
         return new SoftDelete();
+    }
+
+    /**
+     * Create an instance of {@link SearchResponse }
+     * 
+     */
+    public SearchResponse createSearchResponse() {
+        return new SearchResponse();
     }
 
     /**
@@ -285,11 +313,35 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ListDeletedPost }
+     * 
+     */
+    public ListDeletedPost createListDeletedPost() {
+        return new ListDeletedPost();
+    }
+
+    /**
+     * Create an instance of {@link Komentar }
+     * 
+     */
+    public Komentar createKomentar() {
+        return new Komentar();
+    }
+
+    /**
      * Create an instance of {@link Post }
      * 
      */
     public Post createPost() {
         return new Post();
+    }
+
+    /**
+     * Create an instance of {@link Pengguna }
+     * 
+     */
+    public Pengguna createPengguna() {
+        return new Pengguna();
     }
 
     /**
@@ -302,12 +354,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DummyTest }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListUnpublishedPost }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://blog/", name = "dummyTest")
-    public JAXBElement<DummyTest> createDummyTest(DummyTest value) {
-        return new JAXBElement<DummyTest>(_DummyTest_QNAME, DummyTest.class, null, value);
+    @XmlElementDecl(namespace = "http://blog/", name = "listUnpublishedPost")
+    public JAXBElement<ListUnpublishedPost> createListUnpublishedPost(ListUnpublishedPost value) {
+        return new JAXBElement<ListUnpublishedPost>(_ListUnpublishedPost_QNAME, ListUnpublishedPost.class, null, value);
     }
 
     /**
@@ -356,6 +408,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SearchResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://blog/", name = "searchResponse")
+    public JAXBElement<SearchResponse> createSearchResponse(SearchResponse value) {
+        return new JAXBElement<SearchResponse>(_SearchResponse_QNAME, SearchResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SoftDelete }{@code >}}
      * 
      */
@@ -398,6 +459,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://blog/", name = "deleteUserResponse")
     public JAXBElement<DeleteUserResponse> createDeleteUserResponse(DeleteUserResponse value) {
         return new JAXBElement<DeleteUserResponse>(_DeleteUserResponse_QNAME, DeleteUserResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListDeletedPost }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://blog/", name = "listDeletedPost")
+    public JAXBElement<ListDeletedPost> createListDeletedPost(ListDeletedPost value) {
+        return new JAXBElement<ListDeletedPost>(_ListDeletedPost_QNAME, ListDeletedPost.class, null, value);
     }
 
     /**
@@ -482,12 +552,39 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListUnpublishedPostResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://blog/", name = "listUnpublishedPostResponse")
+    public JAXBElement<ListUnpublishedPostResponse> createListUnpublishedPostResponse(ListUnpublishedPostResponse value) {
+        return new JAXBElement<ListUnpublishedPostResponse>(_ListUnpublishedPostResponse_QNAME, ListUnpublishedPostResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListDeletedPostResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://blog/", name = "listDeletedPostResponse")
+    public JAXBElement<ListDeletedPostResponse> createListDeletedPostResponse(ListDeletedPostResponse value) {
+        return new JAXBElement<ListDeletedPostResponse>(_ListDeletedPostResponse_QNAME, ListDeletedPostResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SoftDeleteResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://blog/", name = "softDeleteResponse")
     public JAXBElement<SoftDeleteResponse> createSoftDeleteResponse(SoftDeleteResponse value) {
         return new JAXBElement<SoftDeleteResponse>(_SoftDeleteResponse_QNAME, SoftDeleteResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Search }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://blog/", name = "search")
+    public JAXBElement<Search> createSearch(Search value) {
+        return new JAXBElement<Search>(_Search_QNAME, Search.class, null, value);
     }
 
     /**
@@ -506,15 +603,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://blog/", name = "publishPost")
     public JAXBElement<PublishPost> createPublishPost(PublishPost value) {
         return new JAXBElement<PublishPost>(_PublishPost_QNAME, PublishPost.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DummyTestResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://blog/", name = "dummyTestResponse")
-    public JAXBElement<DummyTestResponse> createDummyTestResponse(DummyTestResponse value) {
-        return new JAXBElement<DummyTestResponse>(_DummyTestResponse_QNAME, DummyTestResponse.class, null, value);
     }
 
     /**
