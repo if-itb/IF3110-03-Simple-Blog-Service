@@ -1,0 +1,532 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="PenguasaDuniaService" targetNamespace="http://PenguasaDunia.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://PenguasaDunia.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://PenguasaDunia.org/" version="1.0" xmlns:tns="http://PenguasaDunia.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="addServiceComment" type="tns:addServiceComment"/>
+<xs:element name="addServiceCommentResponse" type="tns:addServiceCommentResponse"/>
+<xs:element name="addServicePost" type="tns:addServicePost"/>
+<xs:element name="addServicePostResponse" type="tns:addServicePostResponse"/>
+<xs:element name="addServiceUser" type="tns:addServiceUser"/>
+<xs:element name="addServiceUserResponse" type="tns:addServiceUserResponse"/>
+<xs:element name="deleteServiceComment" type="tns:deleteServiceComment"/>
+<xs:element name="deleteServiceCommentResponse" type="tns:deleteServiceCommentResponse"/>
+<xs:element name="deleteServicePost" type="tns:deleteServicePost"/>
+<xs:element name="deleteServicePostResponse" type="tns:deleteServicePostResponse"/>
+<xs:element name="deleteServiceUser" type="tns:deleteServiceUser"/>
+<xs:element name="deleteServiceUserResponse" type="tns:deleteServiceUserResponse"/>
+<xs:element name="editServicePost" type="tns:editServicePost"/>
+<xs:element name="editServicePostResponse" type="tns:editServicePostResponse"/>
+<xs:element name="editServiceUser" type="tns:editServiceUser"/>
+<xs:element name="editServiceUserResponse" type="tns:editServiceUserResponse"/>
+<xs:element name="listServiceComment" type="tns:listServiceComment"/>
+<xs:element name="listServiceCommentResponse" type="tns:listServiceCommentResponse"/>
+<xs:element name="listServicePost" type="tns:listServicePost"/>
+<xs:element name="listServicePostResponse" type="tns:listServicePostResponse"/>
+<xs:element name="listServiceUser" type="tns:listServiceUser"/>
+<xs:element name="listServiceUserResponse" type="tns:listServiceUserResponse"/>
+<xs:element name="publishServicePost" type="tns:publishServicePost"/>
+<xs:element name="publishServicePostResponse" type="tns:publishServicePostResponse"/>
+<xs:element name="search" type="tns:search"/>
+<xs:element name="searchResponse" type="tns:searchResponse"/>
+<xs:complexType name="addServiceUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="role" type="xs:string"/>
+      <xs:element minOccurs="0" name="password" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addServiceUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listServicePost">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="listServicePostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:servicePost"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="servicePost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idAuthor" type="xs:string"/>
+      <xs:element minOccurs="0" name="judul" type="xs:string"/>
+      <xs:element minOccurs="0" name="key" type="xs:string"/>
+      <xs:element minOccurs="0" name="konten" type="xs:string"/>
+      <xs:element minOccurs="0" name="statusDeleted" type="xs:string"/>
+      <xs:element minOccurs="0" name="statusPublished" type="xs:string"/>
+      <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType abstract="true" name="abstractCollection">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType abstract="true" name="abstractList">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractCollection">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="vector">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractList">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="editServicePost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id_post" type="xs:string"/>
+      <xs:element minOccurs="0" name="judul" type="xs:string"/>
+      <xs:element minOccurs="0" name="konten" type="xs:string"/>
+      <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="editServicePostResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteServicePost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteServicePostResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteServiceComment">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteServiceCommentResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addServicePost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="judul" type="xs:string"/>
+      <xs:element minOccurs="0" name="konten" type="xs:string"/>
+      <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
+      <xs:element minOccurs="0" name="id_user" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addServicePostResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listServiceComment">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="listServiceCommentResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:serviceComment"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="serviceComment">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="guest" type="xs:string"/>
+      <xs:element minOccurs="0" name="idPost" type="xs:string"/>
+      <xs:element minOccurs="0" name="idUser" type="xs:string"/>
+      <xs:element minOccurs="0" name="key" type="xs:string"/>
+      <xs:element minOccurs="0" name="komentar" type="xs:string"/>
+      <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="editServiceUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="role" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="editServiceUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listServiceUser">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="listServiceUserResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:serviceUser"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="serviceUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="key" type="xs:string"/>
+      <xs:element minOccurs="0" name="password" type="xs:string"/>
+      <xs:element minOccurs="0" name="role" type="xs:string"/>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addServiceComment">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="komentar" type="xs:string"/>
+      <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
+      <xs:element minOccurs="0" name="id_post" type="xs:string"/>
+      <xs:element minOccurs="0" name="id_user" type="xs:string"/>
+      <xs:element minOccurs="0" name="guest" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addServiceCommentResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteServiceUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteServiceUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="search">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="searchResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:servicePost"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="publishServicePost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="publishServicePostResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="editServiceUserResponse">
+    <wsdl:part element="tns:editServiceUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addServiceUser">
+    <wsdl:part element="tns:addServiceUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listServicePostResponse">
+    <wsdl:part element="tns:listServicePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listServicePost">
+    <wsdl:part element="tns:listServicePost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editServicePostResponse">
+    <wsdl:part element="tns:editServicePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editServicePost">
+    <wsdl:part element="tns:editServicePost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteServicePost">
+    <wsdl:part element="tns:deleteServicePost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteServiceComment">
+    <wsdl:part element="tns:deleteServiceComment" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addServiceUserResponse">
+    <wsdl:part element="tns:addServiceUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteServiceUserResponse">
+    <wsdl:part element="tns:deleteServiceUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listServiceCommentResponse">
+    <wsdl:part element="tns:listServiceCommentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listServiceComment">
+    <wsdl:part element="tns:listServiceComment" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteServiceCommentResponse">
+    <wsdl:part element="tns:deleteServiceCommentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listServiceUser">
+    <wsdl:part element="tns:listServiceUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addServicePostResponse">
+    <wsdl:part element="tns:addServicePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listServiceUserResponse">
+    <wsdl:part element="tns:listServiceUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishServicePost">
+    <wsdl:part element="tns:publishServicePost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="searchResponse">
+    <wsdl:part element="tns:searchResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addServiceCommentResponse">
+    <wsdl:part element="tns:addServiceCommentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addServicePost">
+    <wsdl:part element="tns:addServicePost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishServicePostResponse">
+    <wsdl:part element="tns:publishServicePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteServicePostResponse">
+    <wsdl:part element="tns:deleteServicePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editServiceUser">
+    <wsdl:part element="tns:editServiceUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addServiceComment">
+    <wsdl:part element="tns:addServiceComment" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteServiceUser">
+    <wsdl:part element="tns:deleteServiceUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="search">
+    <wsdl:part element="tns:search" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PenguasaDuniaService">
+    <wsdl:operation name="addServiceUser">
+      <wsdl:input message="tns:addServiceUser" name="addServiceUser">
+    </wsdl:input>
+      <wsdl:output message="tns:addServiceUserResponse" name="addServiceUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listServicePost">
+      <wsdl:input message="tns:listServicePost" name="listServicePost">
+    </wsdl:input>
+      <wsdl:output message="tns:listServicePostResponse" name="listServicePostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editServicePost">
+      <wsdl:input message="tns:editServicePost" name="editServicePost">
+    </wsdl:input>
+      <wsdl:output message="tns:editServicePostResponse" name="editServicePostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteServicePost">
+      <wsdl:input message="tns:deleteServicePost" name="deleteServicePost">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteServicePostResponse" name="deleteServicePostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteServiceComment">
+      <wsdl:input message="tns:deleteServiceComment" name="deleteServiceComment">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteServiceCommentResponse" name="deleteServiceCommentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addServicePost">
+      <wsdl:input message="tns:addServicePost" name="addServicePost">
+    </wsdl:input>
+      <wsdl:output message="tns:addServicePostResponse" name="addServicePostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listServiceComment">
+      <wsdl:input message="tns:listServiceComment" name="listServiceComment">
+    </wsdl:input>
+      <wsdl:output message="tns:listServiceCommentResponse" name="listServiceCommentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editServiceUser">
+      <wsdl:input message="tns:editServiceUser" name="editServiceUser">
+    </wsdl:input>
+      <wsdl:output message="tns:editServiceUserResponse" name="editServiceUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listServiceUser">
+      <wsdl:input message="tns:listServiceUser" name="listServiceUser">
+    </wsdl:input>
+      <wsdl:output message="tns:listServiceUserResponse" name="listServiceUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addServiceComment">
+      <wsdl:input message="tns:addServiceComment" name="addServiceComment">
+    </wsdl:input>
+      <wsdl:output message="tns:addServiceCommentResponse" name="addServiceCommentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteServiceUser">
+      <wsdl:input message="tns:deleteServiceUser" name="deleteServiceUser">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteServiceUserResponse" name="deleteServiceUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="search">
+      <wsdl:input message="tns:search" name="search">
+    </wsdl:input>
+      <wsdl:output message="tns:searchResponse" name="searchResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="publishServicePost">
+      <wsdl:input message="tns:publishServicePost" name="publishServicePost">
+    </wsdl:input>
+      <wsdl:output message="tns:publishServicePostResponse" name="publishServicePostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PenguasaDuniaServiceSoapBinding" type="tns:PenguasaDuniaService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addServiceUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addServiceUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addServiceUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listServicePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listServicePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listServicePostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editServicePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="editServicePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="editServicePostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteServicePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteServicePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteServicePostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteServiceComment">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteServiceComment">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteServiceCommentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addServicePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addServicePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addServicePostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listServiceComment">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listServiceComment">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listServiceCommentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editServiceUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="editServiceUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="editServiceUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listServiceUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listServiceUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listServiceUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addServiceComment">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addServiceComment">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addServiceCommentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteServiceUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteServiceUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteServiceUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="search">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="search">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="searchResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="publishServicePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="publishServicePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="publishServicePostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PenguasaDuniaService">
+    <wsdl:port binding="tns:PenguasaDuniaServiceSoapBinding" name="PenguasaDuniaServicePort">
+      <soap:address location="http://radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
