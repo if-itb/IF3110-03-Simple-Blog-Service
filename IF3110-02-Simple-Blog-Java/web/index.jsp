@@ -72,7 +72,7 @@
         <div id="home">
             <div class="posts">
                 <nav class="art-list">
-                    <ul><center><i>Check out our newest feature <a href="posts/search_form.jsp">Search!</a></i></center></ul>
+                    <ul><i><center>Check out our newest feature <a href="posts/search_form.jsp">Search!</a></i></center></ul>
                   <ul class="art-list-body">
                     <%= listPost.listPublishedPosts() %>
                   </ul>
