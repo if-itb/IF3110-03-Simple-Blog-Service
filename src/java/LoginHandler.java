@@ -128,7 +128,7 @@ public class LoginHandler {
 		}
         loginSucc=loginB;
         loginAttempted = true;
-        con.close();
+      //  con.close();
     }
     
     public void logout() throws IOException{
