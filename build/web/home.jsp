@@ -82,6 +82,9 @@
 									" value="Login as Guest"
 								>
 					</form>
+					<form name="code">
+						<input name="code" type="hidden" value="<%= request.getParameter("code") %>">
+					</form>
 					<%	}
 						else{
 							response.setStatus(response.SC_MOVED_TEMPORARILY);
@@ -92,5 +95,9 @@
 				</div>
 			</div>
         </body>
+		<script>
+			if(document.forms["code"]["code"].value == "error")
+				alert("Username atau Password Salah!");
+		</script>
     </html>
 </f:view>

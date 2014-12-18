@@ -20,9 +20,12 @@
             <title>JSP Page</title>
         </head>
         <body>
-            <%	user.login(request.getParameter("user_id"), request.getParameter("password")); 
+            <%	user.login(request.getParameter("user_id"), request.getParameter("password"));
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
-				response.setHeader("Location", "home.jsp");
+				if(user.getRole() != -1)
+					response.setHeader("Location", "home.jsp");
+				else
+					response.setHeader("Location", "home.jsp?code=error");
 			%>
         </body>
     </html>
