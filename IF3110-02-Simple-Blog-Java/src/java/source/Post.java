@@ -21,7 +21,7 @@ public class Post {
     /**
      * Atribut-atribut
      */
-    private int idPost;
+    private String idPost;
     private String judulPost;
     private String tanggalPost;
     private String kontenPost;
@@ -51,12 +51,35 @@ public class Post {
      * @return  HTML script untuk memuat komentar yang akan digunakan oleh AJAX
      * @throws java.sql.SQLException 
      */
-    public String LoadComment(int ID) {
+    public String LoadComment(String ID) throws SQLException {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         
         //login database
         String HTMLcode = "";
-        
+        /*KoneksiDatabase.setUser("root2");
+        KoneksiDatabase.setPassword("akhfa");
+        KoneksiDatabase.setDatabase("localhost","blog");
+        try {
+            Connection koneksi = KoneksiDatabase.getKoneksi();
+            Statement statement = koneksi.createStatement();
+            String QueryLoadComment = "SELECT * FROM komentar WHERE idpost="+idPost+" ORDER BY Waktu DESC";
+            ResultSet result = statement.executeQuery(QueryLoadComment);
+            while(result.next()) {
+                String Nama = result.getString("Nama");
+                String Email = result.getString("Email");
+                String Comment = result.getString("Komentar");
+                Timestamp Time = result.getTimestamp("Waktu");
+                HTMLcode +=
+                        "    <li class=\"art-list-item\">\n" +
+                        "        <div class=\"art-list-item-title-and-time\">\n" +
+                        "            <h2 class=\"art-list-title\">" + Nama + "</h2>\n" +
+                        "            <div class=\"art-list-time\">" + Time.toString() + "</div>\n" +
+                        "        </div>\n" +
+                        "        <p>" + Comment + "</p>\n" +
+                        "    </li>";
+            }
+        } catch (SQLException ex) {
+        }*/
         return HTMLcode;
     }
     /**
@@ -66,9 +89,9 @@ public class Post {
      * @param comment
      * @throws SQLException 
      */
-    public void AddComment(int PostID, String nama, String email, String comment) throws SQLException {
+    public void AddComment(String PostID, String nama, String email, String comment) throws SQLException {
         String InsertQuery;
-        KoneksiDatabase.setUser("root2");
+        /*KoneksiDatabase.setUser("root2");
         KoneksiDatabase.setPassword("akhfa");
         KoneksiDatabase.setDatabase("localhost","blog");
         try {
@@ -78,7 +101,7 @@ public class Post {
             statement.executeUpdate(InsertQuery);
         } catch (SQLException ex) {
 
-        }
+        }*/
     }
     /**
      * Menambahkan header message pada halaman utama blog
@@ -175,7 +198,7 @@ public class Post {
      * @throws java.sql.SQLException
      */
     public void setAtribut(int post_ID) throws SQLException {
-        try {
+        /*try {
             //login database
             KoneksiDatabase.setUser("root2");
             KoneksiDatabase.setPassword("akhfa");
@@ -198,14 +221,14 @@ public class Post {
         }
         catch (SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
     
     /**
      * Mereturn id post
      * @return idPost
      */
-    public int getID() {
+    public String getID() {
         return idPost;
     }
     
@@ -242,7 +265,7 @@ public class Post {
         //inisialisasi string
         String toHTML = "";
         boolean shortened;
-        try {
+        /*try {
             //login database
             KoneksiDatabase.setUser("root2");
             KoneksiDatabase.setPassword("akhfa");
@@ -306,7 +329,7 @@ public class Post {
         }
         catch (SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         //return string
         return toHTML;
     }
@@ -320,7 +343,7 @@ public class Post {
         //inisialisasi string
         String toHTML = "";
         boolean shortened;
-        try {
+        /*try {
             //login database
             KoneksiDatabase.setUser("root2");
             KoneksiDatabase.setPassword("akhfa");
@@ -433,7 +456,7 @@ public class Post {
         }
         catch (SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         //return string
         return toHTML;
     }
@@ -446,7 +469,7 @@ public class Post {
      * @throws java.sql.SQLException
      */
     public void addPost(String judul, String tanggal, String konten) throws SQLException {
-        try { 
+        /*try { 
             //login database
             KoneksiDatabase.setUser("root2");
             KoneksiDatabase.setPassword("akhfa");
@@ -461,8 +484,7 @@ public class Post {
         }
         catch (SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }*/
     }
     
     /**
@@ -470,8 +492,8 @@ public class Post {
      * @param post_ID post id di database
      * @throws java.sql.SQLException
      */
-    public void publishPost(int post_ID) throws SQLException {
-        try { 
+    public void publishPost(String post_ID) throws SQLException {
+        /*try { 
             //login database
             KoneksiDatabase.setUser("root2");
             KoneksiDatabase.setPassword("akhfa");
@@ -486,7 +508,7 @@ public class Post {
         }
         catch (SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
     
     /**
@@ -497,8 +519,8 @@ public class Post {
      * @param konten konten post
      * @throws java.sql.SQLException
      */
-    public void editPost(int post_ID, String judul, String tanggal, String konten) throws SQLException {
-        try {
+    public void editPost(String post_ID, String judul, String tanggal, String konten) throws SQLException {
+        /*try {
             //login database
             KoneksiDatabase.setUser("root2");
             KoneksiDatabase.setPassword("akhfa");
@@ -517,7 +539,7 @@ public class Post {
         }
         catch (SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
     
     /**
@@ -525,8 +547,8 @@ public class Post {
      * @param post_ID post id di database
      * @throws java.sql.SQLException
      */
-    public void deletePost(int post_ID) throws SQLException {
-        try { 
+    public void deletePost(String post_ID) throws SQLException {
+        /*try { 
             //login database
             KoneksiDatabase.setUser("root2");
             KoneksiDatabase.setPassword("akhfa");
@@ -543,7 +565,7 @@ public class Post {
         }
         catch (SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
     
     /**
@@ -551,8 +573,8 @@ public class Post {
      * @param post_ID id post
      * @throws SQLException
      */
-    public void trashPost(int post_ID) throws SQLException {
-        try { 
+    public void trashPost(String post_ID) throws SQLException {
+        /*try { 
             //login database
             KoneksiDatabase.setUser("root2");
             KoneksiDatabase.setPassword("akhfa");
@@ -567,7 +589,7 @@ public class Post {
         }
         catch (SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
     
     /**
@@ -575,8 +597,8 @@ public class Post {
      * @param post_ID id post
      * @throws SQLException
      */
-    public void restorePost(int post_ID) throws SQLException {
-        try { 
+    public void restorePost(String post_ID) throws SQLException {
+        /*try { 
             //login database
             KoneksiDatabase.setUser("root2");
             KoneksiDatabase.setPassword("akhfa");
@@ -591,6 +613,6 @@ public class Post {
         }
         catch (SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 }
