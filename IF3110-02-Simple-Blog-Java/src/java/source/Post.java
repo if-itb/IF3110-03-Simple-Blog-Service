@@ -2,17 +2,15 @@
  */
 package source;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.chamerling.heroku.service.BlogService;
 import org.chamerling.heroku.service.BlogServiceImplService;
 import org.chamerling.heroku.service.Exception_Exception;
+import org.chamerling.heroku.service.InterruptedException_Exception;
 
 /**
  * @author Try Ajitiono + Rakhmatullah Yoga Sutrisna
@@ -51,7 +49,7 @@ public class Post {
      * @return  HTML script untuk memuat komentar yang akan digunakan oleh AJAX
      * @throws java.sql.SQLException 
      */
-    public String LoadComment(String ID) throws SQLException {
+    public String LoadComment(String ID) {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         
         //login database
@@ -89,7 +87,7 @@ public class Post {
      * @param comment
      * @throws SQLException 
      */
-    public void AddComment(String PostID, String nama, String email, String comment) throws SQLException {
+    public void AddComment(String PostID, String nama, String email, String comment) {
         String InsertQuery;
         /*KoneksiDatabase.setUser("root2");
         KoneksiDatabase.setPassword("akhfa");
@@ -108,7 +106,7 @@ public class Post {
      * @return header tulisan yang dikembalikan ke halaman utama
      * @throws SQLException
      */
-    public String showMessageHeader() throws SQLException, Exception_Exception {
+    public String showMessageHeader() throws Exception_Exception {
         String header;
         if (cookieOn) {
             header = "Welcome " + user.getUsername() + ", your role is " + user.getRole() + 
@@ -133,7 +131,7 @@ public class Post {
      * @return header tulisan yang dikembalikan ke halaman utama
      * @throws SQLException
      */
-    public String showManagementHeader() throws SQLException, Exception_Exception {
+    public String showManagementHeader() throws Exception_Exception {
         String header;
         if (cookieOn) {
             header = "Welcome " + user.getUsername() + ", your role is " + user.getRole() + 
@@ -197,7 +195,13 @@ public class Post {
      * @param post_ID id post
      * @throws java.sql.SQLException
      */
-    public void setAtribut(int post_ID) throws SQLException {
+    public void setAtribut(String post_ID) {
+        java.util.List<org.chamerling.heroku.service.Post> L = getAllPost();
+        for (org.chamerling.heroku.service.Post P : L) {
+            //looping
+            if (P.get)
+        }
+        
         /*try {
             //login database
             KoneksiDatabase.setUser("root2");
@@ -261,7 +265,7 @@ public class Post {
      * @return toHTML yang akan ditulis di HTML
      * @throws java.sql.SQLException
      */
-    public String listPublishedPosts() throws SQLException, Exception_Exception {
+    public String listPublishedPosts() throws Exception_Exception {
         //inisialisasi string
         String toHTML = "";
         boolean shortened;
@@ -339,7 +343,7 @@ public class Post {
      * @return
      * @throws SQLException
      */
-    public String listManagementPosts() throws SQLException, Exception_Exception {
+    public String listManagementPosts() throws Exception_Exception {
         //inisialisasi string
         String toHTML = "";
         boolean shortened;
@@ -468,7 +472,7 @@ public class Post {
      * @param konten konten post
      * @throws java.sql.SQLException
      */
-    public void addPost(String judul, String tanggal, String konten) throws SQLException {
+    public void addPost(String judul, String tanggal, String konten) {
         /*try { 
             //login database
             KoneksiDatabase.setUser("root2");
@@ -492,7 +496,7 @@ public class Post {
      * @param post_ID post id di database
      * @throws java.sql.SQLException
      */
-    public void publishPost(String post_ID) throws SQLException {
+    public void publishPost(String post_ID) {
         /*try { 
             //login database
             KoneksiDatabase.setUser("root2");
@@ -519,7 +523,7 @@ public class Post {
      * @param konten konten post
      * @throws java.sql.SQLException
      */
-    public void editPost(String post_ID, String judul, String tanggal, String konten) throws SQLException {
+    public void editPost(String post_ID, String judul, String tanggal, String konten) {
         /*try {
             //login database
             KoneksiDatabase.setUser("root2");
@@ -547,7 +551,7 @@ public class Post {
      * @param post_ID post id di database
      * @throws java.sql.SQLException
      */
-    public void deletePost(String post_ID) throws SQLException {
+    public void deletePost(String post_ID) {
         /*try { 
             //login database
             KoneksiDatabase.setUser("root2");
@@ -573,7 +577,7 @@ public class Post {
      * @param post_ID id post
      * @throws SQLException
      */
-    public void trashPost(String post_ID) throws SQLException {
+    public void trashPost(String post_ID) {
         /*try { 
             //login database
             KoneksiDatabase.setUser("root2");
@@ -597,7 +601,7 @@ public class Post {
      * @param post_ID id post
      * @throws SQLException
      */
-    public void restorePost(String post_ID) throws SQLException {
+    public void restorePost(String post_ID) {
         /*try { 
             //login database
             KoneksiDatabase.setUser("root2");
@@ -614,5 +618,41 @@ public class Post {
         catch (SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }*/
+    }
+
+    private static Boolean addComment(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3) throws InterruptedException_Exception {
+        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
+        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
+        return port.addComment(arg0, arg1, arg2, arg3);
+    }
+
+    private static Boolean addPost_1(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2) throws InterruptedException_Exception {
+        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
+        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
+        return port.addPost(arg0, arg1, arg2);
+    }
+
+    private static Boolean deletePost_1(java.lang.String arg0) throws InterruptedException_Exception {
+        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
+        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
+        return port.deletePost(arg0);
+    }
+
+    private static Boolean editPost_1(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4) throws InterruptedException_Exception {
+        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
+        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
+        return port.editPost(arg0, arg1, arg2, arg3, arg4);
+    }
+
+    private static java.util.List<org.chamerling.heroku.service.Komentar> getAllCommentar(java.lang.String arg0) {
+        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
+        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
+        return port.getAllCommentar(arg0);
+    }
+
+    private static java.util.List<org.chamerling.heroku.service.Post> getAllPost() {
+        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
+        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
+        return port.getAllPost();
     }
 }
