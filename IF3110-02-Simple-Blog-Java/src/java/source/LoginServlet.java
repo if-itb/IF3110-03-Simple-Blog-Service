@@ -22,6 +22,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.chamerling.heroku.service.Exception_Exception;
  
 /**
  * Servlet implementation class LoginServlet
@@ -60,6 +61,8 @@ public class LoginServlet extends HttpServlet {
 //                rd.include(request, response);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception_Exception ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
  

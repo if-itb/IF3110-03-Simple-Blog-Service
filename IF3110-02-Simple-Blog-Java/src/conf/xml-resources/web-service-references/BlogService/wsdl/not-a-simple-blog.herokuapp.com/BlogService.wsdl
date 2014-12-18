@@ -7,16 +7,18 @@
   <xs:element name="addPostResponse" type="tns:addPostResponse"/>
   <xs:element name="addUser" type="tns:addUser"/>
   <xs:element name="addUserResponse" type="tns:addUserResponse"/>
+  <xs:element name="deletePost" type="tns:deletePost"/>
+  <xs:element name="deletePostResponse" type="tns:deletePostResponse"/>
   <xs:element name="deleteUser" type="tns:deleteUser"/>
   <xs:element name="deleteUserResponse" type="tns:deleteUserResponse"/>
   <xs:element name="editPost" type="tns:editPost"/>
   <xs:element name="editPostResponse" type="tns:editPostResponse"/>
+  <xs:element name="getAllPost" type="tns:getAllPost"/>
+  <xs:element name="getAllPostResponse" type="tns:getAllPostResponse"/>
   <xs:element name="getAllUser" type="tns:getAllUser"/>
   <xs:element name="getAllUserResponse" type="tns:getAllUserResponse"/>
   <xs:element name="readUrl" type="tns:readUrl"/>
   <xs:element name="readUrlResponse" type="tns:readUrlResponse"/>
-  <xs:element name="sayHi" type="tns:sayHi"/>
-  <xs:element name="sayHiResponse" type="tns:sayHiResponse"/>
   <xs:element name="updateUser" type="tns:updateUser"/>
   <xs:element name="updateUserResponse" type="tns:updateUserResponse"/>
   <xs:complexType name="addComment">
@@ -30,16 +32,6 @@
   <xs:complexType name="addCommentResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="sayHi">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="sayHiResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="addPost">
@@ -128,6 +120,16 @@
       <xs:element minOccurs="0" name="return" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="deletePost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deletePostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="addUser">
     <xs:sequence>
       <xs:element minOccurs="0" name="arg0" type="xs:string"/>
@@ -152,6 +154,27 @@
       <xs:element minOccurs="0" name="return" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="getAllPost">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="getAllPostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:post"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="post">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idFirebasePost" type="xs:string"/>
+      <xs:element name="idPost" type="xs:int"/>
+      <xs:element minOccurs="0" name="judulPost" type="xs:string"/>
+      <xs:element minOccurs="0" name="tanggalPost" type="xs:string"/>
+      <xs:element minOccurs="0" name="kontenPost" type="xs:string"/>
+      <xs:element name="publishStatus" type="xs:int"/>
+      <xs:element name="cookieOn" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="konten" type="xs:string"/>
+      <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="InterruptedException">
     <xs:sequence/>
   </xs:complexType>
@@ -164,10 +187,6 @@
   <xs:element name="Exception" type="tns:Exception"/>
 </xs:schema>
   </wsdl:types>
-  <wsdl:message name="sayHiResponse">
-    <wsdl:part element="tns:sayHiResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="addComment">
     <wsdl:part element="tns:addComment" name="parameters">
     </wsdl:part>
@@ -200,10 +219,6 @@
     <wsdl:part element="tns:InterruptedException" name="InterruptedException">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="sayHi">
-    <wsdl:part element="tns:sayHi" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="addPost">
     <wsdl:part element="tns:addPost" name="parameters">
     </wsdl:part>
@@ -232,12 +247,28 @@
     <wsdl:part element="tns:addUserResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="Exception">
-    <wsdl:part element="tns:Exception" name="Exception">
+  <wsdl:message name="getAllPostResponse">
+    <wsdl:part element="tns:getAllPostResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="addPostResponse">
     <wsdl:part element="tns:addPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Exception">
+    <wsdl:part element="tns:Exception" name="Exception">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllPost">
+    <wsdl:part element="tns:getAllPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deletePostResponse">
+    <wsdl:part element="tns:deletePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deletePost">
+    <wsdl:part element="tns:deletePost" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="addUser">
@@ -252,12 +283,6 @@
     </wsdl:output>
       <wsdl:fault message="tns:InterruptedException" name="InterruptedException">
     </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="sayHi">
-      <wsdl:input message="tns:sayHi" name="sayHi">
-    </wsdl:input>
-      <wsdl:output message="tns:sayHiResponse" name="sayHiResponse">
-    </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="addPost">
       <wsdl:input message="tns:addPost" name="addPost">
@@ -299,6 +324,14 @@
       <wsdl:fault message="tns:InterruptedException" name="InterruptedException">
     </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="deletePost">
+      <wsdl:input message="tns:deletePost" name="deletePost">
+    </wsdl:input>
+      <wsdl:output message="tns:deletePostResponse" name="deletePostResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:InterruptedException" name="InterruptedException">
+    </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="addUser">
       <wsdl:input message="tns:addUser" name="addUser">
     </wsdl:input>
@@ -315,6 +348,12 @@
       <wsdl:fault message="tns:Exception" name="Exception">
     </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="getAllPost">
+      <wsdl:input message="tns:getAllPost" name="getAllPost">
+    </wsdl:input>
+      <wsdl:output message="tns:getAllPostResponse" name="getAllPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BlogServiceImplServiceSoapBinding" type="tns:BlogService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
@@ -329,15 +368,6 @@
       <wsdl:fault name="InterruptedException">
         <soap:fault name="InterruptedException" use="literal"/>
       </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="sayHi">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="sayHi">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="sayHiResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="addPost">
       <soap:operation soapAction="" style="document"/>
@@ -411,6 +441,18 @@
         <soap:fault name="InterruptedException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="deletePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deletePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deletePostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="InterruptedException">
+        <soap:fault name="InterruptedException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="readUrl">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="readUrl">
@@ -422,6 +464,15 @@
       <wsdl:fault name="Exception">
         <soap:fault name="Exception" use="literal"/>
       </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAllPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="BlogServiceImplService">

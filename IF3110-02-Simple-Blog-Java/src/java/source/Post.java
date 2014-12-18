@@ -10,6 +10,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.chamerling.heroku.service.BlogService;
+import org.chamerling.heroku.service.BlogServiceImplService;
+import org.chamerling.heroku.service.Exception_Exception;
 
 /**
  * @author Try Ajitiono + Rakhmatullah Yoga Sutrisna
@@ -18,7 +21,7 @@ public class Post {
     /**
      * Atribut-atribut
      */
-    private String idPost;
+    private int idPost;
     private String judulPost;
     private String tanggalPost;
     private String kontenPost;
@@ -49,6 +52,8 @@ public class Post {
      * @throws java.sql.SQLException 
      */
     public String LoadComment(int ID) throws SQLException {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        
         //login database
         String HTMLcode = "";
         KoneksiDatabase.setUser("root2");
@@ -103,7 +108,7 @@ public class Post {
      * @return header tulisan yang dikembalikan ke halaman utama
      * @throws SQLException
      */
-    public String showMessageHeader() throws SQLException {
+    public String showMessageHeader() throws SQLException, Exception_Exception {
         String header;
         if (cookieOn) {
             header = "Welcome " + user.getUsername() + ", your role is " + user.getRole() + 
@@ -128,7 +133,7 @@ public class Post {
      * @return header tulisan yang dikembalikan ke halaman utama
      * @throws SQLException
      */
-    public String showManagementHeader() throws SQLException {
+    public String showManagementHeader() throws SQLException, Exception_Exception {
         String header;
         if (cookieOn) {
             header = "Welcome " + user.getUsername() + ", your role is " + user.getRole() + 
@@ -152,7 +157,7 @@ public class Post {
      * Mengecek apakah pengguna adalah admin
      * @return 1 apabila admin, 0 bila bukan
      */    
-    public boolean isAdmin() {
+    public boolean isAdmin() throws Exception_Exception {
         try {
             return (user.getRole().compareTo("admin") == 0);
         } catch (SQLException ex) {
@@ -165,7 +170,7 @@ public class Post {
      * Mengecek apakah pengguna adalah editor
      * @return 1 apabila admin, 0 bila bukan
      */
-    public boolean isEditor() {
+    public boolean isEditor() throws Exception_Exception {
         try {
             return (user.getRole().compareTo("editor") == 0);
         } catch (SQLException ex) {
@@ -178,7 +183,7 @@ public class Post {
      * Mengecek apakah pengguna adalah owner
      * @return 1 apabila admin, 0 bila bukan
      */
-    public boolean isOwner() {
+    public boolean isOwner() throws Exception_Exception {
         try {
             return (user.getRole().compareTo("owner") == 0);
         } catch (SQLException ex) {
@@ -192,7 +197,7 @@ public class Post {
      * @param post_ID id post
      * @throws java.sql.SQLException
      */
-    public void setAtribut(String post_ID) throws SQLException {
+    public void setAtribut(int post_ID) throws SQLException {
         try {
             //login database
             KoneksiDatabase.setUser("root2");
@@ -223,7 +228,7 @@ public class Post {
      * Mereturn id post
      * @return idPost
      */
-    public String getID() {
+    public int getID() {
         return idPost;
     }
     
@@ -256,7 +261,7 @@ public class Post {
      * @return toHTML yang akan ditulis di HTML
      * @throws java.sql.SQLException
      */
-    public String listPublishedPosts() throws SQLException {
+    public String listPublishedPosts() throws SQLException, Exception_Exception {
         //inisialisasi string
         String toHTML = "";
         boolean shortened;
@@ -283,7 +288,7 @@ public class Post {
                 while (result.next()) { //apabila result masih ada
                     shortened = false;
                     //inisialisasi variabel
-                    idPost = result.getString("id");
+                    idPost = result.getInt("id");
                     judulPost = result.getString("judul");
                     kontenPost = result.getString("konten");
                     publishStatus = result.getInt("publishStatus");
@@ -334,7 +339,7 @@ public class Post {
      * @return
      * @throws SQLException
      */
-    public String listManagementPosts() throws SQLException {
+    public String listManagementPosts() throws SQLException, Exception_Exception {
         //inisialisasi string
         String toHTML = "";
         boolean shortened;
@@ -370,7 +375,7 @@ public class Post {
             while (result.next()) { //apabila result masih ada
                 shortened = false;
                 //inisialisasi variabel
-                idPost = result.getString("id");
+                idPost = result.getInt("id");
                 judulPost = result.getString("judul");
                 kontenPost = result.getString("konten");
                 publishStatus = result.getInt("publishStatus");

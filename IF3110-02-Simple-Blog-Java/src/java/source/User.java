@@ -11,8 +11,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.chamerling.heroku.service.BlogService;
+import org.chamerling.heroku.service.BlogServiceImplService;
+import org.chamerling.heroku.service.DataUser;
+import org.chamerling.heroku.service.Exception_Exception;
+import org.chamerling.heroku.service.InterruptedException_Exception;
 
 /**
  *
@@ -109,12 +115,20 @@ public class User {
         role = _role;
     }
     
-    public String getRole() throws SQLException
+    public String getRole() throws SQLException, Exception_Exception
     {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        List<DataUser> userlist = blog.getAllUser();
         if(role == null)
         {
+            for(DataUser user : userlist) {
+                if(user.username.equals(this.username)) {
+                    this.role = user.role;
+                    break;
+                }
+            }
+            /*
             //Load role dari database
-            System.out.println("Masuk if");
             KoneksiDatabase.setUser(userSQL);
             KoneksiDatabase.setPassword(passSQL);
             KoneksiDatabase.setDatabase(urlSQL,databaseName);
@@ -129,59 +143,42 @@ public class User {
             {
                 role = result.getString("role");
             }
-            System.out.println("role = " + role);
+            System.out.println("role = " + role);*/
         }
-        return role;
+        return this.role;
     }
     
     /**
      * Method untuk me-list semua user yang terdaftar di database
      * @return
-     * @throws SQLException 
+     * @throws org.chamerling.heroku.service.Exception_Exception 
      */
-    public ArrayList<dataUser> getAllUser() throws SQLException
+    public List<DataUser> getAllUser() throws Exception_Exception
     {
-        ArrayList<dataUser> listUser = new ArrayList<>();
-        
-        KoneksiDatabase.setUser(userSQL);
-        KoneksiDatabase.setPassword(passSQL);
-        KoneksiDatabase.setDatabase(urlSQL,databaseName);
-        
-        Connection koneksi = KoneksiDatabase.getKoneksi();
-        Statement statement = koneksi.createStatement();
-        String query = "SELECT username, nama, email, role FROM user";
-        System.out.println(query);
-        
-        ResultSet result = statement.executeQuery(query);
-        while(result.next())
-        {
-            dataUser user = new dataUser();
-            user.username = result.getString("username");
-            user.nama = result.getString("nama");
-            user.email = result.getString("email");
-            user.role = result.getString("role");
-            listUser.add(user);
-        }
-        for (dataUser user:listUser)
-        {
-            System.out.println(user.username);
-            System.out.println(user.nama);
-            System.out.println(user.email);
-            System.out.println(user.role);
-        }
-        result.close();
-        statement.close();
-        return listUser;
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        return blog.getAllUser();
     }
     
      /**
      * Prosedur untuk mendapatkan 1 user untuk di load ke form update user.
      * username harus diset terlebih dahulu dengan prosedure user.setUsername("username").
      * Mengcopy nama, password, email, role dari database ke attribute berdasarkan username yang di set.
-     * @throws SQLException 
+     * @throws org.chamerling.heroku.service.Exception_Exception 
      */
-    public void getOneUser() throws SQLException
+    public void getOneUser() throws Exception_Exception
     {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        List<DataUser> userlist = blog.getAllUser();
+        for(DataUser user : userlist) {
+            if(user.username.equals(this.username)) {
+                this.nama = user.nama;
+                this.password = user.password;
+                this.email = user.email;
+                this.role = user.role;
+                break;
+            }
+        }
+        /*
         KoneksiDatabase.setUser(userSQL);
         KoneksiDatabase.setPassword(passSQL);
         KoneksiDatabase.setDatabase(urlSQL,databaseName);
@@ -200,7 +197,7 @@ public class User {
             this.role = result.getString("role");
         }
         result.close();
-        statement.close();
+        statement.close();*/
     }
     
     /**
@@ -236,8 +233,16 @@ public class User {
      * username harus diset terlebih dahulu dengan prosedure user.setUsername("username").
      * @throws SQLException 
      */
-    public void deleteUser() throws SQLException
+    public void deleteUser() throws InterruptedException_Exception, Exception_Exception
     {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        List<DataUser> userlist = blog.getAllUser();
+        for(DataUser user : userlist) {
+            if(user.username.equals(this.username)) {
+                blog.deleteUser(user.getIdFirebase());
+            }
+        }
+        /*
         KoneksiDatabase.setUser(userSQL);
         KoneksiDatabase.setPassword(passSQL);
         KoneksiDatabase.setDatabase(urlSQL,databaseName);
@@ -250,7 +255,7 @@ public class User {
         try (PreparedStatement preStat = koneksi.prepareStatement(query)) {
             preStat.executeUpdate();
             preStat.close();
-        }
+        }*/
     }
     /**
      * Fungsi untuk user melakukan login dengan menggunakan username dan password 
@@ -419,8 +424,9 @@ public class User {
     /**
      * Testing untuk user
      * @param args 
+     * @throws org.chamerling.heroku.service.Exception_Exception 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception_Exception {
         try {
             User pertama = new User("akhfa3","akhfa2");
             if(pertama.successLogin())
