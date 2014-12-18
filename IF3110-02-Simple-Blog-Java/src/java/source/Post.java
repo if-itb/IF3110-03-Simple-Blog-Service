@@ -18,7 +18,7 @@ public class Post {
     /**
      * Atribut-atribut
      */
-    private int idPost;
+    private String idPost;
     private String judulPost;
     private String tanggalPost;
     private String kontenPost;
@@ -192,7 +192,7 @@ public class Post {
      * @param post_ID id post
      * @throws java.sql.SQLException
      */
-    public void setAtribut(int post_ID) throws SQLException {
+    public void setAtribut(String post_ID) throws SQLException {
         try {
             //login database
             KoneksiDatabase.setUser("root2");
@@ -223,7 +223,7 @@ public class Post {
      * Mereturn id post
      * @return idPost
      */
-    public int getID() {
+    public String getID() {
         return idPost;
     }
     
@@ -283,7 +283,7 @@ public class Post {
                 while (result.next()) { //apabila result masih ada
                     shortened = false;
                     //inisialisasi variabel
-                    idPost = result.getInt("id");
+                    idPost = result.getString("id");
                     judulPost = result.getString("judul");
                     kontenPost = result.getString("konten");
                     publishStatus = result.getInt("publishStatus");
@@ -370,7 +370,7 @@ public class Post {
             while (result.next()) { //apabila result masih ada
                 shortened = false;
                 //inisialisasi variabel
-                idPost = result.getInt("id");
+                idPost = result.getString("id");
                 judulPost = result.getString("judul");
                 kontenPost = result.getString("konten");
                 publishStatus = result.getInt("publishStatus");
