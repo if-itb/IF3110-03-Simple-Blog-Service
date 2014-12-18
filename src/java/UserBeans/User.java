@@ -11,7 +11,7 @@ package UserBeans;
  */
 public class User {
 
-    private int uid;
+    private String uid;
     private String fullname;
     private String username;
     private String password;
@@ -19,7 +19,7 @@ public class User {
     private String email;
 
     public User() {
-        uid = 0;
+        uid = "";
         username = "guest";
         password = "pass";
         role = "guest";
@@ -27,7 +27,7 @@ public class User {
         fullname = "guest";
     }
 
-    public int getUid() {
+    public String getUid() {
         return uid;
     }
 
@@ -55,7 +55,7 @@ public class User {
         this.fullname = fullName;
     }
 
-    public void setUid(int uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 

@@ -5,12 +5,10 @@
  */
 package UserBeans;
 
-import com.firebase.client.Firebase;
-import com.firebase.client.Transaction.Handler;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
+import java.util.List;
+import org.chamerling.heroku.service.JsonObject;
 
 /**
  *
@@ -18,20 +16,7 @@ import java.util.ArrayList;
  */
 public class MainUserData {
     public static void main(String[] args){
-
-        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/");
-        ref.authWithCustomToken(null, null);
-        Firebase komenRef = ref.child("komentar");
-        Komentar komenParam = new Komentar();
-        komenParam.setPid(4);
-        komenParam.setCid(10);
-        komenParam.setKomentator("hayyu");
-        komenParam.setKomen("nyoba post ke firebase");
-        komenParam.setEmail("hayyu@gmail.com");
-//        Map<String, Komentar> komentar = new HashMap<String, Komentar>();
-//        komentar.put("4", komenParam);
-        String coba = "nyoba aja";
-        komenRef.setValue(coba);
-        komenRef.push();
+        //List<JsonObject> listComment = Client.listComment("-JdQ_qQjymLpnDOXIsDg");
+        System.out.println(Client.listPost());
     }
 }

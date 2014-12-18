@@ -13,16 +13,16 @@ import java.sql.Date;
  */
 public class Komentar {
 
-    private int cid;
-    private int pid;
+    private String cid;
+    private String pid;
     private String komentator;
     private String komen;
     private String email;
     private String commentDate;
 
     public Komentar() {
-        cid=0;
-        pid=0;
+        cid="";
+        pid="";
         komentator="guest";
         komen="";
         email="";
@@ -30,19 +30,19 @@ public class Komentar {
         commentDate = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
     }
 
-    public int getCid() {
+    public String getCid() {
         return cid;
     }
 
-    public void setCid(int commentID) {
+    public void setCid(String commentID) {
         cid = commentID;
     }
 
-    public int getPid() {
+    public String getPid() {
         return pid;
     }
 
-    public void setPid(int postID) {
+    public void setPid(String postID) {
         pid = postID;
     }
 

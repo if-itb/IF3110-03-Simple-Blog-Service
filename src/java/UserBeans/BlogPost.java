@@ -14,8 +14,8 @@ import java.util.Date;
  */
 public class BlogPost {
 
-    private int pid;
-    private int uid;
+    private String pid;
+    private String uid;
     private String username;
     private String posttitle;
     private String postcontent;
@@ -24,8 +24,8 @@ public class BlogPost {
     private boolean isdeleted;
 
     public BlogPost() {
-        pid = 0;
-        uid = 0;
+        pid = "";
+        uid = "";
         posttitle = "";
         postcontent = "";
         username = "";
@@ -36,8 +36,8 @@ public class BlogPost {
     }
     
     public void reset(){
-        pid = 0;
-        uid = 0;
+        pid = "";
+        uid = "";
         posttitle = "";
         postcontent = "";
         username = "";
@@ -47,11 +47,11 @@ public class BlogPost {
         postdate = String.valueOf(date.getMonth()+1)+"/"+String.valueOf(date.getDate())+"/"+String.valueOf(date.getYear()+1900);
     }
 
-    public int getPid() {
+    public String getPid() {
         return pid;
     }
 
-    public int getUid() {
+    public String getUid() {
         return uid;
     }
 
@@ -101,11 +101,11 @@ public class BlogPost {
         return ret;
     }
 
-    public void setPid(int Pid) {
+    public void setPid(String Pid) {
         pid = Pid;
     }
 
-    public void setUid(int userID) {
+    public void setUid(String userID) {
         uid = userID;
     }
 

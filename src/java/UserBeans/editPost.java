@@ -17,26 +17,26 @@ import javax.faces.bean.SessionScoped;
 public class editPost {
 
     
-    private int pid;
-    private BlogPost post;
+    private String pid;
+    private org.chamerling.heroku.service.BlogPost post;
     
     /**
      * Creates a new instance of editPost
      */
     public editPost() {
-        post = new BlogPost();
-        pid = 0;
+        post = new org.chamerling.heroku.service.BlogPost();
+        pid = "";
     }
     
-    public String initiate(int ppid){
+    public String initiate(String ppid){
         UserData ud = new UserData();
         pid = ppid;
         post = ud.getBlogPost(ppid);
-        BlogPost dummy = ud.getBlogPost(ppid);
+        org.chamerling.heroku.service.BlogPost dummy = ud.getBlogPost(ppid);
         return "faces/edit_post.xhtml";
     }
     
-    public BlogPost getPost(){
+    public org.chamerling.heroku.service.BlogPost getPost(){
         return post;
     }
     
@@ -53,7 +53,14 @@ public class editPost {
     
     public String submitPost(){
         UserData ud = new UserData();
-        ud.writeBlogPost(post);
+        BlogPost blogpost = new BlogPost();
+        blogpost.setPid(post.getPid());
+        blogpost.setPostcontent(post.getPostcontent());
+        blogpost.setPostdate(post.getPostdate());
+        blogpost.setPosttitle(post.getPosttitle());
+        blogpost.setUid(post.getUid());
+        blogpost.setUsername(post.getUsername());
+        ud.writeBlogPost(blogpost);
         return "faces/index.xhtml";
     }
 }

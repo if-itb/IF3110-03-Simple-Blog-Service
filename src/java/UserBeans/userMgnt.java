@@ -27,20 +27,20 @@ public class userMgnt implements Serializable {
      */
     private String Message;
     private Cookie cookie;
-    private User user;
-    private User newUser;
+    private org.chamerling.heroku.service.User user;
+    private org.chamerling.heroku.service.User newUser;
     private BlogPost post;
-    private BlogPost lihatpost;
-    private ArrayList<BlogPost> allPosts;
-    private ArrayList<BlogPost> unpublishedPosts;
-    private ArrayList<Komentar> comments;
+    private org.chamerling.heroku.service.BlogPost lihatpost;
+    private ArrayList<org.chamerling.heroku.service.BlogPost> allPosts;
+    private ArrayList<org.chamerling.heroku.service.BlogPost> unpublishedPosts;
+    private ArrayList<org.chamerling.heroku.service.Komentar> comments;
     private Komentar komen;
-    private int pid;
-    private ArrayList<User> users;
-    private ArrayList<BlogPost> deletedPosts;
+    private String pid;
+    private ArrayList<org.chamerling.heroku.service.User> users;
+    private ArrayList<org.chamerling.heroku.service.BlogPost> deletedPosts;
 
     public userMgnt() {
-        user = new User();
+        user = new org.chamerling.heroku.service.User();
         post = new BlogPost();
         Message = "tidak ada";
         cookie = new Cookie("Username", null);
@@ -49,15 +49,15 @@ public class userMgnt implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String passedParam = (String) facesContext.getExternalContext().getRequestParameterMap().get("pid");
         if(passedParam != null)
-            pid = Integer.parseInt(passedParam);
+            pid = passedParam;
         
         komen = new Komentar();
-        newUser = new User();
+        newUser = new org.chamerling.heroku.service.User();
     }
     
     public void login() {
         UserData ud = new UserData();
-        User userValidator = ud.getUser(user.getUsername());
+        org.chamerling.heroku.service.User userValidator = ud.getUser(user.getUsername());
         if (userValidator != null) {
             if (user.getPassword().compareTo(userValidator.getPassword()) == 0) {
                 user.setUid(userValidator.getUid());
@@ -96,7 +96,7 @@ public class userMgnt implements Serializable {
         user.setPassword("pass");
         user.setEmail("");
         user.setRole("guest");
-        user.setUid(0);
+        user.setUid("");
     }
 
     public boolean isLogin() {
@@ -127,17 +127,17 @@ public class userMgnt implements Serializable {
         post.reset();
     }
     
-    public void publishPost(int pid){
+    public void publishPost(String pid){
         UserData ud = new UserData();
         ud.publishPost(pid);
     }
     
-    public void softDeletePost(int ppid){
+    public void softDeletePost(String ppid){
         UserData ud = new UserData();
         ud.softDeletePost(ppid);
     }
     
-    public void deletedPost(int ppid){
+    public void deletedPost(String ppid){
         UserData ud = new UserData();
         ud.deletePost(ppid);
     }
@@ -148,12 +148,9 @@ public class userMgnt implements Serializable {
         ud.writeKomentar(komen);
     }
         
-    public ArrayList<Komentar> getComments(){
+    public ArrayList<org.chamerling.heroku.service.Komentar> getComments(){
         UserData ud = new UserData();
-
-        comments = ud.getListKomentar(lihatpost.getPid());
-
-        
+        comments = (ArrayList<org.chamerling.heroku.service.Komentar>) ud.getListKomentar(lihatpost.getPid());
         return comments;
     }
     
@@ -170,19 +167,19 @@ public class userMgnt implements Serializable {
         this.komen.setPid(komen.getPid());
     }
     
-    public ArrayList<BlogPost> getUnpublishedPosts(){
+    public ArrayList<org.chamerling.heroku.service.BlogPost> getUnpublishedPosts(){
         UserData ud = new UserData();
-        return ud.getAllUnpublishedBlogPost();
+        return (ArrayList<org.chamerling.heroku.service.BlogPost>) ud.getAllUnpublishedBlogPost();
     }
     
-    public void setUnpublishedPosts(ArrayList<BlogPost> unpublishedPostSet){
+    public void setUnpublishedPosts(ArrayList<org.chamerling.heroku.service.BlogPost> unpublishedPostSet){
         unpublishedPosts.clear();
-        for (BlogPost unpublishedPostSet1 : unpublishedPostSet) {
+        for (org.chamerling.heroku.service.BlogPost unpublishedPostSet1 : unpublishedPostSet) {
             unpublishedPosts.add(unpublishedPostSet1);
         }
     }
     
-    public User getUser() {
+    public org.chamerling.heroku.service.User getUser() {
         return this.user;
     }
 
@@ -195,14 +192,14 @@ public class userMgnt implements Serializable {
         user.setUsername(newUser.getUsername());
     }
 
-    public ArrayList<BlogPost> getAllPosts() {
+    public ArrayList<org.chamerling.heroku.service.BlogPost> getAllPosts() {
         UserData ud = new UserData();
-        return ud.getAllBlogPost();
+        return (ArrayList<org.chamerling.heroku.service.BlogPost>) ud.getAllBlogPost();
     }
 
-    public void setAllPosts(ArrayList<BlogPost> postSet) {
+    public void setAllPosts(ArrayList<org.chamerling.heroku.service.BlogPost> postSet) {
         allPosts.clear();
-        for (BlogPost postSet1 : postSet) {
+        for (org.chamerling.heroku.service.BlogPost postSet1 : postSet) {
             allPosts.add(postSet1);
         }
     }
@@ -226,9 +223,9 @@ public class userMgnt implements Serializable {
         return Message;
     }
     
-    public ArrayList<User> getUsers(){
+    public ArrayList<org.chamerling.heroku.service.User> getUsers(){
         UserData ud = new UserData();
-        users =  ud.getListUser();
+        users =  (ArrayList<org.chamerling.heroku.service.User>) ud.getListUser();
         return users;
     }
     
@@ -258,7 +255,7 @@ public class userMgnt implements Serializable {
         return "faces/edit_post.xhtml?pid="+editPid;
     }
     
-    public String genPostLink(int ppid){
+    public String genPostLink(String ppid){
         UserData ud = new UserData();
         lihatpost = ud.getBlogPost(ppid);
         return "faces/post.xhtml";
@@ -267,18 +264,25 @@ public class userMgnt implements Serializable {
     public String updateUserOption(int usersIndex){
         if(users.size() >= usersIndex){
             UserData ud = new UserData();
-            ud.updateUserDB(users.get(usersIndex));
+            User user = new User();
+            user.setEmail(users.get(usersIndex).getEmail());
+            user.setFullname(users.get(usersIndex).getFullname());
+            user.setPassword(users.get(usersIndex).getPassword());
+            user.setRole(users.get(usersIndex).getRole());
+            user.setUid(users.get(usersIndex).getUid());
+            user.setUsername(users.get(usersIndex).getUsername());
+            ud.updateUserDB(user);
             return "alert('update berhasil');";
         }
         return "alert('update gagal');";
     }
     
-    public ArrayList<BlogPost> getDeletedPosts(){
+    public ArrayList<org.chamerling.heroku.service.BlogPost> getDeletedPosts(){
         UserData ud = new UserData();
-        return ud.getDeletedPosts();
+        return (ArrayList<org.chamerling.heroku.service.BlogPost>) ud.getDeletedPosts();
     }
     
-    public void restoreDeletedPost(int delPid){
+    public void restoreDeletedPost(String delPid){
         UserData ud = new UserData();
         ud.restorePost(delPid);
     }
@@ -288,16 +292,23 @@ public class userMgnt implements Serializable {
         return "faces/add_post.xhtml";
     }
     
-    public User getNewUser(){
+    public org.chamerling.heroku.service.User getNewUser(){
         return newUser;
     }
     
     public void createNewUser(){
         UserData ud = new UserData();
-        ud.createUserDB(newUser);
+        User user = new User();
+        user.setEmail(newUser.getEmail());
+        user.setFullname(newUser.getFullname());
+        user.setPassword(newUser.getPassword());
+        user.setRole(newUser.getRole());
+        user.setUid(newUser.getUid());
+        user.setUsername(newUser.getUsername());
+        ud.createUserDB(user);
     }
     
-    public BlogPost getLihatpost(){
+    public org.chamerling.heroku.service.BlogPost getLihatpost(){
         return lihatpost;
     }
 }
