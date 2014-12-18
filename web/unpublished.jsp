@@ -4,6 +4,7 @@
     Author     : Asus
 --%>
 
+<%@page import="com.mysql.jdbc.StringUtils"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
@@ -12,6 +13,14 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+
+<%
+    String role =StringUtils.isNullOrEmpty(session.getAttribute("role").toString()) ? "" : session.getAttribute("role").toString();
+    out.print("ROLE" + role);
+    if(role.equals("owner") || role.equals("") || role.equals("guest")){
+        response.sendRedirect("forbidden.jsp");
+    }
+%>
 <html>
    <head>
 
@@ -63,7 +72,7 @@
 </nav>
     
 <sql:query dataSource="${snapshot}" var="result">
-SELECT * FROM `tucilDB_13511097`.`listpost` WHERE `published`='f' ORDER BY `date` DESC;
+SELECT * FROM `tucilDB_13511097`.`listpost` WHERE `published`='f' OR `published`='d' ORDER BY `date` DESC;
 </sql:query> 
 <% TimeConverter tc = new TimeConverter(); %>
 
@@ -83,8 +92,9 @@ SELECT * FROM `tucilDB_13511097`.`listpost` WHERE `published`='f' ORDER BY `date
                 </div>
                
                 <p>
-                    <a href="new_post.jsp?mode=1&id_post=<c:out value='${row.id}'/>">Edit</a> | <a href="javascript:ConfirmDelete(<c:out value='${row.id}'/>)">Hapus</a> | <a href="updatePublish.jsp?id_post=<c:out value='${row.id}'/>">Publish</a>
-                  
+                    
+                        <a href="new_post.jsp?mode=1&id_post=<c:out value='${row.id}'/>">Edit</a> | <a href="javascript:ConfirmDelete(<c:out value='${row.id}'/>)">Hapus</a> | <a href="updatePublish.jsp?id_post=<c:out value='${row.id}'/>">Publish</a> | <a href="recover.jsp?id_post=<c:out value='${row.id}'/>">Recover</a>
+                    
                 </p>
                 </li>
                

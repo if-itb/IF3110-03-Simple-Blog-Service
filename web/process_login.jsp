@@ -6,8 +6,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*" %>
 
-<%! Cookie c1,c2,c3;
+
+<%! Cookie c1,c2,c3,c4;
     String role, id,email;
+    
 %>
 
 <%
@@ -35,16 +37,21 @@
         c2 = new Cookie("username",userid);
         c1 = new Cookie("role",rs.getString("role"));
         c3 = new Cookie("id_user",rs.getString("id"));
-        c3.setMaxAge(60);
-        c1.setMaxAge(60);
-        c2.setMaxAge(60);
+        c4 = new Cookie("email",rs.getString("email"));
+        c3.setMaxAge(60*60*24);
+        c1.setMaxAge(60*60*24);
+        c2.setMaxAge(60*60*24);
+        c4.setMaxAge(60*60*24);
         c1.setPath("/");
         c2.setPath("/");
         c3.setPath("/");
+        c4.setPath("/");
         
         response.addCookie(c1);
         response.addCookie(c2);
         response.addCookie(c3);
+        response.addCookie(c4);
+        
         response.sendRedirect("mainpage.jsp");
     } else {
         response.sendRedirect("login.jsp");
