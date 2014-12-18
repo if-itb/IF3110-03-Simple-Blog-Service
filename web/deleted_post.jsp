@@ -96,7 +96,7 @@
                 </div>
                 <p><% out.print(pm.getKonten());%>&hellip;</p>
                 <p>
-                     <f:subview id="asd" rendered="#{loginHandler.admin}"><a href="DeleteServlet?postId=<% out.print(rs.getString("post_id")); %>"">Hapus</a> | <a href="RestoreServlet?postId=<% out.print(rs.getString("post_id")); %>"">Restore</a>
+                     <f:subview id="asd" rendered="#{loginHandler.admin}"><a href="DeleteServlet?postId=<% out.print(pm.getId()); %>"">Hapus</a> | <a href="RestoreServlet?postId=<% out.print(pm.getId()); %>"">Restore</a>
                     </f:subview>
                 </p>
             </li>
