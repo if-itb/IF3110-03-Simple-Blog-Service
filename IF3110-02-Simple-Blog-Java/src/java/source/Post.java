@@ -51,35 +51,12 @@ public class Post {
      * @return  HTML script untuk memuat komentar yang akan digunakan oleh AJAX
      * @throws java.sql.SQLException 
      */
-    public String LoadComment(int ID) throws SQLException {
+    public String LoadComment(int ID) {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         
         //login database
         String HTMLcode = "";
-        KoneksiDatabase.setUser("root2");
-        KoneksiDatabase.setPassword("akhfa");
-        KoneksiDatabase.setDatabase("localhost","blog");
-        try {
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            String QueryLoadComment = "SELECT * FROM komentar WHERE idpost="+idPost+" ORDER BY Waktu DESC";
-            ResultSet result = statement.executeQuery(QueryLoadComment);
-            while(result.next()) {
-                String Nama = result.getString("Nama");
-                String Email = result.getString("Email");
-                String Comment = result.getString("Komentar");
-                Timestamp Time = result.getTimestamp("Waktu");
-                HTMLcode +=
-                        "    <li class=\"art-list-item\">\n" +
-                        "        <div class=\"art-list-item-title-and-time\">\n" +
-                        "            <h2 class=\"art-list-title\">" + Nama + "</h2>\n" +
-                        "            <div class=\"art-list-time\">" + Time.toString() + "</div>\n" +
-                        "        </div>\n" +
-                        "        <p>" + Comment + "</p>\n" +
-                        "    </li>";
-            }
-        } catch (SQLException ex) {
-        }
+        
         return HTMLcode;
     }
     /**

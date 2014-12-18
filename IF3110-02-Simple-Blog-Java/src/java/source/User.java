@@ -5,6 +5,11 @@
  */
 package source;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -110,18 +115,35 @@ public class User {
         role = _role;
     }
     
-    public String getRole()
+    public String getRole() throws SQLException, Exception_Exception
     {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         List<DataUser> userlist = blog.getAllUser();
         if(role == null)
         {
             for(DataUser user : userlist) {
-                if(user.getUsername().equals(this.username)) {
-                    this.role = user.getRole();
+                if(user.username.equals(this.username)) {
+                    this.role = user.role;
                     break;
                 }
             }
+            /*
+            //Load role dari database
+            KoneksiDatabase.setUser(userSQL);
+            KoneksiDatabase.setPassword(passSQL);
+            KoneksiDatabase.setDatabase(urlSQL,databaseName);
+
+            Connection koneksi = KoneksiDatabase.getKoneksi();
+            Statement statement = koneksi.createStatement();
+            String query = "SELECT username, role FROM user WHERE username = '" + username +"'";
+            System.out.println(query);
+            
+            ResultSet result = statement.executeQuery(query);
+            if(result.next())
+            {
+                role = result.getString("role");
+            }
+            System.out.println("role = " + role);*/
         }
         return this.role;
     }
@@ -148,11 +170,11 @@ public class User {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         List<DataUser> userlist = blog.getAllUser();
         for(DataUser user : userlist) {
-            if(user.getUsername().equals(this.username)) {
-                this.nama = user.getNama();
-                this.password = user.getPassword();
-                this.email = user.getEmail();
-                this.role = user.getRole();
+            if(user.username.equals(this.username)) {
+                this.nama = user.nama;
+                this.password = user.password;
+                this.email = user.email;
+                this.role = user.role;
                 break;
             }
         }
@@ -181,25 +203,42 @@ public class User {
     /**
      * Fungsi untuk mengupdate user berdasarkan username
      * Semua attribut yang akan di update harus diset terlebih dahulu menggunakan setter.
-     
+     * @throws SQLException 
      */
-    public void updateUser() 
+    public void updateUser() throws SQLException
     {
+        KoneksiDatabase.setUser(userSQL);
+        KoneksiDatabase.setPassword(passSQL);
+        KoneksiDatabase.setDatabase(urlSQL,databaseName);
         
-        
+        Connection koneksi = KoneksiDatabase.getKoneksi();
+        Statement statement = koneksi.createStatement();
+        String query = "UPDATE user SET password = ?, "
+                                        + "nama = ?,"
+                                        + "email = ?,"
+                                        + "role = ?"
+                        + "WHERE username = ?";
+        try (PreparedStatement preStat = koneksi.prepareStatement(query)) {
+            preStat.setString(1, password);
+            preStat.setString(2, nama);
+            preStat.setString(3, email);
+            preStat.setString(4, role);
+            preStat.setString(5, username);
+            preStat.executeUpdate();
+        }
     }
     
     /**
      * Fungsi untuk menghapus 1 user dengan username tertentu.
      * username harus diset terlebih dahulu dengan prosedure user.setUsername("username").
-     
+     * @throws SQLException 
      */
     public void deleteUser() throws InterruptedException_Exception, Exception_Exception
     {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         List<DataUser> userlist = blog.getAllUser();
         for(DataUser user : userlist) {
-            if(user.getUsername().equals(this.username)) {
+            if(user.username.equals(this.username)) {
                 blog.deleteUser(user.getIdFirebase());
             }
         }
@@ -224,10 +263,33 @@ public class User {
      * @return True jika login berhasil, dan false jika gagal
      * @throws java.sql.SQLException
      */
-    public boolean successLogin() 
+    public boolean successLogin() throws SQLException
     {
+        KoneksiDatabase.setUser(userSQL);
+        KoneksiDatabase.setPassword(passSQL);
+        KoneksiDatabase.setDatabase(urlSQL,databaseName);
         
+        Connection koneksi = KoneksiDatabase.getKoneksi();
+        Statement statement = koneksi.createStatement();
+        String query = "SELECT username, password FROM user WHERE username = '" + username +"'";
+        System.out.println(query);
         
+        ResultSet result = statement.executeQuery(query);
+        while(result.next())
+        {
+            System.out.println("User = " + result.getString(1));
+            System.out.println("password = " + result.getString(2));
+            if(username.equalsIgnoreCase(result.getString(1)) && password.equals(result.getString(2)))
+            {
+                result.close();
+                statement.close();
+//                koneksi.close();
+                return true;
+            }
+        }
+        result.close();
+        statement.close();
+//        koneksi.close();
         return false;
     }
     
@@ -237,12 +299,35 @@ public class User {
      * @param _userDatabase
      * @param _passwordDatabase
      * @return
-     
+     * @throws SQLException 
      */
-    public boolean successLogin(String _userDatabase, String _passwordDatabase) 
+    public boolean successLogin(String _userDatabase, String _passwordDatabase) throws SQLException
     {
+        KoneksiDatabase.setUser(_userDatabase);
+        KoneksiDatabase.setPassword(_passwordDatabase);
+        KoneksiDatabase.setDatabase("localhost","blog");
         
+        Connection koneksi = KoneksiDatabase.getKoneksi();
+        Statement statement = koneksi.createStatement();
+        String query = "SELECT username, password FROM user WHERE username = '" + username +"'";
+        System.out.println(query);
         
+        ResultSet result = statement.executeQuery(query);
+        while(result.next())
+        {
+            System.out.println("User = " + result.getString(1));
+            System.out.println("password = " + result.getString(2));
+            if(username.equalsIgnoreCase(result.getString(1)) && password.equals(result.getString(2)))
+            {
+                result.close();
+                statement.close();
+//                koneksi.close();
+                return true;
+            }
+        }
+        result.close();
+        statement.close();
+//        koneksi.close();
         return false;
     }
     
@@ -254,34 +339,86 @@ public class User {
      * @param _domain
      * @param _namaDatabase
      * @return
-     
+     * @throws SQLException 
      */
-    public boolean successLogin(String _userDatabase, String _passwordDatabase, String _domain, String _namaDatabase) 
+    public boolean successLogin(String _userDatabase, String _passwordDatabase, String _domain, String _namaDatabase) throws SQLException
     {
+        KoneksiDatabase.setUser(_userDatabase);
+        KoneksiDatabase.setPassword(_passwordDatabase);
+        KoneksiDatabase.setDatabase(_domain,_namaDatabase);
         
+        Connection koneksi = KoneksiDatabase.getKoneksi();
+        Statement statement = koneksi.createStatement();
+        String query = "SELECT username, password FROM user WHERE username = '" + username +"'";
+        System.out.println(query);
         
+        ResultSet result = statement.executeQuery(query);
+        while(result.next())
+        {
+            System.out.println("User = " + result.getString(1));
+            System.out.println("password = " + result.getString(2));
+            if(username.equalsIgnoreCase(result.getString(1)) && password.equals(result.getString(2)))
+            {
+                result.close();
+                statement.close();
+//                koneksi.close();
+                return true;
+            }
+        }
+        result.close();
+        statement.close();
+//        koneksi.close();
         return false;
     }
     
     /**
      * Memasukkan user ke dalam database. 
      * User di create terlebih dahulu dengan constructor dengan parameter (username, password, dan role).
-     
+     * @throws SQLException 
      */
-    public void masukDatabase()
+    public void masukDatabase() throws SQLException
     {
-        
-        
+        KoneksiDatabase.setUser(userSQL);
+        KoneksiDatabase.setPassword(passSQL);
+        KoneksiDatabase.setDatabase(urlSQL,databaseName);
+        Connection koneksi = KoneksiDatabase.getKoneksi();
+        String query = "INSERT INTO user (username,password,nama,email,role) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement preStat = koneksi.prepareStatement(query)) {
+            preStat.setString(1, username);
+            preStat.setString(2, password);
+            preStat.setString(3, nama);
+            preStat.setString(4, email);
+            preStat.setString(5, role);
+            
+            preStat.executeUpdate();
+            preStat.close();
+        }
+//        koneksi.close();
     }
     
     /**
      * Memasukkan user ke dalam database dengan userdatabase dan passwordDatabase yang custom
      * User di create terlebih dahulu dengan constructor dengan parameter (username, password, dan role).
-     
+     * @throws SQLException 
      */
-    public void masukDatabase(String _userDatabase, String _passwordDatabase) 
+    public void masukDatabase(String _userDatabase, String _passwordDatabase) throws SQLException
     {
-        
+        KoneksiDatabase.setUser(_userDatabase);
+        KoneksiDatabase.setPassword(_passwordDatabase);
+        KoneksiDatabase.setDatabase("localhost","blog");
+        Connection koneksi = KoneksiDatabase.getKoneksi();
+        String query = "INSERT INTO user (username,password,nama,email,role) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement preStat = koneksi.prepareStatement(query)) {
+            preStat.setString(1, username);
+            preStat.setString(2, password);
+            preStat.setString(3, nama);
+            preStat.setString(4, email);
+            preStat.setString(5, role);
+            
+            preStat.executeUpdate();
+            preStat.close();
+        }
+//        koneksi.close();
     }
     
     /**
@@ -331,8 +468,9 @@ public class User {
             System.out.println(usertest.getPassword());
             System.out.println(usertest.getEmail());
             System.out.println(usertest.getRole());
-        } catch (Exception_Exception e) {
             
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
