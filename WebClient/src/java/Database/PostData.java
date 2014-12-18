@@ -30,8 +30,6 @@ import org.chamerling.heroku.service.SimpleBlogImplService;
 @ManagedBean(name="PostData")
 @RequestScoped
 public class PostData implements Serializable {
-    private MySQL db;
-    private String table;
     private Part part;
     private String upload;
     private SimpleBlog SB;
@@ -40,9 +38,7 @@ public class PostData implements Serializable {
      * Create an instance of PostData
      */
     public PostData() {
-        table = "post";
         upload = "";
-        db = new MySQL();
         SB = new SimpleBlogImplService().getSimpleBlogImplPort();
     }
 

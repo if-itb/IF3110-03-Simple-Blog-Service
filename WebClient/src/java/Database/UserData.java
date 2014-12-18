@@ -7,8 +7,10 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.LinkedList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import org.chamerling.heroku.service.InterruptedException_Exception;
 import org.chamerling.heroku.service.SimpleBlog;
@@ -22,8 +24,6 @@ import org.chamerling.heroku.service.SimpleBlogImplService;
 @ManagedBean(name="UserData")
 @RequestScoped
 public class UserData implements Serializable {
-    private String table;
-    private MySQL db;
     private String CookieData;
     private CookieHelper cook;
     private String username;
@@ -32,9 +32,7 @@ public class UserData implements Serializable {
      * Create an instance of UserData
      */
     public UserData() {
-        table = "user";
         CookieData = "user_blog";
-        db = new MySQL();
         cook = new CookieHelper();
     }
     
@@ -44,22 +42,6 @@ public class UserData implements Serializable {
      * @return an instance of user from database
      */
     public User getUser(String username) {
-        /*try {
-            this.db.Where("username=", user);
-            ResultSet Data = this.db.Select(table);
-            if (Data.first()) {
-                String username = Data.getString("username");
-                String password = Data.getString("password");
-                String role = Data.getString("role");
-                String name = Data.getString("name");
-                String email = Data.getString("email");
-                return new User(username, password, role, name, email);
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            return null;
-        }*/
         SimpleBlog SB = new SimpleBlogImplService().getSimpleBlogImplPort();
         org.chamerling.heroku.service.User user = SB.getUser(username);
         User user_r = new User(user);
@@ -73,6 +55,7 @@ public class UserData implements Serializable {
      * @return String status to pass
      */
     public String validate(String user,String pass) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleBlog SB = new SimpleBlogImplService().getSimpleBlogImplPort();
         if (SB.validate(user, pass))
         {
@@ -81,7 +64,8 @@ public class UserData implements Serializable {
         }
         else
         {
-            return "invalid";
+            facesContext.addMessage("loginForm", new FacesMessage("Username or password is incorrect"));
+            return null;
         }
     }
     
@@ -91,13 +75,11 @@ public class UserData implements Serializable {
      * @return String status to pass
      */
     public String addUser(User user) throws InterruptedException_Exception {
-        /*String col[] = {"username", "password", "role", "name", "email"};*/
         String username = user.getUsername();
         String password = user.getPassword();
         String role = user.getRole();
         String name = user.getName();
         String email = user.getEmail();
-        /*int query = this.db.Insert(table, col, val);*/
         SimpleBlog SB = new SimpleBlogImplService().getSimpleBlogImplPort();
         boolean query = SB.addUser(username, password, role, name, email);
         if (query) {

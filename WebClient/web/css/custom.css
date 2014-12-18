@@ -262,6 +262,15 @@ footer {
     font-family: 'Raleway', sans-serif;
 }
 
+ul.error-login {
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+    list-style: none;
+    color : #520211;
+    font-weight: bold;
+}
+
 /* Responsive Styles */
 
 @media(max-width:991px) {

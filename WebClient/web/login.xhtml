@@ -35,7 +35,7 @@
         <div class="row">
             <!-- Comments Form -->
                 <div class="well col-sm-6 col-md-offset-3">
-                    <h:form class="form-horizontal" role="form"  >
+                    <h:form class="form-horizontal" role="form" id="loginform"  >
                         <br />
                       <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 col-md-offset-2 control-label">Username</label>
@@ -49,6 +49,7 @@
                         <div class="col-sm-6">
                             <c:set var="pass" value="#{String}" />
                             <h:inputSecret class="form-control" value="#{pass}" />
+                            <h:messages class="error-login"/>
                         </div>
                       </div>
                       <div class="form-group">
