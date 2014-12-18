@@ -35,7 +35,7 @@ public class EditPost {
     public void Redirect(int PostID) throws IOException{
         setPostId(PostID);
         ExternalContext extcon = FacesContext.getCurrentInstance().getExternalContext();
-        extcon.redirect("/webapp/EditPost.xhtml");
+        extcon.redirect("/simpelblog-heroku/EditPost.xhtml");
     }
     
     private Connection getConnection() throws ClassNotFoundException, SQLException, IllegalAccessException{
@@ -95,6 +95,6 @@ public class EditPost {
             System.err.println(e);
         }
         ExternalContext extcon = FacesContext.getCurrentInstance().getExternalContext();
-        extcon.redirect("/webapp/Home.xhtml");
+        extcon.redirect("/simpelblog-heroku/Home.xhtml");
     }    
 }

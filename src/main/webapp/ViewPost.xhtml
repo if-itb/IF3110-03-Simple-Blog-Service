@@ -51,7 +51,7 @@ and open the template in the editor.
                     <h2>Komentar</h2>
 
                     <div id="contact-area2">
-                        <h:form rendered="#{Posting.loginState == true}" onsubmit="AddCommentLoggedIn(#{Viewpost.postId})">
+                        <h:form rendered="#{Posting.loginState == true}" id="Form1" onsubmit="AddCommentLoggedIn(#{Viewpost.postId})">
                             <label for="Nama">Nama:</label>
                             <input type="text" name="Nama2" id="Nama2" required="true" disabled="true" value="#{Posting.activeUser}"/>
 
@@ -61,9 +61,10 @@ and open the template in the editor.
                             <label for="Komentar">Komentar:</label><br/>
                             <textarea name="Komentar2" rows="20" cols="20" id="Komentar2" required="true"></textarea>
                             
-                            <h:commandButton type="submit" value="Kirim" class="submit-button"></h:commandButton>
+                            <h:commandButton type="submit" value="Kirim" class="submit-button">
+                            </h:commandButton>
                         </h:form>
-                        <h:form rendered="#{Posting.loginState == false}" id="Form" onsubmit="return AddComment(#{Viewpost.postId})">
+                        <h:form rendered="#{Posting.loginState == false}" id="Form2" onsubmit="return AddComment(#{Viewpost.postId})">
                             <label for="Nama">Nama:</label>
                             <input type="text" name="Nama" id="Nama" required="true"/>
 
@@ -79,7 +80,7 @@ and open the template in the editor.
                     </div>
 
                     <ul class="art-list-body" id="comment-list">
-                        
+
                     </ul>
                 </div>
             </div>
