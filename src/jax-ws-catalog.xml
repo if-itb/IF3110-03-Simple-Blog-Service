@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/TOSHIBA/Documents/RAMA/KULIAH/Semester%207/WBD/IF3110-03-Simple-Blog-Service/simpleblog.wsdl" uri="wsdl/simpleblog.wsdl"/>
+    <system systemId="http://localhost:8080/IF3110-03-Simple-Blog-Service/simpleblog?wsdl" uri="wsdl/localhost_8080/IF3110-03-Simple-Blog-Service/simpleblog.wsdl"/>
+</catalog>
