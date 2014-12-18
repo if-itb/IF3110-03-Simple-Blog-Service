@@ -2,9 +2,6 @@
  */
 package source;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.chamerling.heroku.service.BlogService;
@@ -23,7 +20,7 @@ public class Post {
     private String judulPost;
     private String tanggalPost;
     private String kontenPost;
-    private int publishStatus;
+    private String publishStatus;
     private boolean cookieOn;
     private User user;
     
@@ -54,30 +51,21 @@ public class Post {
         
         //login database
         String HTMLcode = "";
-        /*KoneksiDatabase.setUser("root2");
-        KoneksiDatabase.setPassword("akhfa");
-        KoneksiDatabase.setDatabase("localhost","blog");
-        try {
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            String QueryLoadComment = "SELECT * FROM komentar WHERE idpost="+idPost+" ORDER BY Waktu DESC";
-            ResultSet result = statement.executeQuery(QueryLoadComment);
-            while(result.next()) {
-                String Nama = result.getString("Nama");
-                String Email = result.getString("Email");
-                String Comment = result.getString("Komentar");
-                Timestamp Time = result.getTimestamp("Waktu");
-                HTMLcode +=
+        java.util.List<org.chamerling.heroku.service.Komentar> L = blog.getAllCommentar(ID);
+        for (org.chamerling.heroku.service.Komentar K : L) {
+            String Nama = K.getNama();
+            String Email = K.getEmail();
+            String Comment = K.getComment();
+            //String Time = K.getTanggal();
+            HTMLcode +=
                         "    <li class=\"art-list-item\">\n" +
                         "        <div class=\"art-list-item-title-and-time\">\n" +
                         "            <h2 class=\"art-list-title\">" + Nama + "</h2>\n" +
-                        "            <div class=\"art-list-time\">" + Time.toString() + "</div>\n" +
+                        //"            <div class=\"art-list-time\">" + Time.toString() + "</div>\n" +
                         "        </div>\n" +
                         "        <p>" + Comment + "</p>\n" +
                         "    </li>";
-            }
-        } catch (SQLException ex) {
-        }*/
+        }
         return HTMLcode;
     }
     /**
@@ -87,19 +75,13 @@ public class Post {
      * @param comment
      * @throws SQLException 
      */
-    public void AddComment(String PostID, String nama, String email, String comment) {
-        String InsertQuery;
-        /*KoneksiDatabase.setUser("root2");
-        KoneksiDatabase.setPassword("akhfa");
-        KoneksiDatabase.setDatabase("localhost","blog");
+    public void AddComment(String PostID, String nama, String email, String comment) throws InterruptedException_Exception {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         try {
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            InsertQuery = "INSERT INTO komentar (idpost, nama, email, komentar) VALUES ('" + PostID + "', '" + nama + "', '" + email + "', '" + comment + "')";
-            statement.executeUpdate(InsertQuery);
-        } catch (SQLException ex) {
-
-        }*/
+            blog.addComment(PostID, nama, email, comment);
+        } catch (InterruptedException_Exception e) {
+            
+        }
     }
     /**
      * Menambahkan header message pada halaman utama blog
@@ -158,7 +140,7 @@ public class Post {
     public boolean isAdmin() throws Exception_Exception {
         try {
             return (user.getRole().compareTo("admin") == 0);
-        } catch (SQLException ex) {
+        } catch (Exception_Exception ex) {
             Logger.getLogger(Post.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
@@ -171,7 +153,7 @@ public class Post {
     public boolean isEditor() throws Exception_Exception {
         try {
             return (user.getRole().compareTo("editor") == 0);
-        } catch (SQLException ex) {
+        } catch (Exception_Exception ex) {
             Logger.getLogger(Post.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
@@ -184,7 +166,7 @@ public class Post {
     public boolean isOwner() throws Exception_Exception {
         try {
             return (user.getRole().compareTo("owner") == 0);
-        } catch (SQLException ex) {
+        } catch (Exception_Exception ex) {
             Logger.getLogger(Post.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
@@ -196,36 +178,19 @@ public class Post {
      * @throws java.sql.SQLException
      */
     public void setAtribut(String post_ID) {
-        java.util.List<org.chamerling.heroku.service.Post> L = getAllPost();
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        java.util.List<org.chamerling.heroku.service.Post> L = blog.getAllPost();
         for (org.chamerling.heroku.service.Post P : L) {
             //looping
-            if (P.get)
-        }
-        
-        /*try {
-            //login database
-            KoneksiDatabase.setUser("root2");
-            KoneksiDatabase.setPassword("akhfa");
-            KoneksiDatabase.setDatabase("localhost","blog");
-            //statement
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            //query
-            String querySelectPost = "SELECT * from post WHERE id=" + post_ID;
-            //execute query
-            ResultSet result = statement.executeQuery(querySelectPost);
-            //tulis hasil query
-            idPost = post_ID;
-            while (result.next()) {
-                judulPost = result.getString("judul");
-                tanggalPost = result.getString("tanggal");
-                kontenPost = result.getString("konten");
-                publishStatus = result.getInt("publishStatus");
+            if (P.getIdFirebasePost().compareTo(post_ID) == 0) {
+                idPost = post_ID;
+                judulPost = P.getJudulPost();
+                tanggalPost = P.getTanggalPost();
+                kontenPost = P.getKontenPost();
+                publishStatus = P.getPublishStatus() + "";
+                break;
             }
         }
-        catch (SQLException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }
     
     /**
@@ -266,43 +231,29 @@ public class Post {
      * @throws java.sql.SQLException
      */
     public String listPublishedPosts() throws Exception_Exception {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         //inisialisasi string
         String toHTML = "";
         boolean shortened;
-        /*try {
-            //login database
-            KoneksiDatabase.setUser("root2");
-            KoneksiDatabase.setPassword("akhfa");
-            KoneksiDatabase.setDatabase("localhost","blog");
-            //statement
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            //query
-            String queryListPosts = "SELECT * from `post` WHERE publishStatus=1 ORDER by tanggal DESC";
-            //execute query
-            ResultSet result = statement.executeQuery(queryListPosts);
-            //tulis hasil query
-            if (!result.next()) {
+        try {
+            java.util.List<org.chamerling.heroku.service.Post> L = blog.getAllPost();
+            if (L.isEmpty()) {
                 //kosong
                 toHTML = "No posts yet.";
             }
-            else { //ada hasil
-                Date date;
-                result = statement.executeQuery(queryListPosts);
-                while (result.next()) { //apabila result masih ada
+            else {
+                for (org.chamerling.heroku.service.Post P : L) { //apabila result masih ada
                     shortened = false;
                     //inisialisasi variabel
-                    idPost = result.getInt("id");
-                    judulPost = result.getString("judul");
-                    kontenPost = result.getString("konten");
-                    publishStatus = result.getInt("publishStatus");
+                    idPost = P.getIdFirebasePost();
+                    judulPost = P.getJudulPost();
+                    kontenPost = P.getKontenPost();
+                    publishStatus = P.getPublishStatus() + "";
                     if (kontenPost.length() > 100) {
                         kontenPost = kontenPost.substring(0, 100); //pemotongan teks
                         shortened = true;
                     }
-                    date = result.getDate("tanggal");
-                    //ubah menjadi string
-                    tanggalPost = date.toString();
+                    tanggalPost = P.getTanggalPost();
                     toHTML +=    
                             "<li class=\"art-list-item\">\n" +
                             "<div class=\"art-list-item-title-and-time\">\n" +
@@ -331,9 +282,9 @@ public class Post {
                 }
             }
         }
-        catch (SQLException ex) {
+        catch (Exception_Exception ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
         //return string
         return toHTML;
     }
@@ -341,24 +292,14 @@ public class Post {
     /**
      *
      * @return
-     * @throws SQLException
      */
     public String listManagementPosts() throws Exception_Exception {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         //inisialisasi string
         String toHTML = "";
         boolean shortened;
-        /*try {
-            //login database
-            KoneksiDatabase.setUser("root2");
-            KoneksiDatabase.setPassword("akhfa");
-            KoneksiDatabase.setDatabase("localhost","blog");
-            //statement
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            //query
-            String queryListPosts = "SELECT * from `post` ORDER by tanggal DESC";
-            //execute query
-            ResultSet result = null;
+        try {
+            java.util.List<org.chamerling.heroku.service.Post> L = blog.getAllPost();
             //header tabel
             toHTML += "<table id=\"t01\"> <tr>" +
                       "<th <tr style=\"vertical-align:center\" rowspan=\"2\" id=\"column1\">Judul Post</th>\n" +
@@ -373,23 +314,18 @@ public class Post {
                       "<th id=\"columnx\">Delete</th>\n" +
                       "<th id=\"columnx\">Edit</th>\n" +
                       "</tr>\n";
-            //tulis hasil query
-            Date date;
-            result = statement.executeQuery(queryListPosts);
-            while (result.next()) { //apabila result masih ada
+            for (org.chamerling.heroku.service.Post P : L) { //apabila result masih ada
                 shortened = false;
                 //inisialisasi variabel
-                idPost = result.getInt("id");
-                judulPost = result.getString("judul");
-                kontenPost = result.getString("konten");
-                publishStatus = result.getInt("publishStatus");
+                idPost = P.getIdFirebasePost();
+                judulPost = P.getJudulPost();
+                kontenPost = P.getKontenPost();
+                publishStatus = P.getPublishStatus() + "";
                 if (kontenPost.length() > 50) {
                     kontenPost = kontenPost.substring(0, 50); //pemotongan teks
                     shortened = true;
                 }
-                date = result.getDate("tanggal");
-                //ubah menjadi string
-                tanggalPost = date.toString();
+                tanggalPost = P.getTanggalPost();
                 //judul, tanggal, konten post
                 toHTML += "<tr>\n" + "<th>" + judulPost + "</th>"
                                    + "<th>" + tanggalPost + "</th>"
@@ -399,24 +335,24 @@ public class Post {
                 else //tidak dipotong
                     toHTML += "</th>";
                 //status post
-                switch (publishStatus) {
+                switch (Integer.parseInt(publishStatus)) {
                     case 0: toHTML += "<th> Unpublished </th>"; break;
                     case 1: toHTML += "<th> Published </th>"; break;
                     case 2: toHTML += "<th> Trashed </th>"; break;
                 }
                 //aksi berdasarkan role, lalu berdasarkan post
                 if (isAdmin()) {
-                    if (publishStatus == 0) { //status unpublished
+                    if (Integer.parseInt(publishStatus) == 0) { //status unpublished
                         toHTML += "<th><a href='../posts/publish_post.jsp?id=" + idPost + "'> X </a></th>\n" +
                                   "<th><a href='../posts/trash_post.jsp?id=" + idPost + "'> X </a></th>\n" +
                                   "<th></th>\n";
                     }
-                    else if (publishStatus == 1) { //status published
+                    else if (Integer.parseInt(publishStatus) == 1) { //status published
                         toHTML += "<th></th>\n" +
                                   "<th><a href='../posts/trash_post.jsp?id=" + idPost + "'> X </a></th>\n" +
                                   "<th></th>\n";
                     }
-                    else if (publishStatus == 2) { //status trash
+                    else if (Integer.parseInt(publishStatus) == 2) { //status trash
                         toHTML += "<th></th>\n" +
                                   "<th></th>\n" +
                                   "<th><a href='../posts/restore_post.jsp?id=" + idPost + "'> X </a></th>\n";
@@ -425,10 +361,10 @@ public class Post {
                               "<th><a href='../posts/edit_post.jsp?id=" + idPost + "'> X </a></th></tr>\n";
                 }
                 else if (isEditor()) {
-                    if (publishStatus == 0) { //status unpublished
+                    if (Integer.parseInt(publishStatus) == 0) { //status unpublished
                         toHTML += "<th><a href='../posts/publish_post.jsp?id=" + idPost + "'> X </a></th>\n";
                     }
-                    else if (publishStatus == 1) { //status published
+                    else if (Integer.parseInt(publishStatus) == 1) { //status published
                         toHTML += "<th></th>\n";
                     }
                     toHTML +=  "<th></th>\n" +
@@ -437,17 +373,17 @@ public class Post {
                                "<th></th>\n";
                 }
                 else if (isOwner()) {
-                    if (publishStatus == 0) { //status unpublished
+                    if (Integer.parseInt(publishStatus) == 0) { //status unpublished
                         toHTML += "<th><a href='../posts/publish_post.jsp?id=" + idPost + "'> X </a></th>\n" +
                                   "<th><a href='../posts/trash_post.jsp?id=" + idPost + "'> X </a></th>\n" +
                                   "<th></th>\n";
                     }
-                    else if (publishStatus == 1) { //status published
+                    else if (Integer.parseInt(publishStatus) == 1) { //status published
                         toHTML += "<th></th>\n" +
                                   "<th><a href='../posts/trash_post.jsp?id=" + idPost + "'> X </a></th>\n" +
                                   "<th></th>\n";
                     }
-                    else if (publishStatus == 2) { //status trash
+                    else if (Integer.parseInt(publishStatus) == 2) { //status trash
                         toHTML += "<th></th>\n" +
                                   "<th></th>\n" +
                                   "<th></th>\n";
@@ -458,9 +394,9 @@ public class Post {
             }
             toHTML += "</table>\n<br>\n";
         }
-        catch (SQLException ex) {
+        catch (Exception_Exception ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
         //return string
         return toHTML;
     }
@@ -470,25 +406,14 @@ public class Post {
      * @param judul judul post
      * @param tanggal tanggal post
      * @param konten konten post
-     * @throws java.sql.SQLException
      */
-    public void addPost(String judul, String tanggal, String konten) {
-        /*try { 
-            //login database
-            KoneksiDatabase.setUser("root2");
-            KoneksiDatabase.setPassword("akhfa");
-            KoneksiDatabase.setDatabase("localhost","blog");
-            //statement
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            //query
-            String queryAddPost = "INSERT INTO post (judul,konten,tanggal,publishStatus) VALUES ('" + judul + "', '" + konten + "', '" + tanggal + "', 0)";
-            //execute query
-            statement.executeUpdate(queryAddPost);
+    public void addPost(String judul, String tanggal, String konten) throws InterruptedException_Exception {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        try {
+            blog.addPost(judul, tanggal, konten);
+        } catch (InterruptedException_Exception e) {
+            
         }
-        catch (SQLException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }
     
     /**
@@ -496,23 +421,13 @@ public class Post {
      * @param post_ID post id di database
      * @throws java.sql.SQLException
      */
-    public void publishPost(String post_ID) {
-        /*try { 
-            //login database
-            KoneksiDatabase.setUser("root2");
-            KoneksiDatabase.setPassword("akhfa");
-            KoneksiDatabase.setDatabase("localhost","blog");
-            //statement
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            //query
-            String queryPublishPost = "UPDATE post SET publishStatus=1 WHERE id=" + post_ID;
-            //execute query
-            statement.executeUpdate(queryPublishPost);
+    public void publishPost(String post_ID) throws InterruptedException_Exception {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        try {
+            blog.editPost(post_ID, judulPost, tanggalPost, kontenPost, "1");
+        } catch (InterruptedException_Exception e) {
+            
         }
-        catch (SQLException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }
     
     /**
@@ -524,26 +439,12 @@ public class Post {
      * @throws java.sql.SQLException
      */
     public void editPost(String post_ID, String judul, String tanggal, String konten) {
-        /*try {
-            //login database
-            KoneksiDatabase.setUser("root2");
-            KoneksiDatabase.setPassword("akhfa");
-            KoneksiDatabase.setDatabase("localhost","blog");
-            //statement
-            Connection koneksi = KoneksiDatabase.getKoneksi(); 
-            Statement statement = koneksi.createStatement();
-            //query
-            String queryEditJudul = "UPDATE post SET judul='" + judul + "' WHERE id=" + post_ID;
-            String queryEditTanggal = "UPDATE post SET tanggal='" + tanggal + "' WHERE id=" + post_ID;
-            String queryEditKonten = "UPDATE post SET konten='" + konten + "' WHERE id=" + post_ID;
-            //execute query
-            statement.executeUpdate(queryEditJudul);
-            statement.executeUpdate(queryEditTanggal);
-            statement.executeUpdate(queryEditKonten);
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        try {
+            blog.editPost(post_ID, judulPost, tanggalPost, kontenPost, publishStatus);
+        } catch (InterruptedException_Exception e) {
+            
         }
-        catch (SQLException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }
     
     /**
@@ -551,25 +452,13 @@ public class Post {
      * @param post_ID post id di database
      * @throws java.sql.SQLException
      */
-    public void deletePost(String post_ID) {
-        /*try { 
-            //login database
-            KoneksiDatabase.setUser("root2");
-            KoneksiDatabase.setPassword("akhfa");
-            KoneksiDatabase.setDatabase("localhost","blog");
-            //statement
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            //query
-            String queryDeletePost = "DELETE FROM post WHERE id=" + post_ID;
-            String queryDeleteComments = "DELETE FROM komentar WHERE id=" + post_ID;
-            //execute query
-            statement.executeUpdate(queryDeletePost);
-            statement.executeUpdate(queryDeleteComments);
+    public void deletePost(String post_ID) throws InterruptedException_Exception {
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        try {
+            blog.deletePost(post_ID);
+        } catch (InterruptedException_Exception e) {
+            
         }
-        catch (SQLException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }
     
     /**
@@ -578,22 +467,12 @@ public class Post {
      * @throws SQLException
      */
     public void trashPost(String post_ID) {
-        /*try { 
-            //login database
-            KoneksiDatabase.setUser("root2");
-            KoneksiDatabase.setPassword("akhfa");
-            KoneksiDatabase.setDatabase("localhost","blog");
-            //statement
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            //query
-            String queryTrashPost = "UPDATE post SET publishStatus=2 WHERE id=" + post_ID;
-            //execute query
-            statement.executeUpdate(queryTrashPost);
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        try {
+            blog.editPost(post_ID, judulPost, tanggalPost, kontenPost, "2");
+        } catch (InterruptedException_Exception e) {
+            
         }
-        catch (SQLException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }
     
     /**
@@ -602,57 +481,11 @@ public class Post {
      * @throws SQLException
      */
     public void restorePost(String post_ID) {
-        /*try { 
-            //login database
-            KoneksiDatabase.setUser("root2");
-            KoneksiDatabase.setPassword("akhfa");
-            KoneksiDatabase.setDatabase("localhost","blog");
-            //statement
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            //query
-            String queryRestorePost = "UPDATE post SET publishStatus=0 WHERE id=" + post_ID;
-            //execute query
-            statement.executeUpdate(queryRestorePost);
+        BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+        try {
+            blog.editPost(post_ID, judulPost, tanggalPost, kontenPost, "0");
+        } catch (InterruptedException_Exception e) {
+            
         }
-        catch (SQLException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-    }
-
-    private static Boolean addComment(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3) throws InterruptedException_Exception {
-        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
-        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
-        return port.addComment(arg0, arg1, arg2, arg3);
-    }
-
-    private static Boolean addPost_1(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2) throws InterruptedException_Exception {
-        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
-        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
-        return port.addPost(arg0, arg1, arg2);
-    }
-
-    private static Boolean deletePost_1(java.lang.String arg0) throws InterruptedException_Exception {
-        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
-        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
-        return port.deletePost(arg0);
-    }
-
-    private static Boolean editPost_1(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4) throws InterruptedException_Exception {
-        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
-        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
-        return port.editPost(arg0, arg1, arg2, arg3, arg4);
-    }
-
-    private static java.util.List<org.chamerling.heroku.service.Komentar> getAllCommentar(java.lang.String arg0) {
-        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
-        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
-        return port.getAllCommentar(arg0);
-    }
-
-    private static java.util.List<org.chamerling.heroku.service.Post> getAllPost() {
-        org.chamerling.heroku.service.BlogServiceImplService service = new org.chamerling.heroku.service.BlogServiceImplService();
-        org.chamerling.heroku.service.BlogService port = service.getBlogServiceImplPort();
-        return port.getAllPost();
     }
 }
