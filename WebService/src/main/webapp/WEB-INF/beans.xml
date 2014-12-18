@@ -22,5 +22,6 @@
 
 	<jaxws:endpoint id="hello"
 		implementor="org.chamerling.heroku.service.HelloServiceImpl" address="/HelloService" />
-
+        <jaxws:endpoint id="newService"
+		implementor="org.chamerling.heroku.service.NewWebService" address="/NewService" />
 </beans>
