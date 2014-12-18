@@ -126,6 +126,9 @@ function checkDate(){
 				 
 				List<PostModel> listPost = new ArrayList();
 				listPost = WSDLConnector.listPost();
+				
+				for(PostModel pm : listPost){
+					if(pm.getId().equals(request.getParameter("postId"))){
 			%>
             
             
@@ -133,17 +136,18 @@ function checkDate(){
             <div id="contact-area">
                 <form name="new_post" action="UpdatePostServlet" method="post" onsubmit="return cekData();">
                     <label for="Judul">Judul:</label>
-                    <input type="text" name="Judul" id="Judul" value="<% out.print(listPost.get(0).getJudul());%>">
+                    <input type="text" name="Judul" id="Judul" value="<% out.print(pm.getJudul());%>">
                     <label for="Tanggal">Tanggal:</label>
-                    <input type="text" name="Tanggal" id="Tanggal" value="<% out.print(listPost.get(0).getDate());%>">
+                    <input type="text" name="Tanggal" id="Tanggal" value="<% out.print(pm.getDate());%>">
                     
                     <label for="Konten">Konten:</label><br>
-						<textarea name="Konten" rows="20" cols="20" id="Konten"><% out.print(listPost.get(0).getKonten());%></textarea>
+						<textarea name="Konten" rows="20" cols="20" id="Konten"><% out.print(pm.getKonten());%></textarea>
 
                     <input type="submit" name="submit" value="Simpan" class="submit-button">
-						<input type="hidden" name="post_id" id="post_id" value="<% out.print(listPost.get(0).getId());%>">
+						<input type="hidden" name="post_id" id="post_id" value="<% out.print(pm.getId());%>">
                 </form>
             </div>
+			<%}}%>
         </div>
     </div>
 
