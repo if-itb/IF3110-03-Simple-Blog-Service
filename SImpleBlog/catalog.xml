@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://morning-citadel-5466.herokuapp.com/HelloService?wsdl" uri="src/conf/xml-resources/web-service-references/HelloService/wsdl/morning-citadel-5466.herokuapp.com/HelloService.wsdl"/>
+    <system systemId="http://intense-shore-8980.herokuapp.com/HelloService?wsdl" uri="src/conf/xml-resources/web-service-references/HelloService/wsdl/intense-shore-8980.herokuapp.com/HelloService.wsdl"/>
+</catalog>
