@@ -19,30 +19,31 @@
             <% 
             Api api = new ApiImplService().getApiImplPort();
             // INSERT USER
-            //out.println(api.createUser("admin", "admin@email.com", "password admin yang diubah ini loh", "admin"));
+            //out.println(api.createUser("anumu", "anumu@gemail.com", "ppassword", "owner"));
+            
             //out.println(api.createPost("Judul", "Deadline ne opo", "12-12-2014", "admin"));
             
             // LIST USER
-            /*
+            
             List<User> users = api.getAllUser();
             
             out.print("<ol>");
             for(User user : users){
                 out.print("<li>");
-                out.print(user.getUsername()+ " ");
-                out.print(user.getPassword()+ " ");
-                out.print(user.getEmail()+ " ");
-                out.print(user.getRole()+ " ");
+                out.print(user.getUsername()+ "<br>");
+                out.print(user.getPassword()+ "<br>");
+                out.print(user.getEmail()+ "<br>");
+                out.print(user.getRole()+ "<br>");
                 out.print("</li>");
             }
             out.print("</ol>");
-            */
+            
             
             // UPDATE USER
             
             // Delete USER
             //out.println(api.createUser("ngetes", "ngetes@email.com", "Asal Ngetes", "admin"));
-            //api.deleteUser("ngetes");
+            //api.deleteUser("anumu");
             
             
             // CREATE POST
@@ -71,11 +72,11 @@
             //out.print(api.updatePost("-JdQ5G_EN_0pXISOLFx1", "Title Anyar", "Kontene opo", "Adadfasdf", "koji"));
             
             // Delete POST
-            out.print(api.addPost("Post untuk ditambah", "19-12-2014", "Tobe Deleted", "author"));
+            //out.print(api.addPost("Post untuk ditambah", "19-12-2014", "Tobe Deleted", "author"));
             //api.deletePost(arg0)
             
             // Add comment
-            api.addComment("-JdQ5G_EN_0pXISOLFx1", "Judul", "Konten komentar", "12-12.2014", "email@email.com");
+            //api.addComment("-JdQ5G_EN_0pXISOLFx1", "Judul", "Konten komentar", "12-12.2014", "email@email.com");
             
             
             // List comment

@@ -105,7 +105,7 @@
            
 
             <div id="contact-area">
-                <form method="post" action="AddPost.jsp">
+                <form method="post" action="AddPost2.jsp">
                     <label for="Judul">Judul:</label>
                     <input type="text" name="Judul" id="Judul" value="${judul}" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">
 
