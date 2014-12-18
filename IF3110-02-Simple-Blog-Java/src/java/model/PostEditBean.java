@@ -24,7 +24,10 @@ public class PostEditBean {
     
     public void reload() {
         
-        edited = service.Utility.soapToLocal(service.BlogService.getInstance().getPost(edited.getPID()));
+        System.out.println(edited.getPID());
+        heroku.service.Post X = service.BlogService.getInstance().getPost(edited.getPID());
+        System.out.println(X.getAuthor());
+        edited = service.Utility.soapToLocal(X);
         /*
         DAO.PostDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getPostDAO();
         if (DB.find(edited.getPID()) != null) {

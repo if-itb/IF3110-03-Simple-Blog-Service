@@ -25,6 +25,7 @@ public class SearchPostBean {
     
     public void search() {
         //TODO minta ke webservice
+        matchedPost.clear();
         List<heroku.service.Post> soapMatchedPost = service.BlogService.getInstance().searchPost(keyword);
         for ( heroku.service.Post post : soapMatchedPost) {
             matchedPost.add(service.Utility.soapToLocal(post));

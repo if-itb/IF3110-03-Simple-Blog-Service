@@ -31,7 +31,7 @@ public class AllKomentar {
     public ArrayList <Komentar> getAllKomentar() {
         
         List<heroku.service.Komentar> X = service.BlogService.getInstance().listComment(PID);
-        allKomentar.clear();
+        allKomentar = new ArrayList<Komentar>();
         
         for (int i =0; i < X.size(); i++) {
             allKomentar.add(service.Utility.soapToLocal(X.get(i)));

@@ -38,7 +38,7 @@ public class EditUserBean {
     
     public void edit() {
         
-        if (service.BlogService.getInstance().isExistUser(edited.getUsername())) {
+        if (!service.BlogService.getInstance().isExistUser(edited.getUsername())) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Username doesn't exists!"));
         }

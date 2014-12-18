@@ -35,7 +35,7 @@ public class LoginBean {
     public String login() {
         NavigationController nb = new NavigationController();
         UserBean finded = null;
-        if (!service.BlogService.getInstance().isExistUser(username)) {
+        if (service.BlogService.getInstance().isExistUser(username)) {
             finded = service.Utility.soapToLocal(service.BlogService.getInstance().getUser(username));
             if (!finded.getPassword().equals(password)) {
                 finded = null;

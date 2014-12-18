@@ -22,7 +22,7 @@ public class DeleteUserBean {
     
     public void delete(String username) {
         
-        if (service.BlogService.getInstance().isExistUser(username)) {
+        if (!service.BlogService.getInstance().isExistUser(username)) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Username doesn't exists!"));
         }

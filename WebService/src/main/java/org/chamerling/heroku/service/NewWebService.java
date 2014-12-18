@@ -187,10 +187,10 @@ public class NewWebService {
             for (int it = 0; it < postIDJSON.length(); ++it) {
                 String postID = postIDJSON.getString(it);
                 JSONObject postJSON = postsJSON.getJSONObject(postID);
-                if (postJSON.getString("PID").equalsIgnoreCase(PID)) {
+                if (postID.equalsIgnoreCase(PID)) {
                     Post _post;
                     _post = new Post();
-                    _post.setPID(postJSON.getString("PID"));
+                    _post.setPID(PID);
                     _post.setAuthor(postJSON.getString("author"));
                     _post.setDate(postJSON.getString("tanggal"));
                     _post.setJudul(postJSON.getString("judul"));
@@ -261,14 +261,34 @@ public class NewWebService {
      */
     @WebMethod(operationName = "editUser")
     public Boolean editUser(@WebParam(name = "user") UserBean _user) {
-       Firebase ref = new Firebase("https://tubes3wbd.firebaseio.com/");
-        Firebase user = ref.child("user/"+_user.getUsername());
-        Map<String, Object> userMap = new HashMap<String, Object>();
-        userMap.put("username",_user.getUsername());
-        userMap.put("role",_user.getRole());
-        userMap.put("password",_user.getPassword());
-        userMap.put("email",_user.getEmail());user.updateChildren(userMap);
-        user.updateChildren(userMap);
+        ArrayList<UserBean> allUser = new ArrayList<UserBean>();
+        Firebase ref = new Firebase("https://tubes3wbd.firebaseio.com/");
+        Firebase post = ref.child("user");
+        try {
+            URLConnection conn = (new URL(post.toString() + ".json")).openConnection();
+            BufferedReader inp = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String jsonString = inp.readLine();
+            System.out.println(jsonString);
+            JSONObject usersJSON = new JSONObject(jsonString);
+            JSONArray usersIDJSON = usersJSON.names();
+            System.out.println(usersIDJSON.length());
+            for (int it = 0; it < usersIDJSON.length(); ++it) {
+                String userID = usersIDJSON.getString(it);
+                JSONObject userJSON = usersJSON.getJSONObject(userID);
+                
+                if(userJSON.getString("username").equals(_user.getUsername())) {
+                    Firebase user = ref.child("user/"+userID);
+                    Map<String, Object> userMap = new HashMap<String, Object>();
+                    userMap.put("username",_user.getUsername());
+                    userMap.put("role",_user.getRole());
+                    userMap.put("password",_user.getPassword());
+                    userMap.put("email",_user.getEmail());user.updateChildren(userMap);
+                    user.updateChildren(userMap);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
@@ -277,10 +297,30 @@ public class NewWebService {
      */
     @WebMethod(operationName = "deleteUser")
     public Boolean deleteUser(@WebParam(name = "username") String username) {
-       Firebase ref = new Firebase("https://tubes3wbd.firebaseio.com/");
-       Firebase user = ref.child("user/"+username);
-       user.removeValue();
-       return true;
+        ArrayList<UserBean> allUser = new ArrayList<UserBean>();
+        Firebase ref = new Firebase("https://tubes3wbd.firebaseio.com/");
+        Firebase post = ref.child("user");
+        try {
+            URLConnection conn = (new URL(post.toString() + ".json")).openConnection();
+            BufferedReader inp = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String jsonString = inp.readLine();
+            System.out.println(jsonString);
+            JSONObject usersJSON = new JSONObject(jsonString);
+            JSONArray usersIDJSON = usersJSON.names();
+            System.out.println(usersIDJSON.length());
+            for (int it = 0; it < usersIDJSON.length(); ++it) {
+                String userID = usersIDJSON.getString(it);
+                JSONObject userJSON = usersJSON.getJSONObject(userID);
+                
+                if(userJSON.getString("username").equals(username)) {
+                    Firebase user = ref.child("user/"+userID);
+                    user.removeValue();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     

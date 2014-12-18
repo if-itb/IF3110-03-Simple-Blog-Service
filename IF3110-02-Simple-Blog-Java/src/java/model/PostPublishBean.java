@@ -47,7 +47,7 @@ public class PostPublishBean {
         else {
             Post published = service.Utility.soapToLocal(service.BlogService.getInstance().getPost(PID));
             published.setPublished(true);
-            service.BlogService.getInstance().editPost(service.Utility.mapToSoap(published));
+            service.BlogService.getInstance().publishPost(PID);
         }
         return nb.gotoListPost()+ "?faces-redirect=true";
         }

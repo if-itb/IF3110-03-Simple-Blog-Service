@@ -113,7 +113,8 @@ public class Post {
         this.PID = PID;
     }
     public Post fetchPost(String id){
-        service.BlogService.getInstance().getPost(id);
-        return this;
+        Post X = service.Utility.soapToLocal(service.BlogService.getInstance().getPost(id));
+        System.out.println("EXPECTED");
+        return X;
     }
 }

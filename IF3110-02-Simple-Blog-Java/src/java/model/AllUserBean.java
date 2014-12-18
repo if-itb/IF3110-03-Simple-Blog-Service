@@ -27,7 +27,7 @@ public class AllUserBean {
     public ArrayList <UserBean> getAllUser() {
         List<heroku.service.UserBean> X = service.BlogService.getInstance().listUser();
         
-        allUser.clear();
+        allUser = new ArrayList<UserBean>();
         for (int i =0; i < X.size() ; i++) {
             allUser.add(service.Utility.soapToLocal(X.get(i)));
         }

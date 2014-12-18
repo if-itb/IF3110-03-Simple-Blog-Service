@@ -44,7 +44,7 @@ public class NavigationController implements Serializable{
     }
     
     public String gotoEditPost(String post_id) {
-        return "Edit-Post.xhtml?id=" + post_id;
+        return "Edit-Post.xhtml?id=" + post_id + " faces-redirect=true";
     }
     
     public String gotoDeletePost(String post_id) {
