@@ -32,6 +32,15 @@
 
         <link rel="stylesheet" type="text/css" href="assets/css/screen.css" />
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+       
+        <script type="text/javascript">
+            var msg = '<%= session.getAttribute("errMsg") %>';
+            function al() {
+                if (msg != "Sukses") {
+                    alert(msg);
+                }
+            }
+        </script>
         
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -49,7 +58,10 @@
                 listPost.cookieHeaderCheck(cookie);
             }
         %>
-                       
+        
+        <script type="text/javascript"> al() </script>
+        <c:remove var="errMsg" scope="session" /> 
+        
         <div class="wrapper">
 
         <nav class="nav">
@@ -68,7 +80,7 @@
                 </nav>
             </div>
         </div>
-
+                 
         <footer class="footer">
             <div class="back-to-top"><a href="">Back to top</a></div>
             <!-- <div class="footer-nav"><p></p></div> -->

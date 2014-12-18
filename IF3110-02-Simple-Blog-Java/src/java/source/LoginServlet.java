@@ -50,11 +50,13 @@ public class LoginServlet extends HttpServlet {
                 roleCookie.setMaxAge(30*60);
                 response.addCookie(loginCookie);
                 response.addCookie(roleCookie);
+                String errMsg = "Sukses";
+                request.getSession().setAttribute("errMsg", errMsg);
                 response.sendRedirect("admin/index.jsp");
             }else{
+                String errMsg = "Either username or password is wrong";
+                request.getSession().setAttribute("errMsg", errMsg);
                 response.sendRedirect("/IF3110-02-Simple-Blog-Java/index.jsp");
-                PrintWriter out= response.getWriter();
-                out.println("<font color=red>Either user name or password is wrong.</font>");
 //                rd.include(request, response);
             }
         } catch (SQLException ex) {
