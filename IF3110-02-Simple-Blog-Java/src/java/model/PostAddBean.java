@@ -38,8 +38,7 @@ public class PostAddBean {
     public String add() {
         NavigationController nb = new NavigationController();
         post.setAuthor(getUser().getUsername());
-        DAO.PostDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getPostDAO();
-        DB.create(post);
+        service.BlogService.getInstance().addPost(service.Utility.mapToSoap(post));
         return nb.gotoListPost()+ "?faces-redirect=true";
         }
 

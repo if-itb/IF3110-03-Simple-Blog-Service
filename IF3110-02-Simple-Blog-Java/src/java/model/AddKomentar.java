@@ -27,11 +27,15 @@ public class AddKomentar {
             komentar.setNama(user.getUsername());
             komentar.setEmail(user.getEmail());
         }
-        String Tanggal = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        komentar.setTanggal(Tanggal);
-        System.out.println("FLAG : "+komentar.getPID());
-        DAO.CommentDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getKomentarDAO();
-        DB.create(komentar);
+        
+        service.BlogService.getInstance().addComment(service.Utility.mapToSoap(komentar));
+        
+        /* String Tanggal = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+         * komentar.setTanggal(Tanggal);
+         * System.out.println("FLAG : "+komentar.getPID());
+         * DAO.CommentDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getKomentarDAO();
+         * DB.create(komentar);
+         */
     }
     
     public String submit(Komentar komentar) throws IOException{

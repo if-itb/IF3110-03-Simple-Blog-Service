@@ -127,6 +127,7 @@ public class AuthenticationFilter implements Filter {
                     || reqURI.startsWith(nc.gotoListPost())
                     || reqURI.startsWith("css/")
                     || reqURI.startsWith(nc.gotoViewPost())
+                    || reqURI.startsWith(nc.gotoSearchPost())
                     || reqURI.startsWith("javax.faces.resource/"))
                    chain.doFilter(request, response);
             else if (user==null)

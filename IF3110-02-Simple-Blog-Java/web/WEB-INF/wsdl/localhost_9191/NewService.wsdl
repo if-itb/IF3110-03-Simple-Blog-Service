@@ -1,0 +1,650 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="NewWebService" targetNamespace="http://service.heroku.chamerling.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.heroku.chamerling.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://service.heroku.chamerling.org/" version="1.0" xmlns:tns="http://service.heroku.chamerling.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="addComment" type="tns:addComment"/>
+<xs:element name="addCommentResponse" type="tns:addCommentResponse"/>
+<xs:element name="addPost" type="tns:addPost"/>
+<xs:element name="addPostResponse" type="tns:addPostResponse"/>
+<xs:element name="addUser" type="tns:addUser"/>
+<xs:element name="addUserResponse" type="tns:addUserResponse"/>
+<xs:element name="deletePost" type="tns:deletePost"/>
+<xs:element name="deletePostResponse" type="tns:deletePostResponse"/>
+<xs:element name="deleteUser" type="tns:deleteUser"/>
+<xs:element name="deleteUserResponse" type="tns:deleteUserResponse"/>
+<xs:element name="editPost" type="tns:editPost"/>
+<xs:element name="editPostResponse" type="tns:editPostResponse"/>
+<xs:element name="editUser" type="tns:editUser"/>
+<xs:element name="editUserResponse" type="tns:editUserResponse"/>
+<xs:element name="getKomentar" type="tns:getKomentar"/>
+<xs:element name="getKomentarResponse" type="tns:getKomentarResponse"/>
+<xs:element name="getPost" type="tns:getPost"/>
+<xs:element name="getPostResponse" type="tns:getPostResponse"/>
+<xs:element name="getPublishedPost" type="tns:getPublishedPost"/>
+<xs:element name="getPublishedPostResponse" type="tns:getPublishedPostResponse"/>
+<xs:element name="getUnpublishedPost" type="tns:getUnpublishedPost"/>
+<xs:element name="getUnpublishedPostResponse" type="tns:getUnpublishedPostResponse"/>
+<xs:element name="getUser" type="tns:getUser"/>
+<xs:element name="getUserResponse" type="tns:getUserResponse"/>
+<xs:element name="isExistUser" type="tns:isExistUser"/>
+<xs:element name="isExistUserResponse" type="tns:isExistUserResponse"/>
+<xs:element name="listComment" type="tns:listComment"/>
+<xs:element name="listCommentResponse" type="tns:listCommentResponse"/>
+<xs:element name="listUser" type="tns:listUser"/>
+<xs:element name="listUserResponse" type="tns:listUserResponse"/>
+<xs:element name="publishPost" type="tns:publishPost"/>
+<xs:element name="publishPostResponse" type="tns:publishPostResponse"/>
+<xs:element name="searchPost" type="tns:searchPost"/>
+<xs:element name="searchPostResponse" type="tns:searchPostResponse"/>
+<xs:complexType name="searchPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="searchPostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:post"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="post">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="author" type="xs:string"/>
+      <xs:element minOccurs="0" name="date" type="xs:string"/>
+      <xs:element minOccurs="0" name="judul" type="xs:string"/>
+      <xs:element minOccurs="0" name="konten" type="xs:string"/>
+      <xs:element minOccurs="0" name="PID" type="xs:string"/>
+      <xs:element name="published" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType abstract="true" name="abstractCollection">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType abstract="true" name="abstractList">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractCollection">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="arrayList">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractList">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="getKomentar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="KID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getKomentarResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:komentar"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="komentar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="KID" type="xs:string"/>
+      <xs:element minOccurs="0" name="komentar" type="xs:string"/>
+      <xs:element minOccurs="0" name="nama" type="xs:string"/>
+      <xs:element minOccurs="0" name="PID" type="xs:string"/>
+      <xs:element minOccurs="0" name="tanggal" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listUser">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="listUserResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:userBean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="userBean">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="password" type="xs:string"/>
+      <xs:element name="role" type="xs:int"/>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addComment">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="komentar" type="tns:komentar"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addCommentResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getPublishedPost">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="getPublishedPostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:post"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getPostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:post"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getUnpublishedPost">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="getUnpublishedPostResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:post"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="post" type="tns:post"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addPostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:userBean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="isExistUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="isExistUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="editPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="post" type="tns:post"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="editPostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listComment">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listCommentResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:komentar"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="editUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="user" type="tns:userBean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="editUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="publishPost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="publishPostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="user" type="tns:userBean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addUserResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deletePost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PID" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deletePostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getPostResponse">
+    <wsdl:part element="tns:getPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addComment">
+    <wsdl:part element="tns:addComment" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteUserResponse">
+    <wsdl:part element="tns:deleteUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editUserResponse">
+    <wsdl:part element="tns:editUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishPostResponse">
+    <wsdl:part element="tns:publishPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUserResponse">
+    <wsdl:part element="tns:getUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editPost">
+    <wsdl:part element="tns:editPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isExistUser">
+    <wsdl:part element="tns:isExistUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPublishedPostResponse">
+    <wsdl:part element="tns:getPublishedPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addPost">
+    <wsdl:part element="tns:addPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getKomentarResponse">
+    <wsdl:part element="tns:getKomentarResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addUserResponse">
+    <wsdl:part element="tns:addUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUnpublishedPostResponse">
+    <wsdl:part element="tns:getUnpublishedPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listComment">
+    <wsdl:part element="tns:listComment" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listUser">
+    <wsdl:part element="tns:listUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishPost">
+    <wsdl:part element="tns:publishPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deletePostResponse">
+    <wsdl:part element="tns:deletePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="searchPostResponse">
+    <wsdl:part element="tns:searchPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getKomentar">
+    <wsdl:part element="tns:getKomentar" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addUser">
+    <wsdl:part element="tns:addUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isExistUserResponse">
+    <wsdl:part element="tns:isExistUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUnpublishedPost">
+    <wsdl:part element="tns:getUnpublishedPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editPostResponse">
+    <wsdl:part element="tns:editPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addCommentResponse">
+    <wsdl:part element="tns:addCommentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteUser">
+    <wsdl:part element="tns:deleteUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listUserResponse">
+    <wsdl:part element="tns:listUserResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editUser">
+    <wsdl:part element="tns:editUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addPostResponse">
+    <wsdl:part element="tns:addPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUser">
+    <wsdl:part element="tns:getUser" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="searchPost">
+    <wsdl:part element="tns:searchPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPost">
+    <wsdl:part element="tns:getPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPublishedPost">
+    <wsdl:part element="tns:getPublishedPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deletePost">
+    <wsdl:part element="tns:deletePost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listCommentResponse">
+    <wsdl:part element="tns:listCommentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="NewWebService">
+    <wsdl:operation name="searchPost">
+      <wsdl:input message="tns:searchPost" name="searchPost">
+    </wsdl:input>
+      <wsdl:output message="tns:searchPostResponse" name="searchPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getKomentar">
+      <wsdl:input message="tns:getKomentar" name="getKomentar">
+    </wsdl:input>
+      <wsdl:output message="tns:getKomentarResponse" name="getKomentarResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listUser">
+      <wsdl:input message="tns:listUser" name="listUser">
+    </wsdl:input>
+      <wsdl:output message="tns:listUserResponse" name="listUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addComment">
+      <wsdl:input message="tns:addComment" name="addComment">
+    </wsdl:input>
+      <wsdl:output message="tns:addCommentResponse" name="addCommentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPublishedPost">
+      <wsdl:input message="tns:getPublishedPost" name="getPublishedPost">
+    </wsdl:input>
+      <wsdl:output message="tns:getPublishedPostResponse" name="getPublishedPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPost">
+      <wsdl:input message="tns:getPost" name="getPost">
+    </wsdl:input>
+      <wsdl:output message="tns:getPostResponse" name="getPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUnpublishedPost">
+      <wsdl:input message="tns:getUnpublishedPost" name="getUnpublishedPost">
+    </wsdl:input>
+      <wsdl:output message="tns:getUnpublishedPostResponse" name="getUnpublishedPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addPost">
+      <wsdl:input message="tns:addPost" name="addPost">
+    </wsdl:input>
+      <wsdl:output message="tns:addPostResponse" name="addPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteUser">
+      <wsdl:input message="tns:deleteUser" name="deleteUser">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteUserResponse" name="deleteUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUser">
+      <wsdl:input message="tns:getUser" name="getUser">
+    </wsdl:input>
+      <wsdl:output message="tns:getUserResponse" name="getUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isExistUser">
+      <wsdl:input message="tns:isExistUser" name="isExistUser">
+    </wsdl:input>
+      <wsdl:output message="tns:isExistUserResponse" name="isExistUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editPost">
+      <wsdl:input message="tns:editPost" name="editPost">
+    </wsdl:input>
+      <wsdl:output message="tns:editPostResponse" name="editPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listComment">
+      <wsdl:input message="tns:listComment" name="listComment">
+    </wsdl:input>
+      <wsdl:output message="tns:listCommentResponse" name="listCommentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editUser">
+      <wsdl:input message="tns:editUser" name="editUser">
+    </wsdl:input>
+      <wsdl:output message="tns:editUserResponse" name="editUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="publishPost">
+      <wsdl:input message="tns:publishPost" name="publishPost">
+    </wsdl:input>
+      <wsdl:output message="tns:publishPostResponse" name="publishPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addUser">
+      <wsdl:input message="tns:addUser" name="addUser">
+    </wsdl:input>
+      <wsdl:output message="tns:addUserResponse" name="addUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deletePost">
+      <wsdl:input message="tns:deletePost" name="deletePost">
+    </wsdl:input>
+      <wsdl:output message="tns:deletePostResponse" name="deletePostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NewWebServiceSoapBinding" type="tns:NewWebService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getKomentar">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getKomentar">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getKomentarResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="searchPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="searchPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addComment">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addComment">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addCommentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPublishedPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPublishedPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPublishedPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUnpublishedPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getUnpublishedPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getUnpublishedPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isExistUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="isExistUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="isExistUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="editPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="editPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listComment">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listComment">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listCommentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="editUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="editUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="publishPost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="publishPost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="publishPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deletePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deletePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deletePostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="NewWebService">
+    <wsdl:port binding="tns:NewWebServiceSoapBinding" name="NewWebServicePort">
+      <soap:address location="http://localhost:9191/NewService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

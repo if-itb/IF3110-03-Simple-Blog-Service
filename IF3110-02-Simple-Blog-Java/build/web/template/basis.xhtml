@@ -22,29 +22,46 @@
     
 </head>
 <body>
-    <div id="layout" class="pure-g">
+    <div  id="layout" class="pure-g">
         <div class="upper-menu">
             <nav class="nav">
                 <ul class="nav-list">
                     <li class="nav-item">
-                        <a class="pure-button" href="#{NavigationController.gotoAddPost()}" value="Add Post">New Post</a>
+                        <h:form>
+                            <h:commandLink styleClass="pure-button" 
+                                           rendered="#{userBean.role == 1 || userBean.role == 2}"
+                                           action="#{NavigationController.gotoAddPost()}">New Post</h:commandLink>
+                        </h:form>
                     </li>
                     <li class="nav-item">
-                        <a class="pure-button" href="#{NavigationController.gotoListPost()}" value="List-Post">List Post</a>
+                        
+                            <h:link styleClass="pure-button" outcome="#{NavigationController.gotoListPost()}" >List Post</h:link>
+                        
                     </li>
                     <li class="nav-item">
-                        <a class="pure-button" href="#{NavigationController.gotoUnpublishedPost()}" value="Unpublished-Post">Unpublished Post</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="pure-button" href="#{NavigationController.gotoListUser()}" value="List-User">List User</a>
+                            <h:link rendered="#{userBean.role == 1 || userBean.role == 2 || userBean.role == 3}"
+                                    styleClass="pure-button" outcome="#{NavigationController.gotoUnpublishedPost()}">Unpublished Post</h:link>
                     </li>
                     <li class="nav-item">
                         <h:form>
-                            <h:commandLink styleClass="pure-button" action="#{userBean.logout()}" >LOGOUT</h:commandLink>
+                            <h:commandLink rendered="#{userBean.role == 2}"
+                                           styleClass="pure-button" action="#{NavigationController.gotoListUser()}">List User</h:commandLink>
+                        </h:form>
+                    </li>
+                    <li class="nav-item">
+                        <h:form>
+                            <h:commandLink rendered="#{userBean.role == 1 || userBean.role == 2 || userBean.role == 3}"
+                                styleClass="pure-button" action="#{userBean.logout()}" >LOGOUT</h:commandLink>
                         </h:form>    
                     </li>
                     <li class="nav-item">
-                        <img class="img-role" height="30" width="30" src="../src/java/resource/person.png"></img>
+                        <h:form>
+                            <h:commandLink rendered="#{userBean.role == 4}"
+                                styleClass="pure-button" action="#{userBean.logout()}" >LOGIN</h:commandLink>
+                        </h:form>    
+                    </li>
+                    <li class="nav-item">
+                        <h:link styleClass="pure-button" outcome="#{NavigationController.gotoSearchPost()}">Search Post</h:link>
                     </li>
                 </ul>
             </nav>
@@ -52,21 +69,19 @@
         <div class="sidebar">
             <div class="header">
                 <h1 class="brand-title">Simple Blog</h1>
-                <h2 class="brand-tagline">Blah blah blah, Tubes 2 WBD</h2>
+                <h2 class="brand-tagline">Tubes 2 WBD</h2>
+                <div class ="list-nama" >
+                    <h3> Calvin Sadewa </h3>
+                    <h3> Khoirunnisa Afifah </h3>
+                    <h3> Joshua Bezaleel Abednego </h3>
+                </div>
             </div>
         </div>
         <div class="content">
+            <br/>
             <ui:insert name="content">Main Content </ui:insert>
         </div>
-        <div class="footer">
-            <div class="pure-menu pure-menu-horizontal pure-menu-open">
-                <ul>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">GitHub</a></li>
-                </ul>
-            </div>
-        </div>
+        
     </div>
 </body>
 </html>

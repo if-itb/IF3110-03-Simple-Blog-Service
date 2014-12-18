@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -24,8 +25,17 @@ public class AllUserBean {
      * @return the allUser
      */
     public ArrayList <UserBean> getAllUser() {
-        allUser = new ArrayList<UserBean> (DAO.DAOFactory.getInstance("javabase.jdbc").getUserDAO().list());
+        List<heroku.service.UserBean> X = service.BlogService.getInstance().listUser();
+        
+        allUser.clear();
+        for (int i =0; i < X.size() ; i++) {
+            allUser.add(service.Utility.soapToLocal(X.get(i)));
+        }
+        
         return allUser;
+        /*
+        allUser = new ArrayList<UserBean> (DAO.DAOFactory.getInstance("javabase.jdbc").getUserDAO().list());
+        return allUser;*/
     }
 
     /**

@@ -21,7 +21,15 @@ public class DeleteUserBean {
     }
     
     public void delete(String username) {
-        DAO.UserDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getUserDAO();
+        
+        if (service.BlogService.getInstance().isExistUser(username)) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Username doesn't exists!"));
+        }
+        else {
+            service.BlogService.getInstance().deleteUser(username);
+        }
+        /*DAO.UserDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getUserDAO();
         if (DB.find(username) == null) {
             // TODO sambungin dengan error message
             FacesContext.getCurrentInstance().addMessage(null,
@@ -31,7 +39,7 @@ public class DeleteUserBean {
             UserBean deleted = new UserBean();
             deleted.setUsername(username);
             DB.delete(deleted);
-        }
+        } */
     }
     
 }

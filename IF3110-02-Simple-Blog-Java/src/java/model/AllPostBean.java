@@ -7,6 +7,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -25,8 +26,20 @@ public class AllPostBean {
      * @return the allPost
      */
     public ArrayList <Post> getPublishedPost() {
-        publishedPost = new ArrayList<Post> (DAO.DAOFactory.getInstance("javabase.jdbc").getPostDAO().listPublish());
+        List<heroku.service.Post> X = service.BlogService.getInstance().getPublishedPost();
+        
+        if (publishedPost != null) {publishedPost.clear();}
+        else {publishedPost = new ArrayList<Post>();}
+        for (int i =0; i < X.size() ; i++) {
+            publishedPost.add(service.Utility.soapToLocal(X.get(i)));
+        }
+        
+        System.out.println(publishedPost.size() + "SIE");
+        
         return publishedPost;
+        /*
+        publishedPost = new ArrayList<Post> (DAO.DAOFactory.getInstance("javabase.jdbc").getPostDAO().listPublish());
+        return publishedPost;*/
     }
 
     /**
@@ -40,8 +53,20 @@ public class AllPostBean {
      * @return the unPublishedPost
      */
     public ArrayList<Post> getUnPublishedPost() {
-        unPublishedPost = new ArrayList<Post> (DAO.DAOFactory.getInstance("javabase.jdbc").getPostDAO().listUnPublish());
+        List<heroku.service.Post> X = service.BlogService.getInstance().getUnpublishedPost();
+        
+        if (unPublishedPost != null) unPublishedPost.clear();
+        else unPublishedPost = new ArrayList<Post>();
+        for (int i =0; i < X.size() ; i++) {
+            unPublishedPost.add(service.Utility.soapToLocal(X.get(i)));
+        }
+        
         return unPublishedPost;
+        
+        
+        /*
+        unPublishedPost = new ArrayList<Post> (DAO.DAOFactory.getInstance("javabase.jdbc").getPostDAO().listUnPublish());
+        return unPublishedPost;*/
     }
 
     /**

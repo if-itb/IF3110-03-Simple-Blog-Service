@@ -37,6 +37,15 @@ public class AddUserBean {
     }
     
     public void add() {
+        
+        if (service.BlogService.getInstance().isExistUser(user.getUsername())) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Username already exists!"));
+        }
+        else {
+            service.BlogService.getInstance().addUser(service.Utility.mapToSoap(user));
+        }
+        /*
         DAO.UserDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getUserDAO();
         if (DB.find(getUser().getUsername()) != null) {
             FacesContext.getCurrentInstance().addMessage(null,
@@ -45,5 +54,7 @@ public class AddUserBean {
         else {
             DB.create(getUser());
         }
+            */
+        
     }
 }

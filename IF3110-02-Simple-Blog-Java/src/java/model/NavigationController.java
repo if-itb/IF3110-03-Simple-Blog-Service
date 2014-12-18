@@ -43,20 +43,20 @@ public class NavigationController implements Serializable{
         return "List-Unpublish-Post.xhtml";
     }
     
-    public String gotoEditPost(int post_id) {
+    public String gotoEditPost(String post_id) {
         return "Edit-Post.xhtml?id=" + post_id;
     }
     
-    public String gotoDeletePost(int post_id) {
+    public String gotoDeletePost(String post_id) {
         return "Delete-Post.xhtml?id=" + post_id;
     }
     
-    public String gotoViewPost(int post_id) {
+    public String gotoViewPost(String post_id) {
         System.out.println("klik here:" +post_id);
         return "View-Post_2.xhtml?id=" + post_id;
     }
     
-    public String gotoViewUnpublished(int post_id) {
+    public String gotoViewUnpublished(String post_id) {
         return "View-Post_unpublished.xhtml?id=" + post_id;
     }
     
@@ -74,5 +74,9 @@ public class NavigationController implements Serializable{
     
     public String gotoViewPost(){
         return "View-Post_2.xhtml";
+    }
+    
+    public String gotoSearchPost(){
+        return "Search-Post.xhtml";
     }
 }

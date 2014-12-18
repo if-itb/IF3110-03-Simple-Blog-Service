@@ -37,6 +37,16 @@ public class EditUserBean {
     }
     
     public void edit() {
+        
+        if (service.BlogService.getInstance().isExistUser(edited.getUsername())) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Username doesn't exists!"));
+        }
+        else {
+            service.BlogService.getInstance().editUser(service.Utility.mapToSoap(edited));
+        }
+        
+        /*
         DAO.UserDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getUserDAO();
         if (DB.find(edited.getUsername()) == null) {
             // TODO sambungin dengan error message
@@ -45,6 +55,6 @@ public class EditUserBean {
         }
         else {
             DB.update(edited);
-        }
+        } */
     }
 }

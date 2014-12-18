@@ -30,14 +30,12 @@ public class PostDeleteBean {
     /**
      * @param edited the edited to set
      */
-    public void setDeleted(Post delted) {
+    public void setDeleted(Post deleted) {
         this.deleted = deleted;
     }
-    public String delete(int PID) {
-         NavigationController nb = new NavigationController();
-        DAO.PostDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getPostDAO();
-        System.out.println("Joshua"+PID);
-        if (DB.find(PID) == null) {
+    public String delete(String PID) {
+        NavigationController nb = new NavigationController();
+        if (service.BlogService.getInstance().getPost(PID) == null) {
             // TODO sambungin dengan error message
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Username doesn't exists!"));
@@ -45,7 +43,7 @@ public class PostDeleteBean {
         else {
             Post deleted = new Post();
             deleted.setPID(PID);
-            DB.delete(deleted);
+            service.BlogService.getInstance().deletePost(PID);
         }
          return nb.gotoListPost()+ "?faces-redirect=true";
     }

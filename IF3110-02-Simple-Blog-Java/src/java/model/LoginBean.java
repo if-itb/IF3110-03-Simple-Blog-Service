@@ -34,6 +34,30 @@ public class LoginBean {
     
     public String login() {
         NavigationController nb = new NavigationController();
+        UserBean finded = null;
+        if (!service.BlogService.getInstance().isExistUser(username)) {
+            finded = service.Utility.soapToLocal(service.BlogService.getInstance().getUser(username));
+            if (!finded.getPassword().equals(password)) {
+                finded = null;
+            }
+        }
+        if (finded == null) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Username atau Password salah"));
+            return nb.gotoLogin() ;
+        }
+        else {
+            CookieHelper ck = new CookieHelper();
+            int expiry = 60*60*24*30; //30 hari
+            user.setUsername(finded.getUsername());
+            user.setPassword(finded.getPassword());
+            user.setRole(finded.getRole());
+            user.setEmail(finded.getEmail());
+            ck.setCookie("username", username, expiry);
+            ck.setCookie("password", password, expiry);
+            return nb.gotoListPost() + "?faces-redirect=true";
+        }
+        /* 
         UserBean finded = DAO.DAOFactory.getInstance("javabase.jdbc").getUserDAO().find(username);
         if (finded == null || !finded.getPassword().equals(password)) {
             FacesContext.getCurrentInstance().addMessage(null,
@@ -50,8 +74,8 @@ public class LoginBean {
             ck.setCookie("username", username, expiry);
             ck.setCookie("password", password, expiry);
             return nb.gotoListPost() + "?faces-redirect=true";
-        }
-    }
+        } */
+    } 
 
     /**
      * @return the username

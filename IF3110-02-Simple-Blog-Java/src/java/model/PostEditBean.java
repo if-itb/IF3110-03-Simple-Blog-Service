@@ -23,13 +23,16 @@ public class PostEditBean {
     }
     
     public void reload() {
+        
+        edited = service.Utility.soapToLocal(service.BlogService.getInstance().getPost(edited.getPID()));
+        /*
         DAO.PostDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getPostDAO();
         if (DB.find(edited.getPID()) != null) {
             Post X;
             X = DB.find(edited.getPID());
             edited = X;
             System.out.println("X="+X.getPID());
-        }
+        } */
     }
 
     /**
@@ -51,8 +54,7 @@ public class PostEditBean {
         System.out.println("Published:"+edited.isPublished());
         
         NavigationController nb = new NavigationController();
-        DAO.PostDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getPostDAO();
-            DB.update(edited);
-             return nb.gotoListPost()+ "?faces-redirect=true";
+        service.BlogService.getInstance().editPost(service.Utility.mapToSoap(edited));
+        return nb.gotoListPost()+ "?faces-redirect=true";
     }
 }

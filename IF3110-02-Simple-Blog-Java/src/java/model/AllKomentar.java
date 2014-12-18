@@ -7,6 +7,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 public class AllKomentar {
 
-    private int PID;
+    private String PID;
     private ArrayList<Komentar> allKomentar;
 
     /**
@@ -23,17 +24,28 @@ public class AllKomentar {
     public AllKomentar() {
     }
     
-    public int getPID(){
+    public String getPID(){
         return PID;
     }
     
     public ArrayList <Komentar> getAllKomentar() {
+        
+        List<heroku.service.Komentar> X = service.BlogService.getInstance().listComment(PID);
+        allKomentar.clear();
+        
+        for (int i =0; i < X.size(); i++) {
+            allKomentar.add(service.Utility.soapToLocal(X.get(i)));
+        }
+        
+        return allKomentar;
+        /*
         allKomentar = new ArrayList<Komentar> (DAO.DAOFactory.getInstance("javabase.jdbc").getKomentarDAO().list(PID));
         System.out.println("flag : " + PID);
         return allKomentar;
+                */
     }
 
-    public void setPID(int PID) {
+    public void setPID(String PID) {
         this.PID = PID;
     }
     

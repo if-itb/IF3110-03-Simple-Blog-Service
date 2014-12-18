@@ -28,7 +28,7 @@ public class Post {
     private String Date;
     private String Author;
     private boolean Published;
-    private int PID;
+    private String PID;
     
     public Post() {
         
@@ -107,14 +107,14 @@ public class Post {
     /**
      * @return the PID
      */
-    public int getPID() {
+    public String getPID() {
         return PID;
     }
 
     /**
      * @param PID the PID to set
      */
-    public void setPID(int PID) {
+    public void setPID(String PID) {
         this.PID = PID;
     }
 }

@@ -22,16 +22,16 @@ public class Komentar {
      */
     
     private UserBean user;
-    private int PID;
-    private int KID;
+    private String PID;
+    private String KID;
     private String Nama;
     private String Email;
     private String Tanggal;
     private String Komentar;
     
     public Komentar() {
-        PID = 0;
-        KID = 0;
+        PID = new String();
+        KID = new String();
         if (user == null || user.getRole()==UserBean.getGuest()) {
             Nama = new String();
             Email = new String();
@@ -47,28 +47,28 @@ public class Komentar {
     /**
      * @return the PID
      */
-    public int getPID() {
+    public String getPID() {
         return PID;
     }
 
     /**
      * @param PID the PID to set
      */
-    public void setPID(int PID) {
+    public void setPID(String PID) {
         this.PID = PID;
     }
 
     /**
      * @return the KID
      */
-    public int getKID() {
+    public String getKID() {
         return KID;
     }
 
     /**
      * @param KID the KID to set
      */
-    public void setKID(int KID) {
+    public void setKID(String KID) {
         this.KID = KID;
     }
 

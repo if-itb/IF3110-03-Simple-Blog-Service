@@ -37,20 +37,18 @@ public class PostPublishBean {
     public void setPost(Post post) {
         this.post = post;
     }
-    public String publish(int PID) {
-       NavigationController nb = new NavigationController();
-        DAO.PostDAO DB = DAO.DAOFactory.getInstance("javabase.jdbc").getPostDAO();
-        
-        if (DB.find(PID) == null) {
+    public String publish(String PID) {
+        NavigationController nb = new NavigationController();
+        if (service.BlogService.getInstance().getPost(PID) == null) {
             // TODO sambungin dengan error message
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Username doesn't exists!"));
         }
         else {
-            Post published = DB.find(PID);
+            Post published = service.Utility.soapToLocal(service.BlogService.getInstance().getPost(PID));
             published.setPublished(true);
-            DB.update(published);
+            service.BlogService.getInstance().editPost(service.Utility.mapToSoap(published));
         }
-         return nb.gotoListPost()+ "?faces-redirect=true";
+        return nb.gotoListPost()+ "?faces-redirect=true";
         }
 }
