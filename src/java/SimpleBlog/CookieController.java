@@ -41,7 +41,7 @@ public class CookieController {
     
     public String SearchForm()
     {
-        String line2 = "<div id=\"login\"><form name=\"searchform\" action=\"search_post.jsp\" method=\"get\">";
+        String line2 = "<div id=\"search\"><form name=\"searchform\" action=\"search_post.jsp\" method=\"get\">";
         String line3 = "<p> Search : <input type=\"text\" name=\"query\">";
         String line5 = "<input type=\"submit\" value=\"Search\">";
         String line6 = "</form></div>";

@@ -71,7 +71,9 @@ function post_komentar()
                 if (xmlhttp.readyState==4 && xmlhttp.status==200)
                 {
                     get_komentar();
-                    document.getElementById("Komentar").setAttribute("Komentar", "");
+                    document.getElementById("Nama").value="";
+                    document.getElementById("Email").value="";
+                    document.getElementById("Komentar").value="";
                 }
             }
             var ID=document.getElementById("ID").value;

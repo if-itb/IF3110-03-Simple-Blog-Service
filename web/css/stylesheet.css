@@ -54,7 +54,7 @@ h4, h5, h6
 h5, h6
 { font: normal 400% 'PacificoRegular', Arial, sans-serif;
   color: #FFF;
-  padding-top: 20px;
+  padding-top: 50px;
   padding-bottom: 15px;
   text-align: center;
 }
@@ -676,4 +676,13 @@ h8 {
     letter-spacing: -1px;
     padding-top: 9px;
     position: absolute;
+}
+
+#search {
+    padding-bottom: 30px;
+    padding-right: 10px;
+    font-weight: bold;
+    text-align: right; 
+    text-shadow: 1px 1px #000;
+    color: #FFF;
 }
