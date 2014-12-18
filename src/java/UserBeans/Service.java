@@ -82,31 +82,22 @@ public class Service {
     /**
      * Web service operation
      */
-//    @WebMethod(operationName = "listUser")
-//    public List<User> listUser() throws MalformedURLException, IOException, JSONException {
-//        //TODO write your implementation code here:
-////        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/user");
-//        URL linkJson = new URL("https://simpleblogjsf.firebaseio.com/user.json");
-//        URLConnection con = linkJson.openConnection();
-//        List<User> list_user = new ArrayList<>();
-//        JSONTokener tokenListUser = new JSONTokener(con.getInputStream());
-//        JSONObject list = new JSONObject(tokenListUser);
-//        Iterator<String> key_user = list.keys();
-//        while(key_user.hasNext()){
-//            String ch = key_user.next();
-//            JSONObject user = list.getJSONObject(ch);
-//            User usr = new User();
-//            usr.setUid(ch);
-//            usr.setEmail(user.getString("email"));
-//            usr.setFullname(user.getString("fullname"));
-//            usr.setUsername(user.getString("username"));
-//            usr.setPassword(user.getString("password"));
-//            usr.setRole(user.getString("role"));
-//            list_user.add(usr);
-//        }
-//        
-//        return list_user;
-//    }
+    @WebMethod(operationName = "listUser")
+    public ArrayList<JSONObject> listUser() throws IOException, JSONException {
+        //TODO write your implementation code here:
+//        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/user");
+        String json=readURL("https://simpleblogjsf.firebaseio.com/user.json");
+        JSONObject obj =new JSONObject(json);
+        ArrayList<JSONObject> User=new ArrayList<>();
+        Iterator<String> ids=obj.keys();
+        //String allKomen="";
+        while(ids.hasNext()){
+            String id_Comment=ids.next();
+            JSONObject getcom=obj.getJSONObject(id_Comment);
+            User.add(getcom);
+        }
+        return User;
+    }
     
 
     @WebMethod(operationName = "deleteUser")
@@ -159,8 +150,11 @@ public class Service {
         while(ids.hasNext()){
             String id_Comment=ids.next();
             JSONObject getcom=obj.getJSONObject(id_Comment);
-            if(getcom.getString("judul").toUpperCase().contains(query) ||getcom.getString("konten").toUpperCase().contains(query)){
-                Post.add(getcom);
+            if(getcom.getString("delete").equals("false") && getcom.getString("publish").equals("true"))
+            {
+                if(getcom.getString("judul").toUpperCase().contains(query) ||getcom.getString("konten").toUpperCase().contains(query)){
+                    Post.add(getcom);
+                }
             }
         }
         return Post;
