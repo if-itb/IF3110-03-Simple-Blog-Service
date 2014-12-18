@@ -1,0 +1,1 @@
+"C:\Program Files\Java\jdk1.8.0_25\bin\wsimport" -keep -d nbproject -s src/java http://simple-blog-30.herokuapp.com/simple-blog?wsdl
