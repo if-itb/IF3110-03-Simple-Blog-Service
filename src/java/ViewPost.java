@@ -1,92 +1,40 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import javax.xml.ws.WebServiceRef;
+import service.ControllerImplement_Service;
+import service.Post;
 
-@ManagedBean(name = "viewPost", eager = true)
-@ViewScoped
+/**
+ *
+ * @author A 46 CB i3
+ */
+@Named(value = "viewPost")
+@SessionScoped
 public class ViewPost implements Serializable {
-
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/calm-chamber-9995.herokuapp.com/HelloService.wsdl")
+    private ControllerImplement_Service service;
+    
     // attribute
-    private int id;
+    private String id;
     private String judul;
     private String tanggal;
     private String konten;
-    private String status;
-    private ArrayList<Comment> komentar;
     
-    // default constructor
+    /**
+     * Creates a new instance of ViewPost
+     */
     public ViewPost() {
-        komentar = new ArrayList<Comment>();
-    }
-    
-    // function
-    public void runPost(int i) {
-       try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            Statement ps = con.createStatement();
-            ResultSet rs = ps.executeQuery("select * from postdata where id_post=" + i);
-            while(rs.next() == true) {
-                id = i;
-                judul = rs.getString(2);
-                tanggal = rs.getString(3);
-                konten = rs.getString(4);
-                status = rs.getString(5);
-            }
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        } 
-    }
-    public void runComment(int i) {
-       try {
-            komentar.clear();
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            Statement ps = con.createStatement();
-            ResultSet rs = ps.executeQuery("select * from commentdata where id_post=" + i);
-            while(rs.next() == true) {
-                Comment c = new Comment();
-                c.setIdc(rs.getInt(1));
-                c.setIdp(rs.getInt(2));
-                c.setNama(rs.getString(3));
-                c.setTanggal(rs.getString(4));
-                c.setEmail(rs.getString(5));
-                c.setKomentar(rs.getString(6));
-                komentar.add(c);
-            }
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        } 
-    }
-    public void addComment(String nama, String tanggal, String email, String komentar) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO commentdata (id_post, nama, tanggal, email, komentar) VALUES(?, ?, ?, ?, ?)");
-            preparedStatement.setInt(1, id);
-            preparedStatement.setString(2, nama);
-            preparedStatement.setString(3, tanggal);
-            preparedStatement.setString(4, email);
-            preparedStatement.setString(5, komentar);
-            preparedStatement.executeUpdate();
-//            FacesContext.getCurrentInstance().getExternalContext().redirect("publish.xhtml");
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
     }
     
     // getter
-    public int getId() {
+    public String getId() {
         return id;
     }
     public String getJudul() {
@@ -98,10 +46,53 @@ public class ViewPost implements Serializable {
     public String getKonten() {
         return konten;
     }
-    public String getStatus() {
-        return status;
+    
+    // setter
+    public void setId(String id) {
+        this.id = id;
     }
-    public ArrayList getKomentar() {
-        return komentar;
+    public void setJudul(String judul) {
+        this.judul = judul;
+    }
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
+    public void setKonten(String konten) {
+        this.konten = konten;
+    }
+
+    private Post loadPost(java.lang.String id) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.loadPost(id);
+    }
+    public void load(String id) {
+        Post p = this.loadPost(id);
+        this.id = p.getId();
+        this.judul = p.getJudul();
+        this.tanggal = p.getTanggal();
+        this.konten = p.getKonten();
+    }
+
+    public java.util.List<service.Comment> loadComment(java.lang.String postid) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.loadComment(postid);
+    }
+
+    private Boolean addComment(java.lang.String postid, java.lang.String nama, java.lang.String email, java.lang.String komentar) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.addComment(postid, nama, email, komentar);
+    }
+    public void add(String nama, String email, String komentar) {
+        boolean b;
+        b = this.addComment(this.id, nama, email, komentar);
+        nama = null;
+        email = null;
+        komentar = null;
     }
 }

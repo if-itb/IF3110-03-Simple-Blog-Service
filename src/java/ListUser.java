@@ -1,59 +1,52 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-@ManagedBean
-@RequestScoped
-public class ListUser {
-    
-    // attribute
-    private ArrayList<User> user;
-    
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
+import javax.xml.ws.WebServiceRef;
+import service.ControllerImplement_Service;
+
+/**
+ *
+ * @author A 46 CB i3
+ */
+@Named(value = "listUser")
+@SessionScoped
+public class ListUser implements Serializable {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/calm-chamber-9995.herokuapp.com/HelloService.wsdl")
+    private ControllerImplement_Service service;
+
+    /**
+     * Creates a new instance of ListUser
+     */
     public ListUser() {
-        user = new ArrayList<User>();
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            Statement ps = con.createStatement();
-            ResultSet rs = ps.executeQuery("select * from userdata");
-            while(rs.next() == true) {
-                User u = new User();
-                u.setUsername(rs.getString(1));
-                u.setPassword(rs.getString(2));
-                u.setNama(rs.getString(3));
-                u.setEmail(rs.getString(4));
-                u.setRole(rs.getString(5));
-                user.add(u);
-            }
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
     }
-    
-    // function
-    public void delete(String username) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM userdata WHERE username=?");
-            preparedStatement.setString(1, username);
-            preparedStatement.executeUpdate();
-            FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+
+    public java.util.List<service.User> loadUser() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.loadUser();
     }
-    
-    // getter
-    public ArrayList getUser() {
-        return user;
+
+    private Boolean deleteUser(java.lang.String id) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.deleteUser(id);
+    }
+    public String delete(String id) {
+        boolean b;
+        b = this.deleteUser(id);
+        if(b) {
+            return "user";
+        }
+        else {
+            return null;
+        }
     }
 }

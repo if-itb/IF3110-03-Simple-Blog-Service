@@ -1,80 +1,51 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-@ManagedBean(name = "listPost", eager = true)
-@RequestScoped
-public class ListPost {
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
+import javax.xml.ws.WebServiceRef;
+import service.ControllerImplement_Service;
 
-    // attribute
-    private ArrayList<Post> post;
+/**
+ *
+ * @author A 46 CB i3
+ */
+@Named(value = "listPost")
+@SessionScoped
+public class ListPost implements Serializable {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/calm-chamber-9995.herokuapp.com/HelloService.wsdl")
+    private ControllerImplement_Service service;
     
-    // default constructor
-    public ListPost() {
-        post = new ArrayList<Post>();
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            Statement ps = con.createStatement();
-            ResultSet rs = ps.executeQuery("select * from postdata where status='published'");
-            while(rs.next() == true) {
-                Post p = new Post();
-                p.setId(rs.getInt(1));
-                p.setJudul(rs.getString(2));
-                p.setTanggal(rs.getString(3));
-                p.setKonten(rs.getString(4));
-                p.setStatus(rs.getString(5));
-                post.add(p);
-            }
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-    // function
-    public void delete(int id) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            PreparedStatement preparedStatement = con.prepareStatement("UPDATE postdata SET status='deleted' where id_post=?");
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public void search(String judul) {
-        post = new ArrayList<Post>();
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            Statement ps = con.createStatement();
-            ResultSet rs = ps.executeQuery("select * from postdata where judul like %" + judul + "%");
-            while(rs.next() == true) {
-                Post p = new Post();
-                p.setId(rs.getInt(1));
-                p.setJudul(rs.getString(2));
-                p.setTanggal(rs.getString(3));
-                p.setKonten(rs.getString(4));
-                p.setStatus(rs.getString(5));
-                post.add(p);
-            }
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
+    /**
+     * Creates a new instance of ListPost
+     */
+    public ListPost() {}
     
-    // getter
-    public ArrayList<Post> getPost() {
-        return post;
+    public java.util.List<service.Post> loadPublishedPost() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.loadPublishedPost();
+    }
+
+    private Boolean deletePost(java.lang.String id) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.deletePost(id);
+    }
+    public String delete(String id) {
+        boolean b;
+        b = this.deletePost(id);
+        if(b) {
+            return "index";
+        }
+        else {
+            return null;
+        }
     }
 }

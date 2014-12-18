@@ -1,97 +1,114 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-@ManagedBean
-@ViewScoped
-public class EditUser {
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.ws.WebServiceRef;
+import service.ControllerImplement_Service;
+import service.User;
+
+/**
+ *
+ * @author A 46 CB i3
+ */
+@Named(value = "editUser")
+@SessionScoped
+public class EditUser implements Serializable {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/calm-chamber-9995.herokuapp.com/HelloService.wsdl")
+    private ControllerImplement_Service service;
     
     // attribute
+    private String id;
     private String username;
     private String password;
-    private String nama;
     private String email;
     private String role;
     
-    // default constructor
+    /**
+     * Creates a new instance of EditUser
+     */
     public EditUser() {
     }
     
-    // function
-    public void run(String user) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            Statement ps = con.createStatement();
-            ResultSet rs = ps.executeQuery("select * from userdata where username='" + user + "'");
-            while(rs.next() == true) {
-                username = user;
-                password = rs.getString(2);
-                nama = rs.getString(3);
-                email = rs.getString(4);
-                role = rs.getString(5);
-            }
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public void edit() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            PreparedStatement preparedStatement = con.prepareStatement("UPDATE userdata SET password=?, nama=?, email=?, role=? where username=?");
-            preparedStatement.setString(1, password);
-            preparedStatement.setString(2, nama);
-            preparedStatement.setString(3, email);
-            preparedStatement.setString(4, role);
-            preparedStatement.setString(5, username);
-            System.out.println(username+password+nama+email+role);
-            preparedStatement.executeUpdate();
-            FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
     // getter
+    public String getId() {
+        return id;
+    }
     public String getUsername() {
         return username;
     }
     public String getPassword() {
         return password;
     }
-    public String getNama() {
-        return nama;
-    }
     public String getEmail() {
         return email;
     }
-    public String getRole() {
+    public String getRole() {    
         return role;
     }
     
     // setter
+    public void setId(String id) {
+        this.id = id;
+    }
     public void setUsername(String username) {
         this.username = username;
     }
     public void setPassword(String password) {
         this.password = password;
     }
-    public void setNama(String nama) {
-        this.nama = nama;
-    }
     public void setEmail(String email) {
         this.email = email;
     }
-    public void setRole(String role) {
+    public void setRole(String role) {    
         this.role = role;
-    }  
+    }
+    
+    private java.util.List<service.User> loadUser() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.loadUser();
+    }
+    public void load(String id) {
+        List<User> user = this.loadUser();
+        int i = 0;
+        boolean found = false;
+        while(i < user.size() && !found) {
+            if(user.get(i).getId().equals(id)) {
+                this.id = user.get(i).getId();
+                this.username = user.get(i).getUsername();
+                this.password = user.get(i).getPassword();
+                this.email = user.get(i).getEmail();
+                this.role = user.get(i).getRole();
+                found = true;
+            }
+            else {
+                i++;
+            }
+        }
+    }
+
+    private Boolean editUser(java.lang.String id, java.lang.String username, java.lang.String password, java.lang.String email, java.lang.String role) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.editUser(id, username, password, email, role);
+    }
+    public String edit() {
+        boolean b;
+        b = this.editUser(this.id, this.username, this.password, this.email, this.role);
+        if(b) {
+            return "user";
+        }
+        else {
+            return null;
+        }
+    }
 }

@@ -1,67 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import javax.xml.ws.WebServiceRef;
+import service.ControllerImplement_Service;
+import service.Post;
 
-@ManagedBean
-@ViewScoped
+/**
+ *
+ * @author A 46 CB i3
+ */
+@Named(value = "editPost")
+@SessionScoped
 public class EditPost implements Serializable {
-
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/calm-chamber-9995.herokuapp.com/HelloService.wsdl")
+    private ControllerImplement_Service service;
+    
     // attribute
-    private int id;
+    private String id;
     private String judul;
     private String tanggal;
     private String konten;
-    private String status;
     
-    // default constructor
+    /**
+     * Creates a new instance of EditPost
+     */
     public EditPost() {
     }
     
-    // function
-    public void run(int i) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            Statement ps = con.createStatement();
-            ResultSet rs = ps.executeQuery("select * from postdata where id_post=" + i);
-            while(rs.next() == true) {
-                id = i;
-                judul = rs.getString(2);
-                tanggal = rs.getString(3);
-                konten = rs.getString(4);
-                status = rs.getString(5);
-            }
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public void edit() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            PreparedStatement preparedStatement = con.prepareStatement("UPDATE postdata SET judul=?, tanggal=?, konten=? where id_post=?");
-            preparedStatement.setString(1, judul);
-            preparedStatement.setString(2, tanggal);
-            preparedStatement.setString(3, konten);
-            preparedStatement.setInt(4, id);
-            preparedStatement.executeUpdate();
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
     // getter
-    public int getId() {
-        return id;
-    }
     public String getJudul() {
         return judul;
     }
@@ -71,14 +43,11 @@ public class EditPost implements Serializable {
     public String getKonten() {
         return konten;
     }
-    public String getStatus() {
-        return status;
+    public String getId() {
+        return id;
     }
     
     // setter
-    public void setId(int id) {
-        this.id = id;
-    }
     public void setJudul(String judul) {
         this.judul = judul;
     }
@@ -88,7 +57,38 @@ public class EditPost implements Serializable {
     public void setKonten(String konten) {
         this.konten = konten;
     }
-    public void setStatus(String status) {
-        this.status = status;
-    }  
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private Post loadPost(java.lang.String id) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.loadPost(id);
+    }
+    public void load(String id) {
+        Post p = this.loadPost(id);
+        this.id = p.getId();
+        this.judul = p.getJudul();
+        this.tanggal = p.getTanggal();
+        this.konten = p.getKonten();
+    }
+
+    private Boolean editPost(java.lang.String id, java.lang.String judul, java.lang.String tanggal, java.lang.String konten) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.editPost(id, judul, tanggal, konten);
+    }
+    public String edit() {
+        boolean b;
+        b = this.editPost(this.id, this.judul, this.tanggal, this.konten);
+        if(b) {
+            return "index";
+        }
+        else {
+            return null;
+        }
+    }
 }

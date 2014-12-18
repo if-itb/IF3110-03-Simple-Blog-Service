@@ -1,34 +1,45 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-@ManagedBean
-@RequestScoped
-public class AddUser {
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
+import javax.xml.ws.WebServiceRef;
+import service.ControllerImplement_Service;
 
-    // default constructor
+/**
+ *
+ * @author A 46 CB i3
+ */
+@Named(value = "addUser")
+@SessionScoped
+public class AddUser implements Serializable {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/calm-chamber-9995.herokuapp.com/HelloService.wsdl")
+    private ControllerImplement_Service service;
+
+    /**
+     * Creates a new instance of AddUser
+     */
     public AddUser() {
     }
-    
-    // function
-    public void add(String username, String password, String nama, String email, String role) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/simpleblog2", "root", "");
-            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO userdata (username, password, nama, email, role) VALUES(?, ?, ?, ?, ?)");
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, nama);
-            preparedStatement.setString(4, email);
-            preparedStatement.setString(5, role);
-            preparedStatement.executeUpdate();
-            FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
+
+    private Boolean addUser(java.lang.String username, java.lang.String password, java.lang.String email, java.lang.String role) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        service.ControllerImplement port = service.getControllerImplementPort();
+        return port.addUser(username, password, email, role);
+    }
+    public String add(String username, String password, String email, String role) {
+        boolean b;
+        b = this.addUser(username, password, email, role);
+        if(b) {
+            return "user";
         }
-        catch(Exception e) {
-            e.printStackTrace();
+        else {
+            return null;
         }
     }
 }
