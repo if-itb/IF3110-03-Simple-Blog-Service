@@ -40,6 +40,7 @@ public class ObjectFactory {
     private final static QName _DeletePost_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "deletePost");
     private final static QName _SearchPost_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "searchPost");
     private final static QName _InterruptedException_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "InterruptedException");
+    private final static QName _Login_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "login");
     private final static QName _SearchPostResponse_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "searchPostResponse");
     private final static QName _ListUnpublishedPostResponse_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "listUnpublishedPostResponse");
     private final static QName _AddPostResponse_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "addPostResponse");
@@ -53,6 +54,7 @@ public class ObjectFactory {
     private final static QName _ListUnpublishedPost_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "listUnpublishedPost");
     private final static QName _CreateUserResponse_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "createUserResponse");
     private final static QName _UpdatePostResponse_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "updatePostResponse");
+    private final static QName _LoginResponse_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "loginResponse");
     private final static QName _AddCommentResponse_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "addCommentResponse");
     private final static QName _GetAllUserResponse_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "getAllUserResponse");
     private final static QName _AddPost_QNAME = new QName("http://service.heroku.fawwaz.github.com/", "addPost");
@@ -119,6 +121,14 @@ public class ObjectFactory {
      */
     public GetUser createGetUser() {
         return new GetUser();
+    }
+
+    /**
+     * Create an instance of {@link Login }
+     * 
+     */
+    public Login createLogin() {
+        return new Login();
     }
 
     /**
@@ -223,6 +233,14 @@ public class ObjectFactory {
      */
     public AddCommentResponse createAddCommentResponse() {
         return new AddCommentResponse();
+    }
+
+    /**
+     * Create an instance of {@link LoginResponse }
+     * 
+     */
+    public LoginResponse createLoginResponse() {
+        return new LoginResponse();
     }
 
     /**
@@ -498,6 +516,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Login }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.fawwaz.github.com/", name = "login")
+    public JAXBElement<Login> createLogin(Login value) {
+        return new JAXBElement<Login>(_Login_QNAME, Login.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SearchPostResponse }{@code >}}
      * 
      */
@@ -612,6 +639,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.heroku.fawwaz.github.com/", name = "updatePostResponse")
     public JAXBElement<UpdatePostResponse> createUpdatePostResponse(UpdatePostResponse value) {
         return new JAXBElement<UpdatePostResponse>(_UpdatePostResponse_QNAME, UpdatePostResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link LoginResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.fawwaz.github.com/", name = "loginResponse")
+    public JAXBElement<LoginResponse> createLoginResponse(LoginResponse value) {
+        return new JAXBElement<LoginResponse>(_LoginResponse_QNAME, LoginResponse.class, null, value);
     }
 
     /**
