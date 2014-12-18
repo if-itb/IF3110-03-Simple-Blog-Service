@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+        *** GENERATED FROM jax-ws.xml - DO NOT EDIT !                             ***
+        *** TO MODIFY wsimport options USE Web Service node -> Edit WS Attributes ***
+        *** TO CHANGE TARGETS GENERATED TO jaxws-build.xml COPY THOSE             ***
+        *** TARGETS TO ../build.xml AND MODIFY THAT FILE INSTEAD                  ***
+
+        --><project xmlns:xalan="http://xml.apache.org/xslt" xmlns:webproject2="http://www.netbeans.org/ns/web-project/2" xmlns:jaxws="http://www.netbeans.org/ns/jax-ws/1">
+    <!--
+                ===================
+                JAX-WS WSGEN SECTION
+                ===================
+            -->
+    <!--
+                ===================
+                JAX-WS WSIMPORT SECTION
+                ===================
+            -->
+    <target name="wsimport-init" depends="init">
+        <fail if="${wsimport.bad.version}" message="WsImport ant task defined in the classpath ${j2ee.platform.wsimport.classpath} has a serious bug. See http://wiki.netbeans.org/MetroIssue for details."/>
+        <mkdir dir="${build.generated.sources.dir}/jax-ws"/>
+        <property name="j2ee.platform.wsimport.classpath" value="${libs.jaxws21.classpath}"/>
+        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+            <classpath path="${java.home}/../lib/tools.jar:${j2ee.platform.wsimport.classpath}:${javac.classpath}"/>
+        </taskdef>
+        <condition property="conf-dir" value="${conf.dir}/" else="">
+            <isset property="conf.dir"/>
+        </condition>
+    </target>
+    <target name="wsimport-client-PenguasaDuniaService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService" destdir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/PenguasaDuniaService/wsdl/radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/PenguasaDuniaService/wsdl/radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-PenguasaDuniaService" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/org/penguasadunia"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService"/>
+    </target>
+    <target name="wsimport-client-PenguasaDuniaService_1" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_1"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_1" destdir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_1" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/PenguasaDuniaService_1/wsdl/radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/PenguasaDuniaService_1/wsdl/radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_1"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_1">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-PenguasaDuniaService_1" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/org/penguasadunia"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_1"/>
+    </target>
+    <target name="wsimport-client-PenguasaDuniaService_2" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_2"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_2" destdir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_2" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/PenguasaDuniaService_2/wsdl/radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/PenguasaDuniaService_2/wsdl/radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_2"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_2">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-PenguasaDuniaService_2" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/org/penguasadunia"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_2"/>
+    </target>
+    <target name="wsimport-client-PenguasaDuniaService_3" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_3"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_3" destdir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_3" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/PenguasaDuniaService_3/wsdl/radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/PenguasaDuniaService_3/wsdl/radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_3"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_3">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-PenguasaDuniaService_3" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/org/penguasadunia"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_3"/>
+    </target>
+    <target name="wsimport-client-PenguasaDuniaService_4" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_4"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_4" destdir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_4" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/PenguasaDuniaService_4/wsdl/radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/PenguasaDuniaService_4/wsdl/radiant-brushlands-4818.herokuapp.com/PenguasaDuniaService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_4"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_4">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-PenguasaDuniaService_4" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/org/penguasadunia"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/PenguasaDuniaService_4"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-PenguasaDuniaService, wsimport-client-PenguasaDuniaService_1, wsimport-client-PenguasaDuniaService_2, wsimport-client-PenguasaDuniaService_3, wsimport-client-PenguasaDuniaService_4"/>
+</project>
