@@ -1,3 +1,4 @@
+import SimpleBlog.MySQLAccess;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.*;
@@ -19,89 +21,71 @@ public class First extends HttpServlet {
         PrintWriter out = response.getWriter();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
-        Connection conn = null;
-        String url = "jdbc:mysql://127.0.0.1/";
-        String dbName = "simpleblog";
-        String driver = "com.mysql.jdbc.Driver";
-
-        try {
-            Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection(url+dbName,"root","");
-            String strQuery = "select * from user where username='" + username + "' and password = '" + password + "'";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(strQuery);
-
-            if(rs.next())
+        
+        MySQLAccess sql = new MySQLAccess();
+        List<org.chamerling.heroku.service.User> listuser = sql.getUser();
+        
+        boolean match = false;
+        int i = 0;
+        while(i<listuser.size() && !match)
+        {
+            if(listuser.get(i).getUsername().equalsIgnoreCase(username))
             {
-               String msg = "login Successful";
-               HttpSession session=request.getSession();
-               session.setAttribute("user",username);
-               
-               int i = 0;
-               Cookie[] cookies = request.getCookies();
-               boolean found = false;
-               while(i<cookies.length && !found)  
-               {
-                   if(cookies[i].getName().equalsIgnoreCase("user"))
-                   {
-                        found = true;
-                   }
-                   else
-                   {
-                        i++;
-                   }
-               }
-               if(found)
-               {
-                   cookies[i].setMaxAge(0);
-                   // Menciptakan cookies untuk guest      
-                   Cookie guest = new Cookie("user",username); 
-                   // Meng - set agar cookie hilang setelah 24 jam
-                   guest.setMaxAge(60*60*2); 
-                   // Menambahkan cookie ke header response
-                   response.addCookie(guest);
-               }
-               else
-               {
-                   // Menciptakan cookies untuk guest      
-                   Cookie guest = new Cookie("user","guest"); 
-                   // Meng - set agar cookie hilang setelah 24 jam
-                   guest.setMaxAge(60*60*2); 
-                   // Menambahkan cookie ke header response
-                   response.addCookie(guest);
-               }
-               
-               String site = new String("index.jsp");
-               response.setStatus(response.SC_MOVED_TEMPORARILY);
-               response.setHeader("Location", site);
+                if(listuser.get(i).getPassword().equalsIgnoreCase(password))
+                {
+                    match = true;
+                }
             }
             else
             {
-                String msg = "login unsuccessful";
-                String site = new String("index.jsp");
-                response.setStatus(response.SC_MOVED_TEMPORARILY);
-                response.setHeader("Location", site);
+                i++;
             }
-            rs.close();
-            st.close();
-
-//            if(uname.equalsIgnoreCase(username) && pass.equalsIgnoreCase(password))
-//            {
-//                HttpSession session=request.getSession();
-//                session.setAttribute("user",uname);
-//                RequestDispatcher rd=request.getRequestDispatcher("Second");
-//                rd.forward(request, response);
-//            } else
-//            {
-//                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-//                rd.include (request,response);
-//            }
-
-        } finally {
-            out.close();
         }
-    }
+        
+        if(match)
+        {
+           String msg = "login Successful";
+           HttpSession session=request.getSession();
+           session.setAttribute("user",username);
+
+           i = 0;
+           Cookie[] cookies = request.getCookies();
+           boolean found = false;
+           while(i<cookies.length && !found)  
+           {
+               if(cookies[i].getName().equalsIgnoreCase("user"))
+               {
+                    found = true;
+               }
+               else
+               {
+                    i++;
+               }
+           }
+           if(found)
+           {
+               cookies[i].setMaxAge(0);
+               // Menciptakan cookies untuk guest      
+               Cookie guest = new Cookie("user",username); 
+               // Meng - set agar cookie hilang setelah 24 jam
+               guest.setMaxAge(60*60*2); 
+               // Menambahkan cookie ke header response
+               response.addCookie(guest);
+           }
+
+           String site = new String("index.jsp");
+           response.setStatus(response.SC_MOVED_TEMPORARILY);
+           response.setHeader("Location", site);
+        }
+        else
+        {
+            String msg = "login unsuccessful";
+            String site = new String("index.jsp");
+            response.setStatus(response.SC_MOVED_TEMPORARILY);
+            response.setHeader("Location", site);
+        }
+        
+}
 
  
     @Override

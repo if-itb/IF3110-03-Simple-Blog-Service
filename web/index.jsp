@@ -6,7 +6,8 @@
 <%@page import="SimpleBlog.MySQLAccess"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!DOCTYPE html> 
+<!DOCTYPE html>
+<root>
 <html>    
 <head>
   <title>Simple Blog</title>
@@ -79,3 +80,4 @@
   <script type="text/javascript" src="javascript/image_slide.js"></script>  
 </body>
 </html>
+</root>

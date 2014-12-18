@@ -18,7 +18,7 @@
         <link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
         <!-- modernizr enables HTML5 elements and feature detects -->
         <script type="text/javascript" src="javascript/modernizr-1.5.min.js"></script>
-        <title>Simple Blog - New Post</title>
+        <title>Simple Blog - View Post</title>
     </head>
 <body onload="get_komentar()">
     <div id="main">		
@@ -42,15 +42,7 @@
                     int idx = CC.FindUserCookie(cookies);
                     if(idx<cookies.length)
                     {
-                        if(!cookies[idx].getValue().equalsIgnoreCase("guest"))
-                        {
-                            out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
-                        }
-                        if(sql.getRolebyUsername(
-                            cookies[CC.FindUserCookie(cookies)].getValue()).equalsIgnoreCase("admin"))
-                        {
-                            out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
-                        }
+                        
                     }
                     else
                     {
@@ -75,13 +67,21 @@
                 String username = cookies[idx].getValue();
                 
                 User user = null;
-                if(idx<cookies.length)
+                if(idx<cookies.length && !username.equalsIgnoreCase("guest"))
                 {
                     user=new User(username, " ", " ", sql.getRolebyUsername(username));
                 }
                 else
                 {
                     user = new User("guest"," "," ","guest");
+                }
+                if(!user.role.equalsIgnoreCase("guest") && !user.role.equalsIgnoreCase("editor"))
+                {
+                    out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
+                }
+                if(user.role.equalsIgnoreCase("admin"))
+                {
+                    out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
                 }
                 if(user.username.equalsIgnoreCase("guest"))
                 {
@@ -90,7 +90,8 @@
                 else
                 {
                     out.println(CC.Welcome(user.username));
-                }    
+                }
+                out.println(CC.SearchForm());
                     %>
                 </ul>
             </div><!--close menubar-->	
@@ -98,13 +99,13 @@
     </header>
     <div id="site_content">
         <%
-            int idPost= Integer.parseInt(request.getParameter("idPost"));
-            Post postId=new Post();
-            postId=sql.getPostId(idPost);
+            String idPost= request.getParameter("idPost");
+            
+            org.chamerling.heroku.service.Post postId=sql.getPostId(idPost);
         %>
-        <h5><% out.print(postId.judul); %></h5>    
+        <h5><% out.print(postId.getJudul()); %></h5>    
         <%    
-            out.println("<div id=\"post-konten\">"+postId.konten +"<br><br>(posted on : "+postId.tanggal+")</div>");
+            out.println("<div id=\"post-konten\">"+postId.getKonten() +"<br><br>(posted on : "+postId.getTanggal()+")</div>");
         %>
         <article class="art simple post">  
             <div class="art-body">
@@ -127,9 +128,9 @@
 
                             if(cookies[indexUser].getValue().compareTo("guest")!=0)
                             {
-                                user=SQL.getSpesificUser(cookies[indexUser].getValue());
-                                name=user.username;
-                                email=user.email;
+                                org.chamerling.heroku.service.User user2=SQL.getSpesificUser(cookies[indexUser].getValue());
+                                name=user2.getUsername();
+                                email=user2.getEmail();
                             }
 
                             out.println("<label for=\"Nama\">Nama:</label>");

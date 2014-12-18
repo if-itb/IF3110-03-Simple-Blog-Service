@@ -38,4 +38,13 @@ public class CookieController {
         String line6 = "</form></div>";
         return line2 + line3 + line4 + line5 + line6;
     }
+    
+    public String SearchForm()
+    {
+        String line2 = "<div id=\"login\"><form name=\"searchform\" action=\"search_post.jsp\" method=\"get\">";
+        String line3 = "<p> Search : <input type=\"text\" name=\"query\">";
+        String line5 = "<input type=\"submit\" value=\"Search\">";
+        String line6 = "</form></div>";
+        return line2 + line3 + line5 + line6;
+    }
 }

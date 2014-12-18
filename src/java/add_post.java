@@ -25,15 +25,10 @@ public class add_post extends HttpServlet {
             int i = 0;
             Cookie[] cookies = request.getCookies();
             boolean found = false;
-            while(i<cookies.length && !found)  
-            {
-                if(cookies[i].getName().equalsIgnoreCase("user")){ found = true; }
-                else{ i++; }
-            }
             
-            SQL.addPost(SQL.getUserID(cookies[i].getValue()), judul, konten, tanggal, false);
+            SQL.addPost(judul, tanggal, konten, "0");
             
-            RequestDispatcher rd=request.getRequestDispatcher("view_post.jsp?idPost=" + SQL.getMaxId());
+            RequestDispatcher rd=request.getRequestDispatcher("home.jsp");
             rd.forward(request, response);
         } finally {            
             out.close();

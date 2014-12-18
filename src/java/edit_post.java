@@ -20,9 +20,10 @@ public class edit_post extends HttpServlet {
             String judul = request.getParameter("Judul");
             String tanggal = request.getParameter("Tanggal");
             String konten = request.getParameter("Konten");
-            int id = Integer.parseInt(request.getParameter("idPost"));
+            String id = request.getParameter("idPost");
+            org.chamerling.heroku.service.Post post = SQL.getPostId(id);
             
-            SQL.updatePost(id, judul, tanggal, konten);
+            SQL.updatePost(id, judul, tanggal, konten, post.getPublish());
             
             RequestDispatcher rd=request.getRequestDispatcher("view_post.jsp?idPost=" + id);
             rd.forward(request, response);

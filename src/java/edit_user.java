@@ -19,9 +19,9 @@ public class edit_user extends HttpServlet {
             MySQLAccess SQL = new MySQLAccess();
             String username = request.getParameter("username");
             String pass = request.getParameter("password");
-            String email = request.getParameter("email");
+            String email = request.getParameter("Email");
             String role = request.getParameter("role");
-            int id = Integer.parseInt(request.getParameter("idUser"));
+            String id = request.getParameter("idUser");
             
             SQL.updateUser(id, username, pass, email, role);
             

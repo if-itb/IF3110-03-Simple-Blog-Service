@@ -78,330 +78,217 @@ public class MySQLAccess {
     }
 
     public List getUser(){
-        List<User> listuser=new ArrayList();
-        open();
+        java.util.List<org.chamerling.heroku.service.User> listuser = null;
         try {
-            preparedStatement = connect.prepareStatement("SELECT * FROM user;");
-            resultSet = preparedStatement.executeQuery();
+            org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+            org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
 
-            while(resultSet.next())
-            {
-                listuser.add(new User(resultSet.getString("username"),resultSet.getString("password"), 
-                        resultSet.getString("email"), resultSet.getString("role")));
-            }
-            close();
-        } catch (SQLException e) {    
-            e.printStackTrace();
+            listuser = port.listUser();
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
         }
         return listuser;
     }
     
-    public User getSpesificUser(String username) {
-        User user = new User();
-        open();
+    public org.chamerling.heroku.service.User getSpesificUser(String username) {
+        java.util.List<org.chamerling.heroku.service.User> listuser = null;
         try {
-            preparedStatement = connect.prepareStatement("SELECT * FROM user WHERE username='"+username+"';");
-            resultSet = preparedStatement.executeQuery();
+            org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+            org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
 
-            while (resultSet.next()) {
-                user.setUser(resultSet.getString("username"), resultSet.getString("password"),
-                        resultSet.getString("email"), resultSet.getString("role"));
+            listuser = port.listUser();
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+        
+        org.chamerling.heroku.service.User user = null;
+        for(int i =0;i<listuser.size();i++)
+        {
+            if(listuser.get(i).getUsername().equalsIgnoreCase(username))
+            {
+                user = listuser.get(i);
+                break;
             }
-            close();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return user;
     }
     
     public List getPost(){
-        List<Post> listpost=new ArrayList();
-        open();
+        java.util.List<org.chamerling.heroku.service.Post> listpost = null;
         try {
-                preparedStatement = connect.prepareStatement("SELECT * FROM post ORDER BY `id post` DESC;");
-                resultSet = preparedStatement.executeQuery();
+            org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+            org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
 
-                while(resultSet.next())
-                {
-                    listpost.add(new Post(resultSet.getInt("id post"),resultSet.getInt("id"), 
-                            resultSet.getString("judul"),resultSet.getDate("tanggal"),resultSet.getTime("tanggal"), 
-                            resultSet.getString("konten"),resultSet.getInt("publish")));
-                }
-                close();
-            } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            }
-            return listpost;
+            listpost = port.listPost();
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+        return listpost;
     }
     
-    public Post getPostId(int idPost)
+    public org.chamerling.heroku.service.Post getPostId(String idPost)
     {
-        Post postId=new Post();
-        open();
+        java.util.List<org.chamerling.heroku.service.Post> listpost = null;
         try {
-                preparedStatement = connect.prepareStatement("SELECT * FROM post WHERE `id post`="+ idPost + ";");
-                resultSet = preparedStatement.executeQuery();
+            org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+            org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
 
-                while(resultSet.next())
-                {
-                    postId.setPost(resultSet.getInt("id post"),resultSet.getInt("id"), 
-                            resultSet.getString("judul"),resultSet.getDate("tanggal"),resultSet.getTime("tanggal"), 
-                            resultSet.getString("konten"),resultSet.getInt("publish"));
-                }
-                close();
-            } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+            listpost = port.listPost();
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+        org.chamerling.heroku.service.Post postId = null;
+        for(int i=0;i<listpost.size();i++)
+        {
+            if(listpost.get(i).getIDPost().equalsIgnoreCase(idPost))
+            {
+                postId = listpost.get(i);
             }
+        }
         return postId;
     }
     
-    public List getKomentar(int id)
+    public List getKomentar(String id)
     {
-        List<Komentar> listkomentar=new ArrayList();
-        open();
+        java.util.List<org.chamerling.heroku.service.Comment> listkomentar = null;
         try {
-                preparedStatement = connect.prepareStatement("SELECT * FROM komentar WHERE `id post`="+ id +";");
-                resultSet = preparedStatement.executeQuery();
+            org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+            org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
 
-                while(resultSet.next())
-                {
-                    listkomentar.add(new Komentar(resultSet.getInt("id post"),resultSet.getInt("id komentar"), 
-                            resultSet.getString("nama"),resultSet.getString("email"),resultSet.getTimestamp("tanggal"), 
-                            resultSet.getString("komentar")));
-                }
-                close();
-            } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            }
-            return listkomentar;
-    }
-    
-    public void addPost(int id, String judul, String konten, String tanggal, boolean publish)
-    {
-        open();
-        try {
-            int i;
-            if(publish){i=1;}
-            else{i=0;}
-            String S = "INSERT INTO `simpleblog`.`post` (`id post`, `id`, `judul`, `konten`, `tanggal`, `publish`) VALUES (NULL, '"+id+"', '"+judul+"', '"+konten+"', '"+tanggal+" 00:00:00', '"+i+"');";
-            preparedStatement = connect.prepareStatement(S);
-            statement.executeUpdate(S);
-            close();
-        } catch (SQLException e) {    
-            e.printStackTrace();
+            listkomentar = port.listComment();
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
         }
-    }
-    
-      public void addImagePost(int id, String pesan, String tanggal, Object gambar)
-    {
-        open();
-        try {
-           
-            String S = "INSERT INTO `simpleblog`.`imagepost` ( `story`, `tanggal`) VALUES ("+pesan+"', '"+tanggal+"');";
-            preparedStatement = connect.prepareStatement(S);
-            statement.executeUpdate(S);
-            close();
-        } catch (SQLException e) {    
-            e.printStackTrace();
-        }
-    }
-    
-    public void updatePost(int id, String judul, String tanggal, String konten)
-    {
-        open();
-        try {
-            String S = "UPDATE `simpleblog`.`post` SET `judul` = '"+judul+"', `konten` = '"+konten+"', `tanggal` = '"+tanggal+"' WHERE `post`.`id post` ="+id+";";
-            preparedStatement = connect.prepareStatement(S);
-            statement.executeUpdate(S);
-            close();
-        } catch (SQLException e) {    
-            e.printStackTrace();
-        }
-    }
-    
-    public void deletePost(int id)
-    {
-        open();
-        try {
-            String S = "DELETE FROM `simpleblog`.`post` WHERE `post`.`id post` ="+id+";";
-            preparedStatement = connect.prepareStatement(S);
-            statement.executeUpdate(S);
-            close();
-        } catch (SQLException e) {    
-            e.printStackTrace();
-        }
-    }
-    
-    public int getMaxId()
-    {
-        int id = 0;
-        open();
-        try {
-            preparedStatement = connect.prepareStatement("SELECT `id post` FROM `simpleblog`.`post` ORDER BY `id post` DESC LIMIT 1;");
-            resultSet = preparedStatement.executeQuery();
-
-            while(resultSet.next())
+        
+        java.util.List<org.chamerling.heroku.service.Comment> listkomentarbyID = new ArrayList<org.chamerling.heroku.service.Comment>();
+        for(int i=0;i<listkomentar.size();i++)
+        {
+            System.out.println(i);
+            System.out.println(id);
+            System.out.println(listkomentar.get(i).getIDPost()+" "+listkomentar.get(i).getNama());
+            if(listkomentar.get(i).getIDPost().equalsIgnoreCase(id))
             {
-                id = resultSet.getInt("id post");
+                listkomentarbyID.add(listkomentar.get(i));
             }
-            close();
-        } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
         }
-        return id;
+        return listkomentarbyID;
     }
     
-    public int getUserID(String username)
+    public boolean addPost(String judul, String konten, String tanggal, String publish)
     {
-        int id = 0;
-        open();
+        org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+        org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+        return port.addPost(judul, tanggal, konten, publish);
+    }
+    
+    public boolean updatePost(String id, String judul, String tanggal, String konten, String publish)
+    {
+        org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+        org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+        return port.editPost(id, judul, konten, tanggal, publish);
+    }
+    
+    public boolean deletePost(String id)
+    {
+        org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+        org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+        return port.deletePost(id);
+    }
+    
+    public String getUserID(String username)
+    {
+        String ID = "";
+        java.util.List<org.chamerling.heroku.service.User> listuser = null;
         try {
-            preparedStatement = connect.prepareStatement("SELECT `id` FROM `simpleblog`.`user` WHERE username=\""+username+"\";");
-            resultSet = preparedStatement.executeQuery();
+            org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+            org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
 
-            while(resultSet.next())
+            listuser = port.listUser();
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+        
+        for(int i=0;i<listuser.size();i++)
+        {
+            if(listuser.get(i).getUsername().equalsIgnoreCase(username))
             {
-                id = resultSet.getInt("id");
+                ID = listuser.get(i).getID();
+                break;
             }
-            close();
-        } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
         }
-        return id;
+        return ID;
     }
     
-    public void publishPost(int idPost)
+    public boolean publishPost(String idPost)
     {
-        Post post = getPostId(idPost);
-        int published = post.publish;
-        open();
-        try {
-            String S = null;
-            if(published==1)
-            {
-                S = "UPDATE `simpleblog`.`post` SET `publish`=0 WHERE `post`.`id post` ="+idPost+";";
-            }
-            else
-            {
-                S = "UPDATE `simpleblog`.`post` SET `publish`=1 WHERE `post`.`id post` ="+idPost+";";
-            }
-            preparedStatement = connect.prepareStatement(S);
-            statement.executeUpdate(S);
-            close();
-        } catch (SQLException e) {    
-            e.printStackTrace();
+        org.chamerling.heroku.service.Post post = getPostId(idPost);
+        if(post.getPublish().equalsIgnoreCase("1"))
+        {
+            return updatePost(idPost, post.getJudul(), post.getTanggal(), post.getKonten(), "0");
+        }
+        else
+        {
+            return updatePost(idPost, post.getJudul(), post.getTanggal(), post.getKonten(), "1");
         }
     }
     
-    public void addKomentar(int idPost, String Nama, String Email, String Komentar)
+    public boolean addKomentar(String idPost, String Nama, String Email, String Tanggal, String Komentar)
     {
-        open();
-        try {
-            String S="INSERT INTO `simpleblog`.`komentar` (`id post`, `id komentar`, `nama`, `email`, `tanggal`, `komentar`) VALUES ('" 
-                                                        + idPost + "', NULL, '"+ Nama +"', '"+ Email +"', CURRENT_TIMESTAMP, '"+Komentar+"');";
-            preparedStatement = connect.prepareStatement(S);
-            statement.executeUpdate(S);
-
-            close();
-        } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-        }
+        org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+        org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+        return port.addComment(idPost, Nama, Email, Tanggal, Komentar);
     }
     
-    public void addUser(String username, String password, String email, String role)
+    public boolean addUser(String username, String password, String email, String role)
     {
-        open();
-        try {
-            
-            String S = "INSERT INTO `simpleblog`.`user` (`username`,`password`,`email`,`role`) VALUES ('" + username + "', '"+ password +"', '"+email+"', '"+ role+"');";
-            preparedStatement = connect.prepareStatement(S);
-            statement.executeUpdate(S);
-            close();
-        } catch (SQLException e) {    
-            e.printStackTrace();
-        }
+        org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+        org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+        return port.addUser(username, password, email, role);
     }
     
-     public void updateUser(int id, String username, String password, String email, String role)
+    public boolean updateUser(String id, String username, String password, String email, String role)
     {
-        open();
-        try {
-            String S = "UPDATE `simpleblog`.`user` SET `username` = '"+username+"', `password` = '"+password+"', `email` = '"+email+"', `role` = '"+role+"' WHERE `id` ="+id+";";
-            preparedStatement = connect.prepareStatement(S);
-            statement.executeUpdate(S);
-            close();
-        } catch (SQLException e) {    
-            e.printStackTrace();
-        }
+        org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+        org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+        return port.editUser(id, username, password, email, role);
     }
     
-    public void deleteUser(int id)
+    public boolean deleteUser(String id)
     {
-        open();
-        try {
-            String S = "DELETE FROM `simpleblog`.`user` WHERE `user`.`id` ="+id+";";
-            preparedStatement = connect.prepareStatement(S);
-            statement.executeUpdate(S);
-            close();
-        } catch (SQLException e) {    
-            e.printStackTrace();
-        }
+        org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+        org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+        return port.deleteUser(id);
     }
 
-    com.mysql.jdbc.Statement createStatement() {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public boolean softDelete(String idPost) {
+        org.chamerling.heroku.service.Post post = getPostId(idPost);
+        return updatePost(idPost, post.getJudul(), post.getTanggal(), post.getKonten(), "3");
     }
 
-    public void softDelete(int idPost) {
-       Post post = getPostId(idPost);
-       open();
-        try {
-            String S = "UPDATE `simpleblog`.`post` SET `publish`=3 WHERE `post`.`id post` ="+idPost+";";
-            preparedStatement = connect.prepareStatement(S);
-            statement.executeUpdate(S);
-            close();
-        } catch (SQLException e) {    
-            e.printStackTrace();
-        }
-    }
-
-    public void restore(int idPost) {
-        Post post = getPostId(idPost);
-       open();
-        try {
-            String S = "UPDATE `simpleblog`.`post` SET `publish`=1 WHERE `post`.`id post` ="+idPost+";";
-            preparedStatement = connect.prepareStatement(S);
-            statement.executeUpdate(S);
-            close();
-        } catch (SQLException e) {    
-            e.printStackTrace();
-        }
+    public boolean restore(String idPost) {
+        org.chamerling.heroku.service.Post post = getPostId(idPost);
+        return updatePost(idPost, post.getJudul(), post.getTanggal(), post.getKonten(), "0");
     }
     
     public String getRolebyUsername(String username) {
-        open();
         String role = "";
-        try{
-            preparedStatement = connect.prepareStatement("SELECT `role` FROM `simpleblog`.`user` WHERE username=\""+username+"\";");
-            resultSet = preparedStatement.executeQuery();
-
-            while(resultSet.next())
+        java.util.List<org.chamerling.heroku.service.User> listuser = null;
+        try {
+            org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+            org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+            listuser = port.listUser();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        for(int i=0;i<listuser.size();i++)
+        {
+            if(listuser.get(i).getUsername().equalsIgnoreCase(username))
             {
-                role = resultSet.getString("role");
+                role = listuser.get(i).getRole();
+                break;
             }
-            close();
-        } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
         }
         return role;
-        
     }
-    
 }

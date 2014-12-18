@@ -22,6 +22,7 @@ function checkemail()
     }
     else
     {
+        alert("Email tidak valid!");
         return false;
     }
 }

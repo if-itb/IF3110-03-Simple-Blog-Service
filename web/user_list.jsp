@@ -45,15 +45,7 @@
                     int idx = CC.FindUserCookie(cookies);
                     if(idx<cookies.length)
                     {
-                        if(!cookies[idx].getValue().equalsIgnoreCase("guest"))
-                        {
-                            out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
-                        }
-                        if(sql.getRolebyUsername(
-                            cookies[CC.FindUserCookie(cookies)].getValue()).equalsIgnoreCase("admin"))
-                        {
-                            out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
-                        }
+                        
                     }
                     else
                     {
@@ -78,13 +70,21 @@
                 String username = cookies[idx].getValue();
                 
                 User user = null;
-                if(idx<cookies.length)
+                if(idx<cookies.length && !username.equalsIgnoreCase("guest"))
                 {
                     user=new User(username, " ", " ", sql.getRolebyUsername(username));
                 }
                 else
                 {
                     user = new User("guest"," "," ","guest");
+                }
+                if(!user.role.equalsIgnoreCase("guest") && !user.role.equalsIgnoreCase("editor"))
+                {
+                    out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
+                }
+                if(user.role.equalsIgnoreCase("admin"))
+                {
+                    out.println("<li class=\"current\"><a href=\"user_list.jsp\">User List</a></li>");
                 }
                 if(user.username.equalsIgnoreCase("guest"))
                 {
@@ -93,7 +93,12 @@
                 else
                 {
                     out.println(CC.Welcome(user.username));
-                }    
+                }
+                if(!user.role.equalsIgnoreCase("admin"))
+                {
+                    response.sendRedirect("home.jsp");
+                }
+                out.println(CC.SearchForm());
             %>
           </ul>
         </div><!--close menubar-->	
@@ -107,7 +112,7 @@
                             <h2>Tambah User</h2>
 
                         <div id="contact-area">
-                            <form method="POST" action="add_user" onSubmit="return checkAddUser()">
+                            <form method="POST" action="add_user" onSubmit="return checkemail()">
                                 <label for="username">Username: </label>
                                 <input type="text" name="username" id="username"><br>
 
@@ -140,21 +145,28 @@
             
         <hr>
             <%
-                List<User> listuser=new ArrayList();
-                listuser=sql.getUser();
+                java.util.List<org.chamerling.heroku.service.User> listuser = null;
+                try {
+                    org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+                    org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
 
-                for (User p:listuser)
+                    listuser = port.listUser();
+                } catch (Exception ex) {
+                    // TODO handle custom exceptions here
+                }
+
+                if(listuser!=null)
                 {
-
+                    for (org.chamerling.heroku.service.User p:listuser)
+                    {
                         out.println("<div class = \"content_item\">");
-                        out.println("<p>Username: "+ p.username+"</p>");
-                        out.println("<p>Password: "+p.password +"</p>");
-                        out.println("<p>Email: "+p.email+"</p>");
-                        out.println("<p>Role "+ p.role + "</p> </div>");
-                        out.println("<div class=\"button_small\"> <a href=\"edit_user.jsp?username="+p.username +"\">Edit</a> </div> <div class=\"button_small\"><a href=\"delete_user?idUser="+sql.getUserID(p.username)+"\">Delete</a></div>");
+                        out.println("<p>Username: "+ p.getUsername()+"</p>");
+                        out.println("<p>Password: "+p.getPassword() +"</p>");
+                        out.println("<p>Email: "+p.getEmail()+"</p>");
+                        out.println("<p>Role "+ p.getRole() + "</p> </div>");
+                        out.println("<div class=\"button_small\"> <a href=\"edit_user.jsp?username="+p.getUsername() +"\">Edit</a> </div> <div class=\"button_small\"><a href=\"delete_user?idUser="+p.getID()+"\">Delete</a></div>");
                         out.println("<br><br><br><hr>");
-                        
-
+                    }
                 }
             %>
             <footer>

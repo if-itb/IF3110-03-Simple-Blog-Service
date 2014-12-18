@@ -17,7 +17,7 @@ public class delete_user extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             MySQLAccess SQL = new MySQLAccess();
-            int id = Integer.parseInt(request.getParameter("idUser"));
+            String id = request.getParameter("idUser");
             
             SQL.deleteUser(id);
         

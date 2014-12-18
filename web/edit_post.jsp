@@ -19,8 +19,7 @@
     <body>
         <%
             MySQLAccess sql=new MySQLAccess();
-            int idPost = Integer.parseInt(request.getParameter("idPost"));
-            Post post = sql.getPostId(idPost);
+            org.chamerling.heroku.service.Post post = sql.getPostId(request.getParameter("idPost"));
         %>
         <div id="main">		
             <header>
@@ -43,15 +42,7 @@
                     int idx = CC.FindUserCookie(cookies);
                     if(idx<cookies.length)
                     {
-                        if(!cookies[idx].getValue().equalsIgnoreCase("guest"))
-                        {
-                            out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
-                        }
-                        if(sql.getRolebyUsername(
-                            cookies[CC.FindUserCookie(cookies)].getValue()).equalsIgnoreCase("admin"))
-                        {
-                            out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
-                        }
+                        
                     }
                     else
                     {
@@ -76,7 +67,7 @@
                 String username = cookies[idx].getValue();
                 
                 User user = null;
-                if(idx<cookies.length)
+                if(idx<cookies.length && !username.equalsIgnoreCase("guest"))
                 {
                     user=new User(username, " ", " ", sql.getRolebyUsername(username));
                 }
@@ -84,14 +75,23 @@
                 {
                     user = new User("guest"," "," ","guest");
                 }
-                if(user.username.equalsIgnoreCase("guest"))
+                if(!user.role.equalsIgnoreCase("guest") && !user.role.equalsIgnoreCase("editor"))
                 {
-                    out.println(CC.LoginForm());
+                    out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
+                }
+                if(user.role.equalsIgnoreCase("admin"))
+                {
+                    out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
+                }
+                 if(!user.role.equalsIgnoreCase("owner")&&!user.role.equalsIgnoreCase("admin")&&!user.role.equalsIgnoreCase("editor"))
+                {
+                    response.sendRedirect("home.jsp");
                 }
                 else
                 {
                     out.println(CC.Welcome(user.username));
-                }    
+                } 
+                out.println(CC.SearchForm());
             %>
           </ul>
         </div><!--close menubar-->	
@@ -105,15 +105,15 @@
                             <h2>Edit Post</h2>
 
                             <div id="contact-area">
-                                <form method="POST" action="edit_post?idPost=<% out.println(post.idPost); %>" onSubmit="return cekTanggal()">
+                                <form method="POST" action="edit_post?idPost=<% out.println(post.getIDPost()); %>" onSubmit="return cekTanggal()">
                                     <label for="Judul">Judul:</label>
-                                    <input type="text" name="Judul" id="Judul" value="<% out.println(post.judul); %>">
+                                    <input type="text" name="Judul" id="Judul" value="<% out.println(post.getJudul()); %>">
 
                                     <label for="Tanggal">Tanggal:</label>
-                                    <input type="text" name="Tanggal" id="Tanggal" placeholder="cth : 1994-11-29" value="<% out.println(post.tanggal); %>">
+                                    <input type="text" name="Tanggal" id="Tanggal" placeholder="cth : 1994-11-29" value="<% out.println(post.getTanggal()); %>">
 
                                     <label for="Konten">Konten:</label><br>
-                                    <textarea name="Konten" rows="20" cols="20" id="Konten"><% out.println(post.konten); %></textarea>
+                                    <textarea name="Konten" rows="20" cols="20" id="Konten"><% out.println(post.getKonten()); %></textarea>
 
                                     <input type="submit" name="submit" value="Simpan" class="submit-button">
                                 </form>

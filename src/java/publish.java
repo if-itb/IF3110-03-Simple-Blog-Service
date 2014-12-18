@@ -16,7 +16,7 @@ public class publish extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             MySQLAccess SQL = new MySQLAccess();
-            int id = Integer.parseInt(request.getParameter("idPost"));
+            String id = request.getParameter("idPost");
             
             SQL.publishPost(id);
             

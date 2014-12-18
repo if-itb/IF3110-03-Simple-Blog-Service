@@ -40,15 +40,7 @@
                     int idx = CC.FindUserCookie(cookies);
                     if(idx<cookies.length)
                     {
-                        if(!cookies[idx].getValue().equalsIgnoreCase("guest"))
-                        {
-                            out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
-                        }
-                        if(sql.getRolebyUsername(
-                            cookies[CC.FindUserCookie(cookies)].getValue()).equalsIgnoreCase("admin"))
-                        {
-                            out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
-                        }
+                        
                     }
                     else
                     {
@@ -61,7 +53,7 @@
                     }
                 }
                 else
-                                {
+                {
                     // Menciptakan cookies untuk guest      
                     Cookie guest = new Cookie("user","guest"); 
                     // Meng - set agar cookie hilang setelah 24 jam
@@ -73,7 +65,7 @@
                 String username = cookies[idx].getValue();
                 
                 User user = null;
-                if(idx<cookies.length)
+                if(idx<cookies.length && !username.equalsIgnoreCase("guest"))
                 {
                     user=new User(username, " ", " ", sql.getRolebyUsername(username));
                 }
@@ -81,14 +73,24 @@
                 {
                     user = new User("guest"," "," ","guest");
                 }
+                if(!user.role.equalsIgnoreCase("guest") && !user.role.equalsIgnoreCase("editor"))
+                {
+                    out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
+                }
+                if(user.role.equalsIgnoreCase("admin"))
+                {
+                    out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
+                }
                 if(user.username.equalsIgnoreCase("guest"))
                 {
                     out.println(CC.LoginForm());
+                    out.println(CC.SearchForm());
                 }
                 else
                 {
                     out.println(CC.Welcome(user.username));
-                }    
+                    out.println(CC.SearchForm());
+                }
             %>
           </ul>
         </div><!--close menubar-->	
@@ -97,76 +99,85 @@
     
     <div id="site_content">
         <%
-            
-            List<Post> listpost=new ArrayList();
-            listpost=sql.getPost();
-            
-            for (Post p:listpost)
-            {
-                  
-                if(user.username.compareTo("guest")==0)
-                {
-                    if(p.publish==1)
-                    {
-                        out.println("<div class = \"content_item\"><p><br>"+ p.tanggal+ " "+p.waktu +"<br><a href=\"view_post.jsp?idPost="+p.idPost+"\"></p><h1>"+p.judul+ "</h1></a> <br><p>"+p.konten + "</div></p>");
-                        out.println("<br><br><hr>");
-                    }
-                     
-                }
-                else if(user.role.compareTo("owner")==0)
-                {
-                    if(p.publish==1)
-                    {
-                        out.println("<div class = \"content_item\"><p><br>"+ p.tanggal+ " "+p.waktu +"<br><a href=\"view_post.jsp?idPost="+p.idPost+"\"></p><h1>"+p.judul+ "</h1></a> <br><p>"+p.konten + "</div></p>");
-                        out.println("<div class=\"button_small\"> <a href=\"edit_post.jsp?idPost="+p.idPost+"\">Edit</a> </div> <div class=\"button_small\"><a href=\"soft_delete?idPost="+p.idPost+"\" onclick=\"return window.confirm('Apakah Anda yakin menghapus post ini?')\">Delete</a></div>");
-                        out.println("<br><br><hr>");
-                    }
-                     
-                }
-                else if(user.role.compareTo("editor")==0)
-                {
-                    if(p.publish!=3)
-                    {
-                        out.println("<div class = \"content_item\"><p><br>"+ p.tanggal+ " "+p.waktu +"<br><a href=\"view_post.jsp?idPost="+p.idPost+"\"></p><h1>"+p.judul+ "</h1></a> <br><p>"+p.konten + "</div></p>");
-                        out.println("<div class=\"button_small\"> <a href=\"edit_post.jsp?idPost="+p.idPost+"\">Edit</a> </div> <div class=\"button_small\"><a href=\"soft_delete?idPost="+p.idPost+"\" onclick=\"return window.confirm('Apakah Anda yakin menghapus post ini?')\">Delete</a></div>");
-                        if(p.publish==1)
-                        {
-                            out.println("<div class=\"button_small\"> <a href=\"publish?idPost="+p.idPost+"\">UnPublish</a> </div>");
-                        }
-                        else if(p.publish==0)
-                        {
-                            out.println("<div class=\"button_small\"> <a href=\"publish?idPost="+p.idPost+"\">Publish</a> </div>");
-                        }
-                        out.println("<br><br><hr>");                                            
-                    }
-                }
-                else if(user.role.compareTo("admin")==0)
-                {
-                    out.println("<div class = \"content_item\"><p><br>"+ p.tanggal+ " "+p.waktu +"<br><a href=\"view_post.jsp?idPost="+p.idPost+"\"></p><h1>"+p.judul+ "</h1></a> <br><p>"+p.konten + "</div></p>");
-                    out.println("<div class=\"button_small\"><a href=\"edit_post.jsp?idPost="+p.idPost+"\">Edit</a> </div> <div class=\"button_small\"><a href=\"delete_post?idPost="+p.idPost+"\" onclick=\"return window.confirm('Apakah Anda yakin menghapus post ini?')\">Delete</a></div>");
-                    if(p.publish==3)
-                    {
-                        out.println("<div class=\"button_small\"> <a href=\"restore?idPost="+p.idPost+"\">Restore</a> </div>");
-                    }
-                    else
-                    {
-                        out.println("<div class=\"button_small\"> <a href=\"soft_delete?idPost="+p.idPost+"\">Soft Delete</a> </div>");
-                    }
-                    if(p.publish==1)
-                    {
-                        out.println("<div class=\"button_small\"> <a href=\"publish?idPost="+p.idPost+"\">UnPublish</a> </div>");
-                    }
-                    else if(p.publish==0)
-                    {
-                        out.println("<div class=\"button_small\"> <a href=\"publish?idPost="+p.idPost+"\">Publish</a> </div>");
-                    }
-                    
-                     out.println("<br><br><hr>");
-                    
-                }
-               
+            java.util.List<org.chamerling.heroku.service.Post> listpost = null;
+            try {
+                org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+                org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+                
+                listpost = port.listPost();
+            } catch (Exception ex) {
+                // TODO handle custom exceptions here
             }
-            
+    
+            if(listpost!=null)
+            {
+                for (org.chamerling.heroku.service.Post p:listpost)
+                {
+
+                    if(user.username.compareTo("guest")==0)
+                    {
+                        if(p.getPublish().equalsIgnoreCase("1"))
+                        {
+                            out.println("<div class = \"content_item\"><p><br>"+ p.getTanggal()+"<br><a href=\"view_post.jsp?idPost="+p.getIDPost()+"\"></p><h1>"+p.getJudul()+ "</h1></a> <br><p>"+p.getKonten() + "</div></p>");
+                            out.println("<br><br><hr>");
+                        }
+
+                    }
+                    else if(user.role.compareTo("owner")==0)
+                    {
+                        if(p.getPublish().equalsIgnoreCase("1"))
+                        {
+                            out.println("<div class = \"content_item\"><p><br>"+ p.getTanggal()+"<br><a href=\"view_post.jsp?idPost="+p.getIDPost()+"\"></p><h1>"+p.getJudul()+ "</h1></a> <br><p>"+p.getKonten() + "</div></p>");
+                            out.println("<div class=\"button_small\"> <a href=\"edit_post.jsp?idPost="+p.getIDPost()+"\">Edit</a> </div> <div class=\"button_small\"><a href=\"soft_delete?idPost="+p.getIDPost()+"\" onclick=\"return window.confirm('Apakah Anda yakin menghapus post ini?')\">Delete</a></div>");
+                            out.println("<br><br><hr>");
+                        }
+
+                    }
+                    else if(user.role.compareTo("editor")==0)
+                    {
+                        if(!p.getPublish().equalsIgnoreCase("3"))
+                        {
+                            out.println("<div class = \"content_item\">");
+                            out.println("<p><br>"+ p.getTanggal()+"<br></p>");
+                            out.println("<p><a href=\"view_post.jsp?idPost="+p.getIDPost()+"\"><h1>"+p.getJudul()+ "</h1></a></p>");
+                            out.println("<p>"+p.getKonten() + "</p></div>");
+                            out.println("<div class=\"button_small\"> <a href=\"edit_post.jsp?idPost="+p.getIDPost()+"\">Edit</a> </div> <div class=\"button_small\"><a href=\"soft_delete?idPost="+p.getIDPost()+"\" onclick=\"return window.confirm('Apakah Anda yakin menghapus post ini?')\">Delete</a></div>");
+                            if(p.getPublish().equalsIgnoreCase("1"))
+                            {
+                                out.println("<div class=\"button_small\"> <a href=\"publish?idPost="+p.getIDPost()+"\">UnPublish</a> </div>");
+                            }
+                            else if(p.getPublish().equalsIgnoreCase("0"))
+                            {
+                                out.println("<div class=\"button_small\"> <a href=\"publish?idPost="+p.getIDPost()+"\">Publish</a> </div>");
+                            }
+                            out.println("<br><br><hr>");                                            
+                        }
+                    }
+                    else if(user.role.compareTo("admin")==0)
+                    {
+                        out.println("<div class = \"content_item\"><p><br>"+ p.getTanggal()+"<br><a href=\"view_post.jsp?idPost="+p.getIDPost()+"\"></p><h1>"+p.getJudul()+ "</h1></a> <br><p>"+p.getKonten() + "</div></p>");
+                        out.println("<div class=\"button_small\"><a href=\"edit_post.jsp?idPost="+p.getIDPost()+"\">Edit</a> </div> <div class=\"button_small\"><a href=\"delete_post?idPost="+p.getIDPost()+"\" onclick=\"return window.confirm('Apakah Anda yakin menghapus post ini?')\">Delete</a></div>");
+                        if(p.getPublish().equalsIgnoreCase("3"))
+                        {
+                            out.println("<div class=\"button_small\"> <a href=\"restore?idPost="+p.getIDPost()+"\">Restore</a> </div>");
+                        }
+                        else
+                        {
+                            out.println("<div class=\"button_small\"> <a href=\"soft_delete?idPost="+p.getIDPost()+"\">Soft Delete</a> </div>");
+                        }
+                        if(p.getPublish().equalsIgnoreCase("1"))
+                        {
+                            out.println("<div class=\"button_small\"> <a href=\"publish?idPost="+p.getIDPost()+"\">UnPublish</a> </div>");
+                        }
+                        else if(p.getPublish().equalsIgnoreCase("0"))
+                        {
+                            out.println("<div class=\"button_small\"> <a href=\"publish?idPost="+p.getIDPost()+"\">Publish</a> </div>");
+                        }
+
+                         out.println("<br><br><hr>");
+                    }
+                }
+            }
         %>
         <footer>
             <a href="twitter.com/djstephendj">Stephen / 13512025</a> | <a href="twitter.com/ivanaclairine"> Ivana / 13512041</a> | <a href="twitter.com/susantigojali"> Susanti / 13512057</a> 

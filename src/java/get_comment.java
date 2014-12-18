@@ -19,22 +19,21 @@ public class get_comment extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             MySQLAccess SQL = new MySQLAccess();
-            List<Komentar> listKomentar=new ArrayList();
+            List<org.chamerling.heroku.service.Comment> listKomentar=new ArrayList();
             String a=request.getParameter("idPost");
-            System.out.println("idPost:"+a+".");
-            int idPost = Integer.parseInt(request.getParameter("idPost"));
+            String idPost = request.getParameter("idPost");
             listKomentar=SQL.getKomentar(idPost);
             String komentar="";
             int i=0;
-            
+            System.out.println(listKomentar.size());
             while(i<listKomentar.size())
             {
                 komentar=komentar+ "<li class=\"art-list-item\">"+
                                         "<div class=\"art-list-item-title-and-time\">"+
-                                            "<h2 id =\"Nama_Komentar\" class=\"art-list-title\">" + listKomentar.get(i).nama  + "</h2>"+
-                                            " <div id =\"Tanggal_Komentar\" class=\"art-list-time\">"+listKomentar.get(i).tanggal + " </div>" +
+                                            "<h2 id =\"Nama_Komentar\" class=\"art-list-title\">" + listKomentar.get(i).getNama()  + "</h2>"+
+                                            " <div id =\"Tanggal_Komentar\" class=\"art-list-time\">"+listKomentar.get(i).getTanggal() + " </div>" +
                                         "</div>"+
-                                        "<p id =\"Komentar_Komentar\"> "+ listKomentar.get(i).komentar + "</p>"+
+                                        "<p id =\"Komentar_Komentar\"> "+ listKomentar.get(i).getKonten() + "</p>"+
                                    "</li> ";
    
                 i++;

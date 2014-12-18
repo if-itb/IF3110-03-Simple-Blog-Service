@@ -38,15 +38,7 @@
                     int idx = CC.FindUserCookie(cookies);
                     if(idx<cookies.length)
                     {
-                        if(!cookies[idx].getValue().equalsIgnoreCase("guest"))
-                        {
-                            out.println("<li><a href=\"add_post.jsp\">Add Post</a></li>");
-                        }
-                        if(sql.getRolebyUsername(
-                            cookies[CC.FindUserCookie(cookies)].getValue()).equalsIgnoreCase("admin"))
-                        {
-                            out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
-                        }
+                        
                     }
                     else
                     {
@@ -71,7 +63,8 @@
                 String username = cookies[idx].getValue();
                 
                 User user = null;
-                if(idx<cookies.length)
+               
+                if(idx<cookies.length && !username.equalsIgnoreCase("guest"))
                 {
                     user=new User(username, " ", " ", sql.getRolebyUsername(username));
                 }
@@ -79,14 +72,23 @@
                 {
                     user = new User("guest"," "," ","guest");
                 }
-                if(user.username.equalsIgnoreCase("guest"))
+                if(!user.role.equalsIgnoreCase("guest") && !user.role.equalsIgnoreCase("editor"))
                 {
-                    out.println(CC.LoginForm());
+                    out.println("<li class=\"current\"><a href=\"add_post.jsp\">Add Post</a></li>");
+                }
+                if(user.role.equalsIgnoreCase("admin"))
+                {
+                    out.println("<li><a href=\"user_list.jsp\">User List</a></li>");
+                }
+                if(!user.role.equalsIgnoreCase("owner")&&!user.role.equalsIgnoreCase("admin"))
+                {
+                    response.sendRedirect("home.jsp");
                 }
                 else
                 {
                     out.println(CC.Welcome(user.username));
-                }    
+                }  
+                out.println(CC.SearchForm());                
             %>
           </ul>
         </div><!--close menubar-->	
@@ -104,13 +106,13 @@
                     <div id="contact-area">
                         <form method="post" action="add_post" onSubmit="return cekTanggal()">
                             <label for="Judul">Judul:</label>
-                            <input type="text" name="Judul" id="Judul">
+                            <input type="text" name="Judul" id="Judul" required>
 
                             <label for="Tanggal">Tanggal:</label>
-                            <input type="text" name="Tanggal" id="Tanggal" placeholder="cth : 1994-11-29">
+                            <input type="text" name="Tanggal" id="Tanggal" placeholder="cth : 1994-11-29" required>
 
                             <label for="Konten">Konten:</label><br>
-                            <textarea name="Konten" rows="20" cols="20" id="Konten"></textarea>
+                            <textarea name="Konten" rows="20" cols="20" id="Konten" required></textarea>
 
                             <input type="submit" name="submit" value="Simpan" class="submit-button">
                         </form>

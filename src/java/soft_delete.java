@@ -25,7 +25,7 @@ public class soft_delete extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             MySQLAccess SQL = new MySQLAccess();
-            int id = Integer.parseInt(request.getParameter("idPost"));
+            String id = request.getParameter("idPost");
             
             SQL.softDelete(id);
         
