@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.wbd.org/simpleblog/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="simpleblog" targetNamespace="http://www.wbd.org/simpleblog/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.wbd.org/simpleblog/">
+      <xsd:element name="addPost">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addPostResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperationResponse1">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="listPost">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="listPostResponse">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="editPost">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="editPostResponse">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deletePost">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperationResponse">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deletePostResponse2">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="publishPost">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="publishPostResponse2">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addUser">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addUserResponse2">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="listUser">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="listUserResponse2">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="listusers" type="tns:User"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="editUser">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="editUserResponse2">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteUser">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteUserResponse2">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addComment">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addCommentResponse2">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="listComment">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="listCommentResponse2">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="listComment" type="tns:Komentar"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="editComment">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="editCommentResponse2">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteComment">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteCommentResponse2">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="search">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="in" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchResponse2">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="blogpost">
+      	<xsd:attribute name="id" type="xsd:int"></xsd:attribute>
+      	<xsd:attribute name="judul" type="xsd:string"></xsd:attribute>
+      	<xsd:attribute name="konten" type="xsd:string"></xsd:attribute>
+      	<xsd:attribute name="tanggal" type="xsd:dateTime"></xsd:attribute>
+      	<xsd:attribute name="isPublished" type="xsd:boolean"></xsd:attribute>
+      </xsd:complexType>
+      <xsd:complexType name="arrayPost">
+      	<xsd:sequence>
+
+      		<xsd:element name="" type="tns:blogpost"
+      			maxOccurs="unbounded" minOccurs="0">
+      		</xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+    
+      <xsd:complexType name="User">
+      	<xsd:attribute name="id" type="xsd:int"></xsd:attribute>
+      	<xsd:attribute name="nama" type="xsd:string"></xsd:attribute>
+      	<xsd:attribute name="email" type="xsd:string"></xsd:attribute>
+      	<xsd:attribute name="role" type="xsd:string"></xsd:attribute>
+      </xsd:complexType>
+    
+      <xsd:complexType name="Komentar">
+      	<xsd:attribute name="id" type="xsd:int"></xsd:attribute>
+      	<xsd:attribute name="nama" type="xsd:string"></xsd:attribute>
+      	<xsd:attribute name="email" type="xsd:string"></xsd:attribute>
+      	<xsd:attribute name="konten" type="xsd:string"></xsd:attribute>
+      	<xsd:attribute name="tanggal" type="xsd:dateTime"></xsd:attribute>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="addPostRequest">
+
+
+  	
+  	<wsdl:part name="judul" type="xsd:string"></wsdl:part>
+  	<wsdl:part name="konten" type="xsd:string"></wsdl:part>
+  	
+  	<wsdl:part name="tanggal" type="xsd:dateTime"></wsdl:part></wsdl:message>
+  <wsdl:message name="addPostResponse">
+
+    <wsdl:part name="success" type="xsd:boolean"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NewOperationResponse1">
+  	<wsdl:part name="parameters" element="tns:NewOperationResponse1"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listPostRequest">
+
+
+
+  </wsdl:message>
+  <wsdl:message name="listPostResponse">
+
+  	<wsdl:part name="posts" type="tns:arrayPost"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editPostRequest">
+
+  	<wsdl:part name="id" type="xsd:int"></wsdl:part>
+  	<wsdl:part name="judul" type="xsd:string"></wsdl:part>
+  	<wsdl:part name="konten" type="xsd:string"></wsdl:part>
+  	<wsdl:part name="tanggal" type="xsd:dateTime"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editPostResponse">
+
+  	<wsdl:part name="success" type="xsd:boolean"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deletePostRequest">
+
+  	<wsdl:part name="id" type="xsd:int"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NewOperationResponse">
+  	<wsdl:part name="parameters" element="tns:NewOperationResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deletePostResponse2">
+
+  	<wsdl:part name="success" type="xsd:boolean"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishPostRequest">
+
+  	<wsdl:part name="id" type="xsd:int"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishPostResponse2">
+
+  	<wsdl:part name="success" type="xsd:boolean"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addUserRequest">
+
+
+  	<wsdl:part name="nama" type="xsd:string"></wsdl:part>
+  	<wsdl:part name="email" type="xsd:string"></wsdl:part>
+  	<wsdl:part name="role" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addUserResponse2">
+
+        <wsdl:part name="success" type="xsd:boolean"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listUserRequest">
+
+  </wsdl:message>
+  <wsdl:message name="listUserResponse2">
+  	<wsdl:part name="users" element="tns:listUserResponse2"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editUserRequest">
+
+  	<wsdl:part name="id" type="xsd:int"></wsdl:part>
+  	<wsdl:part name="nama" type="xsd:string"></wsdl:part>
+  	<wsdl:part name="role" type="xsd:string"></wsdl:part>
+  	<wsdl:part name="email" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editUserResponse2">
+  	<wsdl:part name="success" type="xsd:boolean"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteUserRequest">
+  	<wsdl:part name="id" type="xsd:int"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteUserResponse2">
+  	<wsdl:part name="success" type="xsd:boolean"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addCommentRequest">
+  	<wsdl:part name="nama" type="xsd:string"></wsdl:part>
+  	<wsdl:part name="email" type="xsd:string"></wsdl:part>
+  	<wsdl:part name="kontent" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addCommentResponse2">
+  	<wsdl:part name="success" type="xsd:boolean"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listCommentRequest">
+
+  </wsdl:message>
+  <wsdl:message name="listCommentResponse2">
+  	<wsdl:part name="comments" element="tns:listCommentResponse2"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editCommentRequest">
+  	<wsdl:part name="id" type="xsd:int"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="editCommentResponse2">
+  	<wsdl:part name="parameters" element="tns:editCommentResponse2"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteCommentRequest">
+  	<wsdl:part name="id" type="xsd:int"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteCommentResponse2">
+  	<wsdl:part name="success" type="xsd:boolean"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="searchRequest">
+  	<wsdl:part name="query" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="searchResponse2">
+  	<wsdl:part name="result" type="tns:arrayPost"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="simpleblog">
+    <wsdl:operation name="addPost">
+      <wsdl:input message="tns:addPostRequest"/>
+      <wsdl:output message="tns:addPostResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="listPost">
+    	<wsdl:input message="tns:listPostRequest"></wsdl:input>
+    	<wsdl:output message="tns:listPostResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editPost">
+    	<wsdl:input message="tns:editPostRequest"></wsdl:input>
+    	<wsdl:output message="tns:editPostResponse"></wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="deletePost">
+    	<wsdl:input message="tns:deletePostRequest"></wsdl:input>
+    	<wsdl:output message="tns:deletePostResponse2"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="publishPost">
+    	<wsdl:input message="tns:publishPostRequest"></wsdl:input>
+    	<wsdl:output message="tns:publishPostResponse2"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addUser">
+    	<wsdl:input message="tns:addUserRequest"></wsdl:input>
+    	<wsdl:output message="tns:addUserResponse2"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listUser">
+    	<wsdl:input message="tns:listUserRequest"></wsdl:input>
+    	<wsdl:output message="tns:listUserResponse2"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="editUser">
+    	<wsdl:input message="tns:editUserRequest"></wsdl:input>
+    	<wsdl:output message="tns:editUserResponse2"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteUser">
+    	<wsdl:input message="tns:deleteUserRequest"></wsdl:input>
+    	<wsdl:output message="tns:deleteUserResponse2"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addComment">
+    	<wsdl:input message="tns:addCommentRequest"></wsdl:input>
+    	<wsdl:output message="tns:addCommentResponse2"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listComment">
+    	<wsdl:input message="tns:listCommentRequest"></wsdl:input>
+    	<wsdl:output message="tns:listCommentResponse2"></wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="deleteComment">
+    	<wsdl:input message="tns:deleteCommentRequest"></wsdl:input>
+    	<wsdl:output message="tns:deleteCommentResponse2"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="search">
+    	<wsdl:input message="tns:searchRequest"></wsdl:input>
+    	<wsdl:output message="tns:searchResponse2"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="simpleblogSOAP" type="tns:simpleblog">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addPost">
+      <soap:operation soapAction="http://www.wbd.org/simpleblog/addPost"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="simpleblog">
+    <wsdl:port binding="tns:simpleblogSOAP" name="simpleblogSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

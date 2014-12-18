@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="HelloServiceImplService" targetNamespace="http://service.heroku.chamerling.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.heroku.chamerling.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://service.heroku.chamerling.org/" version="1.0" xmlns:tns="http://service.heroku.chamerling.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="sayHi" type="tns:sayHi"/>
+<xs:element name="sayHiResponse" type="tns:sayHiResponse"/>
+<xs:complexType name="sayHi">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="sayHiResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="sayHi">
+    <wsdl:part element="tns:sayHi" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHiResponse">
+    <wsdl:part element="tns:sayHiResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="HelloService">
+    <wsdl:operation name="sayHi">
+      <wsdl:input message="tns:sayHi" name="sayHi">
+    </wsdl:input>
+      <wsdl:output message="tns:sayHiResponse" name="sayHiResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HelloServiceImplServiceSoapBinding" type="tns:HelloService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sayHi">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sayHi">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sayHiResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HelloServiceImplService">
+    <wsdl:port binding="tns:HelloServiceImplServiceSoapBinding" name="HelloServiceImplPort">
+      <soap:address location="http://pacific-fjord-2577.herokuapp.com/HelloService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
