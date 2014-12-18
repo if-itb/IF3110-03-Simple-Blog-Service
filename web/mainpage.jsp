@@ -5,6 +5,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@page import="com.github.fawwaz.heroku.service.*" %>
 
 <html>
 <head>
@@ -49,6 +50,7 @@
     <%! String role;
         String id_user;
         String username;
+        ApiImplService api;
     %>
 <% TimeConverter tc = new TimeConverter(); 
     
@@ -95,6 +97,9 @@
    /*role = session.getAttribute("role").toString();
    username = session.getAttribute("username").toString();
     id_user = session.getAttribute("id_user").toString();*/
+    
+    //ngambil data
+    List<Post> posts;
 %>
 
 
@@ -130,7 +135,7 @@ SELECT * FROM `tucilDB_13511097`.`listpost` where `published`='t' ORDER BY `date
           <ul class="art-list-body">
               <c:forEach var="row" items="${result.rows}">
                 
-                <c:set var="visible" value="${row.published}"/>
+              <c:set var="visible" value="${row.published}"/>
                   <%! String vi; %>
                   <%  vi =  pageContext.getAttribute("visible").toString(); %>
 
@@ -140,7 +145,7 @@ SELECT * FROM `tucilDB_13511097`.`listpost` where `published`='t' ORDER BY `date
                     <%  mi =  pageContext.getAttribute("myId").toString(); %>
                   <c:set var="myTest" value="${row.date}"/>
                     <%! String d; %>
-                    <%  d =  pageContext.getAttribute("myTest").toString(); %>
+                    <%  d =  pageContext.getAttribute("myTest").toString(); %> 
                     <a href="mainpage.jsp"></a>
                   
                 <li class="art-list-item">
@@ -208,7 +213,7 @@ SELECT * FROM `tucilDB_13511097`.`listpost` where `published`='t' ORDER BY `date
 	var conf = confirm("Apakah Anda yakin menghapus post ini?");
 	
 	if(conf==true){
-		location.href = 'AddPost.jsp?mode=2&id='+id;
+		location.href = 'AddPost.jsp?mode=2&id_post='+id;
 	}
 }
       

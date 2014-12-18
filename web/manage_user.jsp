@@ -10,6 +10,9 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@page import="com.github.fawwaz.heroku.service.*" %>
+
+<%! Api api = new ApiImplService().getApiImplPort();%>
 
 <%
     String role =StringUtils.isNullOrEmpty(session.getAttribute("role").toString()) ? "" : session.getAttribute("role").toString();
@@ -94,7 +97,7 @@
 </html>
 <%
     }else if(action.equals("update")){
-        String userid = request.getParameter("userid");
+        /*String userid = request.getParameter("userid");
         Class.forName("com.mysql.jdbc.Driver");
         String url = "jdbc:mysql://localhost/tucildb_13511097";
         Connection con = DriverManager.getConnection(url,"root", "");
@@ -102,9 +105,11 @@
         ResultSet rs;
         rs = st.executeQuery("select * from user where id='" + userid + "'");
         
-        if(rs.next()){
-            
-            
+        if(rs.next()){*/
+        List<User> users = api.getAllUser();
+       
+        for(User user : users){
+            if (user.getUsername().equals(request.getParameter("userid"))){
         %>
 <!DOCTYPE html>
 <head>
@@ -157,19 +162,21 @@
         <div class="art-body-inner">
         <h4>Edit USer</h4>
         <form action="process_manage_user.jsp">
-            <p>Username :<input type="text" name="username" value="<%out.print(rs.getString("username"));%>"/></p>
-            <p>Password : <input type="password" id="password" name = "password" value="<%out.print(rs.getString("password"));%>"/></p>
-             <p>Pass(re-entry) : <input type="password" id="re-password" onkeyup ="cekPass()"/></p>
-             <p>Email : <input type="text" id="email" name="email" onkeyup ="checkEmail()" value="<%out.print(rs.getString("email"));%>"/></p>
-             <div id="err"></div>
-            
-            <p>Role: 
-                <select name="role">    
-                    <option value="owner" <% out.print((rs.getString("role").equals("owner") ? "Selected" : ""));%>>owner</option>
-                    <option value="admin" <% out.print((rs.getString("role").equals("admin") ? "Selected" : ""));%>>admin</option>
-                    <option value="editor" <% out.print((rs.getString("role").equals("editor") ? "Selected" : ""));%>>editor</option>
+            <%
+                out.println(" <p>Username :<input type='text' name='username' value='"+user.getUsername()+"' /></p>");
+                out.println("<p>Password : <input type='password' id='password' name = 'password' value='"+user.getPassword()+"'/></p>");
+                out.println("  <p>Pass(re-entry) : <input type='password' id='re-password' onkeyup ='cekPass()'/></p>");
+                out.println("<p>Email : <input type='text' id='email' name='email' onkeyup ='checkEmail()' value='"+user.getEmail()+"'/></p>");
+                out.println("<div id='err'></div>");
+                out.println("<p>Role:");
+                out.println(" <select name='role'>");
+                
+            %>
+                    <option value="owner" <% out.print((user.getRole().equals("owner") ? "Selected" : ""));%>>owner</option>
+                    <option value="admin" <% out.print((user.getRole().equals("admin") ? "Selected" : ""));%>>admin</option>
+                    <option value="editor" <% out.print((user.getRole().equals("editor") ? "Selected" : ""));%>>editor</option>
                 </select></p>
-            <input type="hidden" name="userid" value="<%out.print(rs.getString("id"));%>">
+            <input type="hidden" name="userid" value="<%out.print(user.getUsername());%>">
             <input type="hidden" name="action" value="update">
             <p><input type="submit" id = "submit" disabled="true" value="Update !"></p>
             
@@ -179,8 +186,7 @@
     </body>
 </html>
 <%    
-        }else{
-            out.print("Parameter id tidak Id Tidak Ditemukan....");
+             }
         }
     }else{
         %>
@@ -256,22 +262,29 @@
 
         <table border="1px">
             <tr>
-                <td>User id</td>
                 <td>Username</td>
                 <td>Password</td>
+                <td>Email</td>
                 <td>Role</td>
                 <td colspan="2">Action</td>
             </tr>
-        <c:forEach var="row" items="${result.rows}">
-            <tr>
-                <td><c:out value="${row.id}"/></td>
-                <td><c:out value="${row.username}"/></td>
-                <td><c:out value="${row.password}"/></td>
-                <td><c:out value="${row.role}"/></td>
-                <td><a href="manage_user.jsp?action=update&userid=<c:out value="${row.id}"/>">Edit</a></td>
-                <td><a href="process_manage_user.jsp?action=delete&userid=<c:out value="${row.id}"/>">Delete</a></td>
-            </tr>
-        </c:forEach>
+            <%
+                List<User> users = api.getAllUser();
+            
+            
+            for(User user : users){
+               out.print("<tr>");
+                out.print("<td>"+user.getUsername()+ "</td>");
+                out.print("<td>"+user.getPassword()+ "</td>");
+                out.print("<td>"+user.getEmail()+ "</td>");
+                out.print("<td>"+user.getRole()+ "</td>");
+                out.print("<td><a href='manage_user.jsp?action=update&userid="+user.getUsername()+"'>Edit</a></td>");
+                out.print("<td><a href='process_manage_user.jsp?action=delete&userid="+user.getUsername()+"'>Delete</a></td>");
+                out.print("</tr>");
+            }
+                
+            %>
+       
         </table>    
         </div>
     </div>

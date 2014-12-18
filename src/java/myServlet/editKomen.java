@@ -57,6 +57,9 @@ public class editKomen extends HttpServlet {
             throws ServletException, IOException {
         
          String id = request.getParameter("id");
+         response.setContentType("text/plain");
+         response.setCharacterEncoding("UTF-8");
+
          
         try {
                     conn = DriverManager.getConnection(DB_URL,USER, PASS);

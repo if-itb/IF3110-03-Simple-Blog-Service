@@ -20,11 +20,11 @@
             Api api = new ApiImplService().getApiImplPort();
             // INSERT USER
             //out.println(api.createUser("anumu", "anumu@gemail.com", "ppassword", "owner"));
-            
             //out.println(api.createPost("Judul", "Deadline ne opo", "12-12-2014", "admin"));
             
             // LIST USER
             
+            /*
             List<User> users = api.getAllUser();
             
             out.print("<ol>");
@@ -37,7 +37,7 @@
                 out.print("</li>");
             }
             out.print("</ol>");
-            
+            */
             
             // UPDATE USER
             
