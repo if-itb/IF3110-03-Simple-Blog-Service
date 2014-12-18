@@ -46,8 +46,8 @@
                     <li><a href="index.xhtml">Logout</a></li>
                     <h:form>
                         
-                        <h:inputText binding="#{q}"/><br/>
-                        <h:commandButton value ="Search"  action="#{manager.search(q)}"/>
+                        <h:inputText value="#{manager.searchQuerry}"/><br/>
+                        <h:commandButton value ="Search"  action="#{manager.search()}"/>
                     </h:form>
                 </ul>
             </nav>

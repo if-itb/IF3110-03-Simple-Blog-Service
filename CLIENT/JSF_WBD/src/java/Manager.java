@@ -85,9 +85,9 @@ public class Manager {
         this.searchQuerry = searchQuerry;
     }
     
-    public void search(String q){
+    public void search(){
         try {
-            setSearchQuerry(q);
+            
             FacesContext context = FacesContext.getCurrentInstance();
             HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
             response.sendRedirect("searchResult.xhtml");
@@ -95,8 +95,8 @@ public class Manager {
             Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public List<org.chamerling.heroku.service.Post> listPostSearch(String q){
-        return api.search(q);
+    public List<org.chamerling.heroku.service.Post> getListPostSearch(){
+        return api.search(searchQuerry);
     }
     
 }

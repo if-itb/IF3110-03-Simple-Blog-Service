@@ -46,8 +46,8 @@
                     <li><a href="index.xhtml">Logout</a></li>
                     <h:form>
                         
-                        <h:inputText binding="#{q}"/><br/>
-                        <h:commandButton value ="Search"  action="#{manager.search(q)}"/>
+                        <h:inputText value="#{manager.searchQuerry}"/><br/>
+                        <h:commandButton value ="Search"  action="#{manager.search()}"/>
                     </h:form>
                 </ul>
             </nav>
@@ -56,7 +56,7 @@
                 <div class="posts">
                     <nav class="art-list">
                       <ul class="art-list-body">          
-                          <ui:repeat var="o" value="#{manager.listPostSearch(q)}" varStatus="status">
+                          <ui:repeat var="o" value="#{manager.listPostSearch}" varStatus="status">
                             <li class="art-list-item">
                                 <div class="art-list-item-title-and-time">
                                     <h:form>
