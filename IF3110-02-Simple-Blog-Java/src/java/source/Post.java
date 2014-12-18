@@ -243,40 +243,42 @@ public class Post {
             }
             else {
                 for (org.chamerling.heroku.service.Post P : L) { //apabila result masih ada
-                    shortened = false;
-                    //inisialisasi variabel
-                    idPost = P.getIdFirebasePost();
-                    judulPost = P.getJudulPost();
-                    kontenPost = P.getKontenPost();
-                    publishStatus = P.getPublishStatus() + "";
-                    if (kontenPost.length() > 100) {
-                        kontenPost = kontenPost.substring(0, 100); //pemotongan teks
-                        shortened = true;
-                    }
-                    tanggalPost = P.getTanggalPost();
-                    toHTML +=    
-                            "<li class=\"art-list-item\">\n" +
-                            "<div class=\"art-list-item-title-and-time\">\n" +
-                            "<h2 class=\"art-list-title\"><a href=\"posts/post.jsp?id=" + idPost + "\"> " + judulPost + " </a>\n" +
-                            "<div class=\"art-list-time\">" + tanggalPost + "</div>\n" +
-                            "<div class=\"art-list-time\"><span style=\"color:#F40034;\">&#10029;</span> Featured</div>\n" +
-                            "</div>\n" +
-                            "<p> " + kontenPost + "\n" + "</p>\n";                            
-                    if (shortened) //dipotong
-                        toHTML += "... <a href=\"posts/post.jsp?id=" + idPost + "\">Read More</a><br/>\n";
-                    //edit post: untuk semua kecuali guest
-                    if (cookieOn) {
-                        if (isAdmin() || isEditor() || isOwner()) {
-                            toHTML +=  "<p>\n" +
-                            "<a href=\"posts/edit_post.jsp?id=" + idPost + 
-                            "\">Edit</a>";
+                    if (P.getPublishStatus() == 1) {
+                        shortened = false;
+                        //inisialisasi variabel
+                        idPost = P.getIdFirebasePost();
+                        judulPost = P.getJudulPost();
+                        kontenPost = P.getKontenPost();
+                        publishStatus = P.getPublishStatus() + "";
+                        if (kontenPost.length() > 100) {
+                            kontenPost = kontenPost.substring(0, 100); //pemotongan teks
+                            shortened = true;
                         }
-                        //delete post: untuk admin dan owner
-                        if (isAdmin() || isOwner()) {    
-                            toHTML += " | <a href=\"posts/delete_post.jsp?id=" + idPost + 
-                            "\" onclick='return confirmDelete()'>Hapus</a>\n" +
-                            "</p>\n" +
-                            "</li>";
+                        tanggalPost = P.getTanggalPost();
+                        toHTML +=    
+                                "<li class=\"art-list-item\">\n" +
+                                "<div class=\"art-list-item-title-and-time\">\n" +
+                                "<h2 class=\"art-list-title\"><a href=\"posts/post.jsp?id=" + idPost + "\"> " + judulPost + " </a>\n" +
+                                "<div class=\"art-list-time\">" + tanggalPost + "</div>\n" +
+                                "<div class=\"art-list-time\"><span style=\"color:#F40034;\">&#10029;</span> Featured</div>\n" +
+                                "</div>\n" +
+                                "<p> " + kontenPost + "\n" + "</p>\n";                            
+                        if (shortened) //dipotong
+                            toHTML += "... <a href=\"posts/post.jsp?id=" + idPost + "\">Read More</a><br/>\n";
+                        //edit post: untuk semua kecuali guest
+                        if (cookieOn) {
+                            if (isAdmin() || isEditor() || isOwner()) {
+                                toHTML +=  "<p>\n" +
+                                "<a href=\"posts/edit_post.jsp?id=" + idPost + 
+                                "\">Edit</a>";
+                            }
+                            //delete post: untuk admin dan owner
+                            if (isAdmin() || isOwner()) {    
+                                toHTML += " | <a href=\"posts/delete_post.jsp?id=" + idPost + 
+                                "\" onclick='return confirmDelete()'>Hapus</a>\n" +
+                                "</p>\n" +
+                                "</li>";
+                            }
                         }
                     }
                 }
