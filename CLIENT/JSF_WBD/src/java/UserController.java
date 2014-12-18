@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
@@ -18,6 +19,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,13 +37,13 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
     
     
-    
+    HelloService api = null;
     Connection con = null;
     Statement stmt = null;
    
     private User currentUser = new User();
-    public UserController() throws ClassNotFoundException, SQLException {
-        SetupDB();
+    public UserController(){
+       api = new HelloServiceImplService().getHelloServiceImplPort();
     }
     
     //Cookie
@@ -49,6 +52,7 @@ public class UserController {
   
     
   public User getUserByUsername(String username) {
+      
         try {
             String q = "SELECT * FROM `user` WHERE `username` = ?";
             PreparedStatement ps = (PreparedStatement) con.prepareStatement(q);
@@ -70,72 +74,64 @@ public class UserController {
     
     
     
-    private void SetupDB() throws ClassNotFoundException, SQLException{
-        String host = "jdbc:mysql://localhost:3306/simple_blog_java?zeroDateTimeBehavior=convertToNull";
-        String user = "root";
-        String pwd = "";
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        con = (Connection) DriverManager.getConnection(host, user, pwd);
-        stmt = (Statement) con.createStatement();        
-    }
+    
     
     public void addUser(String usern, String passw, String mail, String rol) throws SQLException, IOException {
-        String a = "INSERT INTO tb_user (username,password,email,role) VALUES ('"+usern+"','"+passw+"','"+mail+"','"+rol+"')";
-        PreparedStatement ps = (PreparedStatement) con.prepareStatement(a);
-        int j = ps.executeUpdate();
+        
+        api.addUser(usern, mail, rol, passw);
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
         response.sendRedirect("manageuser.xhtml");
+        
     }
     
-    public void deleteUser(int id) throws SQLException, IOException {
-        //System.out.println("disini");
-        String q = "DELETE FROM tb_user WHERE userid = "+id+";";
-        PreparedStatement ps = (PreparedStatement) con.prepareStatement(q);
-        int i = ps.executeUpdate(q);    
+    public void deleteUser(String id) throws SQLException, IOException {
+        
+        api.deleteUser(id);
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
         response.sendRedirect("manageuser.xhtml");
+        
+        
     }
     
     public void editUser(String id, String usern, String passw, String mail, String rol) throws SQLException, IOException{
-        getCurrentUser().setId(id);
-        getCurrentUser().setUsername(usern);
-        getCurrentUser().setPassword(passw);
-        getCurrentUser().setEmail(mail);
-        getCurrentUser().setRole(rol);
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-        response.sendRedirect("edit_user.xhtml");
-    }
-    
-    public void updateUser(int id, String usern, String passw, String mail, String rol) throws SQLException, IOException{
-        String a = "UPDATE tb_user SET username = '"+usern+"', password = '"+passw+"', email = '"+mail+"', role = '"+rol+"' WHERE userid = "+id+";";
-        PreparedStatement ps = (PreparedStatement) con.prepareStatement(a);
-        int j = ps.executeUpdate();
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-        response.sendRedirect("manageuser.xhtml");
-    }
-    
-    public ArrayList<User> getListUser() throws SQLException {
-        ArrayList<User> result = new ArrayList<>();
-        String q = "SELECT * FROM tb_user;";
-        ResultSet rs = stmt.executeQuery(q);
-        while (rs.next()) {
-            User mUser = new User();
-            mUser.setId(rs.getString("userid"));
-            mUser.setUsername(rs.getString("username"));
-            mUser.setPassword(rs.getString("password"));
-            mUser.setEmail(rs.getString("email"));
-            mUser.setRole(rs.getString("role"));
-            result.add(mUser);
+        
+        
+        if(true){
+            
+            currentUser.setId(id);
+            currentUser.setEmail(mail);
+            currentUser.setPassword(passw);
+            currentUser.setRole(rol);
+            currentUser.setUsername(usern);
+            
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            response.sendRedirect("edit_user.xhtml");
         }
-        return result;
+        
+        
+        
+        
+    }
+    
+    public void updateUser(String id, String usern, String passw, String mail, String rol){
+        
+        
+        try {
+            api.editUser(id, usern, rol, mail, passw);
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            response.sendRedirect("manageuser.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public List<org.chamerling.heroku.service.User> getListUser() throws SQLException {
+
+        return api.listUser();
     }
 
     /**
