@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    #{dbconnector.verify(user, cookiehandler)}
+    #{post.copy(dbconnector.selectPost(param['pid']))}
+    <h:head>
+        <title>#{post.judul}</title>
+        <meta name="viewport" content="width=device-width"/>
+        <link rel ="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/style.css" />
+    </h:head>
+    
+    <h:body>
+        <ui:include src="Topbar.xhtml" />
+        <div id="container">
+            <div id="body">
+                <div id="postContainer">
+                    <h1>#{post.judul}</h1>
+                    #{post.tanggal}
+                    
+                    <p><h:outputText value="#{post.getKontenHTML()}" escape="false" /></p>
+                    <div class="buttons">
+                        <!-- Edit Post -->
+                        <a style="display:#{post.editButton(user.type)}" href="Edit_Post.xhtml?pid=#{post.id_post}">Edit Post</a>
+                        <!-- Delete Post -->
+                        <a style="display:#{post.deleteButton(user.type)}" href="" id="del#{post.id_post}" class="deletebutton">Delete</a>
+                        <!-- Publish Post -->
+                        <a style="display:#{post.publishButton(user.type)}" href="" id="pub#{post.id_post}" class="publishbutton">Publish</a>
+                    </div>
+                    <hr/>
+                    <h2>Berikan Komentar</h2>
+                    <h:form id="inputankomentar">
+                        #{comment.setPost_id(param['pid'])}
+                        #{comment.init(user)}
+                        <h:inputText a:placeholder="Nama" id="nama" value="#{comment.nama}"/><br/>
+                        <h:inputText a:placeholder="Email" id="email" value="#{comment.email}"/><br/>
+                        <h:inputTextarea a:placeholder="Komentar" id="komentar" value="#{comment.komentar}"/><br/>
+                        <h:commandButton class="button" id="ajaxButton" onclick="return validateComment()" value="Post Comment">
+                            <f:ajax execute="inputankomentar" render="komenContainer komentar" listener="#{dbconnector.insertComment(user, comment)}"/>
+                        </h:commandButton>
+                        <br/>
+                        <br/>
+                        <h:panelGroup layout="block" id="komenContainer">
+                        <table id="commentStructure">
+                        <ui:repeat var= "item" value="#{dbconnector.listComment(post.id_post)}">
+                            <tr class="oneComment">
+                                <td>
+                                    <h:outputText value="#{item.nama}" escape="false" /><br/>
+                                    <h:outputText value="#{item.email}" escape="false" /><br/>
+                                    <h:outputText value="#{item.timestamp}" escape="false" /><br/>
+                                </td>
+                                <td>
+                                    <h:outputText value="#{item.komentar}" escape="false" /><br/>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                        </table>
+                        </h:panelGroup>
+                    </h:form>
+                </div>
+            </div>
+            <div id="footer">
+                <div id="idlist">
+                    <div class="identity left">Andre Susanto - 13512028</div>
+                    <div class="identity">Jeffrey Lingga - 13512059</div>
+                    <div class="identity right">Adhika Sigit - 13512060</div>
+                </div>
+            </div>
+        </div>
+        <ui:include src="logmodals.xhtml" />
+        
+    </h:body>
+    <script src="#{facesContext.externalContext.requestContextPath}/resources/js/validator.js" type="text/javascript"></script>
+    <script src="#{facesContext.externalContext.requestContextPath}/resources/js/deletor.js" type="text/javascript"></script>
+</html>

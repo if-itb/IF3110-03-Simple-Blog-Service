@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/Andre/Desktop/simpleblog.wsdl" uri="src/conf/xml-resources/web-services/SimpleBlog/wsdl/simpleblog.wsdl"/>
+    <system systemId="http://localhost:8080/EngineWEB/simpleblogws?wsdl" uri="src/conf/xml-resources/web-service-references/simpleblogws/wsdl/localhost_8080/EngineWEB/simpleblogws.wsdl"/>
+    <system systemId="http://localhost:8080/EngineWEB/simpleblogws?xsd=1" uri="src/conf/xml-resources/web-service-references/simpleblogws/wsdl/localhost_8080/EngineWEB/simpleblogws.xsd_1.xsd"/>
+</catalog>

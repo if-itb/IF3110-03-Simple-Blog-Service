@@ -1,0 +1,21 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:panelGroup layout="block" id="menubar" class="bluegrad">
+        <form id="search" action="Search_Results.xhtml">
+            <h:inputText a:placeholder="Search..." id="query"/>
+        </form>
+        <div id="menulist">
+            <ul>
+                <li><a href="#{facesContext.externalContext.requestContextPath}/">Home</a></li>
+                <li style="display:#{user.addButton()}"><a href="Add_Post.xhtml">Add Post +</a></li>
+                <li style="display:#{user.logInButton()}"><a href="#loginModal">Login</a></li>
+                <li style="display:#{user.logOutButton()}"><a href="#logoutModal">Logout</a></li>
+                <li><a href=""><h:outputText value="#{user.name}"/></a></li>
+            </ul>
+        </div>
+    </h:panelGroup>
+</ui:composition>

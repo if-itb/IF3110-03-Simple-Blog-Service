@@ -6,17 +6,29 @@ Tugas 2 IF3110.
 
 ## Deskripsi
 
-Buatlah Sebuah Web Service untuk menangani mekanisme Simple Blog dengan WSDL yang telah disediakan.
+Gunakan template ini untuk membuat sebuah blog sederhana dengan menggunakan bahasa pemrograman PHP.
 
 ## Spesifikasi
 
 Spesifikasi untuk Tugas II IF3110 dapat diakses pada pranala berikut:
 
-https://www.dropbox.com/sh/7ipifnipiyjcj2c/AACy1g7cGJYUZpbp2-s5x2p0a?dl=0
+https://www.dropbox.com/sh/ig1hf108ad9fqxi/AAA2PMjPFICSFo3ypdrHl39La?dl=0
 
 ## Deliverable
 
-Fork Repository ini dengan Organization dari Tugas sebelumnya dan Pull Request untuk menandakan kalian telah selesai mengerjakan tugas ini.
+Tiap-tiap Kelompok Membuat Organizationnya masing-masing, dengan langkah:
+
+1. Klik tanda Tambah disamping username pada Github, Pilih Create New Organization
+
+2. Buat Organisasi dengan Nama : IF3110-II-Nomor_Kelompok . Nomor Kelompok dapat diakses [disini](https://docs.google.com/spreadsheets/d/1Y-FGJ_feIVYNRv-o0ycBXyfAiKMFXKA17cvw3Mhjd1A/edit?usp=sharing)
+
+3. Masukkan email address salah satu anggota untuk billing email ( bebas ).
+
+4. Undang anggota kelompok untuk menjadi anggota Organisasi.
+
+5. Lakukan Fork Repository ini ke Organisasi yang baru dibentuk
+
+6. Setelah selesai mengerjakan, lakukan Pull Request.
 
 ## Lisensi
 
