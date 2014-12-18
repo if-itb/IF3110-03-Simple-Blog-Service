@@ -1,1 +1,0 @@
-wsimport -keep -d nbproject -s src/java http://immense-headland-7856.herokuapp.com/HelloService?wsdl
