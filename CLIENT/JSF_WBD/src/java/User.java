@@ -1,34 +1,22 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-import java.io.IOException;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ApplicationScoped;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
+//import javax.faces.bean.ManagedBean;
+//import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author kanya
  */
-@ManagedBean(name="user", eager = true)
-@SessionScoped
+//@ManagedBean(name="user", eager = true)
+//@SessionScoped
 public class User {
     
     // Constants: roles
@@ -94,7 +82,7 @@ public class User {
     }
     
     // Attrbutes
-    private int id;
+    private String id;
     private String username;
     private String password;
     private String email;
@@ -103,7 +91,7 @@ public class User {
     // Methods
     
     public User() {
-        id = 0;
+        id = "";
         username = "Guest";
         password = "";
         email = "";
@@ -111,7 +99,7 @@ public class User {
     }
     
     
-    public User(int u_id, String u_username, String u_passw, String u_email, String u_role) {
+    public User(String u_id, String u_username, String u_passw, String u_email, String u_role) {
         id = u_id;
         username = u_username;
         password = u_passw;
@@ -121,14 +109,14 @@ public class User {
 
     public User(ResultSet result) {
         try {
-            id = result.getInt("id");
+            id = result.getString("id");
             username = result.getString("username");
             password = result.getString("password");
             email = result.getString("email");
             role = result.getString("role");
         }
         catch (SQLException e) {
-            id = 0;
+            id = "";
             role = User.ROLEGUEST;
             username = "Guest";
             email = password = "";
@@ -137,14 +125,14 @@ public class User {
     /**
      * @return the id
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

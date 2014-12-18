@@ -102,7 +102,7 @@ public class UserController {
         response.sendRedirect("manageuser.xhtml");
     }
     
-    public void editUser(int id, String usern, String passw, String mail, String rol) throws SQLException, IOException{
+    public void editUser(String id, String usern, String passw, String mail, String rol) throws SQLException, IOException{
         getCurrentUser().setId(id);
         getCurrentUser().setUsername(usern);
         getCurrentUser().setPassword(passw);
@@ -128,7 +128,7 @@ public class UserController {
         ResultSet rs = stmt.executeQuery(q);
         while (rs.next()) {
             User mUser = new User();
-            mUser.setId(rs.getInt("userid"));
+            mUser.setId(rs.getString("userid"));
             mUser.setUsername(rs.getString("username"));
             mUser.setPassword(rs.getString("password"));
             mUser.setEmail(rs.getString("email"));

@@ -10,14 +10,15 @@ import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 /**
  *
@@ -52,36 +53,40 @@ public class Manager {
         con = (Connection) DriverManager.getConnection(host, user, pwd);
         stmt = (Statement) con.createStatement();        
     }
-    public ArrayList<Post> getPublishedPosts() throws SQLException{
-        ArrayList<Post> result;
-        result = new ArrayList<>();
-        String q = "SELECT * FROM tb_post WHERE isPublished = true ORDER BY pdate DESC;";
-        ResultSet rs = stmt.executeQuery(q);
-        while (rs.next()) {
-            Post mPost = new Post();
-            mPost.Judul = rs.getString("ptitle");
-            mPost.Konten = rs.getString("pcontent");
-            mPost.Pid = rs.getInt("pid");
-            mPost.Tanggal = rs.getDate("pdate");
-            result.add(mPost);
-        }
-        return result;
+    public List<org.chamerling.heroku.service.Post> getPublishedPosts() throws SQLException{
+        HelloService api = new HelloServiceImplService().getHelloServiceImplPort();
+        return api.listPublishedPost();
+//        ArrayList<Post> result;
+//        result = new ArrayList<>();
+//        String q = "SELECT * FROM tb_post WHERE isPublished = true ORDER BY pdate DESC;";
+//        ResultSet rs = stmt.executeQuery(q);
+//        while (rs.next()) {
+//            Post mPost = new Post();
+//            mPost.Judul = rs.getString("ptitle");
+//            mPost.Konten = rs.getString("pcontent");
+//            mPost.Pid = rs.getInt("pid");
+//            mPost.Tanggal = rs.getDate("pdate");
+//            result.add(mPost);
+//        }
+//        return result;
     }
-    public ArrayList<Post> getUnPublishedPosts() throws SQLException{
-    ArrayList<Post> result;
-    result = new ArrayList<>();
-    String q = "SELECT * FROM tb_post WHERE isPublished = false;";
-    ResultSet rs = stmt.executeQuery(q);
-    while (rs.next()) {
-        Post mPost = new Post();
-        mPost.Judul = rs.getString("ptitle");
-        mPost.Konten = rs.getString("pcontent");
-        mPost.Pid = rs.getInt("pid");
-        mPost.Tanggal = rs.getDate("pdate");
-    
-        result.add(mPost);
-        }
-        return result;
+    public List<org.chamerling.heroku.service.Post> getUnPublishedPosts() throws SQLException{
+        HelloService api = new HelloServiceImplService().getHelloServiceImplPort();
+        return api.listUnpublishedPost();
+//    ArrayList<Post> result;
+//    result = new ArrayList<>();
+//    String q = "SELECT * FROM tb_post WHERE isPublished = false;";
+//    ResultSet rs = stmt.executeQuery(q);
+//    while (rs.next()) {
+//        Post mPost = new Post();
+//        mPost.Judul = rs.getString("ptitle");
+//        mPost.Konten = rs.getString("pcontent");
+//        mPost.Pid = rs.getString("pid");
+//        mPost.Tanggal = rs.getString("pdate");
+//    
+//        result.add(mPost);
+//        }
+//        return result;
     }
     public Post getPost(int pid) throws SQLException{
         String q = "SELECT * FROM tb_post WHERE pid="+pid+";";
@@ -89,8 +94,8 @@ public class Manager {
         Post mPost = new Post();
         mPost.Judul = rs.getString("ptitle");
         mPost.Konten = rs.getString("pcontent");
-        mPost.Pid = rs.getInt("pid");
-        mPost.Tanggal = rs.getDate("pdate");
+        mPost.Pid = rs.getString("pid");
+        mPost.Tanggal = rs.getString("pdate");
         return mPost;
     }
     public void deletePost(int pid) throws SQLException, IOException{

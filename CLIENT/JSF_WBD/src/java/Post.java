@@ -1,25 +1,27 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.sql.Date;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+//import java.sql.Date;
+//import javax.faces.bean.ManagedBean;
+//import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author ASUS
  */
-@ManagedBean
-@RequestScoped
+//@ManagedBean
+//@RequestScoped
 public class Post {
 
 
     
-    int Pid = -1;
+    String Pid = "-1";
     String Judul = "";
-    Date Tanggal = null;
+    String Tanggal = null;
     String Konten = "";
     Boolean Published = false;
     /**
@@ -30,7 +32,7 @@ public class Post {
     
     
     
-    public int getPid() {
+    public String getPid() {
         return Pid;
     }
 
@@ -38,7 +40,7 @@ public class Post {
         return Judul;
     }
 
-    public Date getTanggal() {
+    public String getTanggal() {
         return Tanggal;
     }
 
@@ -50,7 +52,7 @@ public class Post {
         return Published;
     }
 
-    public void setPid(int Pid) {
+    public void setPid(String Pid) {
         this.Pid = Pid;
     }
 
@@ -58,7 +60,7 @@ public class Post {
         this.Judul = Judul;
     }
 
-    public void setTanggal(Date Tanggal) {
+    public void setTanggal(String Tanggal) {
         this.Tanggal = Tanggal;
     }
 

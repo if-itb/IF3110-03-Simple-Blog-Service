@@ -1,24 +1,26 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+//import javax.faces.bean.ManagedBean;
+//import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author ASUS
  */
-@ManagedBean
-@RequestScoped
+//@ManagedBean
+//@RequestScoped
 public class Comment {
 
     /**
      * Creates a new instance of Comment
      */
-    int Cid;
-    int Pid;
+    String Cid;
+    String Pid;
     String Nama;
     String Email;
     String Konten;
@@ -26,11 +28,11 @@ public class Comment {
     public Comment() {
     }
 
-    public void setCid(int Cid) {
+    public void setCid(String Cid) {
         this.Cid = Cid;
     }
 
-    public void setPid(int Pid) {
+    public void setPid(String Pid) {
         this.Pid = Pid;
     }
 
@@ -46,11 +48,11 @@ public class Comment {
         this.Konten = Konten;
     }
 
-    public int getCid() {
+    public String getCid() {
         return Cid;
     }
 
-    public int getPid() {
+    public String getPid() {
         return Pid;
     }
 

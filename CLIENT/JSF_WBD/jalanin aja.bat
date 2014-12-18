@@ -1,0 +1,1 @@
+wsimport -keep -d nbproject -s src/java http://glacial-plains-4376.herokuapp.com/HelloService?wsdl

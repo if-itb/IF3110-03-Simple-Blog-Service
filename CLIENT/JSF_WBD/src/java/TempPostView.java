@@ -181,7 +181,7 @@ public class TempPostView {
             Comment mCmt = new Comment();
             mCmt.Nama = rs.getString("name");
             mCmt.Email = rs.getString("email");
-            mCmt.Cid = rs.getInt("cid");
+            mCmt.Cid = rs.getString("cid");
             mCmt.Konten = rs.getString("ccontent");
             result.add(mCmt);
         }
