@@ -11,12 +11,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 /**
  *
@@ -25,7 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean
 @SessionScoped
 public class TempPostView {
-    public int Pid;
+    HelloService api = null;
+    public String Pid="";
     public String Judul = "";
     public String Tanggal = "";
     public String Konten = "";
@@ -38,71 +42,27 @@ public class TempPostView {
      * Creates a new instance of TempPostView
      */
     public TempPostView() {
+        api = new HelloServiceImplService().getHelloServiceImplPort();
     }
-    public void viewPost(int pid) throws ClassNotFoundException, SQLException, IOException{
-        String host = "jdbc:mysql://localhost:3306/simple_blog_java?zeroDateTimeBehavior=convertToNull";
-        String user = "root";
-        String pwd = "";
+    public void viewPost(String pid) throws ClassNotFoundException, SQLException, IOException{
+        List<org.chamerling.heroku.service.Post> tempL = api.listPublishedPost();
+        for(int i = 0; i< tempL.size(); ++i){
+            if(tempL.get(i).getPid().equals(pid)){
+                Pid = tempL.get(i).getPid();
+                Judul = tempL.get(i).getJudul();
+                Tanggal = tempL.get(i).getTanggal();
+                Konten = tempL.get(i).getKonten();
+            }
+        }
         
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Connection con = (Connection) DriverManager.getConnection(host, user, pwd);
-        Statement stmt = (Statement) con.createStatement(); 
-        String q = "SELECT * FROM tb_post WHERE pid=" + pid + ";";
-        System.out.println(q);
-        ResultSet rs = stmt.executeQuery(q);
-        if(rs.next()){
-            Judul = rs.getString("ptitle");
-            Konten = rs.getString("pcontent");
-            Pid = rs.getInt("pid");
-            Tanggal = rs.getDate("pdate").toString();
-
-        }else{
-            Judul = "Ga ada judul";
-            Konten = "Ga ada konten";
-        }
-        System.out.println("Judul : " + getJudul());
+        
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
         response.sendRedirect("view_post.xhtml");
         
     }
     
-    public void viewPost2(int pid) throws ClassNotFoundException, SQLException, IOException{
-        String host = "jdbc:mysql://localhost:3306/simple_blog_java?zeroDateTimeBehavior=convertToNull";
-        String user = "root";
-        String pwd = "";
-        
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Connection con = (Connection) DriverManager.getConnection(host, user, pwd);
-        Statement stmt = (Statement) con.createStatement(); 
-        String q = "SELECT * FROM tb_post WHERE pid=" + pid + ";";
-        System.out.println(q);
-        ResultSet rs = stmt.executeQuery(q);
-        if(rs.next()){
-            Judul = rs.getString("ptitle");
-            Konten = rs.getString("pcontent");
-            Pid = rs.getInt("pid");
-            Tanggal = rs.getDate("pdate").toString();
-
-        }else{
-            Judul = "Ga ada judul";
-            Konten = "Ga ada konten";
-        }
-        System.out.println("Judul : " + getJudul());
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-        response.sendRedirect("view_post_2.xhtml");
-        
-    }
-
+    
     public String getCmtNama() {
         return cmtNama;
     }
@@ -127,7 +87,7 @@ public class TempPostView {
         this.cmtKonten = cmtKonten;
     }
 
-    public int getPid() {
+    public String getPid() {
         return Pid;
     }
 
@@ -143,7 +103,7 @@ public class TempPostView {
         return Konten;
     }
 
-    public void setPid(int Pid) {
+    public void setPid(String Pid) {
         this.Pid = Pid;
     }
 
@@ -159,59 +119,17 @@ public class TempPostView {
         this.Konten = Konten;
     }
     
-    public ArrayList<Comment> getCmts() throws ClassNotFoundException, SQLException{
-        ArrayList<Comment> result = new ArrayList<>();
+    public List<org.chamerling.heroku.service.Comment> getCmts() {
+        return api.listComment(Pid);
         
-        String host = "jdbc:mysql://localhost:3306/simple_blog_java?zeroDateTimeBehavior=convertToNull";
-        String user = "root";
-        String pwd = "";
         
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Connection con = (Connection) DriverManager.getConnection(host, user, pwd);
-        Statement stmt = (Statement) con.createStatement();
-        
-        String q = "SELECT * FROM tb_cmt WHERE pid=" + Pid + ";";
-        ResultSet rs = stmt.executeQuery(q);
-        
-        while (rs.next()) {
-            Comment mCmt = new Comment();
-            mCmt.Nama = rs.getString("name");
-            mCmt.Email = rs.getString("email");
-            mCmt.Cid = rs.getString("cid");
-            mCmt.Konten = rs.getString("ccontent");
-            result.add(mCmt);
-        }
-        
-        return result;
         
     }
     
     public void postCmt() throws ClassNotFoundException, SQLException{
-        String host = "jdbc:mysql://localhost:3306/simple_blog_java?zeroDateTimeBehavior=convertToNull";
-        String user = "root";
-        String pwd = "";
-        String q="INSERT INTO tb_cmt (`cid`, `pid`, `name`, `email`, `ccontent` ,`timestamp`) "
-            + "VALUES (NULL, "
-            + "'"+ Pid +"', "
-            + "'"+ cmtNama +"', "
-            + "'"+ cmtEmail +"', "
-            + "'"+ cmtKonten +"', "
-            + "CURRENT_TIMESTAMP);";
-        
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Connection con = (Connection) DriverManager.getConnection(host, user, pwd);
-        PreparedStatement stmt = (PreparedStatement) con.prepareStatement(q);
-        
-        int i = stmt.executeUpdate(q);
         resetCmt();
+        api.addComment(Pid,cmtNama,cmtEmail,cmtKonten);
+        
     }
     
     void resetCmt(){

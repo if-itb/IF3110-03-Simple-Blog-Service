@@ -3,20 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
 import java.io.IOException;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ApplicationScoped;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;

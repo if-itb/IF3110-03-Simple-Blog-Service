@@ -4,10 +4,8 @@
  * and open the template in the editor.
  */
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import java.io.IOException;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -30,6 +28,10 @@ public class Manager {
     HelloService api = null;
     Connection con = null;
     Statement stmt = null;
+    
+    public String searchQuerry = "";
+
+    
 
     
     /**
@@ -73,6 +75,28 @@ public class Manager {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
         response.sendRedirect("home.xhtml");
+    }
+    
+    public String getSearchQuerry() {
+        return searchQuerry;
+    }
+
+    public void setSearchQuerry(String searchQuerry) {
+        this.searchQuerry = searchQuerry;
+    }
+    
+    public void search(String q){
+        try {
+            setSearchQuerry(q);
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            response.sendRedirect("searchResult.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public List<org.chamerling.heroku.service.Post> listPostSearch(String q){
+        return api.search(q);
     }
     
 }

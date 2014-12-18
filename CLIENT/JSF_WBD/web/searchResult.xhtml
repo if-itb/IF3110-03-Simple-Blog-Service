@@ -56,7 +56,7 @@
                 <div class="posts">
                     <nav class="art-list">
                       <ul class="art-list-body">          
-                        <ui:repeat var="o" value="#{manager.publishedPosts}" varStatus="status">
+                          <ui:repeat var="o" value="#{manager.listPostSearch(q)}" varStatus="status">
                             <li class="art-list-item">
                                 <div class="art-list-item-title-and-time">
                                     <h:form>

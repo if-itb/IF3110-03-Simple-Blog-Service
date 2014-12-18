@@ -44,6 +44,11 @@
                         <li><a href="manageuser.xhtml" >Manage Users</a></li>
                     </ui:fragment>
                     <li><a href="index.xhtml">Logout</a></li>
+                    <h:form>
+                        
+                        <h:inputText binding="#{q}"/><br/>
+                        <h:commandButton value ="Search"  action="#{manager.search(q)}"/>
+                    </h:form>
                 </ul>
             </nav>
 
