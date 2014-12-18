@@ -110,7 +110,7 @@ public class User {
         role = _role;
     }
     
-    public String getRole() throws SQLException, Exception_Exception
+    public String getRole()
     {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         List<DataUser> userlist = blog.getAllUser();
@@ -122,23 +122,6 @@ public class User {
                     break;
                 }
             }
-            /*
-            //Load role dari database
-            KoneksiDatabase.setUser(userSQL);
-            KoneksiDatabase.setPassword(passSQL);
-            KoneksiDatabase.setDatabase(urlSQL,databaseName);
-
-            Connection koneksi = KoneksiDatabase.getKoneksi();
-            Statement statement = koneksi.createStatement();
-            String query = "SELECT username, role FROM user WHERE username = '" + username +"'";
-            System.out.println(query);
-            
-            ResultSet result = statement.executeQuery(query);
-            if(result.next())
-            {
-                role = result.getString("role");
-            }
-            System.out.println("role = " + role);*/
         }
         return this.role;
     }
@@ -198,9 +181,9 @@ public class User {
     /**
      * Fungsi untuk mengupdate user berdasarkan username
      * Semua attribut yang akan di update harus diset terlebih dahulu menggunakan setter.
-     * @throws SQLException 
+     
      */
-    public void updateUser() throws SQLException
+    public void updateUser() 
     {
         
         
@@ -209,7 +192,7 @@ public class User {
     /**
      * Fungsi untuk menghapus 1 user dengan username tertentu.
      * username harus diset terlebih dahulu dengan prosedure user.setUsername("username").
-     * @throws SQLException 
+     
      */
     public void deleteUser() throws InterruptedException_Exception, Exception_Exception
     {
@@ -241,7 +224,7 @@ public class User {
      * @return True jika login berhasil, dan false jika gagal
      * @throws java.sql.SQLException
      */
-    public boolean successLogin() throws SQLException
+    public boolean successLogin() 
     {
         
         
@@ -254,9 +237,9 @@ public class User {
      * @param _userDatabase
      * @param _passwordDatabase
      * @return
-     * @throws SQLException 
+     
      */
-    public boolean successLogin(String _userDatabase, String _passwordDatabase) throws SQLException
+    public boolean successLogin(String _userDatabase, String _passwordDatabase) 
     {
         
         
@@ -271,9 +254,9 @@ public class User {
      * @param _domain
      * @param _namaDatabase
      * @return
-     * @throws SQLException 
+     
      */
-    public boolean successLogin(String _userDatabase, String _passwordDatabase, String _domain, String _namaDatabase) throws SQLException
+    public boolean successLogin(String _userDatabase, String _passwordDatabase, String _domain, String _namaDatabase) 
     {
         
         
@@ -283,9 +266,9 @@ public class User {
     /**
      * Memasukkan user ke dalam database. 
      * User di create terlebih dahulu dengan constructor dengan parameter (username, password, dan role).
-     * @throws SQLException 
+     
      */
-    public void masukDatabase() throws SQLException
+    public void masukDatabase()
     {
         
         
@@ -294,9 +277,9 @@ public class User {
     /**
      * Memasukkan user ke dalam database dengan userdatabase dan passwordDatabase yang custom
      * User di create terlebih dahulu dengan constructor dengan parameter (username, password, dan role).
-     * @throws SQLException 
+     
      */
-    public void masukDatabase(String _userDatabase, String _passwordDatabase) throws SQLException
+    public void masukDatabase(String _userDatabase, String _passwordDatabase) 
     {
         
     }
@@ -348,9 +331,8 @@ public class User {
             System.out.println(usertest.getPassword());
             System.out.println(usertest.getEmail());
             System.out.println(usertest.getRole());
+        } catch (Exception_Exception e) {
             
-        } catch (SQLException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
