@@ -1,0 +1,1 @@
+wsimport -keep -d nbproject -s src http://nutellakeju.herokuapp.com/HelloService?wsdl
