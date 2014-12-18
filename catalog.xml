@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8080/tubes-wbd-3-coba/cobablog?Tester" uri="src/conf/xml-resources/web-service-references/cobablog_Tester/wsdl/localhost_8080/tubes-wbd-3-coba/cobablog.tester"/>
+    <system systemId="https://simpleblog-k19.herokuapp.com/simpleblog?wsdl" uri="src/conf/xml-resources/web-service-references/simpleblog/wsdl/simpleblog-k19.herokuapp.com/simpleblog.wsdl"/>
+</catalog>
