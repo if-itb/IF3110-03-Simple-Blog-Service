@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/WBDTUBES3CLIENT/src/java/WBD/AddImagePostServlet.java</file>
+            <file>file:/D:/WBDTUBES3CLIENT/web/PublishedPost.jsp</file>
+            <file>file:/D:/WBDTUBES3CLIENT/web/UnpublishedPost.jsp</file>
+            <file>file:/D:/WBDTUBES3CLIENT/src/java/WBD/SimpleBlogService.java</file>
+            <file>file:/D:/WBDTUBES3CLIENT/web/UserManagement.jsp</file>
+            <file>file:/D:/WBDTUBES3CLIENT/src/java/WBD/UnpublishedPostsServlet.java</file>
+            <file>file:/D:/WBDTUBES3CLIENT/web/EditPost.jsp</file>
+            <file>file:/D:/WBDTUBES3CLIENT/src/java/WBD/SofDeletePostServlet.java</file>
+            <file>file:/D:/WBDTUBES3CLIENT/web/SoftDeletedPost.jsp</file>
+            <file>file:/D:/WBDTUBES3CLIENT/src/java/WBD/LoadCommentServlet.java</file>
+            <file>file:/D:/WBDTUBES3CLIENT/web/ViewPost.jsp</file>
+            <file>file:/D:/WBDTUBES3CLIENT/src/java/WBD/SaveCommentServlet.java</file>
+            <file>file:/D:/WBDTUBES3CLIENT/web/assets/js/myjs.js</file>
+            <file>file:/D:/WBDTUBES3CLIENT/src/java/WBD/UserManagementServlet.java</file>
+        </group>
+    </open-files>
+</project-private>
