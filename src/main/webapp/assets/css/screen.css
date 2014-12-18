@@ -51,12 +51,13 @@ h1 {
 
 h2 {
   font-size: 45px;
-  padding-bottom: 25px;
+  padding-bottom: 10px;
+  padding-top: 50px;
 }
 
 h3 {
   font-size: 40px;
-  padding-bottom: 20px;
+  /* padding-bottom: 60px; */
 }
 
 h4 {
@@ -186,7 +187,7 @@ a:hover {
   margin-left: 0px;
   letter-spacing: 1px;
   font-family: 'Questrial', sans-serif;
-  font-size: 30px;
+  font-size: 20px;
 }
 
 #logo h1 span{
@@ -225,7 +226,7 @@ div.cover > img {
 }
 /* Header */
 .art-header {
-  height: 900px;
+  height: 700px;
   /* Background image is defined in the post */
   background-position: top center;
   background-attachment: fixed;
@@ -233,7 +234,7 @@ div.cover > img {
 }
 /* Contains the time, title and subtitle for an article */
 .art-header-inner {
-  position: fixed;
+  position: absolute;
   top: 300px;
   left: 50%;
   margin-left: -490px;
@@ -250,7 +251,7 @@ div.cover > img {
   letter-spacing: 4px;
 }
 .art-title {
-  font-size: 100px;
+  font-size: 50px;
   line-height: .9;
   letter-spacing: -2px;
   width: 100%;
@@ -322,7 +323,7 @@ div.cover > img {
 
 .art-body-inner blockquote p:first-child:before {
   color: #ccc;
-  content: "“";
+  content: "?";
   font-size: 4em;
   line-height: 0.1em;
   margin-right: 0.25em;
@@ -432,7 +433,7 @@ div.cover > img {
 /*  Footer
 ================================================== */
 .footer {
-  padding: 30px 0 40px;
+  padding: 30px  40px;
   overflow: hidden;
   border-top: 1px solid #ccc;
 }
@@ -815,7 +816,7 @@ hr.featured-article {
     text-align: center;
 }
 hr.featured-article:after {
-    content: "✭ Featured Article ✭";
+    content: "? Featured Article ?";
     display: inline-block;
     position: relative; 
     top: -0.8em;  
