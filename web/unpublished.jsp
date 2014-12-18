@@ -4,7 +4,8 @@
     Author     : Gilang
 --%>
 
-<%@page import="com.gilang.beans.Post"%>
+<%@page import="undeclared.mavenproject1.Post"%>
+<%@page import="undeclared.service.Service" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:useBean id="sql" class="com.gilang.sql.DBAdapter" scope="session"/>
@@ -30,13 +31,13 @@
 	<title>Simple Blog</title>
 
 	</head>
-	<%	if(user.getUsername() == null){
+	<body class="default">
+		<%	if(user.getUsername() == null){
 			response.setStatus(response.SC_MOVED_TEMPORARILY);
 			response.setHeader("Location", "home.jsp");
 		}
 	%>
 	Hello <%= user.getUsername() %>
-	<body class="default">
 	<img src="resources/img/bg.png" class="background">
 	<img src="resources/img/navbackground.png" class="navbackground">
 	<div class="wrapper">
@@ -56,7 +57,7 @@
 			<nav class="art-list">
 				<h5>Unpublished Post</h5><br/>
 			  <ul class="art-list-body">
-			<%	for(Post p : sql.getPosts(true)){	  %>
+			<%	for(Post p : Service.listPublishPost(false)/*sql.getPosts(true)*/){	  %>
 				<li class="art-list-item">
 					<div class="art-list-item-title-and-time">
 						<h2 class="art-list-title"><a href="post.html"><%= p.getTitle() %></a></h2>
@@ -66,11 +67,11 @@
 					<p><%= p.getContent() %></p>
 					<p>
 					
-					<a href="edit_post.jsp?post_id=<%= p.getPost_id() %>">Edit</a>
+					<a href="edit_post.jsp?post_id=<%= p.getId() %>">Edit</a>
 						| 
-						<a onclick="Konfirmasi(<%= p.getPost_id() %>)" href="#">Hapus</a>
+						<a onclick="Konfirmasi(<%= p.getId() %>)" href="#">Hapus</a>
 						|
-					<a href="publish.jsp?post_id=<%= p.getPost_id() %>">Publish</a>
+					<a href="publish.jsp?post_id=<%= p.getId() %>">Publish</a>
 					</p>
 				</li>
 			<%	} %>

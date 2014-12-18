@@ -4,8 +4,10 @@
     Author     : Gilang
 --%>
 
-<%@page import="com.gilang.beans.Post"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="undeclared.service.Service" %>
+<%@page import="undeclared.mavenproject1.Post" %>
+<%@page import="java.util.List" %>
 
 <jsp:useBean id="sql" class="com.gilang.sql.DBAdapter" scope="session"/>
 <jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
@@ -20,6 +22,7 @@
     <html>
        <head>
 
+	<link rel="stylesheet" type="text/css" href="resources/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="resources/screen.css" />
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico"/>
 
@@ -29,13 +32,14 @@
 
 	<title>Simple Blog</title>
 
-	</head>
 	<%	if(user.getUsername() == null){
 			response.setStatus(response.SC_MOVED_TEMPORARILY);
 			response.setHeader("Location", "home.jsp");
 		}
 	%>
 	Hello <%= user.getUsername() %>
+	</head>
+	
 	<body class="default">
 		
 	<img src="resources/img/bg.png" class="background">
@@ -48,6 +52,12 @@
 				<img src="resources/img/navicon.png" class="navicon">
 				<a id="logo" href="home.jsp"><img src="resources/img/icontext.png" class="icontext"></a>
 		</div>
+		<form action="index.jsp" class="form-inline" style="margin-left: 200px; float: left;">
+			<div class="form-group">
+				<input type="text" name="query" class="form-control"/>
+				<input type="submit" class="btn btn-default" value="search"/>
+			</div>
+		</form>	
 		<ul class="nav-primary">
 			<% if(user.getRole() == 1 || user.getRole() == 3){ %>
 			<li><a href="new_post.jsp"><img src="resources/img/add.png" style="width: auto; height: 80px; size: auto;"> </a></li>
@@ -71,10 +81,15 @@
 				</div>
 				<% } %>
 			  <ul class="art-list-body">
-			<%	for(Post p : sql.getPosts(false)){	  %>
+			<%	List<Post> ps;
+				if(request.getParameter("query") != null)
+					ps = Service.search(request.getParameter("query"));
+				else
+					ps = Service.listPublishPost(true);
+				for(Post p : ps/*sql.getPosts(false)*/){	  %>
 				<li class="art-list-item">
 					<div class="art-list-item-title-and-time">
-						<h2 class="art-list-title"><a href="post.jsp?post_id=<%= p.getPost_id() %>"><%= p.getTitle() %></a></h2>
+						<h2 class="art-list-title"><a href="post.jsp?post_id=<%= p.getId() %>"><%= p.getTitle() %></a></h2>
 						<div class="art-list-time"><%= p.getDate() %></div>
 						<div class="art-list-time"><span style="color:#F40034;">&#10029;</span> Featured</div>
 					</div>
@@ -82,9 +97,9 @@
 					<p>
 					
 					<% if(user.getRole() == 1 || user.getRole() == 2 || user.getRole() == 3){ %>
-					<a href="edit_post.jsp?post_id=<%= p.getPost_id() %>">Edit</a>
+					<a href="edit_post.jsp?post_id=<%= p.getId() %>">Edit</a>
 					   | 
-					   <a onclick="return Konfirmasi()" href="delete_post.jsp?post_id=<%= p.getPost_id() %>">Hapus</a>
+					   <a onclick="return Konfirmasi()" href="delete_post.jsp?post_id=<%= p.getId() %>">Hapus</a>
 					<% } %>
 					</p>
 				</li>
@@ -109,13 +124,13 @@
 	</footer>
 
 	</div>
-<script>
-function Konfirmasi(x) {
-    if (confirm("Yakin mau delete?") == true) 
-		return true;
-    return false;
-}
-</script>
 	</body>
+	<script>
+		function Konfirmasi(x) {
+			if (confirm("Yakin mau delete?") == true) 
+				return true;
+			return false;
+		}
+</script>
     </html>
 </f:view>

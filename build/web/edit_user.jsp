@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="sql" scope="session" class="com.gilang.sql.DBAdapter" />
 <jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
+<%@page import="undeclared.service.Service" %>
+<%@page import="undeclared.mavenproject1.User" %>
 <%@page import="com.gilang.beans.UserData" %>
 
 <%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
@@ -37,7 +39,13 @@
 
 		<body class="default">
 			
-		<% UserData userData = sql.getUser(request.getParameter("user_id")); %>
+		<% //UserData userData = sql.getUser(request.getParameter("user_id")); %>
+		<% User userData = null;
+			String username = request.getParameter("user_id");
+			for(User u : Service.listUser()){
+				if(u.getName().equals(username))
+					userData = u;
+			}%>
 		
 		<img src="resources/img/bg.png" class="background">
 		<img src="resources/img/navbackground.png" class="navbackground">
@@ -65,7 +73,7 @@
 					<div id="contact-area">
 						<form method="post" action="update_user.jsp">
 							<label for="user">User ID:</label>
-							<input type="text" name="user_id" id="user" value="<%= userData.getUser_id() %>" readonly="true"/>
+							<input type="text" name="user_id" id="user" value="<%= userData.getName() %>" readonly="true"/>
 
 							<label for="role">Role:</label>
 							<input type="text" name="role" id="role" value="<%= userData.getRole() %>"/>

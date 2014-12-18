@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="undeclared.service.Service" %>
 <jsp:useBean id="sql" scope="session" class="com.gilang.sql.DBAdapter" />
 <jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
 
@@ -25,7 +26,8 @@
 					response.setStatus(response.SC_MOVED_TEMPORARILY);
 					response.setHeader("Location", "home.jsp");
 				}else{
-					sql.deletePost(request.getParameter("post_id"));
+					//sql.deletePost(request.getParameter("post_id"));
+					Service.deletePost(Integer.valueOf(request.getParameter("post_id")));
 					response.setStatus(response.SC_MOVED_TEMPORARILY);
 					response.setHeader("Location", "index.jsp");
 				}

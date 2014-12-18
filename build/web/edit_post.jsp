@@ -7,7 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="sql" scope="session" class="com.gilang.sql.DBAdapter" />
 <jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
-<%@page import="com.gilang.beans.Post" %>
+<%@page import="undeclared.mavenproject1.Post" %>
+<%@page import="undeclared.service.Service" %>
 
 <%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
 <%@taglib prefix="h" uri="http://java.sun.com/jsf/html"%>
@@ -37,7 +38,15 @@
 
 		<body class="default">
 		
-		<% Post post = sql.getPost(Integer.valueOf(request.getParameter("post_id"))); %>
+		<% //Post post = sql.getPost(Integer.valueOf(request.getParameter("post_id"))); %>
+		<%	Post post = null;
+			int postId = Integer.valueOf(request.getParameter("post_id"));
+			for(Post p : Service.listPost()){ 
+				if(p.getId() == postId){
+					post = p;
+				}
+			}%>
+			
 		
 		<img src="resources/img/bg.png" class="background">
 		<img src="resources/img/navbackground.png" class="navbackground">
@@ -69,7 +78,7 @@
 						<form method="post" name="form1" action="update.jsp">
 							<label for="note"></label>
 							<p id="note" style="visibility: hidden">Tanggal Salah!</p>
-							<input type="hidden" name="post_id" value="<%= post.getPost_id() %>"/>
+							<input type="hidden" name="post_id" value="<%= post.getId() %>"/>
 							<label for="Judul">Judul:</label>
 							<input type="text" name="title" id="Judul" value="<%= post.getTitle() %>"/>
 							<div id="Tgl" style="display: inline-block; width: 100%">

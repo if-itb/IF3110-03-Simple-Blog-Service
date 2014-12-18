@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="undeclared.service.Service" %>
 <jsp:useBean id="sql" scope="session" class="com.gilang.sql.DBAdapter" />
 <jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
 <%@taglib prefix="f" uri="http://java.sun.com/jsf/core"%>
@@ -25,8 +26,10 @@
 			response.setHeader("Location", "home.jsp");
 				}else{
 			%>
-            <%	sql.addUser(request.getParameter("user_id"), request.getParameter("password"),
-					Integer.valueOf(request.getParameter("role")), request.getParameter("email"));
+            <%	//sql.addUser(request.getParameter("user_id"), request.getParameter("password"),
+				//	Integer.valueOf(request.getParameter("role")), request.getParameter("email"));
+				Service.addUser(request.getParameter("user_id"), request.getParameter("email"),
+					Integer.valueOf(request.getParameter("role")), request.getParameter("password"));
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "manage_user.jsp");}
 			%>

@@ -4,7 +4,8 @@
     Author     : Gilang
 --%>
 
-<%@page import="com.gilang.beans.Post"%>
+<%@page import="undeclared.mavenproject1.Post"%>
+<%@page import="undeclared.service.Service" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:useBean id="sql" class="com.gilang.sql.DBAdapter" scope="session"/>
@@ -56,7 +57,7 @@
 			<nav class="art-list">
 				<h5>Deleted Post</h5><br/>
 			  <ul class="art-list-body">
-			<%	for(Post p : sql.getDeletedPosts()){	  %>
+			<%	for(Post p : Service.listDeletePost(true)/*sql.getDeletedPosts()*/){	  %>
 				<li class="art-list-item">
 					<div class="art-list-item-title-and-time">
 						<h2 class="art-list-title"><a href="post.html"><%= p.getTitle() %></a></h2>
@@ -65,7 +66,7 @@
 					</div>
 					<p><%= p.getContent() %></p>
 					<p>
-					<a href="restore.jsp?post_id=<%= p.getPost_id() %>">Restore</a>
+					<a href="restore.jsp?post_id=<%= p.getId() %>">Restore</a>
 					</p>
 				</li>
 			<%	} %>

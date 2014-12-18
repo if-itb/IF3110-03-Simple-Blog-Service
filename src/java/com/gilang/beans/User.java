@@ -7,12 +7,13 @@
 package com.gilang.beans;
 
 import com.gilang.sql.DBAdapter;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import undeclared.service.Service;
 
 /**
  *
@@ -45,9 +46,9 @@ public class User {
 	public void login(String username, String password){
 		faces = FacesContext.getCurrentInstance();
 		response = (HttpServletResponse) faces.getExternalContext().getResponse();
-		DBAdapter sql = new DBAdapter();
+		//DBAdapter sql = new DBAdapter();
 		if(!username.equals("guest"))
-			role = sql.checkCredential(username, password);
+			role = checkCredential(username, password);
 		else
 			role = 4;
 		if(role != -1){
@@ -64,6 +65,21 @@ public class User {
 				this.username = username;
 			}
 		}
+	}
+	
+	public int checkCredential(String username, String password){
+		List<undeclared.mavenproject1.User> users = Service.listUser();
+		for(undeclared.mavenproject1.User u : users){
+			System.out.println(u.getName());
+			System.out.println(u.getEmail());
+			System.out.println(u.getPassword());
+		}
+		for(undeclared.mavenproject1.User u : users){
+			if(u.getName().equals(username) && u.getPassword().equals(password)){
+				return u.getRole();
+			}
+		}
+		return -1;
 	}
 	
 	public void logout(){
@@ -89,5 +105,9 @@ public class User {
 	
 	public int getRole(){
 		return role;
+	}
+	
+	public static void main(String[] args){
+		Service.addUser("guest", "", 4, "");
 	}
 }

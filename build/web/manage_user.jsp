@@ -4,7 +4,8 @@
     Author     : Gilang
 --%>
 
-<%@page import="com.gilang.beans.UserData"%>
+<%@page import="undeclared.mavenproject1.User" %>
+<%@page import="undeclared.service.Service" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:useBean id="sql" class="com.gilang.sql.DBAdapter" scope="session"/>
@@ -58,12 +59,12 @@
 		<div class="posts">
 			<nav class="art-list">
 			  <ul class="art-list-body">
-			<%	for(UserData u : sql.getUsersData()){
-					if(!u.getUser_id().equals("guest")){
+			<%	for(User u : Service.listUser()){
+					if(!u.getName().equals("guest")){
 			%>
 				<li class="art-list-item">
 					<div class="art-list-item-title-and-time">
-						<h2 class="art-list-title"><%= u.getUser_id() %></h2>
+						<h2 class="art-list-title"><%= u.getName() %></h2>
 					</div>
 					<p><%	switch(u.getRole()){
 							case 1: out.print("Owner");
@@ -77,9 +78,9 @@
 					<%= u.getEmail() %></p>
 					<p>
 					
-					<a href="edit_user.jsp?user_id=<%= u.getUser_id() %>">Edit</a>
+					<a href="edit_user.jsp?user_id=<%= u.getName() %>">Edit</a>
 					   | 
-					<a onclick="return Konfirmasi()" href="delete_user.jsp?user_id=<%= u.getUser_id() %>">Hapus</a>
+					<a onclick="return Konfirmasi()" href="delete_user.jsp?user_id=<%= u.getName() %>">Hapus</a>
 					</p>
 				</li>
 			<%		} 

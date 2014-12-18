@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="undeclared.service.Service" %>
 <jsp:useBean id="sql" scope="session" class="com.gilang.sql.DBAdapter" />
 <jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
 
@@ -26,7 +27,9 @@
 			response.setHeader("Location", "home.jsp");
 				}else{
 			%>
-            <%	sql.updateUser(request.getParameter("user_id"), Integer.valueOf(request.getParameter("role")),
+            <%	//sql.updateUser(request.getParameter("user_id"), Integer.valueOf(request.getParameter("role")),
+				//				request.getParameter("email"));
+				Service.editUser(request.getParameter("user_id"), Integer.valueOf(request.getParameter("role")),
 								request.getParameter("email"));
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "manage_user.jsp");}

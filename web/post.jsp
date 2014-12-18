@@ -4,9 +4,10 @@
     Author     : daniar heri
 --%>
 
-<%@page import="com.gilang.beans.Komentar"%>
-<%@page import="com.gilang.beans.Post"%>
-<%@page import="com.gilang.beans.UserData"%>
+<%@page import="undeclared.mavenproject1.Comment"%>
+<%@page import="undeclared.mavenproject1.Post"%>
+<%@page import="undeclared.mavenproject1.User"%>
+<%@page import="undeclared.service.Service"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
@@ -26,9 +27,17 @@
 			response.setHeader("Location", "home.jsp");
 				}
 			%>
-            <%	Post post = sql.getPost(Integer.valueOf(request.getParameter("post_id"))); 
-				UserData userData = sql.getUser(user.getUsername());
-				System.out.println(user.getUsername());
+            <%	Post post = null;
+				int postId = Integer.valueOf(request.getParameter("post_id"));
+				for(Post p : Service.listPost()){
+					if(p.getId() == postId)
+						post = p;
+				}
+				User userData = null;
+				for(User s : Service.listUser()){
+					if(s.getName().equals(user.getUsername()))
+						userData = s;
+				}
 			%>
             
             <link rel="stylesheet" type="text/css" href="resources/screen.css" />
@@ -79,9 +88,9 @@
 						
 							<div id="contact-area">
 								<form method="post" onsubmit=" addComment()" name="commentForm">
-									<input type="hidden" name="post_id" value="<%= post.getPost_id() %>"/>
+									<input type="hidden" name="post_id" value="<%= post.getId() %>"/>
 									<% if(!user.getUsername().equals("guest")){ %>
-										<input type="hidden" name="user_id" id="Nama" value="<%=  userData.getUser_id() %>"/>
+										<input type="hidden" name="user_id" id="Nama" value="<%=  userData.getName() %>"/>
 										<input type="hidden" name="email" value="<%=  userData.getEmail() %>"/>
 									<% } else if(user.getRole() != 2){%>
 										<label for="Nama">Nama:</label>

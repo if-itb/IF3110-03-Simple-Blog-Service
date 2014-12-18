@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="undeclared.service.Service" %>
 <jsp:useBean id="sql" class="com.gilang.sql.DBAdapter" scope="session"/>
 <jsp:useBean id="user" scope="session" class="com.gilang.beans.User" />
 
@@ -26,7 +27,8 @@
 			response.setHeader("Location", "home.jsp");
 				}else{
 			%>
-            <%	sql.publishPost(request.getParameter("post_id"));
+            <%	//sql.publishPost(request.getParameter("post_id"));
+				Service.publishPost(Integer.valueOf(request.getParameter("post_id")));
 				response.setStatus(response.SC_MOVED_TEMPORARILY);
 				response.setHeader("Location", "unpublished.jsp");}
 			%>
