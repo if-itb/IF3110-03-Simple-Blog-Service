@@ -4,6 +4,10 @@
     Author     : Rakhmatullah Yoga S
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="org.chamerling.heroku.service.DataUser"%>
+<%@page import="org.chamerling.heroku.service.BlogServiceImplService"%>
+<%@page import="org.chamerling.heroku.service.BlogService"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="source.CookieHelper"%>
 <%@page import="java.sql.ResultSet"%>
@@ -84,26 +88,18 @@
                 <div id="contact-area">
                     <form name="commentForm" method="post" id="commentForm" action="#" onsubmit="return comment()">
                         <%
-                            if(cookie.thereIsCookie()) {
-                                KoneksiDatabase.setUser("root2");
-                                KoneksiDatabase.setPassword("akhfa");
-                                KoneksiDatabase.setDatabase("localhost","blog");
-                                try {
-                                    Connection koneksi = KoneksiDatabase.getKoneksi();
-                                    Statement statement = koneksi.createStatement();
-                                    String username = cookie.getUsername();
-                                    System.out.println(username);
-                                    String emailQuery = "SELECT * FROM `user` WHERE `username` = '"+username+"'";
-                                    ResultSet result = statement.executeQuery(emailQuery);
-                                    while (result.next()) {
-                                        nama = result.getString("nama");
-                                        System.out.println("nama = "+nama);
-                                        email = result.getString("email");
-                                        System.out.println("email = "+email);
-                                    }
-                                } catch (SQLException ex) {
-                                    
+                            BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
+                            List<DataUser> userlist = blog.getAllUser();
+                            DataUser user;
+                            for(DataUser usr : userlist) {
+                                if(usr.getUsername().equals(cookie.getUsername())) {
+                                    break;
                                 }
+                            }
+                            if(cookie.thereIsCookie()) {
+                                nama = user.getUsername();
+                                email = user.getEmail();
+                            }
                             %>
                                 <label for="Nama">Nama:</label>
                                 <input type="text" name="Nama" id="Nama" value="<%= nama %>" aria-required="true" required="" readonly>
