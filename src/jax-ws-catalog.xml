@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="file:/D:/IF3110-03-Simple-Blog-Service/target/classes/META-INF/wsdl/localhost_9191/SimpleBlog.wsdl" uri="wsdl/SimpleBlog.wsdl"/>
-    <system systemId="http://localhost:9191/SimpleBlog?wsdl" uri="wsdl/localhost_9191/SimpleBlog.wsdl"/>
-</catalog>

@@ -1,0 +1,11 @@
+<!-- TOOLBAR_EXEMPT -->
+<html>
+ <head>
+   <title>http://schemas.xmlsoap.org/soap/http</title>
+ </head>
+ <body>
+   <p>
+ http://schemas.xmlsoap.org/soap/http is the <a href='http://www.w3.org/TR/2001/NOTE-wsdl-20010315'>WSDL 1.1</a> <a href='http://www.w3.org/TR/2001/NOTE-wsdl-20010315#_soap:binding'>binding</a> for the <a href='http://www.w3.org/TR/2000/NOTE-SOAP-20000508/'>SOAP 1.1</a> HTTP <a href='http://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383526'>binding</a>.
+   </p>
+ </body>
+</html>

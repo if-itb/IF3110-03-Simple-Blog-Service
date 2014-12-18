@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://spargo.herokuapp.com" uri="src/conf/xml-resources/web-service-references/spargo.herokuapp/wsdl/spargo.herokuapp.com"/>
+    <system systemId="http://spargo.herokuapp.com/?wsdl" uri="src/conf/xml-resources/web-service-references/WsClient/wsdl/spargo.herokuapp.com/.wsdl"/>
+    <system systemId="http://spargo.herokuapp.com/SimpleBlog?wsdl" uri="src/conf/xml-resources/web-service-references/SimpleBlog/wsdl/spargo.herokuapp.com/SimpleBlog.wsdl"/>
+</catalog>
