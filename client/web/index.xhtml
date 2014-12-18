@@ -38,7 +38,7 @@
                                   <div class="art-list-time">Published</div>
                               </ui:fragment>
                           </div>
-                          <p>#{c.content}</p>
+                          <h:outputText value="#{c.content}" escape="false"/>
                           <h:form>
                               <p>
                                   <ui:fragment rendered="#{userController.user.role eq 'admin' or userController.user.role eq 'editor'}">

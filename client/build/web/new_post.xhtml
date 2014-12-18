@@ -14,7 +14,7 @@
 
     <h:outputStylesheet name="assets/css/screen.css"/>
     <h:outputStylesheet name="assets/css/simple-blog.css"/>
-    <!--<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />-->
+<!--<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />-->
 
     <title>Simple Blog | Tambah Post</title>
 </h:head>
@@ -42,7 +42,30 @@
                         <h:inputText id="tanggal" binding="#{date}" p:required="required" p:type="date"/>
 
                         <h:outputLabel for="konten" value="Konten:"/>
-                        <h:inputTextarea id="konten" rows="20" cols="20" p:required="required" binding="#{content}"/>
+                        <br/><br/>
+
+                        <img class="intLink" title="Bold" onclick="formatDoc('bold');" src="data:image/gif;base64,R0lGODlhFgAWAID/AMDAwAAAACH5BAEAAAAALAAAAAAWABYAQAInhI+pa+H9mJy0LhdgtrxzDG5WGFVk6aXqyk6Y9kXvKKNuLbb6zgMFADs=" />
+                        <img class="intLink" title="Italic" onclick="formatDoc('italic');" src="data:image/gif;base64,R0lGODlhFgAWAKEDAAAAAF9vj5WIbf///yH5BAEAAAMALAAAAAAWABYAAAIjnI+py+0Po5x0gXvruEKHrF2BB1YiCWgbMFIYpsbyTNd2UwAAOw==" />
+                        <img class="intLink" title="Underline" onclick="formatDoc('underline');" src="data:image/gif;base64,R0lGODlhFgAWAKECAAAAAF9vj////////yH5BAEAAAIALAAAAAAWABYAAAIrlI+py+0Po5zUgAsEzvEeL4Ea15EiJJ5PSqJmuwKBEKgxVuXWtun+DwxCCgA7" />
+
+
+                        <select onchange="formatDoc('formatblock',this[this.selectedIndex].value);this.selectedIndex=0;">
+                            <option p:selected="selected">- formatting -</option>
+                            <option value="h1">Title 1 &lt;h1&gt;</option>
+                            <option value="h2">Title 2 &lt;h2&gt;</option>
+                            <option value="h3">Title 3 &lt;h3&gt;</option>
+                            <option value="h4">Title 4 &lt;h4&gt;</option>
+                            <option value="h5">Title 5 &lt;h5&gt;</option>
+                            <option value="h6">Subtitle &lt;h6&gt;</option>
+                            <option value="p">Paragraph &lt;p&gt;</option>
+                            <option value="pre">Preformatted &lt;pre&gt;</option>
+                        </select>
+                        <div id="textBox" contenteditable="true">
+                            
+                        </div>
+                        <p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show:</label></p>
+                        <h:inputHidden id="konten" binding="#{content}"/>
+                        
                         <!-- inputFile tag to upload file -->
                         Upload File 
                         <h:inputFile id="file" 
@@ -53,7 +76,10 @@
                         <!--<f:validator validatorId="FileUploadValidator" />-->
                         </h:inputFile>
                         
-                        <h:commandButton action="#{postController.addPost(title.value, date.value, content.value, false)}" value="Simpan" class="submit-button" onclick="return validateDate(document.getElementById('_post-form:tanggal').value);"/>
+                        <h:commandButton action="#{postController.addPost(title.value, date.value, content.value, 0)}"
+                                         value="Simpan" class="submit-button"
+                                         onclick="document.getElementById('_post-form:konten').value = document.getElementById('textBox').innerHTML; return validateDate(document.getElementById('_post-form:tanggal').value);"/>
+                        
                     </h:form>
                 </div>
             </div>
@@ -68,6 +94,6 @@
 </div>
 
 <h:outputScript name="assets/js/validator.js"/>
-
+<h:outputScript name="assets/js/simple-blog.js"/>
 </h:body>
 </html>

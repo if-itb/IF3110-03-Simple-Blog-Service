@@ -40,7 +40,7 @@
         <div class="art-body">
             <div class="art-body-inner">
                 <hr class="featured-article" />
-                    #{postController.post.content}
+                    <h:outputText value="#{postController.post.content}" escape="false"/>
                 <hr />
 
                 <h2>Komentar</h2>
@@ -48,14 +48,14 @@
                 <div id="contact-area">
                     <h:form id="_comment-form">
                         <h:outputLabel for="nama" value="Nama"/>
-                        <h:inputText id="nama" binding="#{name}"  p:required="required" >
+                        <h:inputText id="nama" binding="#{name}" value="#{userController.user.username}" p:required="required" >
 <!--                            <c:if test="#{userController.user.role ne 'guest'}">
                                 <f:attribute name="disabled" value="value"/>
                             </c:if>-->
                         </h:inputText>
 
                         <h:outputLabel for="email" value="Email"/>
-                        <h:inputText id="email" binding="#{email}" p:required="required" >
+                        <h:inputText id="email" binding="#{email}" value="#{userController.user.email}" p:required="required" >
 <!--                            <c:if test="#{userController.user.role ne 'guest'}">
                                 <f:attribute name="disabled" value="true"/>
                             </c:if>-->
