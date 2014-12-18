@@ -117,7 +117,7 @@ public class User {
         role = _role;
     }
     
-    public String getRole() throws SQLException, Exception_Exception
+    public String getRole() throws Exception_Exception
     {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         List<DataUser> userlist = blog.getAllUser();
