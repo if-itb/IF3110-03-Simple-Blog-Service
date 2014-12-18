@@ -207,7 +207,7 @@ SELECT * FROM `tucilDB_13511097`.`listpost` ORDER BY `date` DESC;
 	var conf = confirm("Apakah Anda yakin menghapus post ini?");
 	
 	if(conf==true){
-		location.href = 'AddPost.jsp?mode=2&id='+id;
+		location.href = 'AddPost.jsp?mode=2&id_post='+id;
 	}
 }
       

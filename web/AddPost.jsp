@@ -18,10 +18,7 @@
 
     <%! String id_user; %>
     <%  id_user =  session.getAttribute("id_user").toString(); %>
-    
-<c:choose>
-       <c:when test="${param.mode=='0'}"> <!--  insert new post-->
-            <%! int new_id = 0; 
+    <%! int new_id = 0; 
                 ResultSet rs;
             %>
             <%
@@ -36,7 +33,9 @@
                 conn = DriverManager.getConnection(DB_URL,USER, PASS);
                 statement = conn.createStatement();
             %>
-          
+    
+<c:choose>
+       <c:when test="${param.mode=='0'}"> <!--  insert new post-->
             <%while ( true){   
                 try {
                 String sql = "SELECT * FROM `tucildb_13511097`.`listpost` WHERE `id`="+new_id;
@@ -74,12 +73,24 @@
           </c:when>
 
           <c:otherwise> <!-- berarti mode=2 , delete-->
-              <sql:update dataSource="${snapshot}" var="result">
-                    DELETE FROM `tucildb_13511097`.`listpost` WHERE `id`= <%= request.getParameter("id_post")%>;
-              </sql:update>
-              <sql:update dataSource="${snapshot}" var="result">
-                    DELETE FROM `tucildb_13511097`.`post-komen` WHERE `id_post`= <%= request.getParameter("id_post")%>;
-              </sql:update>
+              <% 
+              try {
+                String sql = "DELETE FROM `tucildb_13511097`.`listpost` WHERE `id`= "+old_id;
+                String sql2 = "SELECT * FROM `tucildb_13511097`.`post-komen` WHERE `id_post`= "+old_id;
+                
+                rs = statement.executeQuery(sql2);
+                if (rs.isBeforeFirst()){
+                    sql2 = "DELETE FROM `tucildb_13511097`.`post-komen` WHERE `id_post`= "+old_id;
+                    statement.executeUpdate(sql2);
+                }
+                statement.executeUpdate(sql);
+                
+                } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+              %>
+              
           </c:otherwise>
           </c:choose>
           

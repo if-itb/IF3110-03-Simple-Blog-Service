@@ -107,7 +107,7 @@
                     <label for="Konten">Konten:</label><br>
                     <textarea name="Konten" rows="20" cols="20" id="Konten" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">${post}</textarea>
                     <input type="hidden" name="mode" value="${param.mode}">
-                    <input type="hidden" name="id_post" value="${param.id_post}">
+                    <input type="hidden" name="id_post"  value="${param.id_post}">
                     <input type="submit" id="submit" value="Simpan" class="submit-button" >
                 </form>
             </div>

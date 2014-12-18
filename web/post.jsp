@@ -237,17 +237,10 @@ function checkEmail(email){
 
 function ConfirmDelete(id){
 	var conf = confirm("Apakah Anda yakin menghapus komen ini?");
+        var id_post = '<%= request.getParameter("id_post")%>';
 	
 	if(conf==true){
-             var xmlhttp=new XMLHttpRequest();
-             xmlhttp.onreadystatechange=function() {
-    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-	  
-	 }
-	}
-              xmlhttp.open("GET","editKomen?id="+id, true);
-              xmlhttp.send();
-                
+            location.href = 'deleteKomen.jsp?id='+id+'&id_post= '+id_post;
 	}
 }
 </script>
