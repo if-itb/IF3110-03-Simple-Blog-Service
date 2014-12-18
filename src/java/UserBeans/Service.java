@@ -84,21 +84,27 @@ public class Service {
      * Web service operation
      */
     @WebMethod(operationName = "listUser")
-    public ArrayList<JSONObject> listUser() throws JSONException, MalformedURLException {
-        //TODO write your implementation code here:
-//        Firebase ref = new Firebase("https://simpleblogjsf.firebaseio.com/user");
-        String linkJson = readURL("https://simpleblogjsf.firebaseio.com/user.json");
-        JSONObject obj =new JSONObject(linkJson);
-        ArrayList<JSONObject> list_user = new ArrayList<>();
-        Iterator<String> ids=obj.keys();
-        String allUser="";
-        while(ids.hasNext()){
-            String id_User=ids.next();
-            JSONObject getuser = obj.getJSONObject(id_User);
-            list_user.add(getuser);
-            allUser+="Fullname:    "+getuser.getString("fullname")+"\nUsername: "+getuser.getString("username")+"\nPassword:    "+getuser.getString("password")+"\nEmail:    "+getuser.getString("email")+"\nRole:    "+getuser.getString("role")+"\n";
+    public String listUser() throws JSONException, MalformedURLException {
+        try {
+            String userJson = readURL("https://simpleblogjsf.firebaseio.com/user.json");
+            JSONObject obj = new JSONObject(userJson);
+            ArrayList<JSONObject> Users = new ArrayList<>();
+            Iterator<String> jsonIterator = obj.keys();
+            String retval = "";
+            while(jsonIterator.hasNext()){
+                String u_id = jsonIterator.next();
+                JSONObject userAtom = obj.getJSONObject(u_id);
+                Users.add(userAtom);
+                retval += "Fullname : "+userAtom.getString("fullname")+"\n";
+                retval += "Username : "+userAtom.getString("username")+"\n";
+                retval += "Email :"+userAtom.getString("email")+"\n";
+                retval += "Role :"+userAtom.getString("role")+"\n";
+            }
+            return retval;
+        } catch (JSONException ex) {
+            Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, ex);
+            return "error";
         }
-        return list_user;
     }
     
 
