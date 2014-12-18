@@ -49,7 +49,7 @@
                listPost.cookieHeaderCheck(cookie);
            }
            else {
-               response.sendRedirect("../login/index.html");
+               response.sendRedirect("../index.jsp");
            }
         %>
         <br>

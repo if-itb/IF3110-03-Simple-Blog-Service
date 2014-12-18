@@ -52,10 +52,10 @@
                 }
                 else
                 {
-                    user.setUsername(request.getParameter("id"));
+                    user.setIdFirebase(request.getParameter("id"));
                     user.getOneUser();
                     
-                    out.println("<input type='text' value='"+user.getUsername()+"' name='username' readonly autofocus />");
+                    out.println("<input type='text' value='"+user.getNama()+"' name='username' readonly autofocus />");
                     
                     out.println("<input type='password' value='"+user.getPassword()+"' placeholder='Password' name='password' autofocus />");
                     

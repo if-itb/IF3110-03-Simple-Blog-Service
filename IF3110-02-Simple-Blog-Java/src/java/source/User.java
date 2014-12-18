@@ -172,8 +172,9 @@ public class User {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         List<DataUser> userlist = blog.getAllUser();
         for(DataUser user : userlist) {
-            if(user.getUsername().equals(this.username)) {
-                setNama(user.getNama());
+            if(user.getIdFirebase().equals(this.getIdFirebase())) {
+                //setNama(user.getNama());
+                nama = user.getNama();
                 setPassword(user.getPassword());
                 setEmail(user.getEmail());
                 setRole(user.getRole());

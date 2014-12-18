@@ -46,7 +46,7 @@
         <% CookieHelper cookie = new CookieHelper(request.getCookies());
            //apabila tidak ada cookie
            if(!cookie.thereIsCookie()) {
-               response.sendRedirect("../login/index.html");
+               response.sendRedirect("../index.jsp");
            }
          %>
         <% Post post = new Post(); %>
