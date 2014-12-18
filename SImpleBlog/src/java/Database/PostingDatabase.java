@@ -378,26 +378,14 @@ public class PostingDatabase {
         String Email = request.getParameter("EditEmail");
         String Password = request.getParameter("EditPassword");
         String Role = SelectedItem;
-        
-//        try (Connection con = makeConnection()) {
-//            PreparedStatement ps;
-//            String query = "UPDATE `user` SET `Password`=?,`Name`=?,`email`=?,`Role`=? WHERE `Username`=?";
-//            ps= con.prepareStatement(query);
-//            
-//            ps.setString(1,Password);
-//            ps.setString(2,Name);
-//            ps.setString(3,Email);
-//            ps.setString(4,Role);
-//            ps.setString(5,Username);
-//            int i = ps.executeUpdate();
-//            con.close();
-//        }
         editUser(Username, Password, Name, Email, Role);
     }
     
     public void find() throws Exception_Exception, IOException{
         HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         SearchContent = search(request.getParameter("search"));
+        System.out.println(SearchContent.get(0).getAuthor());
+        System.out.println(SearchContent.get(0).getJudul());
         ExternalContext extCont = FacesContext.getCurrentInstance().getExternalContext();
         extCont.redirect("/SImpleBlog/Search.xhtml");
     }
