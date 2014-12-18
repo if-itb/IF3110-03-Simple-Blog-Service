@@ -72,6 +72,15 @@
           <div class="col-md-2 col-md-offset-1">
             <div class="sidebar"><h:form>
               <ul class="nav nav-pills nav-stacked text-center">
+                <div class="input-group custom-search-form">
+                    <h:inputText styleClass="form-control" id="judul" binding="#{judul}" />
+                            <span class="input-group-btn">
+                            <h:commandLink type="button" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <f:param name="id" value="#{thepost.id}" />
+                            </h:commandLink>
+                            </span>
+                </div><br></br>
                 <li role="presentation" class="active"><a> You are #{cookie.cRole.value}. </a></li>
                 <li role="presentation"><img src="resources/bootstrap/img/side2.jpg" class="center-block img-responsive img-thumbnail"></img></li>
                 <li role="presentation"><img src="resources/bootstrap/img/haha.jpg" class="center-block img-responsive img-thumbnail"></img></li>

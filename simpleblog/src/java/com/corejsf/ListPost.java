@@ -10,6 +10,8 @@ import java.util.*;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 @ManagedBean(name = "listpost")
 @RequestScoped
@@ -24,41 +26,26 @@ public class ListPost {
     private ArrayList<Post> deleted_posts;
     
     public ListPost(){
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
         published_posts = new ArrayList<Post>();
         unpublished_posts = new ArrayList<Post>();
         deleted_posts = new ArrayList<Post>();
-       /* Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/simpleblog";
-        String user = "root";
-        String driver = "com.mysql.jdbc.Driver";
-        String password = "";
-        try {
-            Class.forName(driver).newInstance();
-            con = DriverManager.getConnection(url, user, password);
-            Statement sm = con.createStatement();
-            ResultSet res = sm.executeQuery("SELECT * FROM post ORDER BY Tanggal DESC, id DESC");
-            while(res.next()){
-                Post pos = new Post();
-                pos.setId(res.getString("id"));
-                pos.setJudul(res.getString("Judul"));
-                pos.setKonten(res.getString("Konten"));
-                pos.setStatus(res.getString("Status"));
-                pos.setTanggal(res.getString("Tanggal"));
-                pos.setDeleted(res.getString("deleted"));
-                if(pos.getDeleted().equals(1)){
-                    deleted_posts.add(pos);
-                }else if(pos.getStatus().equalsIgnoreCase("unpublished")){
-                    unpublished_posts.add(pos);
-                }else{
-                    published_posts.add(pos);
-                }
+        for(org.chamerling.heroku.service.Post p : hello.getPost()){
+            Post pp = new Post();
+            pp.setId(p.getId());
+            pp.setJudul(p.getJudul());
+            pp.setKonten(p.getKonten());
+            pp.setStatus(p.getStatus());
+            pp.setTanggal(p.getTanggal());
+            if(p.getDeleted().equals("1"))
+                deleted_posts.add(pp);
+            else{
+                if(p.getStatus().equalsIgnoreCase("Unpublished"))
+                    unpublished_posts.add(pp);
+                else
+                    published_posts.add(pp);
             }
-            con.close();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            System.out.println(ex.getMessage());
         }
-        finally{
-        }*/
     }
 
     public ArrayList<Post> getDeleted_posts() {

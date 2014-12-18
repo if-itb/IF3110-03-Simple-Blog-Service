@@ -16,6 +16,7 @@
     </h:head>
     
     <h:body>
+        
         <div class="container-fluid">
       
         <h:form><div class="row" id="header">
@@ -72,6 +73,15 @@
           <div class="col-md-2 col-md-offset-1">
             <div class="sidebar"><h:form>
               <ul class="nav nav-pills nav-stacked text-center">
+                <div class="input-group custom-search-form">
+                    <h:inputText styleClass="form-control" id="judul" binding="#{judul}" />
+                            <span class="input-group-btn">
+                            <h:commandLink type="button" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <f:param name="id" value="#{thepost.id}" />
+                            </h:commandLink>
+                            </span>
+                </div><br></br>
                 <c:choose>
                 <c:when test="${cookie.cRole.value eq 'Owner' || cookie.cRole.value eq 'Admin' || cookie.cRole.value eq 'Editor'}">
                     <li role="presentation" class="active"><a> You are #{cookie.cRole.value}. </a></li>
@@ -172,13 +182,13 @@
             <div class="post">
                 <div class="post-title text-center">
                     <h:form>
-                    <h:commandLink action="post" value="#{thepost.judul}">
-                        <f:param name="id" value="#{thepost.id}" />
+                        <h:commandLink action="post" value="#{thepost.judul}">
+                            <f:param name="id" value="#{thepost.id}" />
                     </h:commandLink>
                     </h:form>
                 </div>
                 <div class="post-date text-center"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> #{thepost.printTanggal()} | <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> #{thepost.status}</div>
-              <p class="text-justified">#{thepost.konten}</p>
+                <p class="text-justified">#{thepost.konten}</p>
             </div>   
                   </ui:repeat>
           </div>

@@ -8,8 +8,12 @@ package com.corejsf;
 import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 /**
  *
@@ -44,101 +48,39 @@ public class MemberController {
         this.mem.setPassword(mem.getPassword());
         this.mem.setRole(mem.getRole());
     }
-    public Connection getConnection() throws SQLException{
-        Connection con = null;
-
-        String url = "jdbc:mysql://localhost:3306/simpleblog";
-        String user = "root";
-        String driver = "com.mysql.jdbc.Driver";
-        String password = "";
-        try {
-            Class.forName(driver).newInstance();
-            con = DriverManager.getConnection(url, user, password);
-            System.out.println("Connection completed.");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        finally{
-        }
-        return con;
-    }
     
     public void addMember(String Email, String Name, String Password, String Role){
-        try{
-            Connection con = getConnection();
-            String query = "INSERT INTO member (Email, Name, Password, Role) "
-                    + "VALUES (?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, Email);            
-            ps.setString(2, Name);
-            ps.setString(3, Password);
-            ps.setString(4, Role);
-            ps.executeUpdate();
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+        hello.addMember(Email, Name, Password, Role);
+        try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
-            con.close();
-        } catch (IOException | SQLException ex) {
-            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
         }
     }
     
     public void edit(){
-        Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/simpleblog";
-        String user = "root";
-        String driver = "com.mysql.jdbc.Driver";
-        String password = "";
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+        hello.editMember(mem.getId(), mem.getEmail(), mem.getName(), mem.getPassword(), mem.getRole());
         try {
-            Class.forName(driver).newInstance();            
-            con = DriverManager.getConnection(url, user, password);
-            String query = "UPDATE member SET Email=?, Name=?, Password=?, Role=? WHERE id=?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, mem.getEmail());
-            ps.setString(2, mem.getName());            
-            ps.setString(3, mem.getPassword());
-            ps.setString(4, mem.getRole());
-            ps.setString(5, mem.getId());               
-            ps.executeUpdate();
             FacesContext.getCurrentInstance().getExternalContext().redirect("user.xhtml");
-            con.close();
-        } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
         }
     }
     
     public void execute(String id){
-        Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/simpleblog";
-        String user = "root";
-        String driver = "com.mysql.jdbc.Driver";
-        String password = "";        
-        try {
-            Class.forName(driver).newInstance();
-            con = DriverManager.getConnection(url, user, password);
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM member WHERE id="+id);
-            ResultSet res = ps.executeQuery();
-            while(res.next()){
-                mem.setEmail(res.getString("Email"));
-                mem.setName(res.getString("Name"));
-                mem.setPassword(res.getString("Password"));
-                mem.setRole(res.getString("Role"));
-                mem.setId(id);
-                this.id = id;
-            }            
-            con.close();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+        org.chamerling.heroku.service.Member1 mm = hello.getMemberById(id);
+        mem.setEmail(mm.getEmail());
+        mem.setId(mm.getId());
+        mem.setName(mm.getName());
+        mem.setPassword(mm.getPassword());
+        mem.setRole(mm.getRole());
+        this.id = id;
     }
     
-    public String deleteMember(int id){
-        try{
-            Connection con = getConnection();
-            PreparedStatement ps = con.prepareStatement("DELETE FROM member WHERE id=?");
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            con.close();
-        } catch(SQLException e){            
-        }
+    public String deleteMember(String id){
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+        hello.deleteMember(id);
         return "user?faces-redirect=true";
     }
 }

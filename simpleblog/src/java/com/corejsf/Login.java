@@ -5,12 +5,6 @@
  */
 package com.corejsf;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -28,11 +22,11 @@ public class Login {
     private String email;
     private String password;
     private String role;
-    private int id;
+    private String id;
     private String dbEmail;
     private String dbPassword;
     private String dbRole;
-    private int dbId;
+    private String dbId;
     
     public Login(){
         checkCookie();
@@ -54,7 +48,7 @@ public class Login {
         return dbRole;
     }
     
-    public int getId(){
+    public String getId(){
         return id;
     }
     
@@ -66,7 +60,7 @@ public class Login {
         return dbPassword;
     }
     
-    public int getDbId(){
+    public String getDbId(){
         return dbId;
     }
     
@@ -94,55 +88,45 @@ public class Login {
         this.dbRole = dbRole;
     }
     
-    public void setId(int id){
+    public void setId(String id){
         this.id = id;
     }
     
-    public void setDbId(int dbId){
+    public void setDbId(String dbId){
         this.dbId = dbId;
     }
     
     public void fetchDb(String email_){
-        if(email_ != null){
-            Connection con = null;
-            String url = "jdbc:mysql://localhost:3306/simpleblog";
-            String user = "root";
-            String password = "";
-            String driver = "com.mysql.jdbc.Driver";
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            try {
-                Class.forName(driver).newInstance();
-                con = DriverManager.getConnection(url, user, password);
-                Statement sm = con.createStatement();
-                String sql = "SELECT id,Email,Password,Role FROM member WHERE Email = '" + email_ + "'";
-                ps = con.prepareStatement(sql);
-                rs = ps.executeQuery();
-                rs.next();
-                dbEmail = rs.getString("Email");
-                dbPassword = rs.getString("Password");
-                dbRole = rs.getString("Role");
-                dbId = rs.getInt("id");
-                role = rs.getString("Role");
-                id = rs.getInt("id");
-                // close connection
-                con.close();
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-                System.out.println(ex.getMessage());
+        ListMember lm = new ListMember();
+        if(lm.getMembers().size()>0){            
+            int i = 0;
+            while(!lm.getMembers().get(i).getEmail().equals(email_) && i < lm.getMembers().size()-1){
+                i++;
             }
-            finally{}
+            if(i == lm.getMembers().size()-1){
+                if(!lm.getMembers().get(lm.getMembers().size()-1).getEmail().equals(email_)){
+                    i = lm.getMembers().size();
+                }
+            }
+            if(i < lm.getMembers().size()){
+                dbEmail = lm.getMembers().get(i).getEmail();
+                dbId = lm.getMembers().get(i).getId();
+                dbPassword = lm.getMembers().get(i).getPassword();
+                dbRole = lm.getMembers().get(i).getRole();
+            }
         }
     }
     
     public String startLogin(){
         fetchDb(email);
+        System.out.println("ciao " + dbPassword + " " + password);
         if((email.equals(dbEmail)) && (password.equals(dbPassword))){
             FacesContext facesContext = FacesContext.getCurrentInstance();
             
             Cookie cEmail = new Cookie("cEmail", email);
             Cookie cPassword = new Cookie("cPassword", password);
-            Cookie cRole = new Cookie("cRole", role);
-            Cookie cId = new Cookie("cId", Integer.toString(id));
+            Cookie cRole = new Cookie("cRole", dbRole);
+            Cookie cId = new Cookie("cId", dbId);
             
             cEmail.setMaxAge(86400);
             cPassword.setMaxAge(86400);

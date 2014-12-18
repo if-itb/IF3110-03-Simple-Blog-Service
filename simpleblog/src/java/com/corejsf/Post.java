@@ -76,9 +76,17 @@ public class Post {
     }
     
     public String printTanggal(){
-        int dd = Integer.parseInt(tanggal.substring(8,10));
-        String s =  dd + " ";
-        int mm = Integer.parseInt(tanggal.substring(5, 7));
+        int i=1;
+        while(tanggal.charAt(i) != '-'){
+            i++;
+        }
+        int yy = Integer.parseInt(tanggal.substring(0, i));
+        int it = i+1;
+        do{
+            i++;
+        } while(tanggal.charAt(i) != '-');
+        int mm = Integer.parseInt(tanggal.substring(it, i));
+        int dd = Integer.parseInt(tanggal.substring(i+1, tanggal.length()));
         String m;
         switch(mm){
             case 1: m="Januari"; break;
@@ -94,7 +102,7 @@ public class Post {
             case 11: m="November"; break;
             default: m="Desember"; break;
         }
-        s = s + m + " " + (tanggal.substring(0,4));
+        String s = Integer.toString(dd) + " " + m + " " + Integer.toString(yy);
         
         return s;
     }

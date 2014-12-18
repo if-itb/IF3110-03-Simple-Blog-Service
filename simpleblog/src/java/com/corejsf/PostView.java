@@ -10,9 +10,10 @@
 
 package com.corejsf;
 
-import java.sql.*;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 @ManagedBean(name = "postview", eager=true)
 @ViewScoped
@@ -33,26 +34,14 @@ public class PostView {
     public void setId(String id){
         this.id = id;
         pos.setId(id);
-        /*Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/simpleblog";
-        String user = "root";
-        String driver = "com.mysql.jdbc.Driver";
-        String password = "";
-        try {
-            Class.forName(driver).newInstance();
-            con = DriverManager.getConnection(url, user, password);
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM post WHERE id="+id);
-            ResultSet res = ps.executeQuery();
-            while(res.next()){
-                pos.setJudul(res.getString("Judul"));
-                pos.setKonten(res.getString("Konten"));
-                pos.setStatus(res.getString("Status"));
-                pos.setTanggal(res.getString("Tanggal"));
-            }
-            con.close();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            System.out.println(ex.getMessage());
-        }*/
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+        org.chamerling.heroku.service.Post p = hello.getPostById(id);
+        pos.setId(p.getId());
+        pos.setJudul(p.getJudul());
+        pos.setKonten(p.getKonten());
+        pos.setStatus(p.getStatus());
+        pos.setTanggal(p.getTanggal());
+        pos.setDeleted(p.getDeleted());
     }
     public void setPos(Post pos){
         this.pos = new Post();

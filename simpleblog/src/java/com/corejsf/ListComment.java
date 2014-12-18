@@ -11,8 +11,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 /**
  *
@@ -37,31 +40,19 @@ public class ListComment {
     }
     
     public ArrayList<Comment> execute(String id_post){
-        System.out.println("NYUUU "+ id_post);
         comments = new ArrayList<Comment>();
-        Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/simpleblog";
-        String user = "root";
-        String driver = "com.mysql.jdbc.Driver";
-        String password = "";
-        try {
-            Class.forName(driver).newInstance();
-            con = DriverManager.getConnection(url, user, password);
-            Statement sm = con.createStatement();
-            ResultSet res = sm.executeQuery("SELECT * FROM comment WHERE id_post="+id_post+" ORDER BY Tanggal DESC, id DESC");
-            while(res.next()){
-                Comment com = new Comment();
-                com.setId(res.getString("id"));
-                com.setIdPost(id_post);
-                com.setEmail(res.getString("Email"));
-                com.setNama(res.getString("Nama"));
-                com.setTanggal(res.getString("Tanggal"));
-                com.setKomentar(res.getString("Komentar"));
-                comments.add(com);
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+        if(!hello.getCommentPost(id_post).isEmpty()){
+            for(org.chamerling.heroku.service.Comment c : hello.getCommentPost(id_post)){
+                Comment _c = new Comment();
+                _c.setId(c.getId());
+                _c.setIdPost(id_post);
+                _c.setKomentar(c.getKomentar());
+                _c.setNama(c.getNama());
+                _c.setTanggal(c.getTanggal());
+                _c.setEmail(c.getEmail());
+                comments.add(_c);
             }
-            con.close();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            System.out.println(ex.getMessage());
         }
         return comments;
     }

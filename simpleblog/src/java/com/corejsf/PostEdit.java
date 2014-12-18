@@ -11,11 +11,12 @@
 package com.corejsf;
 
 import java.io.IOException;
-import java.sql.*;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 @ManagedBean(name = "postedit")
 @ViewScoped
@@ -46,52 +47,23 @@ public class PostEdit implements Serializable {
     }
     
     public void edit(){
-        Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/simpleblog";
-        String user = "root";
-        String driver = "com.mysql.jdbc.Driver";
-        String password = "";
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+        hello.editPost(id, pos.getJudul(), pos.getTanggal(), pos.getKonten(), pos.getStatus(), pos.getDeleted());
         try {
-            Class.forName(driver).newInstance();            
-            con = DriverManager.getConnection(url, user, password);
-            String query = "UPDATE post SET Judul=?, Konten=?, Tanggal=? WHERE id=?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, pos.getJudul());
-            ps.setString(2, pos.getKonten());            
-            ps.setString(3, pos.getTanggal());
-            ps.setString(4, pos.getId());   
-            
-            ps.executeUpdate();
             FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-            con.close();
-        } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
         }
     }
     
     public void execute(String id){
-        Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/simpleblog";
-        String user = "root";
-        String driver = "com.mysql.jdbc.Driver";
-        String password = "";        
-        try {
-            Class.forName(driver).newInstance();
-            con = DriverManager.getConnection(url, user, password);
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM post WHERE id="+id);
-            ResultSet res = ps.executeQuery();
-            while(res.next()){
-                pos.setJudul(res.getString("Judul"));
-                pos.setKonten(res.getString("Konten"));
-                pos.setStatus(res.getString("Status"));
-                pos.setTanggal(res.getString("Tanggal"));
-                pos.setDeleted(res.getString("deleted"));
-                pos.setId(id);
-                this.id = id;
-            }            
-            con.close();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+        org.chamerling.heroku.service.Post p = hello.getPostById(id);
+        this.id = id;
+        pos.setId(id);
+        pos.setJudul(p.getJudul());
+        pos.setKonten(p.getKonten());
+        pos.setStatus(p.getStatus());
+        pos.setTanggal(p.getTanggal());
+        pos.setDeleted(p.getDeleted());
     }
 }

@@ -6,14 +6,11 @@
 
 package com.corejsf;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 /**
  *
@@ -29,31 +26,16 @@ public class ListMember {
      */
     public ListMember() {
         members = new ArrayList<Member1>();
-        /*Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/simpleblog";
-        String user = "root";
-        String driver = "com.mysql.jdbc.Driver";
-        String password = "";
-        try {
-            Class.forName(driver).newInstance();
-            con = DriverManager.getConnection(url, user, password);
-            Statement sm = con.createStatement();
-            ResultSet res = sm.executeQuery("SELECT * FROM member");
-            while(res.next()){
-                Member1 member = new Member1();
-                member.setId(res.getString("id"));
-                member.setEmail(res.getString("Email"));
-                member.setName(res.getString("Name"));
-                member.setPassword(res.getString("Password"));
-                member.setRole(res.getString("Role"));
-                members.add(member);
-            }
-            con.close();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            System.out.println(ex.getMessage());
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+        for(org.chamerling.heroku.service.Member1 mem : hello.getMember().getMembers()){
+            Member1 _mem = new Member1();
+            _mem.setId(mem.getId());
+            _mem.setEmail(mem.getEmail());
+            _mem.setName(mem.getName());
+            _mem.setPassword(mem.getPassword());
+            _mem.setRole(mem.getRole());
+            members.add(_mem);
         }
-        finally{
-        }*/
     }
 
     public void setMembers(ArrayList<Member1> members) {

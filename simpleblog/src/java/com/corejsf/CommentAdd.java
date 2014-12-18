@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.chamerling.heroku.service.HelloService;
+import org.chamerling.heroku.service.HelloServiceImplService;
 
 /**
  *
@@ -35,60 +37,17 @@ public class CommentAdd implements Serializable {
     public CommentAdd(){
     }
     
-    public Connection getConnection() throws SQLException{
-        Connection con = null;
-
-        String url = "jdbc:mysql://localhost:3306/simpleblog";
-        String user = "root";
-        String driver = "com.mysql.jdbc.Driver";
-        String password = "";
-        try {
-            Class.forName(driver).newInstance();
-            con = DriverManager.getConnection(url, user, password);
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        finally{
-        }
-        return con;
-    }
-    
     public void addComment(String name, String email, String komentar){
-        try{
-            Connection con = getConnection();
-            String query = "INSERT INTO comment (id_post, Nama, Email, Tanggal, Komentar) "
-                    + "VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, id_pos);
-            ps.setString(2, name);
-            ps.setString(3, email);
-            CurrentDate cd = new CurrentDate();
-            ps.setString(4, cd.getCDate());
-            ps.setString(5, komentar);
-            ps.executeUpdate();
-            //FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+        CurrentDate cdate = new CurrentDate();
+        hello.addComment(id_pos, name, email, komentar, cdate.getCDate());
     }
 
     public void addCommentUser(String id, String komentar){
-        try {
-            Connection con = getConnection();
-            Statement sm = con.createStatement();
-            ResultSet res = sm.executeQuery("SELECT * FROM member WHERE id="+ Integer.parseInt(id));
-            String email="";
-            String nama="";
-            while(res.next()){
-                email = res.getString("Email");
-                nama = res.getString("Name");
-            }
-            con.close();
-            addComment(nama, email, komentar);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        HelloService hello = new HelloServiceImplService().getHelloServiceImplPort();
+        org.chamerling.heroku.service.Member1 _mem = hello.getMemberById(id);
+        CurrentDate cdate = new CurrentDate();
+        hello.addComment(id_pos, _mem.getName(), _mem.getEmail(), komentar, cdate.getCDate());
     }
 
     public void execute(String i){
