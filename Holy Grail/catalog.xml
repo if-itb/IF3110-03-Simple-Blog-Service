@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/D:/Documents/Kuliah/Materi%20Semester%205/Materi%20Sekarang/IF3110%20Web%20Base%20Development/Tugas%203/Folder%20Tugas/SimpleBlog/WSDL/simpleblog.wsdl" uri="src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/simpleblog.wsdl"/>
+    <system systemId="http://hatsunemiku.herokuapp.com/HatsuneMikuService?wsdl" uri="src/conf/xml-resources/web-service-references/HatsuneMikuService/wsdl/hatsunemiku.herokuapp.com/HatsuneMikuService.wsdl"/>
+</catalog>
