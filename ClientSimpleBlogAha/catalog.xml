@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://blooming-sea-9469.herokuapp.com/FirebaseService?wsdl" uri="src/conf/xml-resources/web-service-references/FirebaseService/wsdl/blooming-sea-9469.herokuapp.com/FirebaseService.wsdl"/>
+    <system systemId="http://vanyadeasy.herokuapp.com/FirebaseService?wsdl" uri="src/conf/xml-resources/web-service-references/FirebaseService/wsdl/vanyadeasy.herokuapp.com/FirebaseService.wsdl"/>
+    <system systemId="http://firebase-simple-blog.herokuapp.com/FirebaseService?wsdl" uri="src/conf/xml-resources/web-service-references/FirebaseService/wsdl/firebase-simple-blog.herokuapp.com/FirebaseService.wsdl"/>
+</catalog>
