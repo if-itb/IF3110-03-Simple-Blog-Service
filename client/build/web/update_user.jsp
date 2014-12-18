@@ -71,7 +71,7 @@
         <h2>Update User Info</h2>
         <div id="contact-area">
         <%
-		try{
+		/*try{
 			String id = request.getParameter("id");
 			Connection connection = null;
 			Statement statement = null;
@@ -82,7 +82,7 @@
 			String Data = "select * from users where no = '"+id+"'";
 			rs = statement.executeQuery(Data);
 			
-			while(rs.next()){
+			while(rs.next()){*/
 		%>
 		<form method="post" action="handler/update.jsp">
 			<input type="hidden" id="id" name="id" value="<% out.println(id); %>">
@@ -105,11 +105,11 @@
 		</form>
 		<%
 			}
-			rs.close();
+			/*rs.close();
 			statement.close();
 			connection.close();
 		}catch(Exception ex){
-			out.println("Gagal tersambung. Terdaapat kesalahan.");
+			out.println("Gagal tersambung. Terdaapat kesalahan.");*/
 		}	
 		%>
 		</div>

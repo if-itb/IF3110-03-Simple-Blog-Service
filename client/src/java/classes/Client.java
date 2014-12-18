@@ -224,5 +224,11 @@ public class Client {
         return port.getAllUser();
     }
 
+    public static java.util.List<java.lang.String> search(java.lang.String arg0) throws IOException_Exception, JSONException_Exception, MalformedURLException_Exception {
+        org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+        org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+        return port.search(arg0);
+    }
+
    
 }
