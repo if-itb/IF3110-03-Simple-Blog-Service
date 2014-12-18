@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+>
+    <managed-bean>
+        <managed-bean-name>login_bean</managed-bean-name>
+        <managed-bean-class>beans.login_bean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>    
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>post_bean</managed-bean-name>
+        <managed-bean-class>beans.post_bean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>    
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>Post</managed-bean-name>
+        <managed-bean-class>beans.Post</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>    
+    </managed-bean>
+    <navigation-rule>
+        <description>Manajemen User</description>
+        <from-view-id>/manajemen_user.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{User.setDB(u.id)}</from-action>
+            <from-outcome>edit user</from-outcome>
+            <to-view-id>/edit_user.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{User.goToInsertPage()}</from-action>
+            <from-outcome>insert user</from-outcome>
+            <to-view-id>/insert_user.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{User.hapusUser(u.id)}</from-action>
+            <from-outcome>hapus</from-outcome>
+            <to-view-id>/manajemen_user.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+     <navigation-rule>
+        <description>Edit User</description>
+        <from-view-id>/edit_user.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{User.editUser(User.id)}</from-action>
+            <from-outcome>edit</from-outcome>
+            <to-view-id>/manajemen_user.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <description>Insert User</description>
+        <from-view-id>/insert_user.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{User.insertUser}</from-action>
+            <from-outcome>insert</from-outcome>
+            <to-view-id>/manajemen_user.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>
