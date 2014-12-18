@@ -6,6 +6,7 @@
 <%@ taglib prefix="h"  uri="http://java.sun.com/jsf/html"%>
 <f:view>
 <html>
+<f:subview id="publish" rendered="#{loginHandler.admin}">
 <%@ page import="java.io.*, java.util.*, com.test.WSDLConnector" 
 %>
 
@@ -136,4 +137,5 @@
 </script>
 </body>
 </html>
+</f:subview>
 </f:view>

@@ -87,7 +87,7 @@
           <ul class="art-list-body">
           	<%
 				for(PostModel pm : listPost){
-					if(!pm.getStatus().equals("unpublished")){
+					if(pm.getStatus().equals("published")){
           	%>
             <li class="art-list-item">
                 <div class="art-list-item-title-and-time">

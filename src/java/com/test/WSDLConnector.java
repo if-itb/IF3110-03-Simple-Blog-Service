@@ -101,6 +101,12 @@ public class WSDLConnector {
 		org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
 		return port.listUser();
 	}
+
+	public static Boolean deleteDeletedPost(java.lang.String id) {
+		org.chamerling.heroku.service.HelloServiceImplService service = new org.chamerling.heroku.service.HelloServiceImplService();
+		org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+		return port.deleteDeletedPost(id);
+	}
 	
 	
 	

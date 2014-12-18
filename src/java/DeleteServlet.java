@@ -6,6 +6,7 @@
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import com.test.WSDLConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.DriverManager;
@@ -32,19 +33,8 @@ public class DeleteServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
-        Connection conn;
-	PreparedStatement pState;
-	Random random = new Random();
-	PrintWriter out = response.getWriter();
-	try {
-            Class.forName("com.mysql.jdbc.Driver");
-            int updateQuery = 0;
-            conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/wbd_db", "root", "");
-            pState = (PreparedStatement) conn.prepareStatement("DELETE FROM post WHERE post_id = ?");
-            pState.setString(1, String.valueOf(request.getParameter("postId")));
-            updateQuery = pState.executeUpdate();
-	} catch(Exception e){out.println("Error" + e);}
-	response.sendRedirect("faces/deleted_post.jsp");
+		WSDLConnector.deleteDeletedPost(request.getParameter("postId"));
+		response.sendRedirect("faces/deleted_post.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

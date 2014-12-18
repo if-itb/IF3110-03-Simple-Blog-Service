@@ -10,7 +10,12 @@
 <f:subview id="publish" rendered="#{loginHandler.admin||loginHandler.editor}">
 <%@ page import="java.sql.*, javax.sql.*, java.io.*, javax.naming.*" 
 %>
-<%@ page import="com.mysql.jdbc.Driver" %>
+<%@ page import="java.io.*, java.util.*, com.test.WSDLConnector" 
+%>
+
+<%@ page import="org.chamerling.heroku.service.PostModel" 
+%>
+
 
 <head>
 <meta charset="utf-8">
@@ -48,18 +53,9 @@
 <body class="default">
    
 <%
-  InitialContext ctx;
-  DataSource ds;
-  Connection conn;
-  Statement stmt;
-  ResultSet rs;
-
-  try {
-    ctx = new InitialContext();
-	Class.forName("com.mysql.jdbc.Driver");
-    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wbd_db", "root", "");
-    stmt = conn.createStatement();
-    rs = stmt.executeQuery("SELECT * FROM post WHERE status='deleted' ORDER BY post_date DESC ");
+	
+	List<PostModel> listPost = new ArrayList();
+	listPost = WSDLConnector.listPost();
 %>
 <div class="wrapper">
 
@@ -78,9 +74,10 @@
     </h:form>
     <ul class="nav-primary">
        <f:subview id="publish3" rendered="#{loginHandler.admin||loginHandler.owner}"><li><a href="newpost.jsp">+ Tambah Post</a></li></f:subview>
-       <f:subview id="publish" rendered="#{loginHandler.editor||loginHandler.admin}"><li><a href="faces/publish_post.jsp">Publish Post</a></li></f:subview>
+       <f:subview id="publish" rendered="#{loginHandler.editor||loginHandler.admin}"><li><a href="publish_post.jsp">Publish Post</a></li></f:subview>
        <f:subview id="publish2" rendered="#{loginHandler.admin}"><li><a href="man_user.jsp">Manage user</a></li></f:subview>
-        <f:subview id="publish4" rendered="#{loginHandler.admin}"><li><a href="deleted_post.jsp">Manage Deleted Post</a></li></f:subview>
+      
+       <f:subview id="publish4" rendered="#{loginHandler.admin}"><li><a href="deleted_post.jsp">Manage Deleted Post</a></li></f:subview>
     </ul>
 </nav>
 
@@ -88,21 +85,22 @@
     <div class="posts">
         <nav class="art-list">
           <ul class="art-list-body">
-          	<%while(rs.next()) { 
+          	<%
+				for(PostModel pm : listPost){
+					if(pm.getStatus().equals("deleted")){
           	%>
             <li class="art-list-item">
                 <div class="art-list-item-title-and-time">
-                    <h2 class="art-list-title"><a href="post.jsp?postId=<% out.print(rs.getString("post_id")); %>"><% out.print(rs.getString("tittle"));%></a></h2>
-                    <div class="art-list-time"><% out.print(rs.getString("post_date"));%></div>
+                    <h2 class="art-list-title"><a href="post.jsp?postId=<% out.print(pm.getId()); %>"><% out.print(pm.getJudul());%></a></h2>
+                    <div class="art-list-time"><% out.print(pm.getDate());%></div>
                 </div>
-                <p><% out.print(rs.getString("konten"));%>&hellip;</p>
+                <p><% out.print(pm.getKonten());%>&hellip;</p>
                 <p>
-                    <f:subview id="asd" rendered="#{loginHandler.admin}"><a href="DeleteServlet?postId=<% out.print(rs.getString("post_id")); %>"">Hapus</a> | <a href="RestoreServlet?postId=<% out.print(rs.getString("post_id")); %>"">Restore</a>
+                     <f:subview id="asd" rendered="#{loginHandler.admin}"><a href="DeleteServlet?postId=<% out.print(rs.getString("post_id")); %>"">Hapus</a> | <a href="RestoreServlet?postId=<% out.print(rs.getString("post_id")); %>"">Restore</a>
                     </f:subview>
                 </p>
             </li>
-            <%}}
-			  catch(Exception e){out.println("Error" + e);} %>
+            <%}}%>
           </ul>
         </nav>
     </div>

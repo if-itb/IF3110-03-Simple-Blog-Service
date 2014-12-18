@@ -74,7 +74,18 @@ public class LoginHandler {
     }
     
     public String getUsername(){
-        return username;
+		if(getCookie()!=null){
+			String a = getCookie().getValue();
+			if(a==null){
+				return "";
+			}
+			else{
+				return a;
+			}
+		}
+		else{
+			return "";
+		}
     }
     
     public void setPassword(String pass){
