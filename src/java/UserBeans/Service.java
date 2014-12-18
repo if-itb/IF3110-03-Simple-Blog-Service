@@ -156,15 +156,12 @@ public class Service {
         JSONObject obj =new JSONObject(json);
         ArrayList<JSONObject> Post=new ArrayList<>();
         Iterator<String> ids=obj.keys();
-        int i=0;
         while(ids.hasNext()){
             String id_Comment=ids.next();
             JSONObject getcom=obj.getJSONObject(id_Comment);
             if(getcom.getString("judul").toUpperCase().contains(query) ||getcom.getString("konten").toUpperCase().contains(query)){
                 Post.add(getcom);
-                System.out.println("yang masuk "+i);
             }
-            i++;
         }
         return Post;
     }
