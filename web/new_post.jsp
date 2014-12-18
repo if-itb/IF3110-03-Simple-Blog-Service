@@ -3,7 +3,15 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@page import="com.github.fawwaz.heroku.service.*" %>
 
+<%! 
+    Api api = new ApiImplService().getApiImplPort();
+    String judul = ""; 
+    String tanggal= "";
+    String konten = "";
+    String idpost = "";
+%>
 
 <!DOCTYPE html>
 <html>
@@ -90,31 +98,33 @@
 
       <c:otherwise>
           <h2>Edit Post</h2>
-          <sql:query dataSource="${snapshot}" var="result">
-           SELECT * FROM `tucildb_13511097`.`listpost` WHERE `id`=<c:out value="${param.id_post}"/>;
-          </sql:query> 
-           
-           <c:forEach var="row" items="${result.rows}">
-               <c:set var="judul" value = "${row.title}" />
-               <c:set var="tanggal" value = "${row.date}" />
-               <c:set var="post" value = "${row.post}" />
-                       
-           </c:forEach>
+          <%
+                List<Post> posts = api.getAllPost();
+                
+                for (Post post : posts) {
+                if (post.getIdPost().equals(request.getParameter("id_post"))){
+                   tanggal = post.getDate();
+                   judul = post.getTitle();
+                   konten = post.getContent();
+                   idpost = post.getIdPost();
+                }
+               }
+          %>
       </c:otherwise>
 </c:choose>
            
 
             <div id="contact-area">
-                <form method="post" action="AddPost2.jsp">
+                <form method="post" action="AddPost.jsp">
                     <label for="Judul">Judul:</label>
-                    <input type="text" name="Judul" id="Judul" value="${judul}" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">
+                    <input type="text" name="Judul" id="Judul" value="<%= judul %>" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">
 
                     <label for="Tanggal">Tanggal:</label>
-                    <input type="text" name="Tanggal" id="Tanggal" value="${tanggal}"onkeyup ="ValidasiTanggal()" onmousedown ="ValidasiTanggal()" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">
+                    <input type="text" name="Tanggal" id="Tanggal" value="<%= tanggal %>"onkeyup ="ValidasiTanggal()" onmousedown ="ValidasiTanggal()" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">
                     <div id="err_pass" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">format=yyyy-mm-dd</div><br>
                     
                     <label for="Konten">Konten:</label><br>
-                    <textarea name="Konten" rows="20" cols="20" id="Konten" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">${post}</textarea>
+                    <textarea name="Konten" rows="20" cols="20" id="Konten" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()"><%= konten %></textarea>
                     <input type="hidden" name="mode" value="${param.mode}">
                     <input type="hidden" name="id_post"  value="${param.id_post}">
                     <input type="submit" id="submit" value="Simpan" class="submit-button" >

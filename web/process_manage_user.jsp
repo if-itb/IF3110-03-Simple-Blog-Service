@@ -52,7 +52,7 @@
 //            } // end of while
         
 //        boolean result = st.execute("insert into user (`id`,`username`,`password`,`email`,`role`) value("+new_id+",'" + username + "','" + password + "','" + email + "','" + role + "')");
-        api.createUser(role, email, password, username);
+        api.createUser(username, email, password, role);
         
     }else if(action.equals("update")){
         String id = request.getParameter("userid");
@@ -60,23 +60,24 @@
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String role = request.getParameter("role");
-        Class.forName("com.mysql.jdbc.Driver");
-        String url = "jdbc:mysql://localhost/tucildb_13511097";
-        Connection con = DriverManager.getConnection(url,"root", "");
-        Statement st = con.createStatement();
-        
-        boolean result = st.execute("update user set `username`='" + username + "',`password`='" + password + "',`email`='" + email +"',`role`='" + role + "' where `id`='" + id + "'");
-        
+        //Class.forName("com.mysql.jdbc.Driver");
+//        String url = "jdbc:mysql://localhost/tucildb_13511097";
+//        Connection con = DriverManager.getConnection(url,"root", "");
+//        Statement st = con.createStatement();
+//        
+//        boolean result = st.execute("update user set `username`='" + username + "',`password`='" + password + "',`email`='" + email +"',`role`='" + role + "' where `id`='" + id + "'");
+         api.updateUser(username, email, password, role);
 
     }else if(action.equals("delete")){
-        String id = request.getParameter("userid");
+        String username = request.getParameter("username");
 
-        Class.forName("com.mysql.jdbc.Driver");
-        String url = "jdbc:mysql://localhost/tucildb_13511097";
-        Connection con = DriverManager.getConnection(url,"root", "");
-        Statement st = con.createStatement();
-        out.print("ngakak");
-        boolean result = st.execute("delete from user where `id`='" + id + "'");
+       // Class.forName("com.mysql.jdbc.Driver");
+//        String url = "jdbc:mysql://localhost/tucildb_13511097";
+//        Connection con = DriverManager.getConnection(url,"root", "");
+//        Statement st = con.createStatement();
+//        out.print("ngakak");
+//        boolean result = st.execute("delete from user where `id`='" + id + "'");
+        api.deleteUser(username);
         
     }else{
         // redirect ke manage user

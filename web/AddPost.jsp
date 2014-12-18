@@ -60,7 +60,7 @@
 			e.printStackTrace();
 		}
             }*/
-            api.addPost(request.getParameter("Konten"), request.getParameter("Tanggal"), request.getParameter("Judul"), session.getAttribute("username").toString());
+            api.addPost(request.getParameter("Judul"), request.getParameter("Konten"), request.getParameter("Tanggal"), session.getAttribute("username").toString());
             %>   
           
        
@@ -70,9 +70,9 @@
       <c:otherwise>
           <c:choose>
               <c:when test="${param.mode=='1'}"> <!-- edit post-->
-              <sql:update dataSource="${snapshot}" var="count">
-                UPDATE `tucildb_13511097`.`listpost` SET `title`='<%= request.getParameter("Judul")%>',`date`='<%= request.getParameter("Tanggal")%>',`post`='<%= request.getParameter("Konten")%>' WHERE `id`=<%= request.getParameter("id_post")%>;
-              </sql:update>
+              <%
+                    api.updatePost(request.getParameter("id_post"),request.getParameter("Judul"), request.getParameter("Konten"), request.getParameter("Tanggal"), session.getAttribute("username").toString());
+              %>
           </c:when>
                 
           <c:otherwise> <!-- berarti mode=2 , delete-->

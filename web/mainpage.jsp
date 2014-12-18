@@ -43,14 +43,11 @@
 </head>
 
 <body class="default">
-    <sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
-     url="jdbc:mysql://localhost/tucildb_13511097"
-     user="root"  password=""/>
     
     <%! String role;
         String id_user;
         String username;
-        ApiImplService api;
+        Api api = new ApiImplService().getApiImplPort();
     %>
 <% TimeConverter tc = new TimeConverter(); 
     
@@ -61,7 +58,7 @@
     }else{
         role = session.getAttribute("role").toString();
    username = session.getAttribute("username").toString();
-    id_user = session.getAttribute("id_user").toString();
+    //id_user = session.getAttribute("id_user").toString();
     
     //out.print(role);
     }
@@ -99,7 +96,7 @@
     id_user = session.getAttribute("id_user").toString();*/
     
     //ngambil data
-    List<Post> posts;
+    List<Post> posts = api.getAllPost();
 %>
 
 
@@ -124,51 +121,45 @@
          
     </ul>
 </nav>
-
-<sql:query dataSource="${snapshot}" var="result">
-SELECT * FROM `tucilDB_13511097`.`listpost` where `published`='t' ORDER BY `date` DESC;
-</sql:query> 
     
 <div id="home">
     <div class="posts">
         <nav class="art-list">
           <ul class="art-list-body">
-              <c:forEach var="row" items="${result.rows}">
-                
-              <c:set var="visible" value="${row.published}"/>
+           
                   <%! String vi; %>
-                  <%  vi =  pageContext.getAttribute("visible").toString(); %>
+                  <%  
+                    for(Post post: posts){
+                        String mi = post.getUsername();
+                        String d = post.getDate();
+                        String id = post.getIdPost();
+                    
+                    //vi =  pageContext.getAttribute("visible").toString(); 
+                  %>
 
-                  <%if (vi.equals("t")) {%>
-                   <c:set var="myId" value="${row.id_user}"/>
-                   <%! String mi; %>
-                    <%  mi =  pageContext.getAttribute("myId").toString(); %>
-                  <c:set var="myTest" value="${row.date}"/>
-                    <%! String d; %>
-                    <%  d =  pageContext.getAttribute("myTest").toString(); %> 
+                 
                     <a href="mainpage.jsp"></a>
                   
                 <li class="art-list-item">
                 <div class="art-list-item-title-and-time">
-                    <h2 class="art-list-title"><a href="post.jsp?id_post=<c:out value='${row.id}'/>"><c:out value="${row.title}"/></a></h2>
+                    <h2 class="art-list-title"><a href="post.jsp?id_post=<%= id %>"><%= post.getTitle()%></a></h2>
                     <div class="art-list-time"><%= tc.ConvertDate(d) %></div>
 
                 </div>
-                <p><c:out value="${row.post}"/></p>
+                <p><%= post.getContent() %></p>
                 <p>
                    <%if(role.equals("owner")) {%>
-                         <% if (mi.equals(id_user)) {%>
-                            <a href="new_post.jsp?mode=1&id_post=<c:out value='${row.id}'/>">Edit</a> | <a href="javascript:ConfirmDelete(<c:out value='${row.id}'/>)">Hapus</a>
+                         <% if (mi.equals(username)) {%>
+                            <a href="new_post.jsp?mode=1&id_post=<%= id %>">Edit</a> | <a href="javascript:ConfirmDelete(<%= id %>)">Hapus</a>
                          <%} %>
                     <%}else if(role.equals("editor")||role.equals("admin")) { %>
-                        <a href="new_post.jsp?mode=1&id_post=<c:out value='${row.id}'/>">Edit</a> | <a href="javascript:ConfirmDelete(<c:out value='${row.id}'/>)">Hapus</a>
+                        <a href="new_post.jsp?mode=1&id_post=<%= id %>">Edit</a> | <a href="javascript:ConfirmDelete(<%= id %>)">Hapus</a>
                     <%}%>
                   
                 </p>
                 </li>
-                <% } //end of if vi %>
-             </c:forEach>
-             
+                <% } //end of if for %>
+        
             
           </ul>
         </nav>

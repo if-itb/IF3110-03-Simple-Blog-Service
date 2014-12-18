@@ -4,6 +4,11 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@page import="com.github.fawwaz.heroku.service.*" %>
+
+<%! 
+    Api api = new ApiImplService().getApiImplPort();
+%>
 
 <!DOCTYPE html>
 <html>
@@ -48,10 +53,6 @@
      url="jdbc:mysql://localhost/tucildb_13511097"
      user="root"  password=""/>
 
-<sql:query dataSource="${snapshot}" var="result">
-SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${param.id_post};
-</sql:query> 
-
 
 <%! TimeConverter tc = new TimeConverter();
     String role;%>
@@ -62,6 +63,7 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
             role = session.getAttribute("role").toString();
         }
             
+       List<Post> posts = api.getAllPost();
         %>
         
 
@@ -85,15 +87,19 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
 
 <article class="art simple post">
     
-    <c:forEach var="row" items="${result.rows}">
-         <c:set var="myTest" value="${row.date}"/>
-                    <%! String d; %>
-                    <%  d =  pageContext.getAttribute("myTest").toString(); %>
+    
+        <% 
+            for (Post post : posts) {
+                if (post.getIdPost().equals(request.getParameter("id_post"))){
+                    String d = post.getDate();
+                
+        %>
+         
     <header class="art-header">
         <div class="art-header-inner" style="margin-top: 0px; opacity: 1;">
             <time class="art-time"><%= tc.ConvertDate(d) %></time>
 
-            <h2 class="art-title"><c:out value="${row.title}"/></h2>
+            <h2 class="art-title"><%= post.getTitle() %></h2>
             <p class="art-subtitle"></p>
         </div>
     </header>
@@ -101,9 +107,11 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
     <div class="art-body">
         <div class="art-body-inner">
             <hr class="featured-article" />
-            <p><c:out value="${row.post}"/></p>
-            <hr/>    
-    </c:forEach>
+            <p><%= post.getContent()%></p>
+            <hr/>     
+            <%}
+            }// end of loop%>
+   
     
             
             <h2>Komentar</h2>
