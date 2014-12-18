@@ -419,33 +419,6 @@ public class TestService {
 		}
 		return false;
 	}
-	
-	@WebMethod(operationName = "deleteComment")
-	public boolean deleteUser(@WebParam(name = "id") int id) {
-		try {
-			boolean found = false;
-			String json = readUrl("https://tubeswbd.firebaseio.com/comment/.json");
-			JSONObject obj = new JSONObject(json);
-			Iterator<?> keys = obj.keys();
-			while(keys.hasNext() && !found){
-				String key = (String)keys.next();
-				if(!key.equals("autoId")){
-					JSONObject child = obj.getJSONObject(key);
-					if(child.getInt("id") == id){
-						Firebase base = new Firebase("https://tubeswbd.firebaseio.com/comment/");
-						base.child(key).removeValue();
-						found = true;
-					}
-				}
-			}
-			if(found)
-				return true;
-		} catch (JSONException ex) {
-			ex.printStackTrace();
-			return false;
-		}
-		return false;
-	}
 
 	@WebMethod(operationName = "search")
 	public List<Post> search(@WebParam(name = "query") String query) {
