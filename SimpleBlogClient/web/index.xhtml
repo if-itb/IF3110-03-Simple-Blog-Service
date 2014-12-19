@@ -31,6 +31,7 @@ and open the template in the editor.
                         <li><h:link value="+ Tambah Post" outcome="/new_post" /></li>
                         <li><h:link value="Publish Post" outcome="/publish_post" /></li>
                         <li><h:link value="Manajemen User" outcome="/manajemen_user" /></li>
+                        <li><h:link value="Deleted Post" outcome="/deleted_post" /></li>
                 </ul>
                 <h:form>
                     <h:inputText size="25" value="#{search.query}"></h:inputText>
@@ -61,9 +62,8 @@ and open the template in the editor.
                                     <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'owner')}" >
                                         <h:commandLink value="Edit" action="#{Post.setDBE(item.id_post)}" /> |
                                     </c:if>
-                                    <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'owner') || (login_bean.role == 'editor')}" >
                                         <h:commandLink value="Hapus" onclick="return confirm('Apakah Anda yakin menghapus pos ini?')" action="#{Post.hapusPost(item.id_post)}" />
-                                    </c:if>
+                                   
                                 </p>
                                 </h:form>
                             </li>

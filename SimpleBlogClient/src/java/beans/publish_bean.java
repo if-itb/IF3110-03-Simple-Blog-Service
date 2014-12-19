@@ -37,12 +37,24 @@ public class publish_bean {
         publishPost(id);
         return "publish";
     }
-
+    
+    public String restorePost(String id){
+        restorePost_1(id);
+        return "restore";
+    } 
+    
     private boolean publishPost(java.lang.String arg0) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
         return port.publishPost(arg0);
+    }
+
+    private boolean restorePost_1(java.lang.String arg0) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+        return port.restorePost(arg0);
     }
 
 }

@@ -17,14 +17,20 @@
   <xs:element name="editPostResponse" type="tns:editPostResponse"/>
   <xs:element name="editUser" type="tns:editUser"/>
   <xs:element name="editUserResponse" type="tns:editUserResponse"/>
+  <xs:element name="getUser" type="tns:getUser"/>
+  <xs:element name="getUserResponse" type="tns:getUserResponse"/>
   <xs:element name="listComment" type="tns:listComment"/>
   <xs:element name="listCommentResponse" type="tns:listCommentResponse"/>
   <xs:element name="listPost" type="tns:listPost"/>
   <xs:element name="listPostResponse" type="tns:listPostResponse"/>
+  <xs:element name="listTrash" type="tns:listTrash"/>
+  <xs:element name="listTrashResponse" type="tns:listTrashResponse"/>
   <xs:element name="listUser" type="tns:listUser"/>
   <xs:element name="listUserResponse" type="tns:listUserResponse"/>
   <xs:element name="publishPost" type="tns:publishPost"/>
   <xs:element name="publishPostResponse" type="tns:publishPostResponse"/>
+  <xs:element name="restorePost" type="tns:restorePost"/>
+  <xs:element name="restorePostResponse" type="tns:restorePostResponse"/>
   <xs:element name="search" type="tns:search"/>
   <xs:element name="searchResponse" type="tns:searchResponse"/>
   <xs:complexType name="addPost">
@@ -80,6 +86,16 @@
       <xs:element name="return" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="getUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="addUser">
     <xs:sequence>
       <xs:element minOccurs="0" name="arg0" type="xs:string"/>
@@ -89,6 +105,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="addUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="restorePost">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="restorePostResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:boolean"/>
     </xs:sequence>
@@ -189,6 +215,14 @@
       <xs:element name="return" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="listTrash">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="listTrashResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:post"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="publishPost">
     <xs:sequence>
       <xs:element minOccurs="0" name="arg0" type="xs:string"/>
@@ -207,6 +241,10 @@
     <xs:sequence/>
   </xs:complexType>
   <xs:element name="MalformedURLException" type="tns:MalformedURLException"/>
+  <xs:complexType name="JSONException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="JSONException" type="tns:JSONException"/>
 </xs:schema>
   </wsdl:types>
   <wsdl:message name="IOException">
@@ -215,6 +253,10 @@
   </wsdl:message>
   <wsdl:message name="addPost">
     <wsdl:part element="tns:addPost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="JSONException">
+    <wsdl:part element="tns:JSONException" name="JSONException">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="listUserResponse">
@@ -227,6 +269,10 @@
   </wsdl:message>
   <wsdl:message name="addCommentResponse">
     <wsdl:part element="tns:addCommentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="restorePost">
+    <wsdl:part element="tns:restorePost" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="deleteCommentResponse">
@@ -265,6 +311,10 @@
     <wsdl:part element="tns:editPost" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="listTrashResponse">
+    <wsdl:part element="tns:listTrashResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="searchResponse">
     <wsdl:part element="tns:searchResponse" name="parameters">
     </wsdl:part>
@@ -277,8 +327,16 @@
     <wsdl:part element="tns:editUserResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="restorePostResponse">
+    <wsdl:part element="tns:restorePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="MalformedURLException">
     <wsdl:part element="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUserResponse">
+    <wsdl:part element="tns:getUserResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="deletePost">
@@ -287,6 +345,10 @@
   </wsdl:message>
   <wsdl:message name="deletePostResponse">
     <wsdl:part element="tns:deletePostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUser">
+    <wsdl:part element="tns:getUser" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="addUser">
@@ -315,6 +377,10 @@
   </wsdl:message>
   <wsdl:message name="publishPostResponse">
     <wsdl:part element="tns:publishPostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listTrash">
+    <wsdl:part element="tns:listTrash" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="publishPost">
@@ -350,10 +416,28 @@
       <wsdl:output message="tns:deletePostResponse" name="deletePostResponse">
     </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getUser">
+      <wsdl:input message="tns:getUser" name="getUser">
+    </wsdl:input>
+      <wsdl:output message="tns:getUserResponse" name="getUserResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:MalformedURLException" name="MalformedURLException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:JSONException" name="JSONException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IOException" name="IOException">
+    </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="addUser">
       <wsdl:input message="tns:addUser" name="addUser">
     </wsdl:input>
       <wsdl:output message="tns:addUserResponse" name="addUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="restorePost">
+      <wsdl:input message="tns:restorePost" name="restorePost">
+    </wsdl:input>
+      <wsdl:output message="tns:restorePostResponse" name="restorePostResponse">
     </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="deleteComment">
@@ -404,6 +488,12 @@
       <wsdl:input message="tns:editPost" name="editPost">
     </wsdl:input>
       <wsdl:output message="tns:editPostResponse" name="editPostResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listTrash">
+      <wsdl:input message="tns:listTrash" name="listTrash">
+    </wsdl:input>
+      <wsdl:output message="tns:listTrashResponse" name="listTrashResponse">
     </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="publishPost">
@@ -457,12 +547,39 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="MalformedURLException">
+        <soap:fault name="MalformedURLException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="JSONException">
+        <soap:fault name="JSONException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault name="IOException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="addUser">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="addUser">
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="addUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="restorePost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="restorePost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="restorePostResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
@@ -538,6 +655,15 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="editPostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listTrash">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listTrash">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listTrashResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>

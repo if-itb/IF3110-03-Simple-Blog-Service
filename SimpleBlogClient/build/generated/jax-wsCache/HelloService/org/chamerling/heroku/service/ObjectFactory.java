@@ -25,18 +25,21 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _Search_QNAME = new QName("http://service.heroku.chamerling.org/", "search");
+    private final static QName _ListTrashResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "listTrashResponse");
     private final static QName _DeleteCommentResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "deleteCommentResponse");
     private final static QName _AddComment_QNAME = new QName("http://service.heroku.chamerling.org/", "addComment");
     private final static QName _DeleteUserResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "deleteUserResponse");
     private final static QName _EditUserResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "editUserResponse");
     private final static QName _PublishPostResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "publishPostResponse");
     private final static QName _EditPost_QNAME = new QName("http://service.heroku.chamerling.org/", "editPost");
+    private final static QName _GetUserResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "getUserResponse");
+    private final static QName _RestorePostResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "restorePostResponse");
     private final static QName _AddPost_QNAME = new QName("http://service.heroku.chamerling.org/", "addPost");
     private final static QName _ListPost_QNAME = new QName("http://service.heroku.chamerling.org/", "listPost");
     private final static QName _IOException_QNAME = new QName("http://service.heroku.chamerling.org/", "IOException");
     private final static QName _AddUserResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "addUserResponse");
-    private final static QName _ListUser_QNAME = new QName("http://service.heroku.chamerling.org/", "listUser");
     private final static QName _ListComment_QNAME = new QName("http://service.heroku.chamerling.org/", "listComment");
+    private final static QName _ListUser_QNAME = new QName("http://service.heroku.chamerling.org/", "listUser");
     private final static QName _PublishPost_QNAME = new QName("http://service.heroku.chamerling.org/", "publishPost");
     private final static QName _ListPostResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "listPostResponse");
     private final static QName _DeletePostResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "deletePostResponse");
@@ -45,11 +48,15 @@ public class ObjectFactory {
     private final static QName _AddCommentResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "addCommentResponse");
     private final static QName _DeleteUser_QNAME = new QName("http://service.heroku.chamerling.org/", "deleteUser");
     private final static QName _SearchResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "searchResponse");
+    private final static QName _ListTrash_QNAME = new QName("http://service.heroku.chamerling.org/", "listTrash");
     private final static QName _DeleteComment_QNAME = new QName("http://service.heroku.chamerling.org/", "deleteComment");
     private final static QName _ListUserResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "listUserResponse");
     private final static QName _MalformedURLException_QNAME = new QName("http://service.heroku.chamerling.org/", "MalformedURLException");
     private final static QName _AddPostResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "addPostResponse");
     private final static QName _EditUser_QNAME = new QName("http://service.heroku.chamerling.org/", "editUser");
+    private final static QName _GetUser_QNAME = new QName("http://service.heroku.chamerling.org/", "getUser");
+    private final static QName _RestorePost_QNAME = new QName("http://service.heroku.chamerling.org/", "restorePost");
+    private final static QName _JSONException_QNAME = new QName("http://service.heroku.chamerling.org/", "JSONException");
     private final static QName _DeletePost_QNAME = new QName("http://service.heroku.chamerling.org/", "deletePost");
     private final static QName _ListCommentResponse_QNAME = new QName("http://service.heroku.chamerling.org/", "listCommentResponse");
 
@@ -61,19 +68,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ListComment }
-     * 
-     */
-    public ListComment createListComment() {
-        return new ListComment();
-    }
-
-    /**
      * Create an instance of {@link ListUser }
      * 
      */
     public ListUser createListUser() {
         return new ListUser();
+    }
+
+    /**
+     * Create an instance of {@link ListComment }
+     * 
+     */
+    public ListComment createListComment() {
+        return new ListComment();
     }
 
     /**
@@ -157,6 +164,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ListTrashResponse }
+     * 
+     */
+    public ListTrashResponse createListTrashResponse() {
+        return new ListTrashResponse();
+    }
+
+    /**
      * Create an instance of {@link DeleteCommentResponse }
      * 
      */
@@ -186,6 +201,22 @@ public class ObjectFactory {
      */
     public EditPost createEditPost() {
         return new EditPost();
+    }
+
+    /**
+     * Create an instance of {@link GetUserResponse }
+     * 
+     */
+    public GetUserResponse createGetUserResponse() {
+        return new GetUserResponse();
+    }
+
+    /**
+     * Create an instance of {@link RestorePostResponse }
+     * 
+     */
+    public RestorePostResponse createRestorePostResponse() {
+        return new RestorePostResponse();
     }
 
     /**
@@ -221,6 +252,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RestorePost }
+     * 
+     */
+    public RestorePost createRestorePost() {
+        return new RestorePost();
+    }
+
+    /**
+     * Create an instance of {@link GetUser }
+     * 
+     */
+    public GetUser createGetUser() {
+        return new GetUser();
+    }
+
+    /**
      * Create an instance of {@link SearchResponse }
      * 
      */
@@ -229,11 +276,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DeleteComment }
+     * Create an instance of {@link ListTrash }
      * 
      */
-    public DeleteComment createDeleteComment() {
-        return new DeleteComment();
+    public ListTrash createListTrash() {
+        return new ListTrash();
     }
 
     /**
@@ -242,6 +289,14 @@ public class ObjectFactory {
      */
     public ListUserResponse createListUserResponse() {
         return new ListUserResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeleteComment }
+     * 
+     */
+    public DeleteComment createDeleteComment() {
+        return new DeleteComment();
     }
 
     /**
@@ -258,6 +313,14 @@ public class ObjectFactory {
      */
     public ListCommentResponse createListCommentResponse() {
         return new ListCommentResponse();
+    }
+
+    /**
+     * Create an instance of {@link JSONException }
+     * 
+     */
+    public JSONException createJSONException() {
+        return new JSONException();
     }
 
     /**
@@ -318,6 +381,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListTrashResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.chamerling.org/", name = "listTrashResponse")
+    public JAXBElement<ListTrashResponse> createListTrashResponse(ListTrashResponse value) {
+        return new JAXBElement<ListTrashResponse>(_ListTrashResponse_QNAME, ListTrashResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DeleteCommentResponse }{@code >}}
      * 
      */
@@ -372,6 +444,24 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.chamerling.org/", name = "getUserResponse")
+    public JAXBElement<GetUserResponse> createGetUserResponse(GetUserResponse value) {
+        return new JAXBElement<GetUserResponse>(_GetUserResponse_QNAME, GetUserResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RestorePostResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.chamerling.org/", name = "restorePostResponse")
+    public JAXBElement<RestorePostResponse> createRestorePostResponse(RestorePostResponse value) {
+        return new JAXBElement<RestorePostResponse>(_RestorePostResponse_QNAME, RestorePostResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AddPost }{@code >}}
      * 
      */
@@ -408,21 +498,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ListUser }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.heroku.chamerling.org/", name = "listUser")
-    public JAXBElement<ListUser> createListUser(ListUser value) {
-        return new JAXBElement<ListUser>(_ListUser_QNAME, ListUser.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ListComment }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://service.heroku.chamerling.org/", name = "listComment")
     public JAXBElement<ListComment> createListComment(ListComment value) {
         return new JAXBElement<ListComment>(_ListComment_QNAME, ListComment.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListUser }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.chamerling.org/", name = "listUser")
+    public JAXBElement<ListUser> createListUser(ListUser value) {
+        return new JAXBElement<ListUser>(_ListUser_QNAME, ListUser.class, null, value);
     }
 
     /**
@@ -498,6 +588,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListTrash }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.chamerling.org/", name = "listTrash")
+    public JAXBElement<ListTrash> createListTrash(ListTrash value) {
+        return new JAXBElement<ListTrash>(_ListTrash_QNAME, ListTrash.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DeleteComment }{@code >}}
      * 
      */
@@ -540,6 +639,33 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://service.heroku.chamerling.org/", name = "editUser")
     public JAXBElement<EditUser> createEditUser(EditUser value) {
         return new JAXBElement<EditUser>(_EditUser_QNAME, EditUser.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUser }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.chamerling.org/", name = "getUser")
+    public JAXBElement<GetUser> createGetUser(GetUser value) {
+        return new JAXBElement<GetUser>(_GetUser_QNAME, GetUser.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RestorePost }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.chamerling.org/", name = "restorePost")
+    public JAXBElement<RestorePost> createRestorePost(RestorePost value) {
+        return new JAXBElement<RestorePost>(_RestorePost_QNAME, RestorePost.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link JSONException }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.chamerling.org/", name = "JSONException")
+    public JAXBElement<JSONException> createJSONException(JSONException value) {
+        return new JAXBElement<JSONException>(_JSONException_QNAME, JSONException.class, null, value);
     }
 
     /**

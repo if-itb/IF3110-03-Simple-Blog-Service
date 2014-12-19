@@ -33,7 +33,11 @@ and open the template in the editor.
             <div class="posts">
                 <nav class="art-list">
                   <ul class="art-list-body">
-                      
+                      <li class="art-list-item">
+                        <div class="art-list-item-title-and-time">
+                            <h2 class="art-list-title"><a href="#"></a>Publish Post</h2>
+                        </div>
+                      </li>
                     <c:forEach var="item" items="#{post_bean.dbData()}">  
                         <c:if test="#{!item.status}">
                             <div>#{publish_bean.setId(item.id_post)}</div>

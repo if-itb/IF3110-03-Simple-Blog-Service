@@ -35,12 +35,11 @@ and open the template in the editor.
                   <ul class="art-list-body">
                       <li class="art-list-item">
                         <div class="art-list-item-title-and-time">
-                            <h2 class="art-list-title"><a href="#"></a>Publish Post</h2>
+                            <h2 class="art-list-title"><a href="#"></a>Deleted Post</h2>
                         </div>
                       </li>
-                    <c:forEach var="item" items="#{post_bean.dbData()}">  
-                        <c:if test="#{!item.status}">
-                            <div>#{publish_bean.setId(item.id_post)}</div>
+                      <c:forEach var="item" items="#{post_bean.deletedPost()}">
+                        <div>#{publish_bean.setId(item.id_post)}</div>
                         <li class="art-list-item">
                             <div class="art-list-item-title-and-time">
                                 <h2 class="art-list-title"><a href="#"></a>#{item.judul}</h2>
@@ -51,15 +50,11 @@ and open the template in the editor.
                             <p>${fn:substring(string1, 0, 225)} ...</p>
                             <h:form>
                             <p>
-                                <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'owner')}" >
-                              <h:commandLink value="Edit" action="#{Post.setDBE(item.id_post)}" /> |
-                                </c:if>
-                                <h:commandLink value="Publish" action="#{publish_bean.changeStatus(item.id_post)}" onclick="return confirm('Apakah Anda ingin mem-publish pos ini?')" /> 
-                               <!-- <a href="javascript:konfirmPublish()" onclick="{publish_bean.changeStatus(item.id_post)}" >Publish</a> -->
-                            </p>
+                                    <h:commandLink value="Restore" action="#{publish_bean.restorePost(item.id_post)}" onclick="return confirm('Apakah Anda ingin mem-restore pos ini?')" /> 
+                               
+                                </p>
                             </h:form>
                         </li>
-                        </c:if>
                     </c:forEach>
                     
                   </ul>
