@@ -25,7 +25,7 @@
                     <div class="content"> <p id="postKonten"><h:outputText value="#{post.kontenFront}" escape="false"/></p>
                         <span style="display:#{postController.DelEditpublishedpost(usercontroller.cookieType)}"> 
                             <a href="editpost.xhtml?pid=#{post.id}"><button class="button">UBAH</button> </a> | 
-                            <a onclick="deletePost(#{post.id})"><button class="button">HAPUS</button></a> 
+                            <a onclick="deletePost('#{post.id}')"><button class="button" >HAPUS</button></a> 
                         </span>
                     </div>
 		</div>
@@ -33,10 +33,9 @@
 	</div>
 	<script type="text/javascript">
 		function deletePost(pid){
-                    alert ("hoho");
-//if (confirm("Apakah yakin ingin menghapus post ini?") === true) {
-		    //    location.href = 'deletepost.xhtml?pid='+pid;
-		    //}
+                    if (confirm("Apakah yakin ingin menghapus post ini?") === true) {
+		       location.href = 'deletepost.xhtml?pid='+pid;
+		    }
 		};
 	</script>
 </body>
