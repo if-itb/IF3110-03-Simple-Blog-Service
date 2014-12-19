@@ -2,6 +2,7 @@
  */
 package source;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.chamerling.heroku.service.BlogService;
@@ -426,6 +427,16 @@ public class Post {
     public void publishPost(String post_ID) throws InterruptedException_Exception {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         try {
+            List<org.chamerling.heroku.service.Post> allPost = blog.getAllPost();
+            for(org.chamerling.heroku.service.Post post : allPost)
+            {
+                if(post.getIdFirebasePost().equals(post_ID))
+                {
+                    this.judulPost = post.getJudulPost();
+                    this.kontenPost = post.getKonten();
+                    this.tanggalPost = post.getTanggal();
+                }
+            }
             blog.editPost(post_ID, judulPost, tanggalPost, kontenPost, "1");
         } catch (InterruptedException_Exception e) {
             
@@ -443,6 +454,16 @@ public class Post {
     public void editPost(String post_ID, String judul, String tanggal, String konten) {
         BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
         try {
+            List<org.chamerling.heroku.service.Post> allPost = blog.getAllPost();
+            for(org.chamerling.heroku.service.Post post : allPost)
+            {
+                if(post.getIdFirebasePost().equals(post_ID))
+                {
+                    this.judulPost = post.getJudulPost();
+                    this.kontenPost = post.getKonten();
+                    this.tanggalPost = post.getTanggal();
+                }
+            }
             blog.editPost(post_ID, judulPost, tanggalPost, kontenPost, publishStatus);
         } catch (InterruptedException_Exception e) {
             

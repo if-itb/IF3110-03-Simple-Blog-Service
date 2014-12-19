@@ -50,6 +50,6 @@
            }
          %>
         <% Post post = new Post(); %>
-        <% post.publishPost(Integer.valueOf(request.getParameter("id"))); %>
+        <% post.publishPost(request.getParameter("id")); %>
     </body>
 </html>

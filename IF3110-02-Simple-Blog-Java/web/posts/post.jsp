@@ -47,7 +47,7 @@
         <![endif]-->
         <%
             Post post = new Post();
-            int ID = Integer.valueOf(request.getParameter("id"));            
+            String ID = request.getParameter("id");
             post.setAtribut(ID);
             CookieHelper cookie = new CookieHelper(request.getCookies());
             String nama = "";
@@ -90,16 +90,17 @@
                         <%
                             BlogService blog = new BlogServiceImplService().getBlogServiceImplPort();
                             List<DataUser> userlist = blog.getAllUser();
-                            DataUser user;
+                            DataUser user = new DataUser();
                             for(DataUser usr : userlist) {
                                 if(usr.getUsername().equals(cookie.getUsername())) {
+                                    user = usr;
                                     break;
                                 }
                             }
                             if(cookie.thereIsCookie()) {
                                 nama = user.getUsername();
                                 email = user.getEmail();
-                            }
+                            
                             %>
                                 <label for="Nama">Nama:</label>
                                 <input type="text" name="Nama" id="Nama" value="<%= nama %>" aria-required="true" required="" readonly>
