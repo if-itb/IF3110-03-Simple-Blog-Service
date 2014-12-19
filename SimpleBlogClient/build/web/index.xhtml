@@ -36,12 +36,15 @@ and open the template in the editor.
                         <li><h:link value="Publish Post" outcome="publish_post" /></li>
                     </c:if>
                     <c:if test="${(login_bean.role == 'admin')}" >
-                        <li><h:link value="Manajemen User" outcome="manajemen_user.xhtml" /></li>
-                        <li><h:link value="Deleted Post" outcome="deleted_post.xhtml" /></li>
+                        <li><h:link value="Manajemen User" outcome="manajemen_user" /></li>
+                        <li><h:link value="Deleted Post" outcome="deleted_post" /></li>
                     </c:if>
-                    <!--<c:if test="${(login_bean.role == null)}" >-->
+                    <c:if test="${(login_bean.role == null)}" >
                         <li><h:link value="Login" outcome="login.xhtml" /></li>
-                    <!--</c:if>-->
+                    </c:if>
+                    <c:if test="${(login_bean.role != null)}" >
+                        <li><h:link value="Logout" outcome="#{login_bean.logout()}" /></li>
+                    </c:if>
                 </ul>
                 <h:form>
                     <h:inputText size="25" value="#{search.query}"></h:inputText>

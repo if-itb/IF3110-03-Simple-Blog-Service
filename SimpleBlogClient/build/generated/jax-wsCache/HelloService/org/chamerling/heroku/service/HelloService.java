@@ -74,8 +74,8 @@ public interface HelloService {
      * 
      * @return
      *     returns java.util.List<org.chamerling.heroku.service.Post>
-     * @throws MalformedURLException_Exception
      * @throws IOException_Exception
+     * @throws MalformedURLException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -101,20 +101,23 @@ public interface HelloService {
 
     /**
      * 
+     * @param arg1
      * @param arg0
      * @return
-     *     returns boolean
-     * @throws MalformedURLException_Exception
+     *     returns org.chamerling.heroku.service.User
      * @throws IOException_Exception
+     * @throws MalformedURLException_Exception
      * @throws JSONException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getUser", targetNamespace = "http://service.heroku.chamerling.org/", className = "org.chamerling.heroku.service.GetUser")
     @ResponseWrapper(localName = "getUserResponse", targetNamespace = "http://service.heroku.chamerling.org/", className = "org.chamerling.heroku.service.GetUserResponse")
-    public boolean getUser(
+    public User getUser(
         @WebParam(name = "arg0", targetNamespace = "")
-        String arg0)
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1)
         throws IOException_Exception, JSONException_Exception, MalformedURLException_Exception
     ;
 
@@ -191,8 +194,8 @@ public interface HelloService {
      * @param arg0
      * @return
      *     returns java.util.List<org.chamerling.heroku.service.Komentar>
-     * @throws MalformedURLException_Exception
      * @throws IOException_Exception
+     * @throws MalformedURLException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -234,8 +237,8 @@ public interface HelloService {
      * 
      * @return
      *     returns java.util.List<org.chamerling.heroku.service.User>
-     * @throws MalformedURLException_Exception
      * @throws IOException_Exception
+     * @throws MalformedURLException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")

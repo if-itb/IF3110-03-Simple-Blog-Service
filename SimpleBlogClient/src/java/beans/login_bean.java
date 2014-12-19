@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -24,6 +23,7 @@ import org.chamerling.heroku.service.HelloServiceImplService;
 import org.chamerling.heroku.service.IOException_Exception;
 import org.chamerling.heroku.service.JSONException_Exception;
 import org.chamerling.heroku.service.MalformedURLException_Exception;
+import org.chamerling.heroku.service.User;
 
 /**
  *
@@ -38,7 +38,6 @@ public class login_bean implements Serializable {
     private boolean remember;
     private String role;
     private String email;
-    public static String passMySql = "9999";
     
     public login_bean(){
         this.checkCookie();
@@ -81,18 +80,7 @@ public class login_bean implements Serializable {
     }
     
     public String getRole(){
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String navto;
-        if (request.isUserInRole("admin")){
-            navto = "admin";
-        } else if (request.isUserInRole("editor")){
-            navto = "editor";
-        } else if (request.isUserInRole("owner")){
-            navto = "owner";
-        } else {
-            navto ="guest";
-        }
-        return navto;
+        return role;
     }
     
     public void setRole(String role){
@@ -135,7 +123,7 @@ public class login_bean implements Serializable {
         if (session != null){
             session.invalidate();;
         }
-        FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/login.xhtml");
+        FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml");
     }
     
     public void doCookie(){
@@ -197,8 +185,11 @@ public class login_bean implements Serializable {
         }
     }
     
-    public String checkValidUser(String nama) throws JSONException_Exception, MalformedURLException_Exception, IOException_Exception{
-        if(getUser(nama)){
+    public String checkValidUser() throws JSONException_Exception, MalformedURLException_Exception, IOException_Exception{
+        User user = getUser(username, password); 
+        if (user != null){
+            role = user.getRole();
+            email = user.getEmail();
             doCookie();
             return "valid";
         } else {
@@ -206,10 +197,12 @@ public class login_bean implements Serializable {
         }
     }
 
-    private boolean getUser(java.lang.String arg0) throws JSONException_Exception, MalformedURLException_Exception, IOException_Exception {
+    private User getUser(java.lang.String arg0, java.lang.String arg1) throws JSONException_Exception, MalformedURLException_Exception, IOException_Exception {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
-        return port.getUser(arg0);
+        return port.getUser(arg0, arg1);
     }
+
+    
 }

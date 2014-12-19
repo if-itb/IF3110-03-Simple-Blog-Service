@@ -69,6 +69,7 @@ public class Post implements Serializable{
                 tanggal = apost.getTanggal();
                 konten = apost.getKonten();
                 status = apost.isStatus();
+                break;
             }
         }
         System.out.println("konten : " + konten);
@@ -84,6 +85,7 @@ public class Post implements Serializable{
                 tanggal = apost.getTanggal();
                 konten = apost.getKonten();
                 status = apost.isStatus();
+                break;
             }
         }
         return "edit";
@@ -97,7 +99,7 @@ public class Post implements Serializable{
     
     public String insertPost() throws ClassNotFoundException{
         addPost(judul, tanggal, konten);
-        return "insert";
+        return "/publish_post";
     }
     
     public String editPost() throws ClassNotFoundException{

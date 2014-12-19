@@ -89,11 +89,22 @@
   <xs:complexType name="getUser">
     <xs:sequence>
       <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="getUserResponse">
     <xs:sequence>
-      <xs:element name="return" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="return" type="tns:user"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element name="editable" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="password" type="xs:string"/>
+      <xs:element minOccurs="0" name="role" type="xs:string"/>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="addUser">
@@ -180,16 +191,6 @@
   <xs:complexType name="listUserResponse">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:user"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="user">
-    <xs:sequence>
-      <xs:element name="editable" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="email" type="xs:string"/>
-      <xs:element minOccurs="0" name="id" type="xs:string"/>
-      <xs:element minOccurs="0" name="password" type="xs:string"/>
-      <xs:element minOccurs="0" name="role" type="xs:string"/>
-      <xs:element minOccurs="0" name="username" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="search">

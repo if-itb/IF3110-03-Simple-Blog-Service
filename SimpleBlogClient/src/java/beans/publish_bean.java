@@ -35,7 +35,7 @@ public class publish_bean {
     
     public String changeStatus(String id) throws ClassNotFoundException {
         publishPost(id);
-        return "publish";
+        return "/index";
     }
 
     private boolean publishPost(java.lang.String arg0) {

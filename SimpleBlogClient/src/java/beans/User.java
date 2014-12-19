@@ -93,6 +93,7 @@ public class User {
                 password = user.getPassword();
                 email = user.getEmail();
                 role = user.getRole();
+                break;
             }
         }
         return "edit user";
