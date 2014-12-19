@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import static java.lang.Integer.parseInt;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,9 +37,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
 import simpleblog.heroku.service.IOException_Exception;
+import simpleblog.heroku.service.Post;
 import simpleblog.heroku.service.SimpleblogService;
 import simpleblog.heroku.service.SimpleblogServiceImplService;
-import simpleblog.heroku.service.Post;
 import simpleblog.model.User;
 
 /**
@@ -73,33 +74,12 @@ public class PostController implements Serializable {
         content = null;
     }
      
-    public void getDatabasePost(){
-        try{
-            //get database connection
-            Context initCtx = new InitialContext();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            ds = (DataSource) envCtx.lookup("jdbc/simpleBlogDb");
-
-            System.out.println("SELECT * FROM post WHERE post.id = '"+ getPost_id() + "'");
-            
-            Connection conn = ds.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM post WHERE post.id = '"+ getPost_id() + "'"); 
-            ResultSet result =  ps.executeQuery();
-            result.next();
-            post.setId(result.getInt("id"));
-            post.setUserId(result.getInt("user_id"));
-            post.setTitle(result.getString("title"));
-            
-            String[] date = result.getString("date").split(" ");
-            
-            post.setDate(date[0]);
-            post.setContent(result.getString("content"));
-            post.setStatus(result.getInt("status"));
-
-            conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void getDatabasePost() throws IOException_Exception{
+        SimpleblogService service = new SimpleblogServiceImplService().getSimpleblogServiceImplPort();
+        Post tmp_post = service.getPost(parseInt(getPost_id()));
+        String[] tmp_date = tmp_post.getDate().split(" ");
+        tmp_post.setDate(tmp_date[0]);
+        post = tmp_post;
     }
      
     public List<Post> getPostList() throws SQLException, NamingException, IOException_Exception
@@ -345,33 +325,11 @@ public class PostController implements Serializable {
         externalContext.redirect("index.xhtml");
     }
     
-    public List<Post> getSoftDeletedPost() throws SQLException, NamingException
-    {
-        DataSource ds;
-        Context initCtx = new InitialContext();
-        Context envCtx = (Context) initCtx.lookup("java:comp/env");
-        ds = (DataSource) envCtx.lookup("jdbc/simpleBlogDb");
-        
-        Connection con = ds.getConnection();
-        PreparedStatement ps 
-            = con.prepareStatement(
-                "SELECT * FROM post WHERE status=2"); 
-	ResultSet result =  ps.executeQuery();
-        
+    public List<Post> getSoftDeletedPost() throws SQLException, NamingException, IOException_Exception
+    { 
         List<Post> list = new ArrayList<Post>();
-        
-        while(result.next())
-        {
-            Post post = new Post();
-            
-            post.setId(result.getInt("id"));
-            post.setTitle(result.getString("title"));
-            post.setContent(result.getString("content"));
-            post.setDate(result.getTimestamp("date").toString());
-            post.setUserId(result.getInt("user_id"));
-            list.add(post);
-        }
-        return list;
+        SimpleblogService service = new SimpleblogServiceImplService().getSimpleblogServiceImplPort();
+        return service.getPostList(2);
     }
     
     public String restorePost(int post_id)

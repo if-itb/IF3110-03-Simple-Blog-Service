@@ -24,7 +24,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import static org.apache.tomcat.jni.User.username;
-import simpleblog.model.User;
+import simpleblog.heroku.service.IOException_Exception;
+import simpleblog.heroku.service.SimpleblogService;
+import simpleblog.heroku.service.SimpleblogServiceImplService;
+import simpleblog.heroku.service.User;
 /**
  *
  * @author Luqman
@@ -58,34 +61,11 @@ public class DatabaseController implements Serializable {
         this.selectedUser = selectedUser;
     }
 
-    public User loginValidator(String username, String password){
-        setUser(new User());
-        try{
-            //get database connection
-            initCtx = new InitialContext();
-            envCtx = (Context) initCtx.lookup("java:comp/env");
-            ds = (DataSource) envCtx.lookup("jdbc/simpleBlogDb");
-
-            Connection conn = ds.getConnection();
-            ps = conn.prepareStatement("SELECT * FROM user WHERE user.username = '" + username +  "' AND user.password = '" + password + "'"); 
-            ResultSet result =  ps.executeQuery();
-            result.next();
-            getUser().setId(result.getInt("id"));
-            getUser().setEmail(result.getString("email"));
-            getUser().setUsername(result.getString("username"));
-            getUser().setName(result.getString("name"));
-            getUser().setPassword(result.getString("password"));
-            getUser().setRole(result.getString("role"));
-
-            conn.close();
-            
-            System.out.println("masuk database");
-            return getUser();
-        } catch (Exception e) {
-            System.out.println("masuk exception database");
-            getUser().setRole("guest");
-            return getUser();
-        }
+    public User loginValidator(String username, String password) throws IOException_Exception{
+        SimpleblogService service = new SimpleblogServiceImplService().getSimpleblogServiceImplPort();
+        setUser(service.getUser(username, password));
+        
+        return getUser();
     }
     public User getUser() {
         if(user == null)
@@ -102,44 +82,11 @@ public class DatabaseController implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-    public List<User> getUserList() throws SQLException{
-                try {
-			initCtx = new InitialContext();
-                        envCtx = (Context) initCtx.lookup("java:comp/env");
-                        ds = (DataSource) envCtx.lookup("jdbc/simpleBlogDb");
-		} catch (NamingException e) {
-		}
-		if(ds==null)
-			throw new SQLException("Can't get data source");
- 
-		//get database connection
-		conn = ds.getConnection();
- 
-		if(conn==null)
-			throw new SQLException("Can't get database connection");
- 
-		ps
-			= conn.prepareStatement(
-			   "SELECT id,username,name,email,password,role FROM user"); 
- 
-		//get customer data from database
-		ResultSet result =  ps.executeQuery();
-		List<User> list = new ArrayList<User>();
-                
-		while(result.next()){
-			setUser(new User());
- 
-			getUser().setId(result.getInt("id"));
-                        getUser().setEmail(result.getString("email"));
-                        getUser().setName(result.getString("name"));
-                        getUser().setUsername(result.getString("username"));
-                        getUser().setPassword(result.getString("password"));
-                        getUser().setRole(result.getString("role"));
-			//store all data into a List
-			list.add(getUser());
-		}
- 
-		return list;
+    public List<User> getUserList() throws IOException_Exception{
+                SimpleblogService service = new SimpleblogServiceImplService().getSimpleblogServiceImplPort();
+                List<User> list = new ArrayList<User>();
+                list = service.getUserList();
+                return list;
 	}
     public void add() throws SQLException{
         try {
@@ -208,32 +155,9 @@ public class DatabaseController implements Serializable {
         ps.close();}
         System.out.println("Berhasil");
     }
-    public void settingSelectedUser(){
-        try {
-            initCtx = new InitialContext();
-            envCtx = (Context) initCtx.lookup("java:comp/env");
-            ds = (DataSource) envCtx.lookup("jdbc/simpleBlogDb");
- 
-            //get database connection
-            conn = ds.getConnection();
-            
-            System.out.println("SELECT * FROM user WHERE user.id ='"+selectedUser.getId()+"'");
-
-            ps  = conn.prepareStatement("SELECT * FROM user WHERE user.id ='"+selectedUser.getId()+"'"); 
-            ResultSet result =  ps.executeQuery();
-            result.next();
-            selectedUser.setEmail(result.getString("email"));
-            selectedUser.setName(result.getString("name"));
-            selectedUser.setUsername(result.getString("username"));
-            selectedUser.setPassword(result.getString("password"));
-            selectedUser.setRole(result.getString("role"));
-            conn.close();
-            ps.close();
-            System.out.println("Berhasil");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+    public void settingSelectedUser() throws IOException_Exception{
+        SimpleblogService service = new SimpleblogServiceImplService().getSimpleblogServiceImplPort();
+        selectedUser = service.getUserById(selectedUser.getId());
     }
     
     public void nullUser(){
