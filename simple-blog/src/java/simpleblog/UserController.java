@@ -213,6 +213,7 @@ public class UserController implements Serializable{
         cookie.setCookie("password", null, 0);
         User tmp = new User();
         user = tmp;
+        user.setRole("guest");
         setUsername("");
         System.out.println("set username to null");
         setPassword("");

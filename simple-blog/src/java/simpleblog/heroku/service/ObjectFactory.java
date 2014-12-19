@@ -26,13 +26,17 @@ public class ObjectFactory {
 
     private final static QName _GetPost_QNAME = new QName("http://service.heroku.simpleblog/", "getPost");
     private final static QName _GetCommentList_QNAME = new QName("http://service.heroku.simpleblog/", "getCommentList");
-    private final static QName _GetPostList_QNAME = new QName("http://service.heroku.simpleblog/", "getPostList");
     private final static QName _GetPostResponse_QNAME = new QName("http://service.heroku.simpleblog/", "getPostResponse");
+    private final static QName _GetCommentListResponse_QNAME = new QName("http://service.heroku.simpleblog/", "getCommentListResponse");
+    private final static QName _GetPostListResponse_QNAME = new QName("http://service.heroku.simpleblog/", "getPostListResponse");
+    private final static QName _GetUserById_QNAME = new QName("http://service.heroku.simpleblog/", "getUserById");
+    private final static QName _GetPostList_QNAME = new QName("http://service.heroku.simpleblog/", "getPostList");
     private final static QName _GetUserResponse_QNAME = new QName("http://service.heroku.simpleblog/", "getUserResponse");
     private final static QName _GetUser_QNAME = new QName("http://service.heroku.simpleblog/", "getUser");
-    private final static QName _GetCommentListResponse_QNAME = new QName("http://service.heroku.simpleblog/", "getCommentListResponse");
+    private final static QName _GetUserByIdResponse_QNAME = new QName("http://service.heroku.simpleblog/", "getUserByIdResponse");
+    private final static QName _GetUserList_QNAME = new QName("http://service.heroku.simpleblog/", "getUserList");
     private final static QName _IOException_QNAME = new QName("http://service.heroku.simpleblog/", "IOException");
-    private final static QName _GetPostListResponse_QNAME = new QName("http://service.heroku.simpleblog/", "getPostListResponse");
+    private final static QName _GetUserListResponse_QNAME = new QName("http://service.heroku.simpleblog/", "getUserListResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: simpleblog.heroku.service
@@ -50,19 +54,67 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetPostResponse }
-     * 
-     */
-    public GetPostResponse createGetPostResponse() {
-        return new GetPostResponse();
-    }
-
-    /**
      * Create an instance of {@link GetUserResponse }
      * 
      */
     public GetUserResponse createGetUserResponse() {
         return new GetUserResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetUserById }
+     * 
+     */
+    public GetUserById createGetUserById() {
+        return new GetUserById();
+    }
+
+    /**
+     * Create an instance of {@link GetUserByIdResponse }
+     * 
+     */
+    public GetUserByIdResponse createGetUserByIdResponse() {
+        return new GetUserByIdResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetUser }
+     * 
+     */
+    public GetUser createGetUser() {
+        return new GetUser();
+    }
+
+    /**
+     * Create an instance of {@link GetUserListResponse }
+     * 
+     */
+    public GetUserListResponse createGetUserListResponse() {
+        return new GetUserListResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetUserList }
+     * 
+     */
+    public GetUserList createGetUserList() {
+        return new GetUserList();
+    }
+
+    /**
+     * Create an instance of {@link IOException }
+     * 
+     */
+    public IOException createIOException() {
+        return new IOException();
+    }
+
+    /**
+     * Create an instance of {@link GetPostResponse }
+     * 
+     */
+    public GetPostResponse createGetPostResponse() {
+        return new GetPostResponse();
     }
 
     /**
@@ -87,22 +139,6 @@ public class ObjectFactory {
      */
     public GetCommentListResponse createGetCommentListResponse() {
         return new GetCommentListResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetUser }
-     * 
-     */
-    public GetUser createGetUser() {
-        return new GetUser();
-    }
-
-    /**
-     * Create an instance of {@link IOException }
-     * 
-     */
-    public IOException createIOException() {
-        return new IOException();
     }
 
     /**
@@ -156,21 +192,48 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetPostList }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.heroku.simpleblog/", name = "getPostList")
-    public JAXBElement<GetPostList> createGetPostList(GetPostList value) {
-        return new JAXBElement<GetPostList>(_GetPostList_QNAME, GetPostList.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetPostResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://service.heroku.simpleblog/", name = "getPostResponse")
     public JAXBElement<GetPostResponse> createGetPostResponse(GetPostResponse value) {
         return new JAXBElement<GetPostResponse>(_GetPostResponse_QNAME, GetPostResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetCommentListResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.simpleblog/", name = "getCommentListResponse")
+    public JAXBElement<GetCommentListResponse> createGetCommentListResponse(GetCommentListResponse value) {
+        return new JAXBElement<GetCommentListResponse>(_GetCommentListResponse_QNAME, GetCommentListResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPostListResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.simpleblog/", name = "getPostListResponse")
+    public JAXBElement<GetPostListResponse> createGetPostListResponse(GetPostListResponse value) {
+        return new JAXBElement<GetPostListResponse>(_GetPostListResponse_QNAME, GetPostListResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserById }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.simpleblog/", name = "getUserById")
+    public JAXBElement<GetUserById> createGetUserById(GetUserById value) {
+        return new JAXBElement<GetUserById>(_GetUserById_QNAME, GetUserById.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPostList }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.simpleblog/", name = "getPostList")
+    public JAXBElement<GetPostList> createGetPostList(GetPostList value) {
+        return new JAXBElement<GetPostList>(_GetPostList_QNAME, GetPostList.class, null, value);
     }
 
     /**
@@ -192,12 +255,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetCommentListResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserByIdResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.heroku.simpleblog/", name = "getCommentListResponse")
-    public JAXBElement<GetCommentListResponse> createGetCommentListResponse(GetCommentListResponse value) {
-        return new JAXBElement<GetCommentListResponse>(_GetCommentListResponse_QNAME, GetCommentListResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://service.heroku.simpleblog/", name = "getUserByIdResponse")
+    public JAXBElement<GetUserByIdResponse> createGetUserByIdResponse(GetUserByIdResponse value) {
+        return new JAXBElement<GetUserByIdResponse>(_GetUserByIdResponse_QNAME, GetUserByIdResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserList }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.heroku.simpleblog/", name = "getUserList")
+    public JAXBElement<GetUserList> createGetUserList(GetUserList value) {
+        return new JAXBElement<GetUserList>(_GetUserList_QNAME, GetUserList.class, null, value);
     }
 
     /**
@@ -210,12 +282,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetPostListResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserListResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.heroku.simpleblog/", name = "getPostListResponse")
-    public JAXBElement<GetPostListResponse> createGetPostListResponse(GetPostListResponse value) {
-        return new JAXBElement<GetPostListResponse>(_GetPostListResponse_QNAME, GetPostListResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://service.heroku.simpleblog/", name = "getUserListResponse")
+    public JAXBElement<GetUserListResponse> createGetUserListResponse(GetUserListResponse value) {
+        return new JAXBElement<GetUserListResponse>(_GetUserListResponse_QNAME, GetUserListResponse.class, null, value);
     }
 
 }

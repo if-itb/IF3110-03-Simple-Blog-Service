@@ -95,4 +95,35 @@ public interface SimpleblogService {
         throws IOException_Exception
     ;
 
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns simpleblog.heroku.service.User
+     * @throws IOException_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getUserById", targetNamespace = "http://service.heroku.simpleblog/", className = "simpleblog.heroku.service.GetUserById")
+    @ResponseWrapper(localName = "getUserByIdResponse", targetNamespace = "http://service.heroku.simpleblog/", className = "simpleblog.heroku.service.GetUserByIdResponse")
+    public User getUserById(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0)
+        throws IOException_Exception
+    ;
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<simpleblog.heroku.service.User>
+     * @throws IOException_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getUserList", targetNamespace = "http://service.heroku.simpleblog/", className = "simpleblog.heroku.service.GetUserList")
+    @ResponseWrapper(localName = "getUserListResponse", targetNamespace = "http://service.heroku.simpleblog/", className = "simpleblog.heroku.service.GetUserListResponse")
+    public List<User> getUserList()
+        throws IOException_Exception
+    ;
+
 }
