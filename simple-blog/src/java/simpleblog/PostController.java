@@ -35,7 +35,10 @@ import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
-import simpleblog.model.Post;
+import simpleblog.heroku.service.IOException_Exception;
+import simpleblog.heroku.service.SimpleblogService;
+import simpleblog.heroku.service.SimpleblogServiceImplService;
+import simpleblog.heroku.service.Post;
 import simpleblog.model.User;
 
 /**
@@ -99,33 +102,10 @@ public class PostController implements Serializable {
         }
     }
      
-    public List<Post> getPostList() throws SQLException, NamingException
+    public List<Post> getPostList() throws SQLException, NamingException, IOException_Exception
     {
-        Context initCtx = new InitialContext();
-        Context envCtx = (Context) initCtx.lookup("java:comp/env");
-        ds = (DataSource) envCtx.lookup("jdbc/simpleBlogDb");
-        
-        Connection con = ds.getConnection();
-        PreparedStatement ps 
-            = con.prepareStatement(
-                "SELECT * FROM post WHERE status=1"); 
-	ResultSet result =  ps.executeQuery();
-        
-        List<Post> list = new ArrayList<Post>();
-        
-        while(result.next())
-        {
-            Post post = new Post();
-            
-            post.setId(result.getInt("id"));
-            post.setTitle(result.getString("title"));
-            post.setContent(result.getString("content"));
-            post.setDate(result.getTimestamp("date").toString());
-            post.setUserId(result.getInt("user_id"));
-            
-            list.add(post);
-        }
-        return list;
+        SimpleblogService service = new SimpleblogServiceImplService().getSimpleblogServiceImplPort();
+        return service.getPostList(1);
     } 
     
     public boolean insertPost(User user) throws NamingException, SQLException{

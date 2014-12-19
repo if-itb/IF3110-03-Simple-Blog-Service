@@ -1,0 +1,1 @@
+wsimport -keep -d nbproject -s src/java http://if3110-iii-25-simple-blog.herokuapp.com/SimpleblogService?wsdl

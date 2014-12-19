@@ -23,8 +23,11 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import simpleblog.model.Comment;
-import simpleblog.model.Post;
+import simpleblog.heroku.service.IOException_Exception;
+import simpleblog.heroku.service.SimpleblogService;
+import simpleblog.heroku.service.SimpleblogServiceImplService;
+import simpleblog.heroku.service.Comment;
+import simpleblog.heroku.service.Post;
 import simpleblog.model.ViewPost;
 
 /**
@@ -35,43 +38,24 @@ import simpleblog.model.ViewPost;
 @ViewScoped
 public class ViewPostController {
     private int postId;
-    private ViewPost viewPost;
+    private Post viewPost;
 
-    public void getPost()
+    public void getPost() throws IOException_Exception
     {
-        try {
-            DataSource ds;
-            viewPost = new ViewPost();
-            Context initCtx = new InitialContext();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            ds = (DataSource) envCtx.lookup("jdbc/simpleBlogDb");
-            
-            Connection con = ds.getConnection();
-            PreparedStatement ps
-                    = con.prepareStatement(
-                            "SELECT * FROM post WHERE id="+postId);
-            ResultSet result =  ps.executeQuery();
-            if(result.first())
-            {
-                viewPost.setId(result.getInt("id"));
-                viewPost.setTitle(result.getString("title"));
-                viewPost.setContent(result.getString("content"));
-                viewPost.setDate(result.getTimestamp("date").toString());  
-            }
-             
- 
-        } catch (NamingException ex) {
-            Logger.getLogger(ViewPostController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ViewPostController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        SimpleblogService service = new SimpleblogServiceImplService().getSimpleblogServiceImplPort();
+        Post post = service.getPost(postId);
+        viewPost = post;
+        System.out.println("<><> "+post.getId());
+        System.out.println("<><> "+post.getTitle());
+        System.out.println("<><> "+post.getDate());
+        System.out.println("<><> "+post.getContent());
     }
     
     private String inputName;
     private String inputEmail;
     private String inputComment;
        
-    public List<Comment> getComment()
+    public List<Comment> getComment() throws IOException_Exception
     {
         List<Comment> list = new ArrayList<Comment>();
         try {
@@ -96,23 +80,8 @@ public class ViewPostController {
                 setInputEmail(null);
                 setInputComment(null);
             }
-            ps = con.prepareStatement("SELECT * FROM comment WHERE post_id="+postId);
-            result =  ps.executeQuery();
-            while(result.next())
-            {
-                Comment comment = new Comment();
-                
-                comment.setId(result.getInt("id"));
-                comment.setPostId(result.getInt("post_id"));
-                comment.setName(result.getString("name"));
-                comment.setEmail(result.getString("email"));
-                comment.setDate(result.getTimestamp("date").toString()); 
-                comment.setContent(result.getString("content"));
-                
-                list.add(comment);
-            }
-             
-            
+            SimpleblogService service = new SimpleblogServiceImplService().getSimpleblogServiceImplPort();
+            list = service.getCommentList(postId);
         } catch (NamingException ex) {
             Logger.getLogger(ViewPostController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -138,14 +107,14 @@ public class ViewPostController {
     /**
      * @return the viewPost
      */
-    public ViewPost getViewPost() {
+    public Post getViewPost() {
         return viewPost;
     }
 
     /**
      * @param viewPost the viewPost to set
      */
-    public void setViewPost(ViewPost viewPost) {
+    public void setViewPost(Post viewPost) {
         this.viewPost = viewPost;
     }
 
