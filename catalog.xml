@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/Ardi/Documents/GitHub/IF3110-03-Simple-Blog-Service/simpleblog.wsdl" uri="src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/simpleblog.wsdl"/>
+    <system systemId="file:/C:/Users/Ardi/Documents/belajar/tes.wsdl" uri="src/conf/xml-resources/web-services/tesservice/wsdl/tes.wsdl"/>
+    <system systemId="http://dry-island-4611.herokuapp.com/SABService?wsdl" uri="src/conf/xml-resources/web-service-references/SABService/wsdl/dry-island-4611.herokuapp.com/SABService.wsdl"/>
+</catalog>
