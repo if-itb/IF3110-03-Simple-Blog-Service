@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php 
-require_once('firebaseLib.php');
+require_once('class.SimpleBlogSoap.php');
 ?>
 <html>
     <head>
@@ -8,13 +8,17 @@ require_once('firebaseLib.php');
         <title></title>
     </head>
     <body>
+		<h1>SimpleBlog SOAP API - Firebase Test Page</h1>
+		<h2>access api at <a href="http://simpleblogdarieza.herokuapp.com/api.php" >http://simpleblogdarieza.herokuapp.com/api.php</a></h2><br/><br/>
+		<?php $DBC = new SimpleBlogSoap(); ?>
+		<h3>post_view test - post ID 1</h3>
 		<?php
-		$postsDB = new Firebase("https://blazing-torch-8839.firebaseio.com/posts");
-		$usersDB = new Firebase("https://blazing-torch-8839.firebaseio.com/users");
-		$commentsDB = new Firebase("https://blazing-torch-8839.firebaseio.com/comments");
-		
-		$test = $postsDB->get(1);
-		echo $test;
+		$test = $DBC->post_view(1);
+		echo $test->judul;
+		echo " - ";
+		echo $test->tanggal;
+		echo " - ";
+		echo $test->konten;
 		?>
     </body>
 </html>

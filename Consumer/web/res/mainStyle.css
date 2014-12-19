@@ -1,0 +1,563 @@
+/*
+ * mainStyle.css - property of dalva24.com
+ * Copyright (C) 2014 Dalva
+ * All Rights Reserved.
+ */
+
+/*<editor-fold desc="Welcome Menu" defaultstate="collapsed" >*/
+#welcome div.logo {
+	top: 17%;
+	min-width: 300px;
+	min-height: 400px;
+	text-align: center;
+	position: absolute;
+	background: url(../img/dalva24.png) no-repeat center top;
+	background-size: contain;
+	left:45%;
+	margin-left: -300px;
+}
+#welcome div.text {
+	top: 17%;
+	padding-top: 80px;
+	position: absolute;
+	left:45%;
+}
+#welcome h1 {
+	font-weight: normal;
+	color: #adf;
+	font-family: 'Gruppo', Verdana, sans-serif;
+	font-size: 56px;
+	line-height: 15px;
+	text-shadow: 0px 0px 4px #0af;
+}
+#welcome h2 {
+	font-weight: normal;
+	color: #8ae;
+	font-family: 'Abel', Tahoma, sans-serif;
+	font-size: 24px;
+	line-height: 15px;
+	text-shadow: 0px 0px 2px #0af;
+}
+#welcome h3 {
+	font-weight: bold;
+	font-family: 'Abel', Tahoma, sans-serif;
+	font-size: 24px;
+	line-height: 55px;
+	text-shadow: 0px 0px 4px #0af;
+}
+#welcome h4 {
+	font-weight: normal;
+	color: #46a;
+	font-family: 'Abel', Tahoma, sans-serif;
+	font-size: 14px;
+	line-height: 55px;
+}
+#welcome a {
+	color: #9df;
+	text-decoration: none;
+	border-width: 0px;
+}
+#welcome a img {
+	border-width: 0px;
+}
+#welcome #loading, #enter, #mobile {
+	display: none;
+	opacity: 0;
+}
+#welcome nav {
+	position:absolute;
+	width: 920px;
+	margin: 0px auto;
+	font-family: 'Gruppo', Verdana, sans-serif;
+	font-size: 35px;
+	margin-top: -100px;
+	display:none;
+}
+
+@media all and (max-width: 920px) {
+	#welcome nav {
+		margin-top: -110px;
+	}
+}
+
+@media all and (min-width: 480px) and (max-width: 800px) {
+	#welcome div.maindiv {
+		margin-top: 5px;
+		width: 99%;
+	}
+	#welcome div.logo {
+		top: 10px;
+		left:50%;
+		margin-left: -150px;
+	}
+	#welcome div.text {
+		left: 0%;
+		width: 98%;
+		top: 300px;
+		text-align: center;
+	}
+	#welcome #enter {
+		display: none;
+		opacity: 0;
+	}
+}
+@media all and (max-width: 479px) {
+	#welcome div.maindiv {
+		margin-top: 5px;
+		width: 99%;
+	}
+	#welcome div.logo {
+		top: 10px;
+		width: 95%;
+		min-height: 300px;
+		min-width: 95%;
+		left:50%;
+		margin-left: -47.5%;
+	}
+	#welcome div.text {
+		left: 2.5%;
+		width: 95%;
+		top: 220px;
+		text-align: center;
+	}
+	#welcome h1 {
+		font-size: 40px;
+		line-height: 24px;
+	}
+	#welcome h2 {
+		font-size: 18px;
+		line-height: 20px;
+	}
+	#welcome h3 {
+		line-height: 44px;
+	}
+	#welcome h4 {
+		line-height: 14px;
+	}
+	#welcome #enter {
+		display: none;
+		opacity: 0;
+	}
+	#welcome #mobile {
+		display: inline;
+		opacity: 1;
+	}
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Defaults" defaultstate="collapsed" >*/
+html {
+	margin: 0px;
+	padding: 0px;
+	overflow-y: scroll;
+	overflow-x: auto;
+}
+body {
+	margin: 0px;
+	padding: 0px;
+	color: #adf;
+	font-family: 'Open Sans', Verdana, sans-serif;
+	background: #000a1c url('../img/bg.jpg') no-repeat center top;
+	display: block;
+	font-size: 15px;
+}
+div.center {
+	padding: 0px auto;
+	width: 920px;
+}
+a {
+	text-decoration: none;
+	color: #b8fbff;
+	-webkit-transition: all 250ms;
+	-moz-transition: all 250ms;
+	-ms-transition: all 250ms;
+	-o-transition: all 250ms;
+	transition: all 250ms;
+}
+a:hover {
+	color: #fff;
+	text-shadow: 0px 0px 8px #adf;
+}
+div.center {
+	margin: 0px auto;
+}
+img, video, canvas {
+	max-width: 100%;
+}
+nav, main, footer, aside {
+	display: block;
+}
+p {
+	margin: 1em 0em;
+}
+ul {
+	padding-left: 20px;
+}
+abbr {
+	border-bottom: 1px dotted
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Top Menu" defaultstate="collapsed">*/
+div.ridecon {
+	text-align: center;
+	position: absolute;
+	background: url(../img/dalva24.png) no-repeat center top;
+	background-size: contain;
+	height: 150px;
+	width: 95px;
+	left: 50%;
+	top: 1px;
+	margin: 0px -47px;
+	z-index: 100;
+}
+nav {
+	position:absolute;
+	width: 920px;
+	margin: 0px auto;
+}
+nav a.menu {
+	float: left;
+	display: inline-block;
+	height: 80px;
+	width: 170px;
+	text-align: center;
+	color: #adf;
+	text-shadow: 0px 0px 8px #0ff;
+	margin: 0px 15px;
+	background: url('../img/menuBG.png') no-repeat center top;
+}
+nav a.menu:hover {
+	text-shadow: 0px 0px 8px #246a8e;
+	background-image: url('../img/menuBGH.png');
+	color: #cef;
+}
+#selectedMenu, nav a:active, #selectedMenu:hover{
+	background-image: url('../img/menuBGS.png');
+	/*color: #05a;*/
+	color: #eff;
+	text-shadow: 0px 1px 2px #0ff;
+}
+nav a div.menu {
+	vertical-align: top;
+	line-height: 60px;
+	position: relative;
+	font-family: 'Gruppo', Verdana, sans-serif;
+	font-size: 35px;
+}
+nav a div.desc {
+	vertical-align: top;
+	line-height: 20px;
+	position: relative;
+	top: 0px;
+	font-size: 15px;
+	font-family: 'Abel', Tahoma, sans-serif;
+	opacity: 0;
+}
+#selectedMenu div.menu {
+	line-height: 40px;
+}
+#selectedMenu div.desc {
+	opacity: 1;
+}
+nav div.menuCenter {
+	display: inline-block;
+	float:left;
+	width: 120px;
+	height: 40px;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Main Contents" defaultstate="collapsed" >*/
+main {
+	position: absolute;
+	margin: 0px auto;
+	width: 920px;
+	margin-top: 90px;
+	opacity:1;
+}
+
+div.content {
+	width: 890px;
+	background-color: rgba(0,5,30,0.3);
+	margin: 0px 5px 10px 5px;
+	padding: 10px;
+}
+div.content p {
+	margin: 1em 15px;
+}
+div.content1 {
+	float: left;
+	width: 200px;
+	margin: 0px 5px 10px 5px;
+	padding: 10px;
+}
+div.content1 p {
+	text-align: center;
+}
+div.content2 {
+	float: left;
+	width: 430px;
+	margin: 0px 5px 10px 5px;
+	padding: 10px;
+	background: rgba(0,5,30,0.3);
+}
+div.content2 p {
+	margin: 0.8em 5px;
+}
+div.content3 {
+	float: left;
+	width: 660px;
+	margin: 0px 5px 10px 5px;
+	padding: 10px;
+	background: rgba(0,5,30,0.3);
+}
+div.content3 p {
+	margin: 1em 10px;
+}
+
+/*<editor-fold desc="Intro Page" defaultstate="collapsed" >*/
+div.intro {
+	width: 640px;
+	margin: 0px auto;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Titles" defaultstate="collapsed" >*/
+h1 {
+	font-family: 'Gruppo', Verdana, sans-serif;
+	font-size: 30px;
+}
+h1.title, div.title {
+	background: url(../img/titleBG.png) repeat-x center bottom;
+}
+h1.title {
+	margin: 0px 0px 5px 0px;
+	padding: 5px 0px 11px 0px;
+}
+div.title {
+	position: relative;
+	width: 100%;
+	height: 45px;
+	margin-bottom: 5px;
+}
+div.title h1.left {
+	position: absolute;
+	left: 0px;
+	margin: 5px;
+}
+div.title h1.right {
+	position: absolute;
+	right: 0px;
+	margin: 5px;
+}
+h2 {
+	font-family: 'Gruppo', Verdana, sans-serif;
+	font-size: 25px;
+	margin: 0.3em 0em 0.3em 0em;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="InlineIcons" defaultstate="collapsed" >*/
+a.inlineIco {
+	margin: 15px 5px 0px 5px;
+	height: 32px;
+	display: inline-block;
+}
+img.inlineIco {
+	display: inline-block;
+	height: 32px;
+}
+div.inlineIco {
+	display: inline-block;
+	line-height: 32px;
+	vertical-align: top;
+	margin-left: 15px;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Skill" defaultstate="collapsed" >*/
+div.skillBG {
+	height: 24px;
+	width: 90%;
+	margin: 10px;
+	background-color: #024;
+	position: relative;
+}
+div.skillValue {
+	height: 22px;
+	margin: 1px;
+	background-color: #46a;
+	position: absolute;
+	background: -moz-linear-gradient(left,  #4466aa 0%, #4492ce 100%);
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#4466aa), color-stop(100%,#4492ce));
+	background: -webkit-linear-gradient(left,  #4466aa 0%,#4492ce 100%);
+	background: -o-linear-gradient(left,  #4466aa 0%,#4492ce 100%);
+	background: -ms-linear-gradient(left,  #4466aa 0%,#4492ce 100%);
+	background: linear-gradient(to right,  #4466aa 0%,#4492ce 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4466aa', endColorstr='#4492ce',GradientType=1 );
+}
+div.skillBG span {
+	margin: 2px 2px 2px 10px;
+	position: absolute;
+	display: block;
+	width: 80%;
+	-webkit-transition: all 750ms;
+	-moz-transition: all 750ms;
+	-ms-transition: all 750ms;
+	-o-transition: all 750ms;
+	transition: all 750ms;
+}
+div.skillBG span:hover {
+	margin: 2px 2px 2px 5px;
+	position: absolute;
+	display: block;
+	width: 95%;
+	background-color: rgba(255,255,255,0.2);
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Forms" defaultstate="collapsed" >*/
+div.entry {
+	float: left;
+	margin: 3px 0px;
+}
+div.formtext {
+	float: left;
+	min-width: 70px;
+	text-align: right;
+	line-height: 32px;
+	margin: 3px 0px;
+}
+div.captcha {
+	float: left;
+	margin-left: 10px;
+}
+div.button {
+	float: left;
+	text-align: center;
+	width: 210px;
+}
+input, textarea {
+	margin-left: 10px;
+	background-color: rgba(0,0,0,0.1);
+	color: #bdf;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #79d;
+	padding: 8px;
+	font-family: 'Open Sans', Verdana, sans-serif;
+}
+input {
+	width: 220px;
+}
+textarea.msg {
+	width: 540px;
+	height: 260px;
+	resize: none;
+}
+input.button {
+	margin: 20px;
+	background-color: #fff;
+	color: #333;
+	cursor: pointer;
+	width: 160px;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Portfolio" defaultstate="collapsed" >*/
+div.portocontainer {
+	width: 910px;
+	margin: 0px auto 10px auto;
+}
+.portocontainer div.item {
+	overflow: hidden;
+}
+.portocontainer div.item div.detail { 
+	padding: 10px;
+	margin: 0px 0px 10px 0px;
+	text-align: right;
+	float:left;
+	width: 170px;
+}
+.portocontainer div.item div.detail p {
+	color: #8ae;
+	line-height: 24px;
+	font-size: 13px;
+	margin: 0px;
+}
+.portocontainer div.item div.detail h1 sub {
+	font-size: 20px;
+}
+.portocontainer div.item div.desc {
+	background-color: rgba(0,5,30,0.2);
+	margin: 0px 0px 10px 0px;
+	padding: 10px;
+	float:left;
+	width: 700px;
+}
+.portocontainer div.item div.desc div.preview {
+	width: 320px;
+	height: 240px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	position: absolute;
+	right: 15px;
+	margin: 15px;
+	z-index: 100;
+	box-shadow: 0px 0px 8px #0af;
+	border: 1px solid #93cef2;
+	-webkit-transition: all 250ms;
+	-moz-transition: all 250ms;
+	-ms-transition: all 250ms;
+	-o-transition: all 250ms;
+	transition: all 250ms;
+	cursor: pointer;
+	z-index: 105;
+	opacity: 0;
+}
+.portocontainer div.item div.desc div.previewfloater {
+	width: 320px;
+	position: relative;
+	float: right;
+	margin: 15px;
+}
+.portocontainer div.item div.desc p {
+	margin: 5px;
+}
+
+/*</editor-fold>*/
+
+/*</editor-fold>*/
+
+/*<editor-fold desc="Misc" defaultstate="collapsed">*/
+div#pagefader {
+	display: none;
+	opacity: 1;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	z-index: 110;
+}
+
+footer {
+	display: block;
+	text-align: center;
+	margin: 5px 0px;
+	font-family: 'Abel', Tahoma, sans-serif;
+	font-size: 13px;
+	color: #46a;
+	clear: both;
+}
+footer a {
+	color: #48b;
+}
+
+form.hidden {
+	display: none;
+}
+
+/*</editor-fold>*/
+

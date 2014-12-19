@@ -4,6 +4,7 @@ if(basename($_SERVER['SCRIPT_FILENAME'])==basename(__FILE__))
 	exit;
 
 require_once('firebaseLib.php');
+require_once('class.PostType.php');
 
 /**
  * the main service of this stuff
@@ -50,16 +51,19 @@ class SimpleBlogSoap{
 	 * @return boolean true is success
 	 */
 	function post_new($user, $title, $date, $content) {
-		$num = $this->_metaDB->get(posts);
+		$metaDB = new Firebase("https://blazing-torch-8839.firebaseio.com/meta");
+		$postsDB = new Firebase("https://blazing-torch-8839.firebaseio.com/posts");
+		$num = $metaDB->get("postsNum");
 		$num++;
 		$data = array (
 			"author" => $user,
 			"title"   => $title,
 			"content" => $content,
 			"date" => $date,
-			"published" => "0"
+			"published" => "0",
+			"id" => $num
 		);
-		$this->_postsDB->push($num, $data);
+		$postsDB->push($num, $data);
 		return true;
 	}
 	
@@ -69,7 +73,18 @@ class SimpleBlogSoap{
 	 * @return PostTypeArray
 	 */
 	function post_list() {
-		$retval=Array();
+		$postsDB = new Firebase("https://blazing-torch-8839.firebaseio.com/posts");
+		$posts=json_decode($postsDB->get("/"), true);
+		$retval = array();
+		foreach ($posts as $post) {
+			$postTyp = new PostType();
+			$postTyp->id = $post['ID'];
+			$postTyp->judul = $post['title'];
+			$postTyp->konten = $post['content'];
+			$postTyp->tanggal = $post['date'];
+			$postTyp->isPublished= $post['published'];
+			array_push($retval,$postTyp);
+		}
 		return $retval;
 	}
 
@@ -80,7 +95,15 @@ class SimpleBlogSoap{
 	 * @return PostType
 	 */
 	function post_view($postid) {
-		return new PostType();
+		$postsDB = new Firebase("https://blazing-torch-8839.firebaseio.com/posts");
+		$thisPost=json_decode($postsDB->get($postid), true);
+		$retval = new PostType();
+		$retval->id = $postid;
+		$retval->judul = $thisPost['title'];
+		$retval->konten = $thisPost['content'];
+		$retval->tanggal = $thisPost['date'];
+		$retval->isPublished= $thisPost['published'];
+		return $retval;
 	}
 
 	/**
@@ -90,6 +113,10 @@ class SimpleBlogSoap{
 	 * @return boolean true is success
 	 */
 	function post_publish($postid) {
+		$postsDB = new Firebase("https://blazing-torch-8839.firebaseio.com/posts");
+		$post = $postsDB->get($postid);
+		$post['published'] = 1;
+		$postsDB->update($postid, $post);
 		return true;
 	}
 	
@@ -104,6 +131,13 @@ class SimpleBlogSoap{
 	 * @return boolean true is success
 	 */
 	function post_edit($postid, $user, $title, $date, $content) {
+		$postsDB = new Firebase("https://blazing-torch-8839.firebaseio.com/posts");
+		$post = $postsDB->get($postid);
+		$post['author'] = $user;
+		$post['content'] = $content;
+		$post['date'] = $date;
+		$post['title'] = $title;
+		$postsDB->update($postid, $post);
 		return true;
 	}
 
@@ -114,6 +148,8 @@ class SimpleBlogSoap{
 	 * @return boolean true is success
 	 */
 	function post_del($postid) {
+		$postsDB = new Firebase("https://blazing-torch-8839.firebaseio.com/posts");
+		$postsDB->delete($postid);
 		return true;
 	}
 
@@ -128,6 +164,17 @@ class SimpleBlogSoap{
 	 * @return boolean true is success
 	 */
 	function comment_add($postid, $message, $author, $date) {
+		$commentsDB = new Firebase("https://blazing-torch-8839.firebaseio.com/comments");
+		$metaDB = new Firebase("https://blazing-torch-8839.firebaseio.com/meta");
+		$num = $metaDB->get("commentsNum");
+		$num++;
+		$data = array (
+			"name" => $author,
+			"content" => $message,
+			"date" => $date,
+			"PID" => $postid
+		);
+		$commentsDB->push($num, $data);
 		return true;
 	}
 
@@ -138,6 +185,8 @@ class SimpleBlogSoap{
 	 * @return boolean true is success
 	 */
 	function comment_delete($commentid) {
+		$commentsDB = new Firebase("https://blazing-torch-8839.firebaseio.com/comments");
+		$commentsDB->delete($commentid);
 		return true;
 	}
 
@@ -149,7 +198,13 @@ class SimpleBlogSoap{
 	 * @return boolean true is success
 	 */
 	function user_login($username, $pass) {
-		return true;
+		$usersDB = new Firebase("https://blazing-torch-8839.firebaseio.com/users");
+		$user = $usersDB->get($username);
+		if ($user['password'] === $pass) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -161,7 +216,14 @@ class SimpleBlogSoap{
 	 * @return boolean true is success
 	 */
 	function user_add($username, $pass, $role) {
-		return true;
+		$usersDB = new Firebase("https://blazing-torch-8839.firebaseio.com/users");
+		$user = $usersDB->get($username);
+		if (empty($user)) {
+			$usersDB->push($username, $data);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -171,7 +233,14 @@ class SimpleBlogSoap{
 	 * @return boolean true is success
 	 */
 	function user_delete($username) {
-		return true;
+		$usersDB = new Firebase("https://blazing-torch-8839.firebaseio.com/users");
+		$user = $usersDB->get($username);
+		if (!empty($user)) {
+			$usersDB->delete($username);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -182,6 +251,10 @@ class SimpleBlogSoap{
 	 * @return boolean true is success
 	 */
 	function user_edit($username, $role) {
+		$usersDB = new Firebase("https://blazing-torch-8839.firebaseio.com/users");
+		$user = $usersDB->get($username);
+		$user['type'] = $role;
+		$usersDB->update($username, $user);
 		return true;
 	}
 
