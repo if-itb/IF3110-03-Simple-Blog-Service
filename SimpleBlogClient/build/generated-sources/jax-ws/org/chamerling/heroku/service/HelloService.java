@@ -74,8 +74,8 @@ public interface HelloService {
      * 
      * @return
      *     returns java.util.List<org.chamerling.heroku.service.Post>
-     * @throws IOException_Exception
      * @throws MalformedURLException_Exception
+     * @throws IOException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -104,9 +104,9 @@ public interface HelloService {
      * @param arg0
      * @return
      *     returns boolean
+     * @throws MalformedURLException_Exception
      * @throws IOException_Exception
      * @throws JSONException_Exception
-     * @throws MalformedURLException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -191,8 +191,8 @@ public interface HelloService {
      * @param arg0
      * @return
      *     returns java.util.List<org.chamerling.heroku.service.Komentar>
-     * @throws IOException_Exception
      * @throws MalformedURLException_Exception
+     * @throws IOException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -234,8 +234,8 @@ public interface HelloService {
      * 
      * @return
      *     returns java.util.List<org.chamerling.heroku.service.User>
-     * @throws IOException_Exception
      * @throws MalformedURLException_Exception
+     * @throws IOException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")

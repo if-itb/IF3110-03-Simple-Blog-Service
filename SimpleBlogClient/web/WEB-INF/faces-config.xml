@@ -43,6 +43,8 @@ and open the template in the editor.
             <from-outcome>invalid</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
         <description>Manajemen User</description>
         <from-view-id>/manajemen_user.xhtml</from-view-id>
         <navigation-case>
