@@ -14,8 +14,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import simpleblog.model.CookieHelper;
-import simpleblog.model.User;
-import simpleblog.model.User;
+import simpleblog.heroku.service.User;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,6 +30,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import simpleblog.heroku.service.IOException_Exception;
+import simpleblog.heroku.service.SimpleblogService;
+import simpleblog.heroku.service.SimpleblogServiceImplService;
 import simpleblog.model.Post;
 
 /**
@@ -52,41 +54,21 @@ public class UserController implements Serializable{
     public UserController() {
         System.out.println("user ctrl dibuat");
         user = new User();
+        user.setRole("guest");
         cookie = new CookieHelper();
     }
 
-    public User loginValidator(String username, String password){
-        user = new User();
-        try{
-            //get database connection
-            Context initCtx = new InitialContext();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/simpleBlogDb");
-
-            Connection conn = ds.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM user WHERE user.username = '" + username +  "' AND user.password = '" + password + "'"); 
-            ResultSet result =  ps.executeQuery();
-            result.next();
-            user.setId(result.getInt("id"));
-            user.setEmail(result.getString("email"));
-            user.setUsername(result.getString("username"));
-            user.setName(result.getString("name"));
-            user.setPassword(result.getString("password"));
-            user.setRole(result.getString("role"));
-
-            conn.close();
+    public User loginValidator(String username, String password) throws IOException_Exception{
+        SimpleblogService service = new SimpleblogServiceImplService().getSimpleblogServiceImplPort();
+        user = service.getUser(username, password);
         
-            return user;
-        } catch (Exception e) {
-            user.setRole("guest");
-            return user;
-        }
+        return user;
     }
     
     /**
      * @return the user
      */
-    public User getUser() {
+    public User getUser() throws IOException_Exception {
         return loginValidator(username, password);
     }
 
@@ -147,7 +129,7 @@ public class UserController implements Serializable{
         return false;
     }    
     
-    public String actionLogin(){
+    public String actionLogin() throws IOException_Exception{
         System.out.println("=========action login method=========");
         getUser();
         if(showEditHapus(user.getId())){
@@ -172,7 +154,7 @@ public class UserController implements Serializable{
         this.cookie = cookie;
     }
     
-    public boolean isUsernamePasswordExist(){
+    public boolean isUsernamePasswordExist() throws IOException_Exception{
         System.out.println("=========is Username Password exist method=========");
         if(cookie.getCookie("username") != null && cookie.getCookie("password") != null){
             System.out.println("username cookie = " + cookie.getCookie("username").getValue());
