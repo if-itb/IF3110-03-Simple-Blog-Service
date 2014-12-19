@@ -34,8 +34,14 @@ and open the template in the editor.
         <description>Login</description>
         <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{login_bean.login}</from-action>
+            <from-action>#{login_bean.checkValidUser(login_bean.username)}</from-action>
+            <from-outcome>valid</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{login_bean.checkValidUser(login_bean.username)}</from-action>
+            <from-outcome>invalid</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
         <description>Manajemen User</description>
         <from-view-id>/manajemen_user.xhtml</from-view-id>

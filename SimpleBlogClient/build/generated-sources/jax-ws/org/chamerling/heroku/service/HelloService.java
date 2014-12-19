@@ -74,8 +74,8 @@ public interface HelloService {
      * 
      * @return
      *     returns java.util.List<org.chamerling.heroku.service.Post>
-     * @throws MalformedURLException_Exception
      * @throws IOException_Exception
+     * @throws MalformedURLException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -101,6 +101,25 @@ public interface HelloService {
 
     /**
      * 
+     * @param arg0
+     * @return
+     *     returns boolean
+     * @throws IOException_Exception
+     * @throws JSONException_Exception
+     * @throws MalformedURLException_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getUser", targetNamespace = "http://service.heroku.chamerling.org/", className = "org.chamerling.heroku.service.GetUser")
+    @ResponseWrapper(localName = "getUserResponse", targetNamespace = "http://service.heroku.chamerling.org/", className = "org.chamerling.heroku.service.GetUserResponse")
+    public boolean getUser(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0)
+        throws IOException_Exception, JSONException_Exception, MalformedURLException_Exception
+    ;
+
+    /**
+     * 
      * @param arg3
      * @param arg2
      * @param arg1
@@ -121,6 +140,20 @@ public interface HelloService {
         String arg2,
         @WebParam(name = "arg3", targetNamespace = "")
         String arg3);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "restorePost", targetNamespace = "http://service.heroku.chamerling.org/", className = "org.chamerling.heroku.service.RestorePost")
+    @ResponseWrapper(localName = "restorePostResponse", targetNamespace = "http://service.heroku.chamerling.org/", className = "org.chamerling.heroku.service.RestorePostResponse")
+    public boolean restorePost(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
 
     /**
      * 
@@ -158,8 +191,8 @@ public interface HelloService {
      * @param arg0
      * @return
      *     returns java.util.List<org.chamerling.heroku.service.Komentar>
-     * @throws MalformedURLException_Exception
      * @throws IOException_Exception
+     * @throws MalformedURLException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -201,8 +234,8 @@ public interface HelloService {
      * 
      * @return
      *     returns java.util.List<org.chamerling.heroku.service.User>
-     * @throws MalformedURLException_Exception
      * @throws IOException_Exception
+     * @throws MalformedURLException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
@@ -248,6 +281,17 @@ public interface HelloService {
         String arg2,
         @WebParam(name = "arg3", targetNamespace = "")
         String arg3);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<org.chamerling.heroku.service.Post>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "listTrash", targetNamespace = "http://service.heroku.chamerling.org/", className = "org.chamerling.heroku.service.ListTrash")
+    @ResponseWrapper(localName = "listTrashResponse", targetNamespace = "http://service.heroku.chamerling.org/", className = "org.chamerling.heroku.service.ListTrashResponse")
+    public List<Post> listTrash();
 
     /**
      * 

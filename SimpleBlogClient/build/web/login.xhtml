@@ -4,9 +4,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
-    <h:head>
-        <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>LOGIN Page</title>
     </head>
     <body>
@@ -16,7 +15,7 @@
                 <table width="250" border="0" cellspacing="0" cellpadding="2">
                     <tr>
                         <td colspan="2">
-                            <h:message for="username" styleClass=""/><br>
+                            <h:message for="username" styleClass=""/><br/>
                             <h:message for="password" styleClass=""/>
                         </td>
                     </tr>
@@ -35,7 +34,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            <h:commandButton action="#{login_bean.checkValidUser}" onclick="initialize" value="Login" type="submit" />
+                            <h:commandButton action="#{login_bean.checkValidUser(login_bean.username)}" onclick="initialize" value="Login" type="submit" />
                         </td>
                     </tr>
                 </table>
