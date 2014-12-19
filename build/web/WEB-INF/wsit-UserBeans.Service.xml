@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <definitions 
+ xmlns="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Service" targetNamespace="http://UserBeans/" xmlns:tns="http://UserBeans/" 
+ >
+    <message name="addComment"/>
+    <message name="addCommentResponse"/>
+    <portType name="Service">
+        <operation name="addComment">
+            <input message="tns:addComment"/>
+            <output message="tns:addCommentResponse"/>
+        </operation>
+    </portType>
+    <binding name="ServicePortBinding" type="tns:Service">
+        <operation name="addComment">
+            <input/>
+            <output/>
+        </operation>
+    </binding>
+    <service name="Service">
+        <port name="ServicePort" binding="tns:ServicePortBinding"/>
+    </service>
+</definitions>
