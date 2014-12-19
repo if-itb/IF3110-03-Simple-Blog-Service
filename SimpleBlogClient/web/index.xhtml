@@ -8,7 +8,8 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
   xmlns:h="http://java.sun.com/jsf/html"
   xmlns:c="http://java.sun.com/jsp/jstl/core"
-  xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+  xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
 
         <link rel="stylesheet" type="text/css" href="assets/css/screen.css" />
@@ -42,9 +43,6 @@ and open the template in the editor.
                     <c:if test="${(login_bean.role == null)}" >
                         <li><h:link value="Login" outcome="login.xhtml" /></li>
                     </c:if>
-                    <c:if test="${(login_bean.role != null)}" >
-                        <li><h:link value="Logout" outcome="#{login_bean.logout()}" /></li>
-                    </c:if>
                 </ul>
                 <h:form>
                     <h:inputText size="25" value="#{search.query}"></h:inputText>
@@ -55,6 +53,13 @@ and open the template in the editor.
             <div id="home">
                 <div class="posts">
                     <nav class="art-list">
+                        
+                    <c:if test="${(login_bean.role != null)}" >
+                        
+                            <f:view>
+                                <h:commandLink value="Logout" action="#{login_bean.logout}" />
+                            </f:view>
+                    </c:if>
                       <ul class="art-list-body">
 
                           <c:forEach var="item" items="#{post_bean.dbData()}">  

@@ -105,9 +105,9 @@ public interface HelloService {
      * @param arg0
      * @return
      *     returns org.chamerling.heroku.service.User
+     * @throws JSONException_Exception
      * @throws IOException_Exception
      * @throws MalformedURLException_Exception
-     * @throws JSONException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")

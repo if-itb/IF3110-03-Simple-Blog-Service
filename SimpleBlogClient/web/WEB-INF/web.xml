@@ -4,6 +4,20 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>beans.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/faces/manajemen_user.xhtml</url-pattern>
+        <url-pattern>/faces/publish_post.xhtml</url-pattern>
+        <url-pattern>/faces/new_post.xhtml</url-pattern>
+        <url-pattern>/faces/edit_user.xhtml</url-pattern>
+        <url-pattern>/faces/edit_post.xhtml</url-pattern>
+        <url-pattern>/faces/deleted_post.xhtml</url-pattern>
+        <url-pattern>/faces/insert_user.xhtml</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

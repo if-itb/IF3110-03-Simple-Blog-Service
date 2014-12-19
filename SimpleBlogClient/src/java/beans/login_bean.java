@@ -38,6 +38,7 @@ public class login_bean implements Serializable {
     private boolean remember;
     private String role;
     private String email;
+    public static final String AUTH_KEY = "app.user.name";
     
     public login_bean(){
         this.checkCookie();
@@ -118,12 +119,14 @@ public class login_bean implements Serializable {
         return "failure";
     }
     
-    public void logout(){
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        if (session != null){
-            session.invalidate();;
-        }
-        FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml");
+    public String logout(){
+//        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+//        if (session != null){
+//            session.invalidate();;
+//        }
+//        FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(AUTH_KEY);
+        return "index";
     }
     
     public void doCookie(){
@@ -191,12 +194,17 @@ public class login_bean implements Serializable {
             role = user.getRole();
             email = user.getEmail();
             doCookie();
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, role);
             return "valid";
         } else {
             return "invalid";
         }
     }
-
+    
+    public boolean isLoggedIn(){
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(AUTH_KEY) != null;
+    }
+    
     private User getUser(java.lang.String arg0, java.lang.String arg1) throws JSONException_Exception, MalformedURLException_Exception, IOException_Exception {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
