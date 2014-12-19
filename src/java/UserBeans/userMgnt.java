@@ -59,11 +59,11 @@ public class userMgnt implements Serializable {
         UserData ud = new UserData();
         org.chamerling.heroku.service.User userValidator = ud.getUser(user.getUsername());
         if (userValidator != null) {
-            if (user.getPassword().compareTo(userValidator.getPassword()) == 0) {
-                user.setUid(userValidator.getUid());
-                user.setFullname(userValidator.getFullname());
-                user.setRole(userValidator.getRole());
-                user.setEmail(userValidator.getEmail());
+            if (user.password.compareTo(userValidator.getPassword()) == 0) {
+                user.uid=(userValidator.getUid());
+                user.fullname=(userValidator.getFullname());
+                user.Role=(userValidator.getRole());
+                user.Email=(userValidator.getEmail());
                 cookie.setValue(user.getUsername());
                 FacesContext facesContex = FacesContext.getCurrentInstance();
                 HttpServletResponse response = (HttpServletResponse) facesContex.getExternalContext().getResponse();
@@ -91,28 +91,28 @@ public class userMgnt implements Serializable {
     }
 
     public void reset() {
-        user.setFullname("guest");
-        user.setUsername("guest");
-        user.setPassword("pass");
-        user.setEmail("");
-        user.setRole("guest");
-        user.setUid("");
+        user.fullname=("guest");
+        user.username=("guest");
+        user.password=("pass");
+        user.email=("");
+        user.role=("guest");
+        user.uid=("");
     }
 
     public boolean isLogin() {
-        return user.getUsername().compareTo("guest") != 0 && cookie.getValue() != null;
+        return !user.username().equals("guest") && cookie.getValue() != null;
     }
 
     public boolean isAdmin(){
-        return user.getRole().compareTo("admin")==0;
+        return user.role.equals("admin");
     }
     
     public boolean isOwner(){
-        return user.getRole().compareTo("owner")==0;
+        return user.role.equals("owner");
     }
     
     public boolean isEditor(){
-        return user.getRole().compareTo("editor")==0;
+        return user.role.equals("editor");
     }
     
     public boolean activeMessage() {
@@ -184,12 +184,12 @@ public class userMgnt implements Serializable {
     }
 
     public void setUser(User newUser) {
-        user.setEmail(newUser.getEmail());
-        user.setFullname(newUser.getFullname());
-        user.setPassword(newUser.getPassword());
-        user.setRole(newUser.getRole());
-        user.setUid(newUser.getUid());
-        user.setUsername(newUser.getUsername());
+        user.email=(newUser.getEmail());
+        user.fullname=(newUser.getFullname());
+        user.password=(newUser.getPassword());
+        user.role=(newUser.getRole());
+        user.uid=(newUser.getUid());
+        user.username=(newUser.getUsername());
     }
 
     public ArrayList<org.chamerling.heroku.service.BlogPost> getAllPosts() {
