@@ -29,12 +29,6 @@ and open the template in the editor.
             <nav class="nav">
                 <a style="border:none;" id="logo" href="index.xhtml"><h1>Simple<span>-</span>Blog</h1></a>
                 <ul class="nav-primary">
-<<<<<<< HEAD
-                        <li><h:link value="+ Tambah Post" outcome="/new_post" /></li>
-                        <li><h:link value="Publish Post" outcome="/publish_post" /></li>
-                        <li><h:link value="Manajemen User" outcome="/manajemen_user" /></li>
-                        <li><h:link value="Deleted Post" outcome="/deleted_post" /></li>
-=======
                     <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'owner')}" >
                         <li><h:link value="+ Tambah Post" outcome="new_post" /></li>
                     </c:if>
@@ -47,7 +41,6 @@ and open the template in the editor.
                     <!--<c:if test="${(login_bean.role == null)}" >-->
                         <li><h:link value="Login" outcome="login.xhtml" /></li>
                     <!--</c:if>-->
->>>>>>> origin/master
                 </ul>
                 <h:form>
                     <h:inputText size="25" value="#{search.query}"></h:inputText>
@@ -78,8 +71,9 @@ and open the template in the editor.
                                     <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'owner')}" >
                                         <h:commandLink value="Edit" action="#{Post.setDBE(item.id_post)}" /> |
                                     </c:if>
+                                    <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'owner') || (login_bean.role == 'editor')}" >
                                         <h:commandLink value="Hapus" onclick="return confirm('Apakah Anda yakin menghapus pos ini?')" action="#{Post.hapusPost(item.id_post)}" />
-                                   
+                                    </c:if>
                                 </p>
                                 </h:form>
                             </li>

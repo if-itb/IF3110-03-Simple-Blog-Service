@@ -104,15 +104,9 @@ public interface HelloService {
      * @param arg0
      * @return
      *     returns boolean
-<<<<<<< HEAD
-     * @throws MalformedURLException_Exception
-     * @throws JSONException_Exception
-     * @throws IOException_Exception
-=======
      * @throws IOException_Exception
      * @throws JSONException_Exception
      * @throws MalformedURLException_Exception
->>>>>>> origin/master
      */
     @WebMethod
     @WebResult(targetNamespace = "")
