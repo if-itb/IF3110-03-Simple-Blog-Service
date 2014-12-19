@@ -1,0 +1,26 @@
+/*
+ * mainStyle.css - property of dalva24.com
+ * Copyright (C) 2014 Dalva
+ * All Rights Reserved.
+ * 
+ * !DEV USE ONLY!
+ */
+
+@font-face {
+  font-family: 'Abel';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Abel'), local('Abel-Regular'), url(Abel-Regular.woff) format('woff');
+}
+@font-face {
+  font-family: 'Gruppo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Gruppo'), url(Gruppo.woff) format('woff');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(OpenSans.woff) format('woff');
+}
