@@ -23,15 +23,31 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body class="default">
+        <div>#{login_bean.checkCookie()}</div>
         <div class="wrapper">
 
             <nav class="nav">
                 <a style="border:none;" id="logo" href="index.xhtml"><h1>Simple<span>-</span>Blog</h1></a>
                 <ul class="nav-primary">
+<<<<<<< HEAD
                         <li><h:link value="+ Tambah Post" outcome="/new_post" /></li>
                         <li><h:link value="Publish Post" outcome="/publish_post" /></li>
                         <li><h:link value="Manajemen User" outcome="/manajemen_user" /></li>
                         <li><h:link value="Deleted Post" outcome="/deleted_post" /></li>
+=======
+                    <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'owner')}" >
+                        <li><h:link value="+ Tambah Post" outcome="new_post" /></li>
+                    </c:if>
+                    <c:if test="${(login_bean.role == 'admin') || (login_bean.role == 'editor')}" >
+                        <li><h:link value="Publish Post" outcome="publish_post" /></li>
+                    </c:if>
+                    <c:if test="${(login_bean.role == 'admin')}" >
+                        <li><h:link value="Manajemen User" outcome="manajemen_user.xhtml" /></li>
+                    </c:if>
+                    <!--<c:if test="${(login_bean.role == null)}" >-->
+                        <li><h:link value="Login" outcome="login.xhtml" /></li>
+                    <!--</c:if>-->
+>>>>>>> origin/master
                 </ul>
                 <h:form>
                     <h:inputText size="25" value="#{search.query}"></h:inputText>

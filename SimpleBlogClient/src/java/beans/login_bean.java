@@ -19,6 +19,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.WebServiceRef;
+import org.chamerling.heroku.service.HelloServiceImplService;
+import org.chamerling.heroku.service.IOException_Exception;
+import org.chamerling.heroku.service.JSONException_Exception;
+import org.chamerling.heroku.service.MalformedURLException_Exception;
 
 /**
  *
@@ -26,10 +31,13 @@ import javax.servlet.http.HttpSession;
  */
 @ManagedBean(name="login_bean")
 public class login_bean implements Serializable {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/frozen-badlands-5271.herokuapp.com/HelloService.wsdl")
+    private HelloServiceImplService service;
     private String username;
     private String password;
     private boolean remember;
     private String role;
+    private String email;
     public static String passMySql = "9999";
     
     public login_bean(){
@@ -62,6 +70,14 @@ public class login_bean implements Serializable {
     
     public void setRemember(boolean remember){
         this.remember = remember;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     public String getRole(){
@@ -127,6 +143,8 @@ public class login_bean implements Serializable {
         
         Cookie usercookie = new Cookie("usercookie", username);
         Cookie passcookie = new Cookie("passcookie", password);
+        Cookie rolecookie = new Cookie("rolecookie", role);
+        Cookie emailcookie = new Cookie("emailcookie", email);
         
         String rememberstr;
         if (remember == false){
@@ -139,10 +157,14 @@ public class login_bean implements Serializable {
         
         usercookie.setMaxAge(86400);
         passcookie.setMaxAge(86400);
+        rolecookie.setMaxAge(86400);
+        emailcookie.setMaxAge(86400);
         remembercookie.setMaxAge(86400);
         
         ((HttpServletResponse) facesContext.getExternalContext().getResponse()).addCookie(usercookie);
         ((HttpServletResponse) facesContext.getExternalContext().getResponse()).addCookie(passcookie);
+        ((HttpServletResponse) facesContext.getExternalContext().getResponse()).addCookie(rolecookie);
+        ((HttpServletResponse) facesContext.getExternalContext().getResponse()).addCookie(emailcookie);
         ((HttpServletResponse) facesContext.getExternalContext().getResponse()).addCookie(remembercookie);
     }
     
@@ -154,20 +176,40 @@ public class login_bean implements Serializable {
             for (int i=0; i<cookies.length; i++){
                 cookiename = cookies[i].getName();
                 if (cookiename.equals("usercookie")){
-                    this.username = cookies[i].getValue();
+                    username = cookies[i].getValue();
                 } else if(cookiename.equals("passcookie")){
-                    this.password = cookies[i].getValue();
+                    password = cookies[i].getValue();
+                } else if(cookiename.equals("rolecookie")){
+                    role = cookies[i].getValue();
+                } else if(cookiename.equals("emailcookie")){
+                    email = cookies[i].getValue();
                 } else if(cookiename.equals("remembercookie")){
                     rememberstr = cookies[i].getValue();
                     if (rememberstr.equals("true")){
-                        this.remember = true;
+                        remember = true;
                     } else if (rememberstr.equals("false")){
-                        this.remember = false;
+                        remember = false;
                     }
                 }
             }
         } else {
             System.out.println("Cannot find any cookie");
         }
+    }
+    
+    public String checkValidUser(String nama) throws JSONException_Exception, MalformedURLException_Exception, IOException_Exception{
+        if(getUser(nama)){
+            doCookie();
+            return "valid";
+        } else {
+            return "invalid";
+        }
+    }
+
+    private boolean getUser(java.lang.String arg0) throws JSONException_Exception, MalformedURLException_Exception, IOException_Exception {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        org.chamerling.heroku.service.HelloService port = service.getHelloServiceImplPort();
+        return port.getUser(arg0);
     }
 }

@@ -4,107 +4,41 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
-    <h:head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta name="description" content="Deskripsi Blog" />
-        <meta name="author" content="Judul Blog" />
-
-        <!-- Twitter Card -->
-        <meta name="twitter:card" content="summary"/>
-        <meta name="twitter:site" content="omfgitsasalmon"/>
-        <meta name="twitter:title" content="Simple Blog"/>
-        <meta name="twitter:description" content="Deskripsi Blog"/>
-        <meta name="twitter:creator" content="Simple Blog"/>
-        <meta name="twitter:image:src" content="{{! TODO: ADD GRAVATAR URL HERE }}"/>
-
-        <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Simple Blog"/>
-        <meta property="og:description" content="Deskripsi Blog"/>
-        <meta property="og:image" content="{{! TODO: ADD GRAVATAR URL HERE }}"/>
-        <meta property="og:site_name" content="Simple Blog"/>
-
-        <link rel="stylesheet" type="text/css" href="assets/css/screen.css" />
-        <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico" />
-
-        <title>Simple Blog | Log In</title>
-        
-    </h:head>
-    <h:body class="default">
-        <div class="wrapper">
-            <nav>
-                <a style="border:none;" id="logo" href="index.xhtml"><h1>Simple<span>-</span>Blog</h1></a>
-                <ul class="nav-primary"></ul>
-            </nav>
-            
-            <article class="art simple post">
-                <h2 class="art-title" style="margin-bottom:40px">-</h2>
-                <div class="art-body">
-                    <div class="art-body-inner">
-                        <h2>Log In</h2>
-                        <div id="contact-area">
-                            <h:form>
-                                <center>
-                                <h:messages errorClass="errorMessage" infoClass="infoMessage"  warnClass="warnMessage"></h:messages>
-                                <h:panelGrid id="panel" columns="2">
-                                    <h:outputText value="Username : "></h:outputText>
-                                    <h:inputText size="25" id="username" value="#{login_bean.username}"></h:inputText>
-
-                                    <h:outputText value="Password : "></h:outputText>
-                                    <h:inputSecret size="25" id="password" value="#{login_bean.password}"></h:inputSecret>
-
-                                    <h:selectBooleanCheckbox value="#{login_bean.remember}" onclick="return check(this)"></h:selectBooleanCheckbox>
-                                    <h:outputText value="Remember me"></h:outputText>
-
-                                    <f:facet name="footer">
-                                        <h:panelGroup style="display:block; text-align:center">
-                                           <h:commandButton value="Submit" action="#{login_bean.login}" type="submit"></h:commandButton>
-                                        </h:panelGroup>
-                                     </f:facet>
-                                    
-<!--                                    <h:commandButton value="Clear" type="reset"></h:commandButton>
-
-                                    <h:commandLink value="Register" action="Registration.xhtml"></h:commandLink>               
-                                    <h:commandLink value="Forgot Your Password?"></h:commandLink>            -->
-                                </h:panelGrid>
-                                </center>    
-                            </h:form>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <footer class="footer">
-                <div class="back-to-top"><a href="">Back to top</a></div>
-                <!-- <div class="footer-nav"><p></p></div> -->
-                <!-- <div class="psi">Psi</div> -->
-                <aside class="offsite-links">
-                    Asisten IF3110 /
-                    <a class="rss-link" href="#rss">RSS</a> /
-                    <br/>
-                    <a class="twitter-link" href="http://twitter.com/YoGiiSinaga">Yogi</a> /
-                    <a class="twitter-link" href="http://twitter.com/sonnylazuardi">Sonny</a> /
-                    <a class="twitter-link" href="http://twitter.com/fathanpranaya">Fathan</a> /
-                    <br/>
-                    <a class="twitter-link" href="#">Renusa</a> /
-                    <a class="twitter-link" href="#">Kelvin</a> /
-                    <a class="twitter-link" href="#">Yanuar</a> /
-
-                </aside>
-            </footer>
-        </div>
-        <script type="text/javascript" src="assets/js/fittext.js"></script>
-        <script type="text/javascript" src="assets/js/app.js"></script>
-        <script type="text/javascript" src="assets/js/respond.min.js"></script>
-        <script type="text/javascript">
-          var ga_ua = '{{! TODO: ADD GOOGLE ANALYTICS UA HERE }}';
-
-          (function(g,h,o,s,t,z){g.GoogleAnalyticsObject=s;g[s]||(g[s]=
-              function(){(g[s].q=g[s].q||[]).push(arguments)});g[s].s=+new Date;
-              t=h.createElement(o);z=h.getElementsByTagName(o)[0];
-              t.src='//www.google-analytics.com/analytics.js';
-              z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
-              ga('create',ga_ua);ga('send','pageview');
-        </script>
-    </h:body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>LOGIN Page</title>
+    </head>
+    <body>
+        <f:view>
+            <h:form id="login_form" onsubmit="return initialize();">
+                <h2>Login Please:</h2>
+                <table width="250" border="0" cellspacing="0" cellpadding="2">
+                    <tr>
+                        <td colspan="2">
+                            <h:message for="username" styleClass=""/><br/>
+                            <h:message for="password" styleClass=""/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText value="Username : "/></td>
+                        <td><h:inputText id="username" value="#{login_bean.username}" /></td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText value="Password : "/></td>
+                        <td><h:inputSecret id="password" value="#{login_bean.password}" required="true" redisplay="true"/></td>
+                    </tr>
+                    <tr>
+                            <td>&nbsp;</td>
+                            <td><h:selectBooleanCheckbox id="remember" value="#{login_bean.remember}" onclick="return check(this);" />
+                            <h:outputLabel for="remember">Remember Me</h:outputLabel></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <h:commandButton action="#{login_bean.checkValidUser(login_bean.username)}" onclick="initialize" value="Login" type="submit" />
+                        </td>
+                    </tr>
+                </table>
+            </h:form>
+        </f:view>
+    </body>
 </html>
