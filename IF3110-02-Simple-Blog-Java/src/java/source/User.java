@@ -220,6 +220,11 @@ public class User {
             if(username.equals(user.getUsername()))
             {
                 idFirebaseLocal = user.getIdFirebase();
+                username = user.getUsername();
+                nama = user.getNama();
+                password = user.getPassword();
+                email = user.getEmail();
+                role = user.getRole();
             }
         }
         if(!idFirebaseLocal.equals(""))
