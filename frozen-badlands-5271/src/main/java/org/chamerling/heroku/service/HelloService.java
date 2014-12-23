@@ -32,4 +32,7 @@ public interface HelloService {
         List<User> listUser() throws MalformedURLException, IOException;
         List<beans.Post> search(String query);
         List<Komentar> listComment(String id_post) throws MalformedURLException, IOException;
+        User getUser(String nama, String passw) throws MalformedURLException, IOException, org.json.JSONException;
+        
+        boolean restorePost(String key);
 }

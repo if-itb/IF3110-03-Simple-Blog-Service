@@ -17,6 +17,7 @@ public class Post{
     String tanggal;
     String konten;
     boolean status;
+    boolean deleted;
 
     public String getId_post() {
         return id_post;
@@ -56,5 +57,13 @@ public class Post{
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

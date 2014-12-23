@@ -31,11 +31,9 @@ public class HelloServiceImpl implements HelloService {
         @Override
         public boolean deletePost(String key) {
             Firebase ref = new Firebase("https://tugaswbdiii32.firebaseio.com/");
-            Firebase postRef = ref.child("post").child(key);
-            postRef.removeValue();
-            final boolean success = true;
-
-            return success;
+            Firebase postRef = ref.child("post").child(key).child("deleted");
+            postRef.setValue(true);
+            return true;
         }
 
         @Override
@@ -50,6 +48,7 @@ public class HelloServiceImpl implements HelloService {
             post.put("konten", konten);
             post.put("tanggal", tanggal);
             post.put("status", status);
+            post.put("deleted", false);
 
             postRef.updateChildren(post);
             return true;
@@ -106,6 +105,7 @@ public class HelloServiceImpl implements HelloService {
             post.put("konten", konten);
             post.put("tanggal", tanggal);
             post.put("status", status);
+            post.put("deleted", false);
 
             postReference.push().setValue(post);
             return true;
@@ -161,7 +161,8 @@ public class HelloServiceImpl implements HelloService {
                     p.setJudul(post.getString("judul"));
                     p.setTanggal(post.getString("tanggal"));
                     p.setKonten(post.getString("konten"));
-                    
+                    p.setStatus(post.getBoolean("status"));
+                    p.setDeleted(post.getBoolean("deleted"));
                     list.add(p);
                 }
             } catch (JSONException ex) {
@@ -220,6 +221,8 @@ public class HelloServiceImpl implements HelloService {
                         p.setJudul(post.getString("judul"));
                         p.setTanggal(post.getString("tanggal"));
                         p.setKonten(post.getString("konten"));
+                        p.setStatus(post.getBoolean("status"));
+                        p.setDeleted(post.getBoolean("deleted"));
                         
                         list.add(p);
                     }
@@ -260,5 +263,74 @@ public class HelloServiceImpl implements HelloService {
             }
             return list;
         }
+        
+        @Override
+        public User getUser(String nama, String passw) throws MalformedURLException, IOException, JSONException {
+            User p = new User();
+            URL path = new URL("https://tugaswbdiii32.firebaseio.com/user.json");
+            URLConnection connect = path.openConnection();
+            JSONTokener json = new JSONTokener(connect.getInputStream());
 
+            JSONObject json_obj = new JSONObject(json);
+            Iterator<String> users = json_obj.keys();
+            boolean found = false;
+
+            while(users.hasNext()&&!found) {
+                String chain = users.next();
+                JSONObject post = json_obj.getJSONObject(chain);
+                if(post.getString("nama").equals(nama)) {
+                    if (post.getString("password").equals(passw)){
+                        p.setId(chain);
+                        p.setUsername(post.getString("nama"));
+                        p.setPassword(post.getString("password"));
+                        p.setEmail(post.getString("email"));
+                        p.setRole(post.getString("role"));
+
+                        found = true;
+                    }
+                }
+            }
+            return p;
+        }
+
+//        @Override
+//        public List<Post> listTrash() {
+//            List<Post> list = new ArrayList();
+//            try {
+//                URL path = new URL("https://tugaswbdiii32.firebaseio.com/trash.json");
+//                URLConnection connect = path.openConnection();
+//                JSONTokener json = new JSONTokener(connect.getInputStream());
+//                
+//                JSONObject json_obj = new JSONObject(json);
+//                Iterator<String> posts = json_obj.keys();
+//                
+//                while(posts.hasNext()) {
+//                    String chain = posts.next();
+//                    JSONObject post = json_obj.getJSONObject(chain);
+//                    Post p = new Post();
+//                    p.setId_post(chain);
+//                    p.setJudul(post.getString("judul"));
+//                    p.setTanggal(post.getString("tanggal"));
+//                    p.setKonten(post.getString("konten"));
+//                    p.setStatus(post.getBoolean("status"));
+//                    
+//                    list.add(p);
+//                }
+//            } catch (JSONException ex) {
+//                Logger.getLogger(HelloServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (MalformedURLException ex) {
+//                Logger.getLogger(HelloServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (IOException ex) {
+//                Logger.getLogger(HelloServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+//            } 
+//            return list;
+//        }
+
+        @Override
+        public boolean restorePost(String key) {
+            Firebase ref = new Firebase("https://tugaswbdiii32.firebaseio.com/");
+            Firebase trashRef = ref.child("trash").child(key).child("deleted");
+            trashRef.setValue(false);
+            return true;
+        }
 }
