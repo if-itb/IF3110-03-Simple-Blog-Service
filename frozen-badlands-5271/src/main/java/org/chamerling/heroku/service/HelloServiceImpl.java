@@ -161,7 +161,6 @@ public class HelloServiceImpl implements HelloService {
                     p.setJudul(post.getString("judul"));
                     p.setTanggal(post.getString("tanggal"));
                     p.setKonten(post.getString("konten"));
-                    p.setStatus(post.getBoolean("status"));
                     
                     list.add(p);
                 }
@@ -221,7 +220,6 @@ public class HelloServiceImpl implements HelloService {
                         p.setJudul(post.getString("judul"));
                         p.setTanggal(post.getString("tanggal"));
                         p.setKonten(post.getString("konten"));
-                        p.setStatus(post.getBoolean("status"));
                         
                         list.add(p);
                     }
