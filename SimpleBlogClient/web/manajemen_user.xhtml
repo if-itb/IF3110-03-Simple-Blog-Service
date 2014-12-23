@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+    	<h:outputStylesheet library="css" name="table-style.css"  />
+    </h:head>
+    <h:body>
+ 
+    	<h1>Manajemen User</h1>
+    	<h:form>
+    	   <h:dataTable value="#{user.dbData()}" var="u"
+    		styleClass="order-table"
+    		headerClass="order-table-header"
+    		rowClasses="order-table-odd-row,order-table-even-row"
+    	   >
+ 
+    	     <h:column>
+ 
+    		<f:facet name="header">Nama</f:facet>
+ 
+    		<h:inputText value="#{u.username}" size="20" rendered="#{u.editable}" />
+ 
+    		<h:outputText value="#{u.username}" rendered="#{not u.editable}" />
+ 
+    	     </h:column>
+ 
+    	     <h:column>
+ 
+    		<f:facet name="header">Password</f:facet>
+ 
+    		<h:inputText value="#{u.password}" size="10" rendered="#{u.editable}" />
+ 
+    		<h:outputText value="#{u.password}" rendered="#{not u.editable}" />
+ 
+    	     </h:column>
+ 
+    	     <h:column>
+ 
+    		<f:facet name="header">Email</f:facet>
+ 
+    		<h:inputText value="#{u.email}" size="5" rendered="#{u.editable}" />
+ 
+    		<h:outputText value="#{u.email}" rendered="#{not u.editable}" />
+ 
+    	     </h:column>
+               
+               <h:column>
+ 
+    		<f:facet name="header">Role</f:facet>
+ 
+    		<h:inputText value="#{u.role}" size="5" rendered="#{u.editable}" />
+ 
+    		<h:outputText value="#{u.role}" rendered="#{not u.editable}" />
+ 
+    	     </h:column>
+ 
+    	     <h:column>
+ 
+    		<f:facet name="header">Action</f:facet>
+ 
+                <h:commandLink value="Edit" action="#{User.setDB(u.id)}" 
+                                       rendered="#{not u.editable}" />
+                
+                <h:commandLink value=" Hapus" action="#{User.hapusUser(u.id)}" 
+                                       rendered="#{not u.editable}" />
+ 
+    	     </h:column>
+ 
+    	  </h:dataTable>
+ 
+    	  <h:commandButton value="Create" action="#{User.goToInsertPage()}" />
+ 
+      </h:form>
+    </h:body>	
+</html>

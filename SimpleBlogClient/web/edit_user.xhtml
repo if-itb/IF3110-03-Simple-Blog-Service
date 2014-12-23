@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+<title>Edit Data</title>
+</h:head>
+<h:body>
+    <h1>Edit User</h1>
+<f:view>
+<h:form>
+<table>
+<tr>
+<td> <h:messages showDetail="true" /> </td>
+</tr>
+<tr>
+<td><h:outputText value="Enter Name : " /></td>
+<td><h:inputText value="#{User.username}" /></td>
+</tr>
+<tr>
+<td><h:outputText value="Enter password : "/></td>
+<td><h:inputText value="#{User.password}" /></td>
+</tr>
+<tr>
+<td><h:outputText value="Enter email : " /></td>
+<td><h:inputText value="#{User.email}" /></td>
+</tr>
+<tr>
+<td><h:outputText value="Enter role : "/></td>
+<td><h:inputText value="#{User.role}">
+</h:inputText></td>
+</tr>
+<tr>
+<td></td>
+<td><h:commandButton value="Edit" class="submit-button" action="#{User.editUser(User.id)}"/></td>
+</tr>
+</table>
+</h:form>
+</f:view>
+</h:body>
+</html>
