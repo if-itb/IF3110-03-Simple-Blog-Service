@@ -61,13 +61,13 @@
                         <h2>Tambah Post</h2>
 
                         <div id="contact-area">
-                            <h:form rendered="true" onsubmit="return validatedate()">
+                            <h:form rendered="true" id="formid" onsubmit="return validatedate()">
                                 <h:outputText value="Judul :"/><br/>
                                 <h:inputText value="#{tempPost.judul}"/><br/>
 
                                 <h:outputText value="Tanggal :"/><br/>
-                                <h:inputText value="#{tempPost.tanggal}"/><br/>
-                                <!--<input type="date" jsf:value="#{tempPost.tanggal}" /><br/>-->                                
+                                <h:inputText id="tgl" value="#{tempPost.tanggal}"/><br/>
+                                
                                 <h:outputText value="Konten :"/><br/>
                                 <h:inputTextarea rows="20" cols="20" value="#{tempPost.konten}"/>
                                 
@@ -101,15 +101,17 @@
     <script type="text/javascript">
         function validatedate(){
 
-          var InputText = document.getElementById('Tanggal').value;
+          var InputText = document.getElementById('subv:formid:tgl').value;
           var now = new Date();
           var firstValue = InputText.split('-');
          var firstDate = new Date(firstValue[0],(firstValue[1]-1),firstValue[2]);
          if(firstDate > now) 
          {
+             alert("ga boleh bro");
                 return false;
           }
           else {
+              alert("oke");
           return true;
           }
          }

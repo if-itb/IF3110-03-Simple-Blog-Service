@@ -221,6 +221,7 @@ public class login
         dbrole = "null";
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.invalidateSession();
+        System.out.println("ROLE: " + dbrole);
         externalContext.redirect(externalContext.getRequestContextPath() + "/loginuser.xhtml");
     }
 
